@@ -13,19 +13,33 @@
     <script type='importmap'>
         {
             "imports": {
-                "stuffy":           "../src/Stuffy.js",
-                "pixi" :            "https://unpkg.com/pixi.js@7.4.0/dist/pixi.min.mjs"
+                "stuffy":           "../src/engine/Stuffy.js",
+
+                "pixi" :            "./libs/pixi.min.mjs"
             }
         }
     </script>
 
+    <div id="display" style="position: absolute; width: 512px; height: 512px;"></div>
+
+    <script src="./libs/matter.min.js"></script>
+
     <script type='module'>
+
+        /********** PIXI DEMO */
 
         import * as PIXI from 'pixi';
 
-        const app = new PIXI.Application({ background: '#1099bb', resizeTo: window });
+        const display = document.getElementById('display');
 
-        document.body.appendChild(app.view);
+        const app = new PIXI.Application({
+            // https://pixijs.download/release/docs/PIXI.IApplicationOptions.html
+            // https://pixijs.download/release/docs/PIXI.IRendererOptions.html
+            background: '#1099bb',
+            resizeTo: display, // window,
+        });
+
+        display.appendChild(app.view);
 
         // create a new Sprite from an image path
         const bunny = PIXI.Sprite.from('./files/textures/dragon.png');
@@ -42,10 +56,9 @@
         // Listen for animate update
         app.ticker.add((delta) =>
         {
-            // just for fun, let's rotate mr rabbit a little
             // delta is 1 if running at 100% performance
             // creates frame-independent transformation
-            bunny.rotation += 0.1 * delta;
+            // bunny.rotation += 0.01 * delta;
         });
 
     </script>
