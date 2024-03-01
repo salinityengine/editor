@@ -1,0 +1,31 @@
+
+* {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+html *, html *::before, html *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: rgba(225, 225, 225);
+    background-color: rgb(24,  24,  24);
+}
+
+button {
+    margin: 1em;
+    padding: 0.5em;
+}
+
+.styler * {
+    font-family: inherit;
+    font-size: inherit;
+    padding: inherit;
+}
