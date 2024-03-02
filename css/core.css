@@ -18,14 +18,3 @@ body {
     color: rgba(225, 225, 225);
     background-color: rgb(24,  24,  24);
 }
-
-button {
-    margin: 1em;
-    padding: 0.5em;
-}
-
-.styler * {
-    font-family: inherit;
-    font-size: inherit;
-    padding: inherit;
-}

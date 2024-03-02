@@ -6,7 +6,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
     <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
     <link rel='icon' type='image/png' href='./files/logo/favicon.png' />
-    <link rel='stylesheet' href='./css/style.css' type='text/css'>
+    <link rel='stylesheet' href='./css/core.css' type='text/css'>
+    <link rel='stylesheet' href='./css/stuff.css' type='text/css'>
 </head>
 <body>
 
@@ -20,45 +21,47 @@
         }
     </script>
 
-    <div id="display" style="position: absolute; width: 512px; height: 512px;"></div>
+    <div id="display" class="stuff-display"></div>
 
     <script src="./libs/matter.min.js"></script>
 
     <script type='module'>
 
-        /********** PIXI DEMO */
-
         import * as PIXI from 'pixi';
 
-        const display = document.getElementById('display');
+        import {
+            Application
+         } from 'stuffy';
 
-        const app = new PIXI.Application({
-            // https://pixijs.download/release/docs/PIXI.IApplicationOptions.html
-            // https://pixijs.download/release/docs/PIXI.IRendererOptions.html
-            background: '#1099bb',
-            resizeTo: display, // window,
-        });
+        const app = new Application({
+            element: document.getElementById('display'),
+            backgroundColor: '#1099bb',
+        })
 
-        display.appendChild(app.view);
-
-        // create a new Sprite from an image path
+        // Sprite
         const bunny = PIXI.Sprite.from('./files/textures/dragon.png');
-
-        // center the sprite's anchor point
         bunny.anchor.set(0.5);
-
-        // move the sprite to the center of the screen
         bunny.x = app.screen.width / 2;
         bunny.y = app.screen.height / 2;
-
         app.stage.addChild(bunny);
 
-        // Listen for animate update
-        app.ticker.add((delta) =>
-        {
-            // delta is 1 if running at 100% performance
-            // creates frame-independent transformation
-            // bunny.rotation += 0.01 * delta;
+        // Text
+        const text = new PIXI.Text('This is a PixiJS text', {
+            fontFamily: 'Arial',
+            fontSize: 24,
+            fill: 0xff1010,
+            align: 'center',
+        });
+        app.stage.addChild(text);
+
+        // Update
+        app.ticker.add((delta) => {
+            // frame-independent transformation, delta is 1 if running at 100% performance
+
+            bunny.rotation += 0.01 * delta;
+
+            text.x += 0.1 * delta;
+            text.y += 0.1 * delta;
         });
 
     </script>
