@@ -1,0 +1,411 @@
+/******************** EDITOR */
+
+/********** EYE */
+
+#tb-eye-closed {
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg)) var(--drop-shadow);
+}
+#tb-eye-open {
+    filter: none;
+}
+#tb-eye-lid-top {
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg));
+}
+#tb-eye-lid-bottom {
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg));
+}
+
+#tb-eye-closed, #tb-eye-lid-top, #tb-eye-lid-bottom {
+    opacity: 1.0;
+    scale: 0.9; /* for toolbar button scaling, see layout gui class .osui-shadow-box */
+    transition:
+        transform 0.2s ease-in-out,
+        opacity 0.2s ease-in-out;
+}
+
+#tb-eye-open {
+    opacity: 0.5;
+    scale: 0.9;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.osui-toolbar-button:hover #tb-eye-open, .osui-toolbar-button.osui-selected #tb-eye-open {
+    opacity: 1.0;
+}
+
+.osui-toolbar-button:hover #tb-eye-lid-top, .osui-toolbar-button.osui-selected #tb-eye-lid-top {
+    transform: translate(15%, -15%);
+    opacity: 0.0;
+}
+
+.osui-toolbar-button:hover #tb-eye-lid-bottom, .osui-toolbar-button.osui-selected #tb-eye-lid-bottom {
+    transform: translate(-15%, 15%);
+    opacity: 0.0;
+}
+
+/********** MODE: SCENE EDITOR */
+
+.osui-toolbar-button:hover #tb-edit-pencil, .osui-toolbar-button.osui-selected #tb-edit-pencil {
+    animation: writing 0.7s;
+    animation-iteration-count: var(--animation-count);
+}
+
+.osui-toolbar-button:hover #tb-edit-pencil-tip, .osui-toolbar-button.osui-selected #tb-edit-pencil-tip {
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg));
+    animation: writing 0.7s;
+    animation-iteration-count: var(--animation-count);
+}
+
+/********** MODE: WORLD EDITOR */
+
+#tb-world-background {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    transform: translate(10%, 10%);
+    border-radius: 50%;
+    background-size: 200% 100%;
+    background-repeat: repeat;
+    box-shadow:
+        inset  0.1em -0.1em 0.3em 0.1em rgba(  0,   0,   0, 0.5),
+        inset -0.1em  0.1em 0.3em 0.1em rgba(255, 255, 255, 0.5);
+    transition:
+        background-position 0.4s ease-in-out;
+}
+
+.osui-toolbar-button:hover #tb-world-background, .osui-toolbar-button.osui-selected #tb-world-background {
+    background-position: 100%;
+}
+
+/********** MODE: UI EDITOR */
+
+.osui-toolbar-button:hover #tb-ui-joystick, .osui-toolbar-button.osui-selected #tb-ui-joystick {
+    transform-origin: bottom center;
+    animation: wiggle 0.8s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/******************** VIEWPORT */
+
+/********** MOUSE MODES */
+
+#tb-mode-select, #tb-mode-select-cursor,
+#tb-mode-look, #tb-mode-look-pupil,
+#tb-mode-move, #tb-mode-move-grab,
+#tb-mode-zoom {
+    filter: brightness(125%) saturate(125%) hue-rotate(var(--rotate-hue)) var(--drop-shadow);
+}
+
+/* Select */
+
+.osui-toolbar-button:hover #tb-mode-select, .osui-toolbar-button.osui-selected #tb-mode-select {
+    animation: selectBox 0.8s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+.osui-toolbar-button:hover #tb-mode-select-cursor, .osui-toolbar-button.osui-selected #tb-mode-select-cursor {
+    animation: selectCursor 0.8s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/* Look */
+
+.osui-toolbar-button:hover #tb-mode-look, .osui-toolbar-button.osui-selected #tb-mode-look {
+    animation: lookAround 0.8s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+.osui-toolbar-button:hover #tb-mode-look-pupil, .osui-toolbar-button.osui-selected #tb-mode-look-pupil {
+    animation: look 0.8s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/* Move */
+
+#tb-mode-move { opacity: 1.0; }
+#tb-mode-move-grab { opacity: 0.0; }
+
+.osui-toolbar-button:hover #tb-mode-move, .osui-toolbar-button.osui-selected #tb-mode-move { opacity: 0.0; }
+.osui-toolbar-button:hover #tb-mode-move-grab, .osui-toolbar-button.osui-selected #tb-mode-move-grab {
+    opacity: 1.0;
+    animation: grabbing 1.3s ease-in-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* Zoom */
+
+.osui-toolbar-button:hover #tb-mode-zoom, .osui-toolbar-button.osui-selected #tb-mode-zoom {
+    animation: zoomInOut 0.7s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/********** TRANSFORM MODES */
+
+/* None */
+
+.osui-toolbar-button #tb-tool-none {
+    animation: zoomOutReverse 0.25s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+.osui-toolbar-button:hover #tb-tool-none, .osui-toolbar-button.osui-selected #tb-tool-none {
+    animation: zoomOut 0.35s ease-in-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* Translate */
+
+.osui-toolbar-button:hover #tb-tool-translate, .osui-toolbar-button.osui-selected #tb-tool-translate {
+    animation: wobble 0.9s ease-out;
+    animation-iteration-count: 1;
+}
+
+/* Rotate */
+
+.osui-toolbar-button:hover #tb-tool-rotate, .osui-toolbar-button.osui-selected #tb-tool-rotate {
+    animation: rotate360 0.9s;
+    animation-iteration-count: 1;
+}
+
+/* Scale */
+
+.osui-toolbar-button:hover #tb-tool-scale, .osui-toolbar-button.osui-selected #tb-tool-scale {
+    animation: growShrink 1.1s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/* Rect */
+
+.osui-toolbar-button:hover #tb-tool-rect-left-top, .osui-toolbar-button.osui-selected #tb-tool-rect-left-top,
+.osui-toolbar-button:hover #tb-tool-rect-left-bot, .osui-toolbar-button.osui-selected #tb-tool-rect-left-bot {
+    animation: resizeRectLeft 0.7s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+.osui-toolbar-button:hover #tb-tool-rect-right-top, .osui-toolbar-button.osui-selected #tb-tool-rect-right-top,
+.osui-toolbar-button:hover #tb-tool-rect-right-bot, .osui-toolbar-button.osui-selected #tb-tool-rect-right-bot {
+    animation: resizeRectRight 0.7s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/* Snap */
+
+#tb-snap-attract {
+    opacity: 0;
+}
+
+.osui-toolbar-button:enabled:hover #tb-snap-attract, .osui-toolbar-button.osui-selected #tb-snap-attract {
+    animation: flicker 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* Paint */
+
+.osui-toolbar-button:hover #tb-paint-brush, .osui-toolbar-button.osui-selected #tb-paint-brush {
+    animation: painting 0.4s;
+    animation-iteration-count: 2;
+}
+
+/********** VIEW */
+
+/* Focus, Reset */
+
+#tb-focus-target, #tb-reset-target {
+    transform: scale(0.0);
+    transition: transform 0.25s ease-out;
+}
+
+#tb-focus-eye, #tb-reset-axis-x, #tb-reset-axis-y, #tb-focus-scene {
+    transition: transform 0.2s ease-out;
+}
+
+#tb-focus-pupil {
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg));
+    transition: transform 0.2s ease-out;
+}
+
+.osui-toolbar-button:enabled:hover #tb-focus-eye, .osui-toolbar-button:enabled:active #tb-focus-eye,
+.osui-toolbar-button:enabled:hover #tb-focus-pupil, .osui-toolbar-button:enabled:active #tb-focus-pupil,
+.osui-toolbar-button:enabled:hover #tb-focus-scene, .osui-toolbar-button:enabled:active #tb-focus-scene,
+.osui-toolbar-button:enabled:hover #tb-reset-axis-x, .osui-toolbar-button:enabled:active #tb-reset-axis-x,
+.osui-toolbar-button:enabled:hover #tb-reset-axis-y, .osui-toolbar-button:enabled:active #tb-reset-axis-y {
+    transform: scale(0.55) translate(calc(var(--pad-micro) * -1), 0);
+}
+
+.osui-toolbar-button:enabled:hover #tb-focus-target, .osui-toolbar-button:enabled:active #tb-focus-target,
+.osui-toolbar-button:enabled:hover #tb-reset-target, .osui-toolbar-button:enabled:active #tb-reset-target {
+    transform: scale(1.0);
+}
+
+/* Toggle Options */
+
+#tb-toggle-back-1 { opacity: 1; }
+#tb-toggle-back-2 { opacity: 0; }
+
+#tb-toggle-back-1, #tb-toggle-back-2 {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.osui-toolbar-button:hover #tb-toggle-back-1, .osui-toolbar-button.osui-selected #tb-toggle-back-1 { opacity: 0; }
+.osui-toolbar-button:hover #tb-toggle-back-2, .osui-toolbar-button.osui-selected #tb-toggle-back-2 { opacity: 1; }
+
+#tb-toggle-button-1, #tb-toggle-button-2 {
+    transition: transform 0.3s ease-in-out;
+}
+
+.osui-toolbar-button:hover #tb-toggle-button-1, .osui-toolbar-button.osui-selected #tb-toggle-button-1 {
+    transform: translate(-38%, 0%);
+}
+
+.osui-toolbar-button:hover #tb-toggle-button-2, .osui-toolbar-button.osui-selected #tb-toggle-button-2 {
+    transform: translate( 38%, 0%);
+}
+
+/********** PLAY */
+
+/* Play */
+
+.osui-toolbar-button:enabled:hover #tb-play-arrow, .osui-toolbar-button:enabled:active #tb-play-arrow {
+    animation: zoomAway 0.7s;
+    animation-iteration-count: 1;
+}
+
+/* Pause */
+
+.osui-toolbar-button:hover #tb-play-pause, .osui-toolbar-button.osui-selected #tb-play-pause {
+    animation: growShrink 1.1s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+.osui-toolbar-button:hover #tb-play-active, .osui-toolbar-button.osui-selected #tb-play-active {
+    animation: growShrink 1.1s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/* Stop */
+
+.osui-toolbar-button:hover #tb-play-stop, .osui-toolbar-button.osui-selected #tb-play-stop {
+    animation: growShrink 1.1s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/* Screenshot */
+
+#tb-camera-lens, #tb-camera-flash {
+    transform: scale(0.0);
+}
+
+.osui-toolbar-button:enabled:hover #tb-camera-lens, .osui-toolbar-button:enabled:active #tb-camera-lens {
+    animation: lensClick 0.15s;
+    animation-iteration-count: 1;
+}
+
+.osui-toolbar-button:enabled:hover #tb-camera-flash, .osui-toolbar-button:enabled:active #tb-camera-flash {
+    animation: lensFlash 0.4s;
+    animation-iteration-count: 1;
+}
+
+/* Screen Style */
+
+#tb-screen-monitor {
+    transition: transform 0.3s ease-in-out;
+}
+
+
+.osui-toolbar-button:enabled:hover #tb-screen-monitor, .osui-toolbar-button.osui-selected #tb-screen-monitor {
+    transform: scaleX(0.5) scaleY(1.1);
+}
+
+/********** SETTINGS */
+
+/* Scene */
+
+#tb-scene-frame {
+    transform-origin: 50% 5%; /* specific x-offset | y-offset */
+}
+
+.osui-toolbar-button:hover #tb-scene-frame, .osui-toolbar-button.osui-selected #tb-scene-frame {
+    animation: swing 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* Project */
+
+.osui-toolbar-button:hover #tb-project-ship, .osui-toolbar-button.osui-selected #tb-project-ship {
+    animation: takeOff 1.2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* History */
+
+#tb-history-second, #tb-history-minute, #tb-history-hour, #tb-history-center {
+    transition: transform 0.5s ease-in-out;
+    filter: none;
+}
+
+.osui-toolbar-button:enabled:hover #tb-history-second, .osui-toolbar-button.osui-selected #tb-history-second {
+    transform: rotateZ(-1080deg);
+}
+
+.osui-toolbar-button:enabled:hover #tb-history-minute, .osui-toolbar-button.osui-selected #tb-history-minute {
+    transform: rotateZ(-360deg);
+}
+
+.osui-toolbar-button:enabled:hover #tb-history-hour, .osui-toolbar-button.osui-selected #tb-history-hour {
+    transform: rotateZ(-90deg);
+}
+
+/* Settings */
+
+#tb-settings-center {
+    filter: none;
+}
+
+#tb-settings-gear {
+    transition: transform 0.4s linear;
+}
+
+.osui-toolbar-button:enabled:hover #tb-settings-gear, .osui-toolbar-button.osui-selected #tb-settings-gear {
+    transform: rotateZ(180deg);
+}
+
+#tb-settings-shadow {
+    opacity: 0.75;
+    transition: transform 0.4s linear;
+    filter: none;
+}
+
+.osui-toolbar-button:enabled:hover #tb-settings-shadow, .osui-toolbar-button.osui-selected #tb-settings-shadow {
+    transform: rotateZ(-180deg);
+}
+
+/******************** WORLD GRAPH */
+
+/********** NODES */
+
+#tb-node-plus-sign {
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
+}
+
+/********** SETTINGS */
+
+/* Node Graph */
+
+#tb-graph-nodes {
+    filter: saturate(125%) hue-rotate(calc(var(--rotate-hue) + 180deg)) var(--drop-shadow);
+}
+
+#tb-graph-lines {
+    filter: saturate(150%) brightness(2.0) hue-rotate(calc(var(--rotate-hue) + 220deg)) var(--drop-shadow);
+}
+
+.osui-toolbar-button:hover #tb-graph-lines, .osui-toolbar-button.osui-selected #tb-graph-lines {
+    animation: fillDown 0.8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}

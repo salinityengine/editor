@@ -2,10 +2,10 @@
  * @description JS Signals
  * @about       Event broadcaster for JavaScript. Inspired by Joa Ebert AS3 SignalBinding and Robert Penner's Slot classes.
  *
- * @license     MIT - Copyright (c) 2023 Stephens Nunnally
- * @version     v1.0.1
+ * @license     MIT - Copyright (c) 2024 Stephens Nunnally
+ * @version     v1.0.2
  * @author      stevinz (module)
- * @source      https://github.com/onsightengine/osui
+ * @source      https://github.com/stevinz/salinity
  *
  * @license     MIT - Copyright (c) 2012 Miller Medeiros
  * @version:    1.0.0 - Build: 268 (2012/11/29 05:48 PM)
@@ -96,7 +96,7 @@ class SignalBinding {
 /** Custom event broadcaster */
 class Signal {
 
-    VERSION = '1.0.1';
+    VERSION = '1.0.2';
 
     active = true;          // Signal is active / should broadcast? (to stop propagation of a signal during listeners use `halt()`)
     memorize = false;       // Keep record of previously dispatched parameters and auto execute listener during `add()`/`addOnce()` if Signal was already dispatched before?

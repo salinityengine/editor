@@ -1,0 +1,46 @@
+// #                                    #
+// #                                   #▒#
+// #                                 *#▒▒▒#*
+// #                               ,*#▒▒▒▒▒#*,
+// #                              *#▒▒▒▒▒▒▒▒▒#*
+// #                            ,*▒▒▒▒▒▒▒▒▒▒▒▒▒▒*,
+// #                           #▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒#
+// #                          #▒▒▒▒▒▒▒▒▒▒▒/░░░░░\▒#
+// #                          #░\▒▒▒▒▒/░░░░░░░░░░░#
+// #                          #░░░░░░░░░░░░░░░░░░░#
+// #                           *#░░░░░░░░░░░░░░░#*
+// #                             '**#░░░░░░░#**'
+// #                                '*******'
+//
+//                                  Salinity
+//                    Easy to use 2D JavaScript game engine.
+//
+//                            Development History:
+//                    2018-11-27 - version 1.0 - (C++, Qt)
+//                    2021-02-07 - version 2.0 - (C++, Sokol)
+//                    2021-11-09 - version 3.0 - (JS, Three)
+//                    2024-04-01 - version 4.0 - (JS, Pixi)
+//
+
+/******************** LIBRARIES ********************/
+
+- Graphics
+    pixijs                  (MIT)       2D Graphics         https://github.com/pixijs/pixijs
+
+- Physics
+    matter-js               (MIT)       2D Physics          https://github.com/liabru/matter-js
+
+- Gui
+    js-signals              (MIT)       Signals/Slots       https://github.com/millermedeiros/js-signals
+
+- Utility
+    fflate (zip)            (MIT)       Zip Archive         https://github.com/101arrowz/fflate
+
+/******************** ASSETS ********************/
+
+- Images
+    flaticon                (Premium)   https://www.flaticon.com/
+
+- Fonts
+    aileron                 (CC0)       https://github.com/Nicholaiii/Aileron (source - http://dotcolon.net)
+    roboto                  (Apache)    https://fonts.google.com/specimen/Roboto (source - google)

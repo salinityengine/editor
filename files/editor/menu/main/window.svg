@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 513 513" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,0,-1.4995)">
+        <path d="M512.001,95.167C512.001,63.064 485.937,37 453.834,37L58.167,37C26.064,37 0,63.064 0,95.167L0,419.833C0,451.936 26.064,478 58.167,478L453.834,478C485.937,478 512.001,451.936 512.001,419.833L512.001,95.167Z" style="fill:rgb(103,117,151);"/>
+    </g>
+    <path d="M120.08,35.5L58.167,35.5C26.064,35.5 0,61.564 0,93.668L0,418.333C0,450.437 26.064,476.501 58.167,476.501L120.08,476.501L120.08,35.5Z" style="fill-opacity:0.15;"/>
+    <g transform="matrix(1.86316,0,0,1.86316,-528.463,-120.331)">
+        <circle cx="443.81" cy="118.865" r="19.057" style="fill:rgb(165,235,120);"/>
+    </g>
+    <g transform="matrix(1.86316,0,0,1.86316,-528.463,-120.331)">
+        <circle cx="386.414" cy="118.865" r="19.057" style="fill:rgb(255,215,130);"/>
+    </g>
+    <g transform="matrix(1.86316,0,0,1.86316,-528.463,-120.331)">
+        <circle cx="329.03" cy="118.865" r="19.057" style="fill:rgb(255,100,101);"/>
+    </g>
+    <g transform="matrix(1,0,0,1.12719,1.067,-31.8772)">
+        <path d="M461.867,197.919C461.867,183.614 448.776,172 432.652,172L77.215,172C61.091,172 48,183.614 48,197.919L48,374.081C48,388.386 61.091,400 77.215,400L432.652,400C448.776,400 461.867,388.386 461.867,374.081L461.867,197.919Z" style="fill:url(#_Linear1);"/>
+    </g>
+    <defs>
+        <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-371,200.498,-226,-329.136,438.933,181.759)"><stop offset="0" style="stop-color:rgb(62,71,92);stop-opacity:1"/><stop offset="1" style="stop-color:black;stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>

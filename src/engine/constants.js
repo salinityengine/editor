@@ -6,3 +6,12 @@ export const APP_ORIENTATION = {
     PORTRAIT:       'portrait',
     LANDSCAPE:      'landscape',
 };
+
+export const ASSET_TYPES = [
+    'Palette',
+];
+
+export const WORLD_TYPES = [
+    'World2D',
+    'WorldUI',
+];

@@ -2,7 +2,7 @@
  * @description Suey
  * @about       Lightweight JavaScript UI library.
  * @author      Stephens Nunnally <@stevinz>
- * @license     MIT - Copyright (c) 2021-2023 Stephens Nunnally
+ * @license     MIT - Copyright (c) 2021 Stephens Nunnally
  */
 
 //  ---CATEGORY---              ---NODE TYPE---         ---CLASS NAME---
@@ -76,7 +76,6 @@ export { Css } from './utils/Css.js';
 export { Interaction } from './utils/Interaction.js';
 export { Iris } from './utils/Iris.js';
 export { Popper } from './utils/Popper.js';
-export { Signal } from './utils/Signal.js';
 export { Utils } from './utils/Utils.js';
 
 import { tooltipper } from './utils/Tooltipper.js';
