@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-    <title>Stuffy</title>
+    <title>Salinity</title>
     <meta charset='UTF-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
     <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
     <link rel='icon' type='image/png' href='./files/logo/favicon.png' />
     <link rel='stylesheet' href='./css/core.css' type='text/css'>
-    <link rel='stylesheet' href='./css/stuff.css' type='text/css'>
+    <link rel='stylesheet' href='./css/salinity.css' type='text/css'>
 </head>
 <body>
 
     <script type='importmap'>
         {
             "imports": {
-                "stuffy":           "../src/engine/Stuffy.js",
+                "salinity":         "../src/engine/Salinity.js",
 
                 "pixi" :            "./libs/pixi.min.mjs"
             }
         }
     </script>
 
-    <div id="display" class="stuff-display"></div>
+    <div id="display" class="salinity-display"></div>
 
     <script src="./libs/matter.min.js"></script>
 
@@ -31,7 +31,7 @@
 
         import {
             Application
-         } from 'stuffy';
+         } from 'salinity';
 
         const app = new Application({
             element: document.getElementById('display'),
