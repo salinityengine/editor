@@ -6,8 +6,25 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
     <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
     <link rel='icon' type='image/png' href='./files/logo/favicon.png' />
-    <link rel='stylesheet' href='./css/core.css' type='text/css'>
-    <link rel='stylesheet' href='./css/salinity.css' type='text/css'>
+
+    <!-- -------------------- STYLE -------------------- -->
+
+    <!-- GUI -->
+    <link rel='stylesheet' href='./css/gui/variables.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/core.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/inputs.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/layout.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/menu.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/panels.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/data.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/node.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/interactive.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/tooltip.css' type='text/css'>
+    <link rel='stylesheet' href='./css/gui/options.css' type='text/css'>
+
+    <!-- EDITOR -->
+    <link rel='stylesheet' href='./css/editor/panels.css' type='text/css'>
+
 </head>
 <body>
 
@@ -15,6 +32,7 @@
         {
             "imports": {
                 "salinity":         "../src/engine/Salinity.js",
+                "suey":             "../src/gui/Suey.js",
 
                 "pixi" :            "./libs/pixi.min.mjs"
             }
@@ -27,13 +45,15 @@
 
     <script type='module'>
 
+        /***** IMPORTS - SALINITY *****/
+
+        import * as SALT from 'salinity';
+        import * as SUEY from 'suey';
         import * as PIXI from 'pixi';
 
-        import {
-            Application
-         } from 'salinity';
+        console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
 
-        const app = new Application({
+        const app = new SALT.Application({
             element: document.getElementById('display'),
             backgroundColor: '#1099bb',
         })

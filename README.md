@@ -1,7 +1,15 @@
 <div align="center">
-<img src="./files/logo/salinity.png" width="256" height="256" alt="Salinity"/>
+<img src="./files/logo/salinity.png" alt="Salinity"/>
 </div>
 
 # Salinity
 
-Playground for a 2D JavaScript game engine.
+Drag and drop 2D JavaScript game engine.
+
+<br />
+
+## Status
+
+Under development, more info to come...
+
+<br />
