@@ -5,8 +5,8 @@ import * as SUEY from 'gui';
 import { Advice } from './config/Advice.js';
 import { Clipboard } from './config/Clipboard.js';
 import { Config } from './config/Config.js';
-// import { History } from './config/History.js';
-// import { Language } from './config/Language.js';
+import { History } from './config/History.js';
+import { Language } from './config/Language.js';
 // import { Loader } from './config/Loader.js';
 // import { Storage } from './config/Storage.js'; // https://github.com/DVLP/localStorageDB/blob/master/localdata.js
 
@@ -16,12 +16,12 @@ import { EditorToolbar } from './EditorToolbar.js';
 import { Advisor } from './panels/Advisor.js';
 // import { Explorer } from './panels/Explorer.js';
 import { InfoBox } from './panels/InfoBox.js';
-// import { Inspector } from './panels/Inspector.js';
+import { Inspector } from './panels/Inspector.js';
 // import { Player } from './panels/Player.js';
 // import { Previewer } from './panels/Previewer.js';
 // import { Scripter } from './panels/Scripter.js';
 // import { Shaper } from './panels/Shaper.js';
-// import { Viewport } from './viewport/Viewport.js';
+import { View2D } from './view2d/View2D.js';
 // import { Worlds } from './worlds/Worlds.js';
 
 // import { loadDemoProject3D } from './Demo.js';
@@ -30,7 +30,7 @@ class Editor extends SUEY.Docker {
 
     constructor() {
         super();
-        this.addClass('side-editor').selectable(false);
+        this.addClass('one-editor').selectable(false);
 
         // Init Dom
         document.body.appendChild(this.dom);
@@ -48,15 +48,14 @@ class Editor extends SUEY.Docker {
         /********** MODULES */
 
         this.clipboard = new Clipboard();                       // Copy / Paste Clipboard
-        // this.history = new History();                        // TODO: Undo / Redo History
-        // this.loader = new Loader();                          // TODO: File Loader
-        // this.storage = new _Storage();                       // TODO: Storage / Autosave
+        this.history = new History();                           // Undo / Redo History
+        // this.loader = new Loader();                          // File Loader
+        // this.storage = new Storage();                        // TODO: Storage / Autosave
 
         /********** PROPERTIES */
 
         // References
-        this.two = null;                                        // 2D Scene Editor
-        this.viewport = null;                                   // 3D Scene Editor
+        this.view2d = null;                                     // 2D Scene Editor
         this.worlds = null;                                     // World Graph
 
         this.advisor = null;                                    // Advisor
@@ -70,7 +69,6 @@ class Editor extends SUEY.Docker {
         this.dragInfo = undefined;                              // Stores data for 'dragenter' events
         this.selected = [];                                     // Current Selection
         this.wantsScreenshot = false;                           // Creates Screenshot (without helpers in shot)
-        // this.mixer = new THREE.AnimationMixer();             // TODO: Animation Mixer
 
         // Input
         this.keyStates = {                                      // Track modifier keys
@@ -82,7 +80,7 @@ class Editor extends SUEY.Docker {
         };
         this.modifierKey = false;                               // True when currently a modifier key pressed
 
-        /******************** EVENTS */
+        /********** LOAD EVENTS */
 
         EditorEvents.addEvents();
 
@@ -91,13 +89,9 @@ class Editor extends SUEY.Docker {
         this.add(new EditorToolbar());
         this.add(new InfoBox());
 
-        // // Scene Editor, 3D
-        // this.viewport = new Viewport();
-        // this.add(this.viewport);
-
-        // // Scene Editor, 2D
-        // this.two = new Two();
-        // this.add(this.two);
+        // Scene Editor, 2D
+        this.view2d = new View2D();
+        this.add(this.view2d);
 
         // // World Graph
         // this.worlds = new Worlds();
@@ -120,12 +114,12 @@ class Editor extends SUEY.Docker {
         // // Docking Panels
         this.advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
         // this.explorer = new Explorer({ startWidth: 245, minWidth: 70 });
-        // this.inspector = new Inspector({ startWidth: 300, minWidth: 190 });
+        this.inspector = new Inspector({ startWidth: 300, minWidth: 190 });
         // this.previewer = new Previewer({ startWidth: 300, minWidth: 190 });
 
         this.addDockPanel(this.advisor, SUEY.CORNERS.BOTTOM_LEFT);
         // this.addDockPanel(this.explorer, SUEY.CORNERS.TOP_LEFT);
-        // this.addDockPanel(this.inspector, SUEY.CORNERS.TOP_RIGHT);
+        this.addDockPanel(this.inspector, SUEY.CORNERS.TOP_RIGHT);
         // this.addDockPanel(this.previewer, SUEY.CORNERS.BOTTOM_RIGHT);
 
         // Watch Bottom Left Size
@@ -156,8 +150,8 @@ class Editor extends SUEY.Docker {
 
         setTimeout(() => {
             // loadDemoProject3D(editor.project);
-            // editor.viewport.world = editor.project.activeWorld();
-            // editor.viewport.stage = editor.viewport.world.activeStage();
+            // editor.view2d.world = editor.project.activeWorld();
+            // editor.view2d.stage = editor.view2d.world.activeStage();
             signals.projectLoaded.dispatch();
         }, 100);
 
@@ -172,8 +166,8 @@ class Editor extends SUEY.Docker {
     modeElement() {
         switch (this.mode()) {
             case EDITOR.MODES.UI_EDITOR:        return undefined;
-            case EDITOR.MODES.SCENE_EDITOR_2D:  return undefined;
-            case EDITOR.MODES.SCENE_EDITOR_3D:  return this.viewport;
+            case EDITOR.MODES.SCENE_EDITOR_2D:  return this.view2d;
+            case EDITOR.MODES.SCENE_EDITOR_3D:  return undefined;
             case EDITOR.MODES.SOUND_EDITOR:     return undefined;
             case EDITOR.MODES.WORLD_GRAPH:      return this.worlds;
         }
@@ -256,7 +250,7 @@ class Editor extends SUEY.Docker {
             filtered.push(entity);
         }
 
-        // New selection same as current selection? Refresh Inspector (but don't refresh viewport.transformGroup)
+        // New selection same as current selection? Refresh Inspector (but don't refresh view transformGroup)
         if (SALT.EntityUtils.compareArrayOfEntities(this.selected, filtered)) {
             if (editor.selected.length > 0) {
                 signals.inspectorBuild.dispatch(editor.selected[0]);

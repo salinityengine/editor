@@ -16,7 +16,7 @@ export { MultiCmdsCommand } from './MultiCmds.js';
 // // Editor
 export { EditorModeCommand } from './editor/EditorMode.js';
 // export { RebuildInspectorCommand } from './editor/RebuildInspector.js';
-// export { SelectCommand } from './editor/Select.js';
+export { SelectCommand } from './editor/Select.js';
 // export { SetStageCommand } from './editor/SetStage.js';
 // export { SetTabPriorityCommand } from './editor/SetTabPriority.js';
 

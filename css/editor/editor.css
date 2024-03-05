@@ -28,7 +28,7 @@ body {
 
 /********** EDITOR */
 
-.side-editor {
+.one-editor {
     user-select: none;
     overflow: hidden;
     position: absolute;

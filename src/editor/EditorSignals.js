@@ -195,8 +195,8 @@ class EditorSignals {
 
             // Viewport
             if (editor.viewport) {
-                editor.viewport.setGizmo(Config.getKey('scene/gizmo'));
-                editor.viewport.wireframePass.enabled = Config.getKey('scene/select/showWireframe');
+                // editor.viewport.setGizmo(Config.getKey('scene/gizmo'));
+                // editor.viewport.wireframePass.enabled = Config.getKey('scene/select/showWireframe');
             }
 
             // Font Size Update

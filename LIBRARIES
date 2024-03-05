@@ -26,6 +26,7 @@
 
 - Graphics
     pixijs                  (MIT)       2D Graphics         https://github.com/pixijs/pixijs
+    three.js                (MIT)       3D Graphics         https://github.com/mrdoob/three.js
 
 - Physics
     matter-js               (MIT)       2D Physics          https://github.com/liabru/matter-js
@@ -34,7 +35,7 @@
     js-signals              (MIT)       Signals/Slots       https://github.com/millermedeiros/js-signals
 
 - Utility
-    fflate (zip)            (MIT)       Zip Archive         https://github.com/101arrowz/fflate
+    fflate                  (MIT)       Zip Archive         https://github.com/101arrowz/fflate
 
 /******************** ASSETS ********************/
 
@@ -44,3 +45,37 @@
 - Fonts
     aileron                 (CC0)       https://github.com/Nicholaiii/Aileron (source - http://dotcolon.net)
     roboto                  (Apache)    https://fonts.google.com/specimen/Roboto (source - google)
+
+/******************** POSSIBLE / FUTURE ********************/
+
+- App
+    capacitor               (MIT)       Mobile App          https://github.com/ionic-team/capacitor
+    cordova                 (Apache)    Mobile App          https://cordova.apache.org
+    electron                (MIT)       Desktop App         https://github.com/electron/electron
+    nw.js                   (MIT)       Desktop App         https://github.com/nwjs/nw.js
+    tauri                   (Apache)    Desktop/Mobile      https://github.com/tauri-apps/tauri
+
+- Audio
+    howler.js               (MIT)       Audio Playback      https://github.com/goldfire/howler.js
+    tone.js                 (MIT)       Audio Creation      https://github.com/Tonejs/Tone.js
+
+- Code Editing
+    blockly                 (Apache)    Visual Code         https://developers.google.com/blockly
+    brython                 (BSD)       Python Scripting    https://github.com/brython-dev/brython
+
+- Geometry (2D)
+    concaveman              (ISC)       Concave Hull        https://github.com/mapbox/concaveman
+    convexhull-js           (MIT)       Convex Hull         https://github.com/indy256/convexhull-js
+    delaunator              (ISC)       Deaunay Triangluate https://github.com/mapbox/delaunator
+    earcut                  (ISC)       Polygon Triangluate https://github.com/mapbox/earcut
+    martinez                (MIT)       Polygon Clipping    https://github.com/w8r/martinez
+    poly-decomp.js          (MIT)       Convex Pieces       https://github.com/schteppe/poly-decomp.js
+    potpack                 (ISC)       Rect Packing        https://github.com/mapbox/potpack
+
+- Textures
+    texture-merger          (MIT)       Texture Atlas       https://github.com/oguzeroglu/TextureMerger
+
+- Utility
+    clipboard.js            (MIT)       Clipboard           https://github.com/zenorocha/clipboard.js
+    idb                     (ISC)       Storage             https://github.com/jakearchibald/idb
+    local-storage-db        (MIT)       Storage             https://github.com/DVLP/localStorageDB
