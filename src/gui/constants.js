@@ -1,5 +1,5 @@
 export const IMAGE_CHECK = '../../files/gui/check.svg';
-export const IMAGE_CLOSE = '../../files/gui//close.svg';
+export const IMAGE_CLOSE = '../../files/gui/close.svg';
 export const IMAGE_EMPTY = '../../files/gui/empty.svg';
 export const IMAGE_EXPAND = '../../files/gui/expand.svg';
 

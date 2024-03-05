@@ -13,7 +13,7 @@ import { Config } from './config/Config.js';
 import { EditorEvents } from './EditorEvents.js';
 import { EditorToolbar } from './EditorToolbar.js';
 
-// import { Advisor } from './panels/Advisor.js';
+import { Advisor } from './panels/Advisor.js';
 // import { Explorer } from './panels/Explorer.js';
 import { InfoBox } from './panels/InfoBox.js';
 // import { Inspector } from './panels/Inspector.js';
@@ -118,12 +118,12 @@ class Editor extends SUEY.Docker {
         // this.add(this.shaper);
 
         // // Docking Panels
-        // this.advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
+        this.advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
         // this.explorer = new Explorer({ startWidth: 245, minWidth: 70 });
         // this.inspector = new Inspector({ startWidth: 300, minWidth: 190 });
         // this.previewer = new Previewer({ startWidth: 300, minWidth: 190 });
 
-        // this.addDockPanel(this.advisor, SUEY.CORNERS.BOTTOM_LEFT);
+        this.addDockPanel(this.advisor, SUEY.CORNERS.BOTTOM_LEFT);
         // this.addDockPanel(this.explorer, SUEY.CORNERS.TOP_LEFT);
         // this.addDockPanel(this.inspector, SUEY.CORNERS.TOP_RIGHT);
         // this.addDockPanel(this.previewer, SUEY.CORNERS.BOTTOM_RIGHT);

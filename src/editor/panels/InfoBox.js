@@ -40,7 +40,7 @@ class InfoBox extends SUEY.Div {
             signals.showInfo.remove(showInfo);
         }, { once: true });
 
-    }
+    } // end ctor
 
 }
 

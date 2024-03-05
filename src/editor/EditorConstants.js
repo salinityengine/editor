@@ -9,7 +9,7 @@ export const MODES = {
 
 // Colors
 export const THEMES = {
-    CLASSIC:            0x00b4af,               // (  0, 180, 175)      classic (aqua)
+    CLASSIC:            0x00aacc,               // (  0, 170, 204)      classic (aqua)
     STEEL:              0x00c8c3,               // (  0, 200, 195)      light aqua (fully unsaturated)
     NAVY:               0x1a48cf,               // ( 26,  72, 207)      violet blue (navy)
     GRAPE:              0x960ef4,               // (150,  14, 244)      electric violet (purple)

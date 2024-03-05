@@ -12,11 +12,10 @@ const DEFAULT_SETTINGS = {
 
     /***** EDITOR *****/
 
-    'settings/editorMode':                      'edit3d',           // Editor mode
-    'settings/autosave':                        true,           // TODO: Storage / Autosave
+    'settings/editorMode':                      'edit2d',           // Editor mode
     'settings/language':                        'en',               // Current editor labeling language (Language.js)
 
-    'scheme/iconColor':                         0x00b4af,           // Color scheme icon color
+    'scheme/iconColor':                         0x00aacc,           // Color scheme icon color
     'scheme/background':                        0,                  // Color scheme background
     'scheme/backgroundTint':                    0.0,                // Color scheme tint percentage
     'scheme/backgroundSaturation':              0.0,                // Color scheme saturation

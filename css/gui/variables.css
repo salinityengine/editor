@@ -34,14 +34,15 @@
     --midlight:              85,  85,  85;
     --highlight:            255, 255, 255;
 
-    --icon-dark:              0,  90,  87;      /* #005A57 icon darkened            dark classic aqua */
-    --icon:                   0, 180, 175;      /* #00B4AF icon color               classic aqua */
-    --icon-light:            90, 255, 250;      /* #5AFFFA icon brightened          light clasic aqua */
-    --complement:           255, 113,   0;      /* #FF7100 icon shifted 180°        orange */
-    --triadic1:             216,   0, 127;      /* #D8007F icon shifted 120°        pink */
-    --triadic2:             165, 243,   0;      /* #A5F300 complement shifted 120°  lime green */
-    --triadic3:             113,  25, 185;      /* #7119B9 icon shifted 90°         purple */
-    --triadic4:             255, 253,  84;      /* #FFFD54 complement shifted 90°   yellow */
+    --icon-dark:              0, 106, 128;      /* icon darkened            dark classic aqua   #006A80 */
+    --icon:                   0, 170, 204;      /* icon color               classic aqua        #00AACC */
+    --icon-light:           102, 230, 255;      /* icon brightened          light clasic aqua   #66E6FF */
+
+    --complement:             0,   0,   0;      /* icon shifted 180°        orange */
+    --triadic1:               0,   0,   0;      /* icon shifted 120°        pink */
+    --triadic2:               0,   0,   0;      /* complement shifted 120°  lime green */
+    --triadic3:               0,   0,   0;      /* icon shifted 90°         purple */
+    --triadic4:               0,   0,   0;      /* complement shifted 90°   yellow */
 
     /* Theme Multiplier */
     --bright:               1;                  /* 1: Mid/Dark, 0: Light */

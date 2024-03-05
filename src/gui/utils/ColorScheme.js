@@ -5,6 +5,7 @@
  */
 
 import { BACKGROUNDS, TRAIT } from '../constants.js';
+
 import { Css } from './Css.js';
 import { Iris } from './Iris.js';
 
@@ -21,8 +22,9 @@ const _triadic3 = new Iris();
 const _triadic4 = new Iris();
 
 // Save state
+const DEFAULT_CLR = 0x00aacc; /* (0, 170, 204) - classic icon aqua */
 let _background = BACKGROUNDS.DARK;
-let _color = 0x00b4af; /* (0, 180, 175) - classic aqua */
+let _color = DEFAULT_CLR;
 let _tint = 0.0;
 let _saturation = 0.0;
 
@@ -90,9 +92,9 @@ class ColorScheme {
         Css.setVariable('--bright',             (_background == BACKGROUNDS.LIGHT) ? '0' : '1');
 
         // Update necessary hue rotation degrees
-        const startHue = _clr.set(0x00b4af).hue();
+        const startHue = _clr.set(DEFAULT_CLR).hue();
         const newHue = _clr.set(ColorScheme.color(TRAIT.ICON, true /* ignoreSaturation */)).hue();
-        const diffHue = `${newHue - startHue}deg`;
+        const diffHue = `${newHue - startHue + 20}deg`;
         Css.setVariable('--rotate-hue', diffHue);
     }
 

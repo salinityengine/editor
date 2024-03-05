@@ -1,4 +1,5 @@
 import * as EDITOR from 'editor';
+import * as SUEY from 'gui';
 
 import { Config } from './config/Config.js';
 
@@ -204,7 +205,7 @@ function editorKeyUp(event) {
         case '&': editor.setSchemeColor(EDITOR.THEMES.COFFEE,      0.20); break;
         case '*': editor.setSchemeColor(EDITOR.THEMES.GOLDEN,      0.15); break;
         case '(': editor.setSchemeColor(EDITOR.THEMES.EMERALD,     0.10); break;
-        case ')': editor.setSchemeColor(OSUI.Iris.randomHex(),     0.10); break;
+        case ')': editor.setSchemeColor(SUEY.Iris.randomHex(),     0.10); break;
     }
 
 }
