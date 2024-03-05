@@ -69,6 +69,55 @@
     text-shadow: -0.075em 0.075em rgba(var(--black), 0.5);
 }
 
+.one-advisor-wave-holder {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    overflow: hidden;
+}
+
+.water_wave {
+    position: absolute;
+    bottom: 0;
+    width: 5600px;
+    opacity: 0.8;
+}
+
+.water_wave_back {
+    left: -340px;
+    margin-bottom: 0;
+    fill: rgb(var(--icon));
+    animation: wave-back 6s infinite linear;
+}
+
+.water_wave_middle {
+    left: -180px;
+    margin-bottom: -4px;
+    fill: rgb(var(--icon-dark));
+    animation: wave-middle 5s infinite linear;
+}
+
+.water_wave_front {
+    left: -60px;
+    margin-bottom: -4px;
+    fill: rgb(var(--icon-light));
+    animation: wave-front 4s infinite linear;
+}
+
+@keyframes wave-front {
+    100% { transform: translate(-280px, 0px); }
+}
+
+@keyframes wave-middle {
+    25% { transform: translate(0px,  4px); }
+    50% { transform: translate(0px, -4px); }
+}
+
+@keyframes wave-back {
+    100% { transform: translate( 280px, 0px); }
+}
+
 /********** FULLSCREEN */
 
 .one-fullscreen {

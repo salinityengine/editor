@@ -5,6 +5,8 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { DockPanel } from '../gui/DockPanel.js';
 
+let _title = '__NOT_SET__';
+
 class Advisor extends DockPanel {
 
     constructor({
@@ -28,9 +30,32 @@ class Advisor extends DockPanel {
 
         // // OPTION: Text
         welcomeBody.setInnerHtml(`
-        <div style='font-size: 110%; color: rgb(var(--triadic2));'>Welcome</div>
-        <div style='font-size: 110%; color: rgb(var(--triadic1)); padding: 0 0.4em;'>to</div>
-        <div style='font-size: 110%; color: rgb(var(--icon));'>Salinity</div>`);
+        <div style='padding-bottom: 1em;'>
+            <span style='font-size: 110%; color: rgb(var(--triadic2));'>Welcome</span>
+            <span style='font-size: 110%; color: rgb(var(--triadic1));'>&nbspto&nbsp</span>
+            <span style='font-size: 110%; color: rgb(var(--icon));'>Salinity</span>
+        </div>
+        <div class='one-advisor-wave-holder'>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_back'>
+                <pattern id="wave1" patternUnits="userSpaceOnUse" width="280" height="16">
+                <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#wave1)"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_middle'>
+                <pattern id="wave2" patternUnits="userSpaceOnUse" width="280" height="16">
+                <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#wave2)"/>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_front'>
+                <pattern id="wave3" patternUnits="userSpaceOnUse" width="280" height="16">
+                <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#wave3)"/>
+            </svg>
+        </div>
+        `);
 
         // // OPTION: Graphics
         // const onsightIris = new SUEY.VectorBox(`${EDITOR.FOLDER_LOGO}iris.svg`);
@@ -136,6 +161,7 @@ class Advisor extends DockPanel {
         /********** SET INFO */
 
         function setInfo(title, html = '') {
+            if (title === _title) return;
             if (title) {
                 titleText.setInnerHtml(title);
                 try { bodyContents.dom.removeChild(welcomeBody.dom); } catch (error) { /* FAILED TO REMOVE */ }
@@ -148,6 +174,7 @@ class Advisor extends DockPanel {
                 bodyContents.addClass('one-advisor-contents-empty');
                 history = -1;
             }
+            _title = title;
         }
 
         function infoWantsToChange(title, html) {

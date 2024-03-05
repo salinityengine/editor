@@ -1,5 +1,23 @@
 /******************** TODO ********************/
 
-Matter:
+Editor:
+    - Asset View
+    - Scene Tree
+    - View2D
+        - Editable
+        - Graph
 
-Pixi.js:
+Engine:
+    - Project
+        - World
+        - Stage
+        - Entity
+    - Assets
+        - Image
+
+Gui:
+    - Property list widget
+    - Better docking
+
+Player:
+    - Run in editor
