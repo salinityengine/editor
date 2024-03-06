@@ -196,16 +196,16 @@ function editorKeyUp(event) {
     // Color Schemes
     switch (event.key) {
         case '~': editor.cycleSchemeBackground(); break;
-        case '!': editor.setSchemeColor(EDITOR.THEMES.CLASSIC,     0.00); break;
-        case '@': editor.setSchemeColor(EDITOR.THEMES.FLAMINGO,    0.10); break;
-        case '#': editor.setSchemeColor(EDITOR.THEMES.NAVY,        0.20); break;
-        case '$': editor.setSchemeColor(EDITOR.THEMES.GRAPE,       0.15); break;
-        case '%': editor.setSchemeColor(EDITOR.THEMES.RUST,        0.20); break;
-        case '^': editor.setSchemeColor(EDITOR.THEMES.CARROT,      0.20); break;
-        case '&': editor.setSchemeColor(EDITOR.THEMES.COFFEE,      0.20); break;
-        case '*': editor.setSchemeColor(EDITOR.THEMES.GOLDEN,      0.15); break;
-        case '(': editor.setSchemeColor(EDITOR.THEMES.EMERALD,     0.10); break;
-        case ')': editor.setSchemeColor(SUEY.Iris.randomHex(),     0.10); break;
+        case '!': editor.setSchemeColor(SUEY.THEMES.CLASSIC,    0.00); break;
+        case '@': editor.setSchemeColor(SUEY.THEMES.FLAMINGO,   0.10); break;
+        case '#': editor.setSchemeColor(SUEY.THEMES.NAVY,       0.20); break;
+        case '$': editor.setSchemeColor(SUEY.THEMES.GRAPE,      0.15); break;
+        case '%': editor.setSchemeColor(SUEY.THEMES.RUST,       0.20); break;
+        case '^': editor.setSchemeColor(SUEY.THEMES.CARROT,     0.20); break;
+        case '&': editor.setSchemeColor(SUEY.THEMES.COFFEE,     0.20); break;
+        case '*': editor.setSchemeColor(SUEY.THEMES.GOLDEN,     0.15); break;
+        case '(': editor.setSchemeColor(SUEY.THEMES.EMERALD,    0.10); break;
+        case ')': editor.setSchemeColor(SUEY.Iris.randomHex(),  0.10); break;
     }
 
 }

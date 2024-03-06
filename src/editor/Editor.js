@@ -307,7 +307,7 @@ class Editor extends SUEY.Docker {
         signals.schemeChanged.dispatch();
     }
 
-    setSchemeColor(color = EDITOR.THEMES.CLASSIC, tint = 0.0, saturation = 0.0, updateSettings = true) {
+    setSchemeColor(color = SUEY.THEMES.CLASSIC, tint = 0.0, saturation = 0.0, updateSettings = true) {
         if (updateSettings) {
             Config.setKey('scheme/iconColor', color);
             Config.setKey('scheme/backgroundTint', tint);

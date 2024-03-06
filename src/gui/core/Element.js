@@ -411,7 +411,7 @@ function removeFromParent(parent, element) {
 // Hyphenated style properties can be referenced via camelCase in JavaScript
 // See: http://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSS2Properties
 const properties = [
-    'display', 'color',
+    'display', 'color', 'opacity',
     'left', 'top', 'right', 'bottom', 'width', 'height',
 ];
 

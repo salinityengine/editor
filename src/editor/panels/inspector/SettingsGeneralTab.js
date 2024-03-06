@@ -118,16 +118,16 @@ class SettingsGeneralTab extends SUEY.Titled {
             editor.setSchemeColor(color, tint, saturation);
             updateUI();
         }
-        schemeClassic.onSelect(() => setColor(EDITOR.THEMES.CLASSIC, 0.00));
-        schemeSteel.onSelect(() => setColor(EDITOR.THEMES.STEEL, 0.10, -1.0));
-        schemeFlamingo.onSelect(() => setColor(EDITOR.THEMES.FLAMINGO, 0.10));
-        schemeNavy.onSelect(() => setColor(EDITOR.THEMES.NAVY, 0.20));
-        schemeGrape.onSelect(() => setColor(EDITOR.THEMES.GRAPE, 0.15));
-        schemeRust.onSelect(() => setColor(EDITOR.THEMES.RUST, 0.20));
-        schemeCarrot.onSelect(() => setColor(EDITOR.THEMES.CARROT, 0.20));
-        schemeCoffee.onSelect(() => setColor(EDITOR.THEMES.COFFEE, 0.20));
-        schemeGolden.onSelect(() => setColor(EDITOR.THEMES.GOLDEN, 0.15));
-        schemeEmerald.onSelect(() => setColor(EDITOR.THEMES.EMERALD, 0.10));
+        schemeClassic.onSelect(() => setColor(SUEY.THEMES.CLASSIC, 0.00));
+        schemeSteel.onSelect(() => setColor(SUEY.THEMES.STEEL, 0.10, -1.0));
+        schemeFlamingo.onSelect(() => setColor(SUEY.THEMES.FLAMINGO, 0.10));
+        schemeNavy.onSelect(() => setColor(SUEY.THEMES.NAVY, 0.20));
+        schemeGrape.onSelect(() => setColor(SUEY.THEMES.GRAPE, 0.15));
+        schemeRust.onSelect(() => setColor(SUEY.THEMES.RUST, 0.20));
+        schemeCarrot.onSelect(() => setColor(SUEY.THEMES.CARROT, 0.20));
+        schemeCoffee.onSelect(() => setColor(SUEY.THEMES.COFFEE, 0.20));
+        schemeGolden.onSelect(() => setColor(SUEY.THEMES.GOLDEN, 0.15));
+        schemeEmerald.onSelect(() => setColor(SUEY.THEMES.EMERALD, 0.10));
         schemeRandom.onSelect(() => setColor(SUEY.Iris.randomHex(), 0.10));
 
         // Add Color Menu and Button

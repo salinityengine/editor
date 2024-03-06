@@ -26,11 +26,9 @@ class Advisor extends DockPanel {
 
         /********** WELCOME */
 
-        const welcomeBody = new SUEY.Div().addClass('osui-absolute-box', 'one-advisor-welcome-box');
-
-        // // OPTION: Text
-        welcomeBody.setInnerHtml(`
-        <div style='padding-bottom: 1em;'>
+        const welcomeContents = new SUEY.Div().addClass('osui-absolute-box', 'one-advisor-welcome-box');
+        welcomeContents.setInnerHtml(`
+        <div style='padding-bottom: 0.5em;'>
             <span style='font-size: 110%; color: rgb(var(--triadic2));'>Welcome</span>
             <span style='font-size: 110%; color: rgb(var(--triadic1));'>&nbspto&nbsp</span>
             <span style='font-size: 110%; color: rgb(var(--icon));'>Salinity</span>
@@ -57,13 +55,14 @@ class Advisor extends DockPanel {
         </div>
         `);
 
-        // // OPTION: Graphics
-        // const onsightIris = new SUEY.VectorBox(`${EDITOR.FOLDER_LOGO}iris.svg`);
-        // const onsightText = new SUEY.VectorBox(`${EDITOR.FOLDER_LOGO}onsight.svg`);
-        // onsightIris.setStyle('opacity', '0.5', 'transform', 'scale(2.2)', 'filter', 'brightness(1)');
-        // onsightIris.setStyle('background', 'rgb(var(--icon)');
-        // onsightText.setStyle('opacity', '1', 'filter', `brightness(10) var(--drop-shadow)`);
-        // welcomeBody.add(onsightIris, onsightText);
+        // OPTION: Graphics
+        const onsightIris = new SUEY.VectorBox(`${EDITOR.FOLDER_LOGO}iris.svg`);
+        onsightIris.setStyle(
+            'z-index', '-1',
+            'opacity', '0.25',
+            'transform', 'scale(1.5)',
+        );
+        welcomeContents.add(onsightIris);
 
         /********** HISTORY */
 
@@ -89,7 +88,7 @@ class Advisor extends DockPanel {
         // Body
         const bodyScroller = new SUEY.Div().addClass('one-advisor-scroller');
         const bodyContents = new SUEY.Div().addClass('one-advisor-contents');
-        bodyScroller.add(bodyContents);
+        bodyScroller.add(welcomeContents, bodyContents);
 
         // Add to Panel
         advisorPanel.add(titleDiv, bodyScroller);
@@ -164,14 +163,14 @@ class Advisor extends DockPanel {
             if (title === _title) return;
             if (title) {
                 titleText.setInnerHtml(title);
-                try { bodyContents.dom.removeChild(welcomeBody.dom); } catch (error) { /* FAILED TO REMOVE */ }
                 bodyContents.setInnerHtml(html);
-                bodyContents.removeClass('one-advisor-contents-empty');
+                bodyContents.setOpacity(1.0);
+                welcomeContents.setOpacity(0.0);
             } else {
                 titleText.setInnerHtml(advice.title);
                 bodyContents.setInnerHtml('');
-                bodyContents.dom.appendChild(welcomeBody.dom);
-                bodyContents.addClass('one-advisor-contents-empty');
+                bodyContents.setOpacity(0.0);
+                welcomeContents.setOpacity(1.0);
                 history = -1;
             }
             _title = title;

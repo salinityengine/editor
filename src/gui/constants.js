@@ -14,6 +14,21 @@ export const BACKGROUNDS = {
     FADED:              3,
 }
 
+// Colors
+export const THEMES = {
+    CLASSIC:            0x0088cc,               // (  0, 136, 204)      classic (aqua)
+    STEEL:              0x00c8c3,               // (  0, 200, 195)      light aqua (fully unsaturated)
+    NAVY:               0x1a48cf,               // ( 26,  72, 207)      violet blue (navy)
+    GRAPE:              0x960ef4,               // (150,  14, 244)      electric violet (purple)
+    FLAMINGO:           0xff13ed,               // (255,  19, 237)      fuchsia (hot pink)
+    RUST:               0xaf1c19,               // (175,  28,  25)      carnelian (dark red)
+    CARROT:             0xfe7700,               // (254, 119,   0)      burnt orange
+    COFFEE:             0xb16f1b,               // (177, 111,  27)      copper (brown)
+    GOLDEN:             0xd1d855,               // (209, 216,  85)      faded yellow
+    EMERALD:            0x1aca22,               // ( 26, 202,  34)      lime green (emerald)
+    RANDOM:             -1,
+};
+
 export const TRAIT = {
     SHADOW:             'shadow',
     DARKNESS:           'darkness',

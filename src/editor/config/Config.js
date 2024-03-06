@@ -1,3 +1,5 @@
+import { THEMES } from 'gui';
+
 const DEFAULT_SETTINGS = {
     'promode':                                  false,              // Enhanced menu and inspector
 
@@ -15,7 +17,7 @@ const DEFAULT_SETTINGS = {
     'settings/editorMode':                      'edit2d',           // Editor mode
     'settings/language':                        'en',               // Current editor labeling language (Language.js)
 
-    'scheme/iconColor':                         0x00aacc,           // Color scheme icon color
+    'scheme/iconColor':                         THEMES.CLASSIC,     // Color scheme icon color
     'scheme/background':                        0,                  // Color scheme background
     'scheme/backgroundTint':                    0.0,                // Color scheme tint percentage
     'scheme/backgroundSaturation':              0.0,                // Color scheme saturation
@@ -133,7 +135,7 @@ class Config {
             key = key.replaceAll('Digit', '');
             key = key.replaceAll('Key', '');
             key = key.toUpperCase();
-            tip += ` <span class='osui-disabled'>&nbsp ${key}</span>`;
+            tip += `&nbsp<span class='osui-disabled'>&nbsp ${key}</span>`;
         }
         return tip;
     }

@@ -33,11 +33,11 @@
     margin-bottom: 0.1em;
     padding: var(--pad-medium);
     color: rgba(var(--text), 1.0);
-    background: rgba(var(--blacklight), 0.1);
+    /* background: rgba(var(--blacklight), 0.1); */
     border: none;
-    border-radius: calc(var(--radius-small) * 1.2);
-    outline: solid calc(var(--border-small) * 1.2) rgba(var(--shadow), 0.35);
-    box-shadow: inset 0 0 calc(var(--pad-small) * 1.2) 0 rgba(var(--midlight), 0.5); /* inner-glow */
+    /* border-radius: calc(var(--radius-small) * 1.2); */
+    /* outline: solid calc(var(--border-small) * 1.2) rgba(var(--shadow), 0.35); */
+    /* box-shadow: inset 0 0 calc(var(--pad-small) * 1.2) 0 rgba(var(--midlight), 0.5); */
     cursor: default;
     user-select: all;
 }
@@ -47,11 +47,8 @@
     background-color: rgba(var(--blacklight), 1);
 }
 
-.one-advisor-contents-empty {
-    border: solid var(--border-micro) rgba(var(--complement), 0.5);
-}
-
 .one-advisor-welcome-box {
+    font-size: 100%;
     user-select: none;
     overflow: hidden;
 }
@@ -61,6 +58,7 @@
 }
 
 .one-advisor-wave-holder {
+    z-index: 1;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -72,7 +70,7 @@
     position: absolute;
     bottom: 0;
     width: 5600px;
-    opacity: 0.8;
+    opacity: 1;/*0.8;*/
 }
 
 .water_wave_back {
@@ -90,23 +88,23 @@
 }
 
 .water_wave_front {
-    left: -60px;
+    left: -340px;
     margin-bottom: -4px;
     fill: rgb(var(--icon-light));
-    animation: wave-front 4s infinite linear;
+    animation: wave-front 12s infinite linear;
 }
 
 @keyframes wave-front {
-    100% { transform: translate(-280px, 0px); }
+    100% { transform: translateX(-280px); }
 }
 
 @keyframes wave-middle {
-    25% { transform: translate(0px,  4px); }
-    50% { transform: translate(0px, -4px); }
+    25.0% { transform: translateY( 4px); }
+    75.0% { transform: translateY(-4px); }
 }
 
 @keyframes wave-back {
-    100% { transform: translate( 280px, 0px); }
+    100% { transform: translateX( 280px); }
 }
 
 /********** FULLSCREEN */
