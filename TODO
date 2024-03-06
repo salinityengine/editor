@@ -1,8 +1,8 @@
 /******************** TODO ********************/
 
-Streamline Gui:
-    - Remove all old three code
+Editor Skeleton:
     - Move signals into editor?
+    - Remove all old three code
     - Go through Advice
     - Go through Config
     - Go through Language

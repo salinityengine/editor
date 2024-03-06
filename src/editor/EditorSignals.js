@@ -13,11 +13,9 @@ class EditorSignals {
         /***** EDITOR **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
         // General
-        'advisorInfo',              // (title, html)        FUNCTION    New Advisor title / text
-        'editorMode',               // (newMode)            FUNCTION    New Editor mode
+        'editorModeChanged',        // -                    ALERT       Editor mode was changed
         'clipboardChanged',         // -                    ALERT       Clipboard was changed
         'historyChanged',           // (command)            ALERT       History was changed
-        'showInfo',                 // (info)               FUNCTION    Display temporary, centered tooltip
 
         // Gui
         'fontSizeChanged',          // -                    ALERT       Font size was changed
@@ -127,74 +125,13 @@ class EditorSignals {
 
         /******************** EDITOR ********************/
 
-        signals.editorMode.add(function(mode) {
-            // Close (Hide) Windows
-            const windows = document.querySelectorAll('.osui-window');
-            for (const window of windows) {
-                window.classList.remove('osui-active-window');
-                window.style.display = 'none';
-                window.dispatchEvent(new Event('hidden'));
-            }
-
-            // Hide Dock Panels
-            if (editor.explorer) editor.explorer.hide();
-            if (editor.inspector) {
-                const persistent = [ 'project', 'history', 'settings'];
-                if (!persistent.includes(editor.inspector.currentItem())) editor.inspector.hide();
-            }
-            if (editor.previewer) editor.previewer.hide();
-
-            // Hide Editor Panels
-            if (editor.viewport) editor.viewport.hide();
-            if (editor.worlds) editor.worlds.hide();
-
-            // Switch Mode
-            switch (mode) {
-                case EDITOR.MODES.UI_EDITOR:
-
-                    break;
-                case EDITOR.MODES.SCENE_EDITOR_2D:
-
-                    break;
-                case EDITOR.MODES.SCENE_EDITOR_3D:
-                    if (editor.explorer) editor.explorer.display();
-                    if (editor.viewport) editor.viewport.display();
-                    break;
-                case EDITOR.MODES.SOUND_EDITOR:
-
-                    break;
-                case EDITOR.MODES.WORLD_GRAPH:
-                default:
-                    if (editor.worlds) {
-                        editor.worlds.display();
-                        editor.worlds.zoomTo();
-                    }
-                    mode = EDITOR.MODES.WORLD_GRAPH;
-            }
-            Config.setKey('settings/editorMode', mode);
-
-            // Rebuild Inspector if on 'settings'
-            if (editor.inspector && editor.inspector.currentItem() === 'settings') {
-                signals.inspectorBuild.dispatch('rebuild');
-            }
-
-            // Refresh Panel Sizes
-            signals.windowResize.dispatch();
-        });
-
         signals.refreshSettings.add(function() {
             // Mouse Modes
             signals.mouseModeChanged.dispatch(Config.getKey('scene/viewport/mode'));
             signals.transformModeChanged.dispatch(Config.getKey('scene/controls/mode'));
 
-            // Viewport
-            if (editor.viewport) {
-                // editor.viewport.setGizmo(Config.getKey('scene/gizmo'));
-                // editor.viewport.wireframePass.enabled = Config.getKey('scene/select/showWireframe');
-            }
-
             // Font Size Update
-            editor.fontSizeUpdate();
+            editor.fontSizeChange(Config.getKey('scheme/fontSize'));
 
             // Color Scheme
             editor.setSchemeBackground(Config.getKey('scheme/background'));
@@ -216,9 +153,6 @@ class EditorSignals {
                     child.selectLastKnownTab();
                 }
             }, false /* applyToSelf */);
-
-            // Render Mode (also dispatches cameraChanged signal)
-            if (editor.viewport) editor.viewport.setRenderMode(Config.getKey('scene/render/mode'));
 
             // Rebuild Inspector / Preview from Existing Items
             signals.inspectorBuild.dispatch('rebuild');

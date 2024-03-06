@@ -20,6 +20,7 @@ class Advisor extends DockPanel {
         maxHeight = Infinity,
     } = {}) {
         super({ style, resizers, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
+        const self = this;
         this.setName('Advisor');
         this.addClass('one-advisor');
         this.setTabSide(SUEY.TAB_SIDES.RIGHT);
@@ -56,13 +57,13 @@ class Advisor extends DockPanel {
         `);
 
         // OPTION: Graphics
-        const onsightIris = new SUEY.VectorBox(`${EDITOR.FOLDER_LOGO}iris.svg`);
-        onsightIris.setStyle(
+        const irisLogo = new SUEY.VectorBox(`${EDITOR.FOLDER_LOGO}iris.svg`);
+        irisLogo.setStyle(
             'z-index', '-1',
             'opacity', '0.25',
             'transform', 'scale(1.5)',
         );
-        welcomeContents.add(onsightIris);
+        welcomeContents.add(irisLogo);
 
         /********** HISTORY */
 
@@ -149,7 +150,7 @@ class Advisor extends DockPanel {
         this.onPointerLeave(() => {
             active = true;
             buttonRow.setStyle('display', 'none');
-            signals.advisorInfo.dispatch();
+            self.setInfo();
         });
 
         this.dom.addEventListener('hidden', () => {
@@ -176,7 +177,7 @@ class Advisor extends DockPanel {
             _title = title;
         }
 
-        function infoWantsToChange(title, html) {
+        this.setInfo = function (title, html) {
             if (!active) return;
             if (title && ((titles.length === 0) || (titles.length > 0 && title !== titles[0]))) {
                 titles.unshift(title);
@@ -188,12 +189,6 @@ class Advisor extends DockPanel {
             setInfo(title, html);
             updateButtons();
         }
-
-        signals.advisorInfo.add(infoWantsToChange);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.advisorInfo.remove(infoWantsToChange);
-        }, { once: true });
 
         /***** INIT *****/
 

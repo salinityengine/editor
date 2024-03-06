@@ -70,24 +70,24 @@ class Advice {
 
     /** Attaches an OSUI.Element or HTMLElement to the Advisor signals */
     static attach(element, title /* or key */ = '', html = '') {
-        if (!element || !signals || !signals.advisorInfo) return;
+        if (!element || !window.editor) return;
         const advice = Advice.getKey(title);
         title = advice.title ?? title;
         html = advice.html ?? html;
         if (element.isElement) {
-            element.onPointerEnter(() => { signals.advisorInfo.dispatch(title, html); });
+            element.onPointerEnter(() => { editor.setAdvisorInfo(title, html); });
         } else if (element instanceof HTMLElement) {
-            element.addEventListener('pointerenter', () => { signals.advisorInfo.dispatch(title, html); });
+            element.addEventListener('pointerenter', () => { editor.setAdvisorInfo(title, html); });
         }
     }
 
     /** Assigns an OSUI.Element or HTMLElement to the Advisor on pointer leave */
     static clear(element) {
-        if (!element || !signals || !signals.advisorInfo) return;
+        if (!element || !window.editor) return;
         if (element.isElement) {
-            element.onPointerLeave(() => { signals.advisorInfo.dispatch(); });
+            element.onPointerLeave(() => { editor.setAdvisorInfo(); });
         } else if (element instanceof HTMLElement) {
-            element.addEventListener('pointerleave', () => { signals.advisorInfo.dispatch(); });
+            element.addEventListener('pointerleave', () => { editor.setAdvisorInfo(); });
         }
     }
 

@@ -63,7 +63,7 @@ class EditorToolbar extends SUEY.Panel {
         world.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.WORLD_GRAPH)));
         ui.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.UI_EDITOR)));
 
-        signals.editorMode.add((mode) => {
+        signals.editorModeChanged.add((mode) => {
             scene.removeClass('osui-selected');
             world.removeClass('osui-selected');
             ui.removeClass('osui-selected');

@@ -7,7 +7,7 @@ import { Clipboard } from './config/Clipboard.js';
 import { Config } from './config/Config.js';
 import { History } from './config/History.js';
 import { Language } from './config/Language.js';
-// import { Loader } from './config/Loader.js';
+import { Loader } from './config/Loader.js';
 
 import { EditorEvents } from './EditorEvents.js';
 import { EditorToolbar } from './EditorToolbar.js';
@@ -27,13 +27,13 @@ import { View2D } from './view2d/View2D.js';
 
 class Editor extends SUEY.Docker {
 
+    #panels = [];
+
     constructor() {
         super();
         this.addClass('one-editor').selectable(false);
-
-        // Init Dom
         document.body.appendChild(this.dom);
-        this.fontSizeUpdate();
+        this.fontSizeChange(Config.getKey('scheme/fontSize'));
 
         /********** GLOBAL */
 
@@ -48,7 +48,7 @@ class Editor extends SUEY.Docker {
 
         this.clipboard = new Clipboard();                       // Copy / Paste Clipboard
         this.history = new History();                           // Undo / Redo History
-        // this.loader = new Loader();                          // File Loader
+        this.loader = new Loader();                             // File Loader
         // this.storage = new Storage();                        // TODO: Storage / Autosave
 
         /********** PROPERTIES */
@@ -56,13 +56,6 @@ class Editor extends SUEY.Docker {
         // References
         this.view2d = null;                                     // 2D Scene Editor
         this.worlds = null;                                     // World Graph
-
-        this.advisor = null;                                    // Advisor
-        this.explorer = null;                                   // Explorer (Outliner / Assets / Prefabs)
-        this.inspector = null;                                  // Object Inspector
-        this.player = null;                                     // Game Player
-        this.previewer = null;                                  // Asset Previewer
-        this.scripter = null;                                   // Script Editor
 
         // Misc
         this.dragInfo = undefined;                              // Stores data for 'dragenter' events
@@ -79,14 +72,33 @@ class Editor extends SUEY.Docker {
         };
         this.modifierKey = false;                               // True when currently a modifier key pressed
 
-        /********** LOAD EVENTS */
+        /********** EVENTS */
 
         EditorEvents.addEvents();
 
-        /********** LOAD PANELS */
+        /********** ELEMENTS */
 
-        this.add(new EditorToolbar());
-        this.add(new InfoBox());
+        const toolbar = new EditorToolbar();
+        const infoBox = new InfoBox();
+        this.add(toolbar, infoBox);
+
+        // Display temporary, centered tooltip
+        this.showInfo = function(info) {
+            infoBox.showInfo(info);
+        }
+
+        /********** PANELS */
+
+        // Docking Panels
+        let advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
+        let inspector = new Inspector({ startWidth: 300, minWidth: 190 });
+
+        this.explorer = null;                                   // Explorer (Outliner / Assets / Prefabs)
+        this.player = null;                                     // Game Player
+        this.previewer = null;                                  // Asset Previewer
+        this.scripter = null;                                   // Script Editor
+
+        this.addPanel(advisor, infoBox);
 
         // Scene Editor, 2D
         this.view2d = new View2D();
@@ -95,8 +107,6 @@ class Editor extends SUEY.Docker {
         // // World Graph
         // this.worlds = new Worlds();
         // this.add(this.worlds);
-
-        /*****/
 
         // // Script Editor
         // this.scripter = new Scripter();
@@ -111,12 +121,11 @@ class Editor extends SUEY.Docker {
         // this.add(this.shaper);
 
         // // Docking Panels
-        this.advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
         // this.explorer = new Explorer({ startWidth: 245, minWidth: 70 });
         this.inspector = new Inspector({ startWidth: 300, minWidth: 190 });
         // this.previewer = new Previewer({ startWidth: 300, minWidth: 190 });
 
-        this.addDockPanel(this.advisor, SUEY.CORNERS.BOTTOM_LEFT);
+        this.addDockPanel(advisor, SUEY.CORNERS.BOTTOM_LEFT);
         // this.addDockPanel(this.explorer, SUEY.CORNERS.TOP_LEFT);
         this.addDockPanel(this.inspector, SUEY.CORNERS.TOP_RIGHT);
         // this.addDockPanel(this.previewer, SUEY.CORNERS.BOTTOM_RIGHT);
@@ -133,14 +142,14 @@ class Editor extends SUEY.Docker {
         signals.refreshWindows.add(resizeTopLeftDocks);
         signals.windowResize.add(resizeTopLeftDocks);
 
-        /********** INIT SIGNALS */
+        /********** SIGNALS */
 
         // Add Editor Signal Callbacks
         signals.addSignalCallbacks();
 
         // Dispatch Initial Signals
         signals.refreshSettings.dispatch(); /* also selects none */
-        signals.editorMode.dispatch(Config.getKey('settings/editorMode'));
+        this.setMode(Config.getKey('settings/editorMode'));
 
         // Enable Button Animations
         setTimeout(() => document.body.classList.remove('preload'), 2000);
@@ -157,6 +166,45 @@ class Editor extends SUEY.Docker {
     } // end ctor
 
     /******************** MODE ********************/
+
+    setMode(mode) {
+        // Close (Hide) Windows
+        const windows = document.querySelectorAll('.osui-window');
+        for (const window of windows) {
+            window.classList.remove('osui-active-window');
+            window.style.display = 'none';
+            window.dispatchEvent(new Event('hidden'));
+        }
+
+        // // Hide Dock Panels
+        // if (editor.explorer) editor.explorer.hide();
+        // if (editor.inspector) {
+        //     const persistent = [ 'project', 'history', 'settings' ];
+        //     if (!persistent.includes(editor.inspector.currentItem())) editor.inspector.hide();
+        // }
+        // if (editor.previewer) editor.previewer.hide();
+
+        // Switch Mode
+        switch (mode) {
+            case EDITOR.MODES.UI_EDITOR:        break;
+            case EDITOR.MODES.SCENE_EDITOR_2D:  break;
+            case EDITOR.MODES.SCENE_EDITOR_3D:  break;
+            case EDITOR.MODES.SOUND_EDITOR:     break;
+            case EDITOR.MODES.WORLD_GRAPH:
+            default:
+                mode = EDITOR.MODES.WORLD_GRAPH;
+        }
+        Config.setKey('settings/editorMode', mode);
+
+        // // Rebuild Inspector if on 'settings'
+        // if (editor.inspector && editor.inspector.currentItem() === 'settings') {
+        //     signals.inspectorBuild.dispatch('rebuild');
+        // }
+
+        // Dispatch Signals
+        signals.windowResize.dispatch(); // refresh panel sizes
+        signals.editorModeChanged.dispatch(mode);
+    }
 
     mode() {
         return Config.getKey('settings/editorMode');
@@ -266,21 +314,17 @@ class Editor extends SUEY.Docker {
 
     /******************** GUI ********************/
 
-    fontSizeChange(direction = 'up') {
-        let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
-        if (direction === 'down' || direction === 'decrease') {
+    fontSizeChange(fontSize) {
+        if (fontSize === 'up' || fontSize === 'increase') {
+            let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
+            fontSize = Math.min(EDITOR.FONT_SIZE_MAX, SUEY.Css.fontSize() + addSize);
+        } else if (fontSize === 'down' || fontSize === 'decrease') {
+            let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
             addSize = Math.floor((SUEY.Css.fontSize() - addSize + 10.0) / 10.0);
-            addSize *= -1;
+            fontSize = Math.min(EDITOR.FONT_SIZE_MAX, SUEY.Css.fontSize() - addSize);
+        } else {
+            fontSize = parseInt(fontSize);
         }
-        let fontSize = Math.min(EDITOR.FONT_SIZE_MAX, SUEY.Css.fontSize() + addSize);
-        fontSize = SALT.Maths.clamp(fontSize, EDITOR.FONT_SIZE_MIN, EDITOR.FONT_SIZE_MAX);
-        Config.setKey('scheme/fontSize', SUEY.Css.toPx(fontSize));
-        SUEY.Css.setVariable('--font-size', SUEY.Css.toPx(fontSize));
-        signals.fontSizeChanged.dispatch();
-    }
-
-    fontSizeUpdate() {
-        let fontSize = parseInt(Config.getKey('scheme/fontSize'));
         fontSize = SALT.Maths.clamp(fontSize, EDITOR.FONT_SIZE_MIN, EDITOR.FONT_SIZE_MAX);
         Config.setKey('scheme/fontSize', SUEY.Css.toPx(fontSize));
         SUEY.Css.setVariable('--font-size', SUEY.Css.toPx(fontSize));
@@ -363,6 +407,32 @@ class Editor extends SUEY.Docker {
             this.keyStates[EDITOR.KEYS.META] ||
             this.keyStates[EDITOR.KEYS.SHIFT] ||
             this.keyStates[EDITOR.KEYS.SPACE];
+    }
+
+    /******************** PANELS ********************/
+
+    addPanel(/* any number or comma separated panels */) {
+        for (const panel of arguments) {
+            if (!panel) return;
+            if (!this.#panels.includes(panel)) this.#panels.push(panel);
+        }
+        return this;
+    }
+
+    getPanel(name) {
+        if (!name) return undefined;
+        name = String(name).toLowerCase();
+        for (const panel of this.#panels) {
+            if (!panel || !panel.name) continue;
+            if (panel.name.toLowerCase() === name) return panel;
+        }
+        return undefined;
+    }
+
+    setAdvisorInfo(title = '', html = '') {
+        const advisor = this.getPanel('Advisor');
+        if (!advisor) return;
+        advisor.setInfo(title, html);
     }
 
 }

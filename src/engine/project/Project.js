@@ -110,12 +110,8 @@ class Project {
 
     /******************** ENTITY */
 
-    findEntityByUUID(uuid, searchAllWorlds = false) {
-        const activeWorld = editor.viewport.world;
-
-        let worldList = [];
-        if (searchAllWorlds) worldList = [...this.worlds];
-        else if (activeWorld) worldList = [ activeWorld ];
+    findEntityByUUID(uuid, searchWorld = null) {
+        const worldList = (searchWorld && searchWorld.isWorld) ? [ searchWorld ] : [...this.worlds];
 
         for (const world of worldList) {
             if (uuid && world.uuid && uuid === world.uuid) return world;
@@ -199,7 +195,7 @@ class Project {
 
         // Meta Data
         json.metadata = {
-            type: 'Salinity',
+            type: 'Salt',
             version: VERSION,
             generator: 'Salinity.Project.toJSON',
         };

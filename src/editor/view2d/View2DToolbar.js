@@ -28,7 +28,7 @@ class View2DToolbar extends SUEY.Panel {
         const rotate = new SUEY.ToolbarButton(null, 'middle');
         const scale = new SUEY.ToolbarButton(null, 'middle');
         const rect = new SUEY.ToolbarButton(null, 'middle');
-        const snap = new SUEY.ToolbarButton(null, 'right');
+        const snap = new SUEY.ToolbarButton(null, 'middle');
         const paint = new SUEY.ToolbarButton(null, 'right');
 
         const focus = new SUEY.ToolbarButton();
@@ -169,7 +169,7 @@ class View2DToolbar extends SUEY.Panel {
                 case 'scale': scale.addClass('osui-selected'); break;
                 case 'rect': rect.addClass('osui-selected'); break;
                 case 'snap': snap.addClass('osui-selected'); break;
-                // case 'paint': paint.addClass('osui-selected'); break;
+                case 'paint': paint.addClass('osui-selected'); break;
             }
         });
 
@@ -205,74 +205,31 @@ class View2DToolbar extends SUEY.Panel {
         let _lastTooltip = '';
 
         signals.selectionChanged.add(() => {
-            // if (!editor.viewport) return;
+            // Focus on Scene or Selection?
+            let sceneFocus = false;
+            sceneFocus ||= (editor.selected.length === 0);
+            sceneFocus ||= (editor.selected.length === 1);
 
-            // // Focus on Scene or Selection?
-            // let sceneFocus = false;
-            // sceneFocus ||= (editor.selected.length === 0);
-            // sceneFocus ||= (editor.selected.length === 1 && editor.selected[0] === editor.viewport.world.activeStage());
+            // // OPTION: Disable Button
+            // focus.setDisabled(editor.selected.length === 0);
 
-            // // // OPTION: Disable Button
-            // // focus.setDisabled(editor.selected.length === 0);
+            // // OPTION: Scene Icon
+            // focusScene.setDisplay((sceneFocus) ? '' : 'none');
+            // focusEye.setDisplay((sceneFocus) ? 'none' : '');
+            // focusPupil.setDisplay((sceneFocus) ? 'none' : '');
 
-            // // // OPTION: Scene Icon
-            // // focusScene.setDisplay((sceneFocus) ? '' : 'none');
-            // // focusEye.setDisplay((sceneFocus) ? 'none' : '');
-            // // focusPupil.setDisplay((sceneFocus) ? 'none' : '');
-
-            // // OPTION: Tooltip
-            // const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
-            // if (_lastTooltip !== focusOn) {
-            //     focus.dom.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
-            // }
-            // _lastTooltip = focusOn;
+            // OPTION: Tooltip
+            const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
+            if (_lastTooltip !== focusOn) {
+                focus.dom.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
+            }
+            _lastTooltip = focusOn;
         });
 
         // Toggle Menu
         const toggleMenu = new SUEY.Menu();
         toggleMenu.addClass('one-toggle-menu');
         toggleMenu.addClass('osui-menu-under');
-
-        // // OPTION
-        // function createCheckItem(icon = '', text = '', configKey, callback = () => {}) {
-        //     const item = new SUEY.MenuItem(text, icon).keepOpen();
-        //     const itemCheck = new SUEY.Checkbox().setStyle('margin-right', '0.5em');
-        //     itemCheck.onPointerDown((event) => { event.stopPropagation(); event.preventDefault(); toggleCheck(); });
-        //     itemCheck.onPointerUp((event) => { event.stopPropagation(); event.preventDefault(); });
-        //     itemCheck.onClick((event) => { event.stopPropagation(); event.preventDefault(); });
-        //     item.row.add(itemCheck);
-        //     item.onSelect(toggleCheck);
-        //     function toggleCheck() {
-        //         if (configKey) Config.setKey(configKey, (!Config.getKey(configKey)));
-        //         setCheckValue();
-        //         if (typeof callback === 'function') callback();
-        //     }
-        //     function setCheckValue() {
-        //         itemCheck.setValue((configKey) ? Config.getKey(configKey) : false);
-        //     }
-        //     signals.refreshSettings.add(setCheckValue);
-        //     setCheckValue();
-        //     return item;
-        // }
-        // // Boundary Item
-        // const boundaryIcon = `${EDITOR.FOLDER_MENU}toggle/boundary.svg`;
-        // const boundaryItem = createCheckItem(boundaryIcon, 'Show Bounds', 'scene/render/bounds', () => {
-        //     const bounds = Config.getKey('scene/render/bounds');
-        //     SceneUtils.toggleBoundaryObjects(bounds, editor.viewport.world.activeStage());
-        // });
-        // toggleMenu.add(boundaryItem);
-        // // Colliders Item
-        // const collidersIcon = `${EDITOR.FOLDER_MENU}toggle/colliders.svg`;
-        // const collidersItem = createCheckItem(collidersIcon, 'Show Colliders', 'scene/render/colliders', () => {
-        //     SceneUtils.toggleColliders();
-        // });
-        // toggleMenu.add(collidersItem);
-        // // Joints Item
-        // const jointsIcon = `${EDITOR.FOLDER_MENU}toggle/joints.svg`;
-        // const jointsItem = createCheckItem(jointsIcon, 'Show Joints', 'scene/render/joints');
-        // toggleMenu.add(jointsItem);
-
-        // // OPTION
         toggleMenu.addClass('one-button-menu');
         function createToggleButton(icon = '', tip, configKey, callback = () => {}) {
             const toggle = new SUEY.ToolbarButton(null, null, false /* background */, false /* closesMenus */);
@@ -297,7 +254,9 @@ class View2DToolbar extends SUEY.Panel {
         const boundaryIcon = `${EDITOR.FOLDER_MENU}toggle/boundary.svg`;
         const boundaryItem = createToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
             const bounds = Config.getKey('scene/render/bounds');
-            SceneUtils.toggleBoundaryObjects(bounds, editor.viewport.world.activeStage());
+
+            // SceneUtils.toggleBoundaryObjects(bounds, editor.viewport.world.activeStage());
+
         });
         toggleMenu.add(boundaryItem);
         // Colliders Toggle
@@ -381,7 +340,7 @@ class View2DToolbar extends SUEY.Panel {
         left.add(new SUEY.FlexSpacer());
 
         const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto');
-        middle.add(none, translate, rotate, scale, rect, snap, /* TODO: paint */);
+        middle.add(none, translate, rotate, scale, rect, snap, paint);
 
         const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto').setWidth('50%');
         right.add(new SUEY.ToolbarSeparator(), focus, /* INCLUDE?: reset, */ toggle);

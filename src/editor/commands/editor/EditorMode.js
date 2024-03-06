@@ -14,11 +14,11 @@ class EditorModeCommand extends Command {
     }
 
     execute() {
-        signals.editorMode.dispatch(this.newMode);
+        editor.setMode(this.newMode);
     }
 
     undo() {
-        signals.editorMode.dispatch(this.oldMode);
+        editor.setMode(this.oldMode);
     }
 
 }

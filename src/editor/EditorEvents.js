@@ -3,12 +3,17 @@ import * as SUEY from 'gui';
 
 import { Config } from './config/Config.js';
 
+let _eventsAdded = false;
+
 class EditorEvents {
 
     static addEvents() {
-        // NOTE: These events are called BEFORE Viewport keydown/keyup events
-        document.addEventListener('keydown', editorKeyDown);
-        document.addEventListener('keyup', editorKeyUp);
+        if (!_eventsAdded) {
+            // NOTE: These events are called BEFORE Viewport keydown/keyup events
+            document.addEventListener('keydown', editorKeyDown);
+            document.addEventListener('keyup', editorKeyUp);
+        }
+        _eventsAdded = true;
     }
 
 }
@@ -117,7 +122,7 @@ function editorKeyDown(event) {
 
         // Snap to Grid
         case 'g':
-            switch (Config.getKey('settings/editorMode')) {
+            switch (editor.mode()) {
                 case EDITOR.MODES.UI_EDITOR:
                     break;
                 case EDITOR.MODES.SCENE_EDITOR_2D:
@@ -171,11 +176,6 @@ function editorKeyDown(event) {
 
             // Refresh GUI
             signals.refreshSettings.dispatch();
-
-            // Refresh Toggle Views
-            if (editor && editor.viewport && editor.viewport.world) {
-                editor.viewport.stage = editor.viewport.world.activeStage();
-            }
             break;
     }
 }

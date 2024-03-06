@@ -20,10 +20,6 @@ class View2D extends SUEY.Panel {
         this.addClass('one-fullscreen');
         this.selectable(false);
 
-        /******************** GLOBAL */
-
-        window.editor.viewport = this;                          // Adds 'viewport' to global before children are loaded
-
         /******************** TOOLBAR */
 
         this.add(new View2DToolbar());
@@ -33,7 +29,6 @@ class View2D extends SUEY.Panel {
         // Forward Function Declarations
         this.addSprites = function() {};                        // Adds sprites to empty entities
         this.rebuildColliders = function() {};                  // Builds scene 'sceneColliders' from selected Stage
-        this.rebuildHelpers = function() {};                    // Builds scene 'sceneHelpers' from selected Entities
         this.buildTransformGroup = function() {};               // Builds transform group
         this.updateTransformGroup = function() {};              // Update selected entities from wireTrackers
 
@@ -43,10 +38,6 @@ class View2D extends SUEY.Panel {
 
         // Containers
         this.selected = [];                                     // Objects selected (can differ slightly from editor)
-        this.updatables = [];                                   // List of objects to have update() called on
-
-        // // Children
-        // this.updateClock = new THREE.Clock();                   // Three Clock Object for update() delta
 
         // Objects
         let _sceneWorld = null;                                 // 'this.world'
@@ -79,10 +70,6 @@ class View2D extends SUEY.Panel {
         this.transformControls = null;
         this.paintControls = null;
 
-        // // Selection
-        // this.transformGroup = new THREE.Group();                // Holds selected group of objects in Scene
-        // this.transformGroup.name = 'TransformGroup';
-
         // Input
         this.mouseMode = VIEW2D.MOUSE_MODES.SELECT;           // Left mouse button mode
         this.mouseState = VIEW2D.MOUSE_STATES.NONE;           // Current mouse state
@@ -109,12 +96,6 @@ class View2D extends SUEY.Panel {
             set: function(world) {
                 editor.selectEntities(/* none */);
                 _sceneWorld = (world && world.isWorld) ? world : null;//_emptyWorld;
-
-                // Update Passes (but not all)
-                self.renderPass.scene = _sceneWorld;
-                self.pickPass.scene = _sceneWorld;
-                self.outlinePass.scene = _sceneWorld;
-                self.wireframePass.scene = _sceneWorld;
 
                 // Scene Graph Signal
                 signals.sceneGraphChanged.dispatch();
@@ -258,13 +239,6 @@ class View2D extends SUEY.Panel {
         // ViewportEvents.addEvents(this);
         // ViewportSignals.addSignals(this);
 
-        // Camera Update
-        this.setCameraMode(Config.getKey('scene/camera/mode'));
-        this.updatables.push(this.cameraControls);
-
-        // Color Scheme
-        this.setRenderColors();
-
         // First Render
         requestAnimationFrame(() => { this.animate(); });
     }
@@ -323,204 +297,39 @@ class View2D extends SUEY.Panel {
         // Store dimensions
         this.width = Math.max(2, this.getWidth() * window.devicePixelRatio);
         this.height = Math.max(2, this.getHeight() * window.devicePixelRatio);
-
-        // Update cameras
-        this.camera.setSize(this.dom.clientWidth, this.dom.clientHeight);
-        this.cameraSky.setSize(this.dom.clientWidth, this.dom.clientHeight);
-
-        // Update renderer
-        this.renderer.setSize(this.width, this.height);
-        this.sceneComposer.setSize(this.width, this.height);
-        this.fxaaComposer.setSize(this.width, this.height);
-        this.fxaaPass.uniforms['resolution'].value.set(1 / this.width, 1 / this.height);
     }
 
     /******************** CLIPBOARD / EDIT ********************/
 
     cut() {
         if (!this.validWorld()) return;
-        SceneUtils.deleteSelection('Cut' /* commandName */);
+        // SceneUtils.deleteSelection('Cut' /* commandName */);
     }
 
     paste() {
         if (!this.validWorld()) return;
-        SceneUtils.duplicateSelection(null, editor.clipboard.items, true /* force copy */, 'Paste');
+        // SceneUtils.duplicateSelection(null, editor.clipboard.items, true /* force copy */, 'Paste');
     }
 
     duplicate(key) {
         if (!this.validWorld()) return;
-        SceneUtils.duplicateSelection(key);
+        // SceneUtils.duplicateSelection(key);
     }
 
     delete() {
         if (!this.validWorld()) return;
-        SceneUtils.deleteSelection();
+        // SceneUtils.deleteSelection();
     }
 
     selectAll() {
         if (!this.validWorld()) return;
-        const activeEntities = this.world.activeStage().getEntities(false /* includeStages */);
-        editor.execute(new SelectCommand(activeEntities, editor.selected));
+        // const activeEntities = this.world.activeStage().getEntities(false /* includeStages */);
+        // editor.execute(new SelectCommand(activeEntities, editor.selected));
     }
 
     selectNone() {
         if (!this.validWorld()) return;
         editor.execute(new SelectCommand([], editor.selected));
-    }
-
-    /******************** CAMERA ********************/
-
-    getCameraTarget() {
-        return this.cameraControls.target;
-    }
-
-    getCameraZoom(optionalTarget = undefined) {
-        return this.cameraControls.getCameraZoom(optionalTarget);
-    }
-
-    setCameraMode(newCameraMode) {
-        Config.setKey('scene/camera/mode', newCameraMode);
-
-        // if (this.cameraMode !== newCameraMode) {
-        //     this.camera.changeType(newCameraMode);
-        //     this.cameraControls.camera = this.camera;
-        //     this.cameraMode = newCameraMode;
-        // }
-
-        // Have controls update their cameras
-        signals.cameraChanged.dispatch();
-    }
-
-    setGizmo(gizmoType) {
-        // // Remove exisiting Gizmo
-        // if (this.gizmo && this.gizmo.isGizmo) {
-        //     if (this.gizmo.gizmoType === gizmoType) return;
-
-        //     ONE.ObjectUtils.clearObject(this.gizmo);
-        //     this.remove(this.gizmo.osui);
-
-        //     // Traverse this.updatables and remove existing gizmo
-        //     let i = this.updatables.length;
-        //     while (i--) {
-        //         if (this.updatables[i].uuid && this.updatables[i].uuid === this.gizmo.uuid) {
-        //             this.updatables.splice(i, 1);
-        //         }
-        //     }
-        // }
-
-        // // Create new Gizmo
-        // this.gizmo = new ObjectGizmo(this, gizmoType);
-        // this.add(this.gizmo.osui);
-        // this.updatables.push(this.gizmo);
-        // Config.setKey('scene/gizmo', gizmoType);
-
-        // // Have new Gizmo update internals
-        // signals.cameraChanged.dispatch();
-    }
-
-    /******************** OBJECTS ********************/
-
-    rotateToFacingPlane(object) {
-        if (!object) return;
-
-        switch (this.facingPlane.toLowerCase()) {
-            case 'yz':
-                object.rotation.y = (Math.PI / 2) * ((this.camAngleX > 0) ? 1 : - 1);
-                break;
-            case 'xz':
-                // Y+ Away
-                if (this.camAngleY < 0) {
-                    // Z+ Up
-                    if (this.camAngleZ > 0 && Math.abs(this.camAngleZ) > Math.abs(this.camAngleX)) {
-                        object.rotation.x = Math.PI / 2;
-                    // Z- Up
-                    } else if (this.camAngleZ < 0 && Math.abs(this.camAngleZ) > Math.abs(this.camAngleX)) {
-                        object.rotation.x = Math.PI / 2;
-                        object.rotation.z = Math.PI;
-                    // X+ Up
-                    } else if (this.camAngleX > 0 && Math.abs(this.camAngleX) > Math.abs(this.camAngleZ)) {
-                        object.rotation.x = Math.PI / 2;
-                        object.rotation.z = Math.PI / - 2;
-                    // X- Up
-                    } else {
-                        object.rotation.x = Math.PI / 2;
-                        object.rotation.z = Math.PI / 2;
-                    }
-                // Y- Away
-                } else {
-                    // Z+ Up
-                    if (this.camAngleZ > 0 && Math.abs(this.camAngleZ) > Math.abs(this.camAngleX)) {
-                        object.rotation.x = Math.PI / - 2;
-                    // Z- Up
-                    } else if (this.camAngleZ < 0 && Math.abs(this.camAngleZ) > Math.abs(this.camAngleX)) {
-                        object.rotation.x = Math.PI / - 2;
-                        object.rotation.z = Math.PI;
-                    // X+ Up
-                    } else if (this.camAngleX > 0 && Math.abs(this.camAngleX) > Math.abs(this.camAngleZ)) {
-                        object.rotation.x = Math.PI / - 2;
-                        object.rotation.z = Math.PI / 2;
-                    // X- Up
-                    } else {
-                        object.rotation.x = Math.PI / - 2;
-                        object.rotation.z = Math.PI / - 2;
-                    }
-                }
-                break;
-            default: /* 'xy' */ ;
-                object.rotation.y = Math.PI * ((this.camAngleZ > 0) ? 0 : 1);
-        }
-    }
-
-    /******************** VIEW2D ********************/
-
-    setOutlineObjects(objects) {
-        if (this.outlinePass) this.outlinePass.selectedObjects = objects;
-    }
-
-    setWireframeObjects(objects) {
-        if (this.wireframePass) this.wireframePass.setObjects(objects);
-    }
-
-    setRenderColors() {
-        // // Pass Colors
-        // this.clearPass.clearColor.setHex(SUEY.ColorScheme.color(VIEW2D.COLORS.BACKGROUND));
-        // this.outlinePass.visibleEdgeColor.setHex(SUEY.ColorScheme.color(VIEW2D.COLORS.OUTLINE_VISIBLE));
-        // this.outlinePass.hiddenEdgeColor.setHex(SUEY.ColorScheme.color(VIEW2D.COLORS.OUTLINE_HIDDEN));
-        // this.wireframePass.setWireColor(SUEY.ColorScheme.color(VIEW2D.COLORS.WIREFRAME));
-
-        // // Grid Colors
-        // const gridParams = {
-        //     gridColor: SUEY.ColorScheme.color(SUEY.TRAIT.MIDLIGHT),
-        //     color1: SUEY.ColorScheme.color(SUEY.TRAIT.BUTTON_DARK),
-        //     color2: SUEY.ColorScheme.color(SUEY.TRAIT.BUTTON_LIGHT),
-        // };
-        // this.canvasGrid.updateMaterialColors(gridParams);
-        // this.infiniteGrid.updateColors();
-    }
-
-    setRenderMode(mode = 'normal') {
-        // // Reset rendering mode to normal arguments
-        // this.renderPass.overrideMaterial = null;
-        // this.depthPass.enabled = false;
-        // this.fxaaPass.enabled = Config.getKey('renderer/antialias');
-
-        // // Set new render mode arguments
-        // switch (mode) {
-        //     case 'wireframe':
-        //         this.renderPass.overrideMaterial = _wireframeMaterial;
-        //         this.fxaaPass.enabled = false;
-        //         break;
-        //     case 'depth':
-        //         this.depthPass.enabled = true;
-        //         break;
-        //     case 'normals':
-        //         this.renderPass.overrideMaterial = _normalMaterial;
-        //         break;
-        //     case 'standard':
-        //     default:
-        //         /* EMPTY */;
-        // }
-        // signals.cameraChanged.dispatch();
     }
 
     /******************** INTERACTION ********************/
@@ -572,10 +381,6 @@ class View2D extends SUEY.Panel {
 
         const viewportHasFocus = !lostFocus;
         return viewportHasFocus;
-    }
-
-    transformMode() {
-        return ((this.transformControls) ? this.transformControls.mode : 'none');
     }
 
     validWorld() {

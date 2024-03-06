@@ -141,12 +141,12 @@ class EyeMenu extends SUEY.Menu {
                     content = content.replace('<!-- TITLE -->', title);
                     toZip['index.html'] = strToU8(content);
                 });
-                loader.load('./src/libs/onsight.min.js', function(content) {
-                    toZip['libs/onsight.min.js'] = strToU8(content);
-                });
-                loader.load('./src/libs/graphics/three.module.js', function(content) {
-                    toZip['libs/three.module.js'] = strToU8(content);
-                });
+                // loader.load('./src/libs/salinity.min.js', function(content) {
+                //     toZip['libs/salinity.min.js'] = strToU8(content);
+                // });
+                // loader.load('./src/libs/graphics/three.module.js', function(content) {
+                //     toZip['libs/three.module.js'] = strToU8(content);
+                // });
             });
         }
 
@@ -221,25 +221,14 @@ class EyeMenu extends SUEY.Menu {
             windowFullscreen = new SUEY.MenuItem('Enter Fullscreen', `${EDITOR.FOLDER_MENU}main/window/fullscreen.svg`, fullscreenTxt);
 
             windowHide.onSelect(() => {
-                // Config.setKey('panels/showAdvisor', false);
-                // Config.setKey('panels/showExplorer', false);
-                // Config.setKey('panels/showInspector', false);
-                // Config.setKey('panels/showPreviewer', false);
-                editor.advisor.setStyle('display', 'none');
-                editor.previewer.setStyle('display', 'none');
-                editor.explorer.setStyle('display', 'none');
-                editor.inspector.setStyle('display', 'none');
-                signals.refreshWindows.dispatch();
+                //
+                // TODO
+                //
             });
             windowShow.onSelect(() => {
-                // Config.setKey('panels/showAdvisor', true);
-                // Config.setKey('panels/showExplorer', true);
-                // Config.setKey('panels/showInspector', true);
-                // Config.setKey('panels/showPreviewer', true);
-                signals.editorMode.dispatch(Config.getKey('settings/editorMode'));
-                editor.advisor.setStyle('display', '');
-                if (!editor.inspector.isEmpty) editor.inspector.setStyle('display', '');
-                if (!editor.previewer.isEmpty) editor.previewer.setStyle('display', '');
+                //
+                // TODO
+                //
             });
             windowAdvisor.onSelect(() => { toggleShowPanel('panels/showAdvisor'); });
             windowExplorer.onSelect(() => { toggleShowPanel('panels/showExplorer'); });
