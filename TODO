@@ -1,9 +1,17 @@
 /******************** TODO ********************/
 
+Streamline Gui:
+    - Remove all old three code
+    - Move signals into editor?
+    - Go through Advice
+    - Go through Config
+    - Go through Language
+
 Editor:
     - Asset View
     - Scene Tree
     - View2D
+        - Multiple Scenes Open same time!
         - Editable
         - Graph
 
@@ -18,6 +26,7 @@ Engine:
 Gui:
     - Property list widget
     - Better docking
+        - Drag panels around
 
 Player:
     - Run in editor
