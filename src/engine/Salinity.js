@@ -25,6 +25,7 @@ export { Palette } from './project/assets/Palette.js';
 
 /******************** CLASSES - Utils  ********************/
 
+export { EntityUtils } from './utils/EntityUtils.js';
 export { Maths } from './utils/Maths.js';
 export { Strings } from './utils/Strings.js';
 export { System } from './utils/System.js';

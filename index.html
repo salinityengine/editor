@@ -7,9 +7,7 @@
     <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
     <link rel='icon' type='image/png' href='./files/logo/salinity256.png' />
 
-    <!-- -------------------- STYLE -------------------- -->
-
-    <!-- GUI -->
+    <!-- SYTLE: GUI -->
     <link rel='stylesheet' href='./css/gui/variables.css' type='text/css'>
     <link rel='stylesheet' href='./css/gui/core.css' type='text/css'>
     <link rel='stylesheet' href='./css/gui/inputs.css' type='text/css'>
@@ -22,11 +20,12 @@
     <link rel='stylesheet' href='./css/gui/tooltip.css' type='text/css'>
     <link rel='stylesheet' href='./css/gui/options.css' type='text/css'>
 
-    <!-- EDITOR -->
+    <!-- SYTLE: EDITOR -->
     <link rel='stylesheet' href='./css/editor/animations.css' type='text/css'>
     <link rel='stylesheet' href='./css/editor/editor.css' type='text/css'>
     <link rel='stylesheet' href='./css/editor/panels.css' type='text/css'>
     <link rel='stylesheet' href='./css/editor/toolbar.css' type='text/css'>
+
 </head>
 <body>
 
@@ -42,8 +41,6 @@
             }
         }
     </script>
-
-    <div id="display" class="salinity-display"></div>
 
     <script src="./libs/matter.min.js"></script>
 
@@ -62,11 +59,11 @@
 
         /***** GLOBALS *****/
 
-        window.SALT = SALT;
+        window.MATTER = MATTER;
         window.PIXI = PIXI;
+        window.SALT = SALT;
         window.signals = new EditorSignals();
         window.editor = new Editor();
-        window.activeCamera = null;
 
         /***** TEXT SELECTION *****/
 

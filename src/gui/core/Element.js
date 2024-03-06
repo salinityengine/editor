@@ -128,22 +128,16 @@ class Element {
     }
 
     setDisabled(value = true) {
-        if (value) {
-            this.addClass('osui-disabled');
-        } else {
-            this.removeClass('osui-disabled');
-        }
+        if (value) this.addClass('osui-disabled');
+        else this.removeClass('osui-disabled');
         this.dom.disabled = value;
         return this;
     }
 
     /**  Makes this Element Selectable / Unselectable */
     selectable(allowSelection) {
-        if (allowSelection) {
-            this.removeClass('osui-unselectable');
-        } else {
-            this.addClass('osui-unselectable');
-        }
+        if (allowSelection) this.removeClass('osui-unselectable');
+        else this.addClass('osui-unselectable');
         return this;
     }
 
@@ -188,7 +182,7 @@ class Element {
     // Order of content, from least to most:
     //      textContent:    All text contained by an element and all its children
     //      innerText:      All text contained by an element and all its children, affected by 'style'
-    //      innerHtml:      All text, including html tags, that is contained by an element
+    //      innerHtml:      All text (including html tags) that is contained by an element
 
     /** The textContent property represents the text content of the node and its descendants */
     setTextContent(value) {

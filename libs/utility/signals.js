@@ -124,7 +124,7 @@ class Signal {
             this._bindings.splice(n + 1, 0, binding);
         }
 
-        if(this.memorize && this._prevParams){
+        if (this.memorize && this._prevParams){
             binding.execute(this._prevParams);
         }
 

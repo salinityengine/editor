@@ -220,22 +220,24 @@ class Inspector extends DockPanel {
 
         /***** SIGNALS *****/
 
-        signals.inspectorBuild.add((buildFrom) => {
-            build(buildFrom);
-        });
+        editor.addSignal
+
+        function buildFrom(from) {
+            build(from);
+        }
+
+        signals.inspectorBuild.add(buildFrom);
 
         signals.promodeChanged.add(() => {
             build('rebuild');
         });
 
-        signals.selectionChanged.add(() => {
-            rebuild();
-        });
+        signals.selectionChanged.add(rebuild);
 
         /***** DESTROY *****/
 
         this.dom.addEventListener('destroy', function() {
-            signals.inspectorBuild.remove(build);
+            signals.inspectorBuild.remove(buildFrom);
             signals.selectionChanged.add(rebuild);
         }, { once: true });
 

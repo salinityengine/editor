@@ -24,7 +24,7 @@ class EditorSignals {
         'promodeChanged',           // -                    ALERT       Pro (advanced) mode was toggled
         'schemeChanged',            // -                    ALERT       Color scheme was changed
         'refreshSettings',          // -                    FUNCTION    Refresh app settings (color, font size, etc.)
-        'refreshWindows',           // -                    FUNCTION    Refresh OSUI Window/Docker sizes
+        'refreshWindows',           // -                    FUNCTION    Refresh SUEY Window/Docker sizes
         'windowResize',             // -                    ALERT       Window was resized
 
         // Project
@@ -59,14 +59,12 @@ class EditorSignals {
         'mouseStateChanged',        // (state, cursor)      ALERT       Mouse state was changed
 
         'transformModeChanged',     // (mode, temp?)        FUNCTION    Change transform mode
-        'transformUpdate',          // (origin)             FUNCTION    Tell TransformControls to updateMatrixWorld()
 
         'cameraChanged',            // -                    ALERT       Viewport camera was changed
         'cameraFocus',              // -                    FUNCTION    Focus camera
         'cameraReset',              // -                    FUNCTION    Reset camera
 
         'gridChanged',              // -                    ALERT       Change to grid settings (shown, snap, etc.)
-        'gridPlaneChanged',         // -                    ALERT       Grid plane was changed
 
         'preTransform',             // -                    ALERT       We're about to change some Entity transforms
         'postTransform',            // -                    ALERT       We're done changing, record changes as History
@@ -84,16 +82,12 @@ class EditorSignals {
         'stageChanged',             // -                    ALERT       Active stage of 'viewport.world' was changed
         'entityChanged',            // (entity)             ALERT       Entity was changed (excluding transform)
         'transformsChanged',        // (entityArray)        ALERT       Transforms changed (may need to rebuild transform group)
-        'componentChanged',         // (component)          ALERT       Component was changed
 
         // Assets
         'assetAdded',               // (type, asset)        ALERT       Asset added to AssetManager
         'assetRemoved',             // (type, asset)        ALERT       Asset removed from AssetManager
         'assetChanged',             // (type, asset)        ALERT       Asset was changed
         'assetSelect',              // (type, asset)        FUNCTION    Select Asset in Explorer
-
-        // Scripts
-        'editScript',               // (script)             FUNCTION    Open Scripter (script editor) with 'script'
 
         ];
 
@@ -215,7 +209,6 @@ class EditorSignals {
 
             // Grids
             signals.gridChanged.dispatch();
-            signals.gridPlaneChanged.dispatch();
 
             // Tabs
             editor.traverse((child) => {
@@ -248,23 +241,6 @@ class EditorSignals {
                 if (entity.isLight || entity.isStage || entity.isWorld) editor.viewport.updateSky();
                 if (entity.isCamera || entity.isLight) editor.viewport.rebuildHelpers();
                 editor.viewport.rebuildColliders();
-            }
-        });
-
-        signals.componentChanged.add(function(component) {
-            if (!component || !component.entity || !component.entity.isEntity) return;
-
-            // Individual Component Signals
-            switch (component.type) {
-                case 'geometry':
-                    signals.transformsChanged.dispatch([ component.entity ]);
-                    break;
-                case 'material':
-                    /* signals.assetChanged.dispatch('material'); */
-                    break;
-                case 'rigidbody':
-                    editor.viewport.rebuildColliders();
-                    break;
             }
         });
 

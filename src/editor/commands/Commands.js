@@ -2,7 +2,7 @@
 export { MultiCmdsCommand } from './MultiCmds.js';
 
 // // Assets
-// export { AddAssetCommand } from './asset/AddAsset.js';
+export { AddAssetCommand } from './asset/AddAsset.js';
 // export { RemoveAssetCommand } from './asset/RemoveAsset.js';
 // export { SetAssetCopyCommand } from './asset/SetAssetCopy.js';
 // export { SetAssetValueCommand } from './asset/SetAssetValue.js';
@@ -21,7 +21,7 @@ export { SelectCommand } from './editor/Select.js';
 // export { SetTabPriorityCommand } from './editor/SetTabPriority.js';
 
 // // Entity
-// export { AddEntityCommand } from './entity/AddEntity.js';
+export { AddEntityCommand } from './entity/AddEntity.js';
 // export { CallbackEntityCommand } from './entity/CallbackEntity.js';
 // export { MoveEntityCommand } from './entity/MoveEntity.js';
 // export { RemoveEntityCommand } from './entity/RemoveEntity.js';

@@ -8,7 +8,6 @@ import { Config } from './config/Config.js';
 import { History } from './config/History.js';
 import { Language } from './config/Language.js';
 // import { Loader } from './config/Loader.js';
-// import { Storage } from './config/Storage.js'; // https://github.com/DVLP/localStorageDB/blob/master/localdata.js
 
 import { EditorEvents } from './EditorEvents.js';
 import { EditorToolbar } from './EditorToolbar.js';

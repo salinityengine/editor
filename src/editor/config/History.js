@@ -1,6 +1,3 @@
-// https://github.com/mrdoob/three.js/blob/dev/editor/js/History.js
-
-/** Editor undo / redo history */
 class History {
 
     constructor() {
