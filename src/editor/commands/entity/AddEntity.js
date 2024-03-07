@@ -16,7 +16,7 @@ class AddEntityCommand extends Command {
         }
 
         this.entity = entity;
-        this.parent = parent ?? editor.viewport.world.activeStage() ?? editor.viewport.world;
+        this.parent = parent ?? editor.view2d.world.activeStage() ?? editor.view2d.world;
         this.index = (index === undefined || index === null) ? -1 : index;
         this.maintainWorldTransform = maintainWorldTransform;
 

@@ -255,7 +255,7 @@ class View2DToolbar extends SUEY.Panel {
         const boundaryItem = createToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
             const bounds = Config.getKey('scene/render/bounds');
 
-            // SceneUtils.toggleBoundaryObjects(bounds, editor.viewport.world.activeStage());
+            // SceneUtils.toggleBoundaryObjects(bounds, editor.view2d.world.activeStage());
 
         });
         toggleMenu.add(boundaryItem);

@@ -22,7 +22,7 @@ import { Inspector } from './panels/Inspector.js';
 // import { Scripter } from './panels/Scripter.js';
 // import { Shaper } from './panels/Shaper.js';
 import { View2D } from './view2d/View2D.js';
-// import { Worlds } from './worlds/Worlds.js';
+import { Worlds } from './worlds/Worlds.js';
 
 // import { loadDemoProject3D } from './Demo.js';
 
@@ -102,9 +102,9 @@ class Editor extends SUEY.Docker {
         this.view2d = new View2D();
         this.add(this.view2d);
 
-        // // World Graph
-        // this.worlds = new Worlds();
-        // this.add(this.worlds);
+        // World Graph
+        this.worlds = new Worlds();
+        this.add(this.worlds);
 
         // // Script Editor
         // this.scripter = new Scripter();
@@ -212,14 +212,22 @@ class Editor extends SUEY.Docker {
         // }
         // if (this.previewer) this.previewer.hide();
 
+        // Hide Editor Panels
+        this.view2d.hide();
+        this.worlds.hide();
+
         // Switch Mode
         switch (mode) {
             case EDITOR.MODES.UI_EDITOR:        break;
-            case EDITOR.MODES.SCENE_EDITOR_2D:  break;
+            case EDITOR.MODES.SCENE_EDITOR_2D:
+                this.view2d.display();
+                break;
             case EDITOR.MODES.SCENE_EDITOR_3D:  break;
             case EDITOR.MODES.SOUND_EDITOR:     break;
             case EDITOR.MODES.WORLD_GRAPH:
             default:
+                this.worlds.display();
+                this.worlds.zoomTo();
                 mode = EDITOR.MODES.WORLD_GRAPH;
         }
         Config.setKey('settings/editorMode', mode);

@@ -139,8 +139,8 @@ class Loader {
                 {
                     editor.selectEntities(/* none */);
                     editor.project.fromJSON(data, true /* loadAssets? */, /* onLoad */ () => {
-                        editor.viewport.world = editor.project.activeWorld();
-                        editor.viewport.stage = editor.viewport.world.activeStage();
+                        editor.view2d.world = editor.project.activeWorld();
+                        editor.view2d.stage = editor.view2d.world.activeStage();
                         Signals.dispatch('projectLoaded');
                     });
                     break;

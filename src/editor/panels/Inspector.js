@@ -193,7 +193,7 @@ class Inspector extends DockPanel {
             // // 'viewport' Mode?
             // if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
             //     // Don't rebuild inspector during rubberband mode
-            //     if (editor.viewport.mouseState === EDITOR.MOUSE_STATES.SELECTING) return;
+            //     if (editor.view2d.mouseState === EDITOR.MOUSE_STATES.SELECTING) return;
             // }
 
             // Don't rebuild while dragging new object into scene

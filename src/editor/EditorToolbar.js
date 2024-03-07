@@ -61,7 +61,7 @@ class EditorToolbar extends SUEY.Panel {
         const uiBase = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}ui-base.svg`).setId('tb-ui-base');
         ui.add(uiButton, uiJoystick, uiBase);
 
-        scene.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.SCENE_EDITOR_3D)));
+        scene.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.SCENE_EDITOR_2D)));
         world.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.WORLD_GRAPH)));
         ui.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.UI_EDITOR)));
 
@@ -70,7 +70,7 @@ class EditorToolbar extends SUEY.Panel {
             world.removeClass('osui-selected');
             ui.removeClass('osui-selected');
             switch (mode) {
-                case EDITOR.MODES.SCENE_EDITOR_3D: scene.addClass('osui-selected'); break;
+                case EDITOR.MODES.SCENE_EDITOR_2D: scene.addClass('osui-selected'); break;
                 case EDITOR.MODES.WORLD_GRAPH: world.addClass('osui-selected'); break;
                 case EDITOR.MODES.UI_EDITOR: ui.addClass('osui-selected'); break;
             }
