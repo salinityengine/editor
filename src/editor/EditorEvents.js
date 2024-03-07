@@ -2,6 +2,7 @@ import * as EDITOR from 'editor';
 import * as SUEY from 'gui';
 
 import { Config } from './config/Config.js';
+import { Signals } from './config/Signals.js';
 
 let _eventsAdded = false;
 
@@ -136,22 +137,22 @@ function editorKeyDown(event) {
                     Config.setKey('graph/grid/snap', (!Config.getKey('graph/grid/snap')));
                     break;
             }
-            signals.gridChanged.dispatch();
+            Signals.dispatch('gridChanged');
             break;
 
         // Camera Focus on Object
         case Config.getKey('shortcuts/focus'):
-            signals.cameraFocus.dispatch();
+            Signals.dispatch('cameraFocus');
             break;
 
         // Reset camera
         case 'r':
-            signals.cameraReset.dispatch();
+            Signals.dispatch('cameraReset');
             break;
 
         // Play Game
         case Config.getKey('shortcuts/play'):
-            signals.startPlayer.dispatch();
+            Signals.dispatch('startPlayer');
             break;
 
         // Increase / Decrease Font (Gui) Sizing
@@ -175,7 +176,7 @@ function editorKeyDown(event) {
             if (tabs['inspector']) Config.setKey(`tabs/Inspector`, [ tabs['inspector'] ]);
 
             // Refresh GUI
-            signals.refreshSettings.dispatch();
+            Signals.dispatch('refreshSettings');
             break;
     }
 }

@@ -1,4 +1,5 @@
 import { Command } from '../Command.js';
+import { Signals } from '../../config/Signals.js';
 
 class AddEntityCommand extends Command {
 
@@ -33,28 +34,28 @@ class AddEntityCommand extends Command {
     execute() {
         if (this.entity.isWorld) {
             this.project.addWorld(this.entity);
-            signals.entityChanged.dispatch(this.entity);
+            Signals.dispatch('entityChanged', this.entity);
         } else {
             this.parent.addEntity(this.entity, this.index, this.maintainWorldTransform);
-            signals.entityChanged.dispatch(this.entity);
-            signals.entityChanged.dispatch(this.parent);
+            Signals.dispatch('entityChanged', this.entity);
+            Signals.dispatch('entityChanged', this.parent);
         }
 
-        signals.sceneGraphChanged.dispatch();
+        Signals.dispatch('sceneGraphChanged');
         this.wasAdded = true;
     }
 
     undo() {
         if (this.entity.isWorld) {
             this.project.removeWorld(this.entity);
-            signals.entityChanged.dispatch(this.entity);
+            Signals.dispatch('entityChanged', this.entity);
         } else {
             this.parent.removeEntity(this.entity);
-            signals.entityChanged.dispatch(this.entity);
-            signals.entityChanged.dispatch(this.parent);
+            Signals.dispatch('entityChanged', this.entity);
+            Signals.dispatch('entityChanged', this.parent);
         }
 
-        signals.sceneGraphChanged.dispatch();
+        Signals.dispatch('sceneGraphChanged');
         this.wasAdded = false;
     }
 

@@ -1,6 +1,8 @@
 import * as EDITOR from 'editor';
 import * as SUEY from 'gui';
 
+import { Signals } from '../../config/Signals.js';
+
 class SettingsHistoryTab extends SUEY.Titled {
 
     constructor() {
@@ -111,7 +113,7 @@ class SettingsHistoryTab extends SUEY.Titled {
 
         let lastHistorySize = editor.history.undos.length + editor.history.redos.length;
 
-        function historyChangedCallback() {
+        Signals.connect(this, historyChanged, function() {
             let thisHistorySize = editor.history.undos.length + editor.history.redos.length;
             if (lastHistorySize === thisHistorySize) {
                 updateUI();
@@ -119,13 +121,7 @@ class SettingsHistoryTab extends SUEY.Titled {
                 buildUI();
                 lastHistorySize = thisHistorySize;
             }
-        }
-
-        signals.historyChanged.add(historyChangedCallback);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.historyChanged.remove(historyChangedCallback);
-        }, { once: true });
+        });
 
         /***** INIT *****/
 

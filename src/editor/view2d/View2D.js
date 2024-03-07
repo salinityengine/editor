@@ -9,6 +9,7 @@ import * as VIEW2D from 'view2d';
 import { View2DToolbar } from './View2DToolbar.js';
 
 import { Config } from '../config/Config.js';
+import { Signals } from '../config/Signals.js';
 import { SelectCommand } from '../commands/Commands.js';
 
 class View2D extends SUEY.Panel {
@@ -41,25 +42,9 @@ class View2D extends SUEY.Panel {
 
         // Objects
         let _sceneWorld = null;                                 // 'this.world'
-        this.sceneColliders = null;
-        this.sceneHelpers = null;
-        this.sceneControls = null;
-        this.sceneCanvasGrid = null;
-        this.sceneInfiniteGrid = null;
-        this.sceneSky = null;
-
-        this.canvasGrid = null;
-        this.infiniteGrid = null;
-        this.dragLine = null;
 
         this.camera = null;
         this.cameraMode = undefined;
-        this.cameraSky = null;
-        this.skySphere = null;                                  // Skybox sphere for perspective camera
-
-        this.fatX = null;
-        this.fatY = null;
-        this.fatZ = null;
 
         // Controls
         this.cameraControls = null;
@@ -98,7 +83,7 @@ class View2D extends SUEY.Panel {
                 _sceneWorld = (world && world.isWorld) ? world : null;//_emptyWorld;
 
                 // Scene Graph Signal
-                signals.sceneGraphChanged.dispatch();
+                Signals.dispatch('sceneGraphChanged');
 
                 // Active World / Stage Toggles
                 editor.project.setActiveWorld((world && world.isWorld) ? world : undefined);
@@ -120,7 +105,7 @@ class View2D extends SUEY.Panel {
                 world.setActiveStage(stage);
 
                 // Stage Changed Signals
-                signals.stageChanged.dispatch();
+                Signals.dispatch('stageChanged');
                 self.updateSky();
 
                 // Active World / Stage Toggles
@@ -129,109 +114,6 @@ class View2D extends SUEY.Panel {
                 SceneUtils.toggleColliders(Config.getKey('scene/render/colliders'));
             }
         });
-
-        /******************** VIEW2D: GRIDS */
-
-        const gridParams = {
-            gridColor: SUEY.ColorScheme.color(SUEY.TRAIT.MIDLIGHT),
-            color1: SUEY.ColorScheme.color(SUEY.TRAIT.BUTTON_DARK),
-            color2: SUEY.ColorScheme.color(SUEY.TRAIT.BUTTON_LIGHT),
-            gridAlpha: 0.40,
-            checkerAlpha: 0.40,
-        };
-
-        // // xy plane: xyz
-        // // yz plane: yzx
-        // // xz plane: xzy
-        // const gridSize = Config.getKey('scene/grid/translateSize');
-        // const gridMultiplier = Config.getKey('scene/grid/canvasMultiplier');
-        // const gridPlane = Config.getKey('scene/grid/plane');
-        // this.canvasGrid = new CanvasGrid(gridSize, gridMultiplier, gridPlane, gridParams);
-        // this.sceneCanvasGrid = new THREE.Scene();
-        // this.sceneCanvasGrid.background = null;
-        // this.sceneCanvasGrid.add(this.canvasGrid);
-
-        // this.infiniteGrid = new InfiniteGrid(Config.getKey('scene/grid/translateSize'));
-        // this.infiniteGrid.visible = false;
-        // this.sceneInfiniteGrid = new THREE.Scene();
-        // this.sceneInfiniteGrid.background = null;
-        // this.sceneInfiniteGrid.add(this.infiniteGrid);
-
-        /******************** VIEW2D: TEMP LIGHTS */
-
-        // const ambLight = new THREE.AmbientLight(0xffffff, 1.5);
-        // const dirLight1 = new THREE.DirectionalLight(0xffffff, 3); dirLight1.position.set(0, 10000,  10000);
-        // const dirLight2 = new THREE.DirectionalLight(0xffffff, 3); dirLight2.position.set(0, 10000, -10000);
-
-        // /******************** VIEW2D: COLLIDERS */
-
-        // this.sceneColliders = new THREE.Scene();
-        // this.sceneColliders.name = 'Colliders';
-        // this.sceneColliders.background = null;
-
-        // /******************** VIEW2D: HELPERS */
-
-        // this.sceneHelpers = new THREE.Scene();
-        // this.sceneHelpers.name = 'Helpers';
-        // this.sceneHelpers.background = null;
-
-        // /******************** VIEW2D: CONTROLS */
-
-        // this.sceneControls = new THREE.Scene();
-        // this.sceneControls.name = 'Controls';
-        // this.sceneControls.background = null;
-
-        // // Control Scene Lights
-        // this.sceneControls.add(ambLight.clone(), dirLight1.clone(), dirLight2.clone());
-
-        // // Origin Cross
-        // const lineSize = 0.15;
-        // this.fatX = new ONE.BasicLine(-lineSize, 0, 0, lineSize, 0, 0, SUEY.ColorScheme.color(VIEW2D.COLORS.X_COLOR));
-        // this.fatY = new ONE.BasicLine(0, -lineSize, 0, 0, lineSize, 0, SUEY.ColorScheme.color(VIEW2D.COLORS.Y_COLOR));
-        // this.fatZ = new ONE.BasicLine(0, 0, -lineSize, 0, 0, lineSize, SUEY.ColorScheme.color(VIEW2D.COLORS.Z_COLOR));
-        // this.sceneControls.add(this.fatX, this.fatY, this.fatZ);
-        // this.fatX.visible = Config.getKey('scene/render/origin');
-        // this.fatY.visible = Config.getKey('scene/render/origin');
-        // this.fatZ.visible = Config.getKey('scene/render/origin');
-
-        // signals.schemeChanged.add(function() {
-        //     self.fatX.material.color.setHex(SUEY.ColorScheme.color(VIEW2D.COLORS.X_COLOR));
-        //     self.fatY.material.color.setHex(SUEY.ColorScheme.color(VIEW2D.COLORS.Y_COLOR));
-        //     self.fatZ.material.color.setHex(SUEY.ColorScheme.color(VIEW2D.COLORS.Z_COLOR));
-        // });
-
-        // // Clean Up Lights
-        // dirLight1.dispose();
-        // dirLight2.dispose();
-
-        /******************** OBJECTS */
-
-        // // Drag Line
-        // // this.dragLine = new ONE.FatLine(-1, -1, 0, 1, 1, 0, 2.0, SUEY.ColorScheme.color(SUEY.TRAIT.HIGHLIGHT));
-        // this.dragLine = new ONE.BasicLine(-1, -1, 0, 1, 1, 0, SUEY.ColorScheme.color(SUEY.TRAIT.ICON_LIGHT));
-        // this.dragLine.material.depthTest = false;
-        // this.dragLine.material.side = THREE.FrontSide;
-        // this.dragLine.visible = false;
-        // this.sceneInfiniteGrid.add(this.dragLine);
-
-        // // Cameras
-        // const dw = this.dom.clientWidth;
-        // const dh = this.dom.clientHeight;
-
-        // this.camera = new ONE.Camera3D({ type: 'perspective', width: dw, height: dh });
-        // this.camera.position.set(0, 0, 5);
-        // this.camera.lookAt(0, 0, 0);
-        // this.cameraMode = VIEW2D.CAMERA_TYPES.PERSPECTIVE;
-
-        // // Sky
-        // this.skySphere = new ONE.SkyObject();
-        // this.skySphere.name = 'SkySphere';
-        // this.sceneSky = new THREE.Scene();
-        // this.sceneSky.add(this.skySphere);
-
-        // this.cameraSky = new ONE.Camera3D({ type: 'perspective', width: dw, height: dh });
-        // this.cameraSky.position.set(0, 0, 5);
-        // this.cameraSky.lookAt(0, 0, 0);
 
         /******************** FINAL SETUP */
 
@@ -261,7 +143,7 @@ class View2D extends SUEY.Panel {
             this.renderer.info.reset();
 
             // End render timer, dispatch signal
-            signals.sceneRendered.dispatch(performance.now() - startTime);
+            Signals.dispatch('sceneRendered', performance.now() - startTime);
         }
 
         // Ask for another animation frame immediately

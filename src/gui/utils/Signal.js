@@ -13,7 +13,7 @@
  * @source      https://github.com/millermedeiros/js-signals/
  */
 
-/** INTERNAL CLASS: Object that represents a binding between a Signal and a listener function */
+/** Object that represents a binding between a Signal and a listener function */
 class SignalBinding {
 
     active = true;      // {Boolean} If binding is active and should be executed
@@ -195,7 +195,7 @@ class Signal {
     }
 
     /** Broadcast Signal to all listeners added to the queue */
-    dispatch(/* any number of comma seperated arguments */) {
+    dispatch(/* any number of comma separated arguments */) {
         if (!this.active) return;
 
         let paramsArr = [...arguments];
@@ -230,7 +230,7 @@ class Signal {
 
 }
 
-export { Signal };
+export { SignalBinding, Signal };
 
 /******************** INTERNAL ********************/
 

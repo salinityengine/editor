@@ -77,6 +77,7 @@ export { Interaction } from './utils/Interaction.js';
 export { Iris } from './utils/Iris.js';
 export { Popper } from './utils/Popper.js';
 export { Utils } from './utils/Utils.js';
+export { Signal, SignalBinding } from './utils/Signal.js';
 
 import { tooltipper } from './utils/Tooltipper.js';
 export { tooltipper } from './utils/Tooltipper.js';

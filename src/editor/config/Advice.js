@@ -68,7 +68,7 @@ const _values = {
 
 class Advice {
 
-    /** Attaches an OSUI.Element or HTMLElement to the Advisor signals */
+    /** Assigns an 'Element' or 'HTMLElement' to the Advisor on pointer enter */
     static attach(element, title /* or key */ = '', html = '') {
         if (!element || !window.editor) return;
         const advice = Advice.getKey(title);
@@ -81,7 +81,7 @@ class Advice {
         }
     }
 
-    /** Assigns an OSUI.Element or HTMLElement to the Advisor on pointer leave */
+    /** Clears Advisor info on 'Element' or 'HTMLElement' pointer leave */
     static clear(element) {
         if (!element || !window.editor) return;
         if (element.isElement) {

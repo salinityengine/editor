@@ -1,7 +1,7 @@
 /******************** TODO ********************/
 
 Editor Skeleton:
-    - Move signals into editor?
+    - Turn 'functional' signals into editor methods
     - Remove all old three code
     - Go through Advice
     - Go through Config

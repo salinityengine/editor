@@ -1,5 +1,6 @@
 import * as SALT from 'engine';
 import { Command } from '../Command.js';
+import { Signals } from '../../config/Signals.js';
 
 class AddAssetCommand extends Command {
 
@@ -38,10 +39,10 @@ class AddAssetCommand extends Command {
             if (ONE.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
                 editor.project.traverseWorlds((child) => child.rebuildComponents());
             }
-            signals.assetAdded.dispatch(this.assetType, this.asset);
-            signals.assetSelect.dispatch(this.assetType, this.asset);
-            signals.inspectorBuild.dispatch();
-            signals.previewerBuild.dispatch();
+            Signals.dispatch('assetAdded', this.assetType, this.asset);
+            Signals.dispatch('assetSelect', this.assetType, this.asset);
+            Signals.dispatch('inspectorBuild');
+            Signals.dispatch('previewerBuild');
         }
     }
 
@@ -52,9 +53,9 @@ class AddAssetCommand extends Command {
             if (ONE.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
                 editor.project.traverseWorlds((child) => child.rebuildComponents());
             }
-            signals.assetRemoved.dispatch(this.assetType, this.asset);
-            signals.inspectorBuild.dispatch();
-            signals.previewerBuild.dispatch();
+            Signals.dispatch('assetRemoved', this.assetType, this.asset);
+            Signals.dispatch('inspectorBuild');
+            Signals.dispatch('previewerBuild');
         }
     }
 

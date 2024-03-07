@@ -10,10 +10,9 @@ class InfoBox extends SUEY.Div {
         super();
         this.setClass('osui-info-box');
         this.setInnerHtml('');
-
     } // end ctor
 
-    showInfo(info) {
+    popupInfo(info) {
         const self = this;
         this.setInnerHtml(info);
 

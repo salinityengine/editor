@@ -1,6 +1,6 @@
-/**
- * Base Class of the Salinity Gui Library
- */
+import { SignalBinding } from '../utils/Signal.js';
+
+/** Base Class of the Suey (Salinity Gui) Library */
 class Element {
 
     constructor(dom) {
@@ -8,12 +8,22 @@ class Element {
 
         this.isElement = true;
 
-        this.dom = dom;                                 // HTML Element
+        this.dom = dom;                                 // 'HTMLElement'
         this.name = undefined;                          // Object Name
 
-        this.contents = function() { return self; };    // Inner Osui Element to be filled with other elements
-        this.children = [];                             // Holds Osui Children (.add / .remove / .clearContents)
-        this.parent = undefined;
+        this.contents = function() { return self; };    // Inner 'Element' to be filled with other 'Element's
+        this.children = [];                             // Holds 'Element' children (.add / .remove / .clearContents)
+        this.parent = undefined;                        // Parent 'Element'
+        this.slots = [];                                // Holds all 'SignalBinding' slots
+
+        // Clean Slots
+        this.dom.addEventListener('destroy', function() {
+            for (const slot of self.slots) {
+                if (typeof slot.detach === 'function') slot.detach();
+                if (typeof slot.destroy === 'function') slot.destroy();
+            }
+            self.slots.length = 0;
+        }, { once: true });
     }
 
     /********** DESTROY **********/
@@ -24,10 +34,20 @@ class Element {
         return this;
     }
 
+    /********** SIGNALS **********/
+
+    addSlot(slot) {
+        if (slot instanceof SignalBinding) {
+            this.slots.push(slot);
+        } else {
+            console.warn(`Element.addSlot(): '${this.name}' failed to add slot`, slot);
+        }
+    }
+
     /********** CHILDREN **********/
 
-    /** Adds to contents() any number of Osui Elements passed as arguments */
-    add(/* any number of Elements to remove */) {
+    /** Adds to contents() any number of 'Element' / 'HTMLElement' passed as arguments */
+    add(/* any number of comma separated elements to add */) {
         for (let i = 0; i < arguments.length; i++) {
             const element = arguments[i];
             addToParent(this.contents(), element);
@@ -35,7 +55,7 @@ class Element {
         return this;
     }
 
-    addToSelf(/* any number of Elements to remove */) {
+    addToSelf(/* any number of comma separated elements to add */) {
         for (let i = 0; i < arguments.length; i++) {
             const element = arguments[i];
             addToParent(this, element);
@@ -43,14 +63,14 @@ class Element {
         return this;
     }
 
-    /** Removes all children DOM elements from element's 'contents' only */
+    /** Removes all children 'Element' / 'HTMLElement' from '.contents()' only */
     clearContents() {
         clearChildren(this.contents(), false /* destroy event */);
         return this;
     }
 
-    /** Removes any number of Elements or Dom Nodes passed as arguments from contents() or self children */
-    remove(/* any number of Elements to remove */) {
+    /** Removes any number of 'Element' / 'HTMLElement' from self.contents() or self.children */
+    remove(/* any number of comma separated elements to remove */) {
         for (let i = 0; i < arguments.length; i++) {
             const element = arguments[i];
 
@@ -72,7 +92,7 @@ class Element {
         return this;
     }
 
-    addClass(/* any number of comma seperated classes to add */) {
+    addClass(/* any number of comma separated classes to add */) {
         for (let i = 0; i < arguments.length; i ++) {
             const argument = arguments[i];
             this.dom.classList.add(argument);
@@ -94,7 +114,7 @@ class Element {
         return false;
     }
 
-    removeClass(/* any number of comma seperated classes to remove */) {
+    removeClass(/* any number of comma separated classes to remove */) {
         for (let i = 0; i < arguments.length; i ++) {
             const argument = arguments[i];
             this.dom.classList.remove(argument);
@@ -301,15 +321,14 @@ export { Element };
 function addToParent(parent, element) {
     if (!element) return;
 
-    // Osui Element
+    // Suey 'Element'
     if (element.isElement) {
         // Add node
         parent.dom.appendChild(element.dom);
 
         // Add to child array if not already there
         let hasIt = false;
-        for (let i = 0; i < parent.children.length; i++) {
-            const child = parent.children[i];
+        for (const child of parent.children) {
             if (child.dom.isSameNode(element.dom)) {
                 hasIt = true;
                 break;
@@ -320,7 +339,7 @@ function addToParent(parent, element) {
         // Set element parent
         element.parent = parent;
 
-    // Html Node?
+    // 'HTMLElement'
     } else {
         try {
             parent.dom.appendChild(element);
@@ -330,13 +349,13 @@ function addToParent(parent, element) {
     }
 }
 
-// Clears Element Children
-function clearElementChildren(osui) {
-    for (let i = 0; i < osui.children.length; i++) {
-        const child = osui.children[i];
+// Clears 'Element' Children
+function clearElementChildren(suey) {
+    for (let i = 0; i < suey.children.length; i++) {
+        const child = suey.children[i];
         clearChildren(child, true /* destroy event */);
     }
-    osui.children.length = 0;
+    suey.children.length = 0;
 }
 
 // Clears Dom Element Children
@@ -349,25 +368,25 @@ function clearDomChildren(dom) {
     }
 }
 
-/* Clears all osui children / dom children from element */
+/* Clears all 'Element' children and/or 'HTMLElement' (dom) children from element */
 function clearChildren(element, destroy = true) {
     if (!element) return;
 
-    // Osui Element
+    // Suey 'Element'
     if (element.isElement) {
         clearElementChildren(element);
         clearDomChildren(element.dom);
 
-        // 'destroy' event
+        // Destroy Event
         if (destroy && element.dom && element.dom.dispatchEvent) {
             element.dom.dispatchEvent(new Event('destroy'));
         }
 
-    // Html Node?
+    // 'HTMLElement'
     } else {
         clearDomChildren(element);
 
-        // 'destroy' event
+        // Destroy Event
         if (destroy && element && element.dispatchEvent) {
             element.dispatchEvent(new Event('destroy'));
         }
@@ -379,7 +398,7 @@ function removeFromParent(parent, element) {
     if (!parent) return;
     if (!element) return;
 
-    // Osui Element
+    // Suey 'Element'
     if (element.isElement && parent.isElement) {
         for (let i = 0; i < parent.children.length; i++) {
             const child = parent.children[i];

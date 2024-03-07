@@ -52,17 +52,17 @@
         import * as SALT from 'engine';
         import * as SUEY from 'gui';
 
-        console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
-
+        import { Signals } from './src/editor/config/Signals.js';
         import { Editor } from './src/editor/Editor.js';
-        import { EditorSignals } from './src/editor/EditorSignals.js';
+
+        console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
 
         /***** GLOBALS *****/
 
         window.MATTER = Matter;
         window.PIXI = PIXI;
         window.SALT = SALT;
-        window.signals = new EditorSignals();
+
         window.editor = new Editor();
 
         /***** TEXT SELECTION *****/
@@ -87,7 +87,7 @@
 
         /***** RESIZE EVENT *****/
 
-        window.addEventListener('resize', () => signals.windowResize.dispatch());
+        window.addEventListener('resize', () => Signals.dispatch('windowResize'));
 
         /***** PREVENT DEFAULTS *****/
 

@@ -5,6 +5,7 @@ import * as VIEW2D from 'view2d';
 import { Advice } from '../config/Advice.js';
 import { ColorizeFilter } from '../gui/ColorizeFilter.js';
 import { Config } from '../config/Config.js';
+import { Signals } from '../config/Signals.js';
 // import { SceneUtils } from './SceneUtils.js';
 
 class View2DToolbar extends SUEY.Panel {
@@ -106,12 +107,12 @@ class View2DToolbar extends SUEY.Panel {
         move.add(moveIcon, moveGrab);
         zoom.add(zoomIcon);
 
-        select.onClick(() => { signals.mouseModeChanged.dispatch(VIEW2D.MOUSE_MODES.SELECT); });
-        look.onClick(() => { signals.mouseModeChanged.dispatch(VIEW2D.MOUSE_MODES.LOOK); });
-        move.onClick(() => { signals.mouseModeChanged.dispatch(VIEW2D.MOUSE_MODES.MOVE); });
-        zoom.onClick(() => { signals.mouseModeChanged.dispatch(VIEW2D.MOUSE_MODES.ZOOM); });
+        select.onClick(() => Signals.dispatch('mouseModeChanged', VIEW2D.MOUSE_MODES.SELECT));
+        look.onClick(() => Signals.dispatch('mouseModeChanged', VIEW2D.MOUSE_MODES.LOOK));
+        move.onClick(() => Signals.dispatch('mouseModeChanged', VIEW2D.MOUSE_MODES.MOVE));
+        zoom.onClick(() => Signals.dispatch('mouseModeChanged', VIEW2D.MOUSE_MODES.ZOOM));
 
-        signals.mouseModeChanged.add((mouseMode) => {
+        Signals.connect(this, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('osui-selected');
             look.removeClass('osui-selected');
             move.removeClass('osui-selected');
@@ -146,15 +147,15 @@ class View2DToolbar extends SUEY.Panel {
         snap.add(snapMagnet, snapAttract);
         paint.add(paintBrush);
 
-        none.onClick(() => { signals.transformModeChanged.dispatch('none'); });
-        translate.onClick(() => { signals.transformModeChanged.dispatch('translate'); });
-        rotate.onClick(() => { signals.transformModeChanged.dispatch('rotate'); });
-        scale.onClick(() => { signals.transformModeChanged.dispatch('scale'); });
-        rect.onClick(() => { signals.transformModeChanged.dispatch('rect'); });
-        snap.onClick(() => { signals.transformModeChanged.dispatch('snap'); });
-        paint.onClick(() => { signals.transformModeChanged.dispatch('paint'); });
+        none.onClick(() => Signals.dispatch('transformModeChanged', 'none'));
+        translate.onClick(() => Signals.dispatch('transformModeChanged', 'translate'));
+        rotate.onClick(() => Signals.dispatch('transformModeChanged', 'rotate'));
+        scale.onClick(() => Signals.dispatch('transformModeChanged', 'scale'));
+        rect.onClick(() => Signals.dispatch('transformModeChanged', 'rect'));
+        snap.onClick(() => Signals.dispatch('transformModeChanged', 'snap'));
+        paint.onClick(() => Signals.dispatch('transformModeChanged', 'paint'));
 
-        signals.transformModeChanged.add((mode) => {
+        Signals.connect(this, 'transformModeChanged', function(mode) {
             none.removeClass('osui-selected');
             translate.removeClass('osui-selected');
             rotate.removeClass('osui-selected');
@@ -192,19 +193,19 @@ class View2DToolbar extends SUEY.Panel {
         const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setId('tb-toggle-button-2');
         toggle.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
 
-        signals.schemeChanged.add(() => {
+        Signals.connect(this, 'schemeChanged', function() {
             const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(VIEW2D.COLORS.X_COLOR));
             const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(VIEW2D.COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
 
-        reset.onClick(() => { signals.cameraReset.dispatch(); });
-        focus.onClick(() => { signals.cameraFocus.dispatch(); });
+        reset.onClick(() => Signals.dispatch('cameraReset'));
+        focus.onClick(() => Signals.dispatch('cameraFocus'));
 
         let _lastTooltip = '';
 
-        signals.selectionChanged.add(() => {
+        Signals.connect(this, 'selectionChanged', function() {
             // Focus on Scene or Selection?
             let sceneFocus = false;
             sceneFocus ||= (editor.selected.length === 0);
@@ -246,7 +247,7 @@ class View2DToolbar extends SUEY.Panel {
                 toggle.removeClass('osui-toggled');
                 if (configKey && Config.getKey(configKey)) toggle.addClass('osui-toggled');
             }
-            signals.refreshSettings.add(setButtonValue);
+            Signals.connect(toggle, 'refreshSettings', setButtonValue)
             setButtonValue();
             return toggle;
         }
@@ -287,10 +288,10 @@ class View2DToolbar extends SUEY.Panel {
         const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-arrow.svg`).setId('tb-play-arrow');
         play.add(playArrow);
 
-        play.onClick(() => { signals.startPlayer.dispatch(); });
+        play.onClick(() => Signals.dispatch('startPlayer'));
 
         /** When Player starts / stops, handle graying Editor, hiding 'Play' */
-        signals.playerStateChanged.add((state) => {
+        Signals.connect(this, 'playerStateChanged', function(state) {
             if (state === 'start') {
                 editor.addClass('one-gray-out');
                 play.setStyle('display', 'none', 'pointer-events', 'none');
@@ -316,11 +317,11 @@ class View2DToolbar extends SUEY.Panel {
         const settingsShadow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-shadow.svg`).setId('tb-settings-shadow');
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
-        proj.onClick(() => { signals.inspectorBuild.dispatch('project'); });
-        history.onClick(() => { signals.inspectorBuild.dispatch('history'); });
-        settings.onClick(() => { signals.inspectorBuild.dispatch('settings'); });
+        proj.onClick(() => Signals.dispatch('inspectorBuild', 'project'));
+        history.onClick(() => Signals.dispatch('inspectorBuild', 'history'));
+        settings.onClick(() => Signals.dispatch('inspectorBuild', 'settings'));
 
-        signals.inspectorChanged.add(() => {
+        Signals.connect(this, 'inspectorChanged', function() {
             proj.removeClass('osui-selected');
             history.removeClass('osui-selected');
             settings.removeClass('osui-selected');

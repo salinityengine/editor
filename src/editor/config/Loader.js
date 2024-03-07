@@ -1,10 +1,10 @@
 // https://github.com/mrdoob/three.js/blob/master/editor/js/Loader.js
 
 import * as SALT from 'engine';
+import { Signals } from './Signals.js';
 
 import { AddAssetCommand } from '../commands/Commands.js';
 import { AddEntityCommand } from '../commands/Commands.js';
-import { LoaderUtils } from '../config/LoaderUtils.js';
 
 import { unzipSync, strFromU8 } from '../../../libs/utility/fflate.module.js';
 
@@ -16,7 +16,7 @@ class Loader {
 
         this.loadFiles = function(files, filesMap) {
             if (files.length > 0) {
-                filesMap = filesMap || LoaderUtils.createFilesMap(files);
+                filesMap = filesMap || createFilesMap(files);
 
                 const manager = new SALT.LoadingManager();
                 manager.setURLModifier(function(url) {
@@ -141,7 +141,7 @@ class Loader {
                     editor.project.fromJSON(data, true /* loadAssets? */, /* onLoad */ () => {
                         editor.viewport.world = editor.project.activeWorld();
                         editor.viewport.stage = editor.viewport.world.activeStage();
-                        signals.projectLoaded.dispatch();
+                        Signals.dispatch('projectLoaded');
                     });
                     break;
                 }
@@ -186,3 +186,13 @@ class Loader {
 }
 
 export { Loader };
+
+/******************** INTERNAL ********************/
+
+function createFilesMap(files) {
+    const map = {};
+    for (const file of files) {
+        map[file.name] = file;
+    }
+    return map;
+}

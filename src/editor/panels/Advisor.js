@@ -4,6 +4,7 @@ import * as SUEY from 'gui';
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { DockPanel } from '../gui/DockPanel.js';
+import { Signals } from '../config/Signals.js';
 
 let _title = '__NOT_SET__';
 
@@ -155,7 +156,7 @@ class Advisor extends DockPanel {
 
         this.dom.addEventListener('hidden', () => {
             Config.setKey('panels/showAdvisor', !Config.getKey('panels/showAdvisor'));
-            signals.refreshWindows.dispatch();
+            Signals.dispatch('refreshWindows');
         });
 
         /********** SET INFO */

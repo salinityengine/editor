@@ -9,6 +9,7 @@ import * as SUEY from 'gui';
 import { zipSync, strToU8 } from '../../libs/utility/fflate.module.js';
 
 import { Config } from './config/Config.js';
+import { Signals } from './config/Signals.js';
 
 class EyeMenu extends SUEY.Menu {
 
@@ -180,19 +181,19 @@ class EyeMenu extends SUEY.Menu {
             editNone.onSelect(() => { editor.selectNone(); });
 
             // Clipboard changed
-            signals.clipboardChanged.add(function() {
+            Signals.connect(this, 'clipboardChanged', function() {
                 const hasEntities = editor.clipboard.containsEntities();
                 editPaste.setDisabled(!hasEntities);
             });
 
             // History changed
-            signals.historyChanged.add(function() {
+            Signals.connect(this, 'historyChanged', function() {
                 editUndo.setDisabled(editor.history.undos.length == 0);
                 editRedo.setDisabled(editor.history.redos.length == 0);
             });
 
             // Disable menu items when no selection
-            signals.selectionChanged.add(function() {
+            Signals.connect(this, 'selectionChanged', function() {
                 const entitiesSelected = editor.selected.length;
                 editCut.setDisabled(entitiesSelected === 0);
                 editCopy.setDisabled(entitiesSelected === 0);
@@ -238,10 +239,10 @@ class EyeMenu extends SUEY.Menu {
 
             function toggleShowPanel(key) {
                 Config.setKey(key, !Config.getKey(key));
-                signals.refreshWindows.dispatch();
+                Signals.dispatch('refreshWindows');
             }
 
-            signals.refreshWindows.add(() => {
+            Signals.connect(this, 'refreshWindows', function() {
                 // const showAdvisor = Config.getKey('panels/showAdvisor');
                 // const showExplorer = Config.getKey('panels/showExplorer');
                 // const showInspector = Config.getKey('panels/showInspector');

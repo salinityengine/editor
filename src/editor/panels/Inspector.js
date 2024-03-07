@@ -5,6 +5,7 @@ import * as VIEW2D from 'view2d';
 
 import { Config } from '../config/Config.js';
 import { DockPanel } from '../gui/DockPanel.js';
+import { Signals } from '../config/Signals.js';
 
 // import { ComponentTab } from './inspector/ComponentTab.js';
 // import { EntityTab } from './inspector/EntityTab.js';
@@ -60,7 +61,7 @@ class Inspector extends DockPanel {
                     doubleSelect = doubleSelect || (buildFrom === 'project' && _item === 'project');
                     if (doubleSelect) {
                         _item = undefined;
-                        setTimeout(() => { signals.selectionChanged.dispatch(); }, 0);
+                        setTimeout(() => Signals.dispatch('selectionChanged'), 0);
                         return;
                     }
                 }
@@ -184,28 +185,24 @@ class Inspector extends DockPanel {
             // Select Last Known Tab (stored ranked in Config.js)
             self.selectLastKnownTab();
 
-            // // DEBUG: Print out number of functions attached to each signal
-            // signals.logSignalCounts();
-
             // Dispatch Signals
-            signals.inspectorChanged.dispatch();
-
+            Signals.dispatch('inspectorChanged');
         }
 
         /** Rebuilds on 'new selection' */
         function rebuild() {
-            // 'viewport' Mode?
-            if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
-                // Don't rebuild inspector during rubberband mode
-                if (editor.viewport.mouseState === VIEW2D.MOUSE_STATES.SELECTING) return;
-            }
+            // // 'viewport' Mode?
+            // if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
+            //     // Don't rebuild inspector during rubberband mode
+            //     if (editor.viewport.mouseState === VIEW2D.MOUSE_STATES.SELECTING) return;
+            // }
 
             // Don't rebuild while dragging new object into scene
             if (editor.dragInfo) return;
 
             // Rebuild with selected entity
             const entity = (editor.selected.length === 0) ? undefined : editor.selected[0];
-            signals.inspectorBuild.dispatch(entity);
+            Signals.dispatch('inspectorBuild', entity);
         }
 
         // Close Button
@@ -215,31 +212,20 @@ class Inspector extends DockPanel {
 
         this.dom.addEventListener('hidden', () => {
             _item = undefined;
-            setTimeout(() => { signals.inspectorBuild.dispatch(); }, 0);
+            setTimeout(() => Signals.dispatch('inspectorBuild'), 0);
         });
 
         /***** SIGNALS *****/
 
-        editor.addSignal
-
-        function buildFrom(from) {
+        Signals.connect(this, 'inspectorBuild', function(from) {
             build(from);
-        }
+        });
 
-        signals.inspectorBuild.add(buildFrom);
-
-        signals.promodeChanged.add(() => {
+        Signals.connect(this, 'promodeChanged', function() {
             build('rebuild');
         });
 
-        signals.selectionChanged.add(rebuild);
-
-        /***** DESTROY *****/
-
-        this.dom.addEventListener('destroy', function() {
-            signals.inspectorBuild.remove(buildFrom);
-            signals.selectionChanged.add(rebuild);
-        }, { once: true });
+        Signals.connect(this, 'selectionChanged', rebuild);
 
         /***** GETTERS *****/
 

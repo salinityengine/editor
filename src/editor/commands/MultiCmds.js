@@ -1,5 +1,6 @@
 import * as SALT from 'engine';
 import { Command } from './Command.js';
+import { Signals } from '../config/Signals.js';
 
 class MultiCmdsCommand extends Command {
 
@@ -51,9 +52,9 @@ class MultiCmdsCommand extends Command {
 
     process(type = 'execute') {
         // Disable All Change Signals
-        signals.entityChanged.active = false;
-        signals.transformsChanged.active = false;
-        signals.sceneGraphChanged.active = false;
+        Signals.toggle('entityChanged', false);
+        Signals.toggle('transformsChanged', false);
+        Signals.toggle('sceneGraphChanged', false);
 
         // Changed Entity Lists
         const commandTypes = {};
@@ -105,18 +106,18 @@ class MultiCmdsCommand extends Command {
         }
 
         // // Entity Changed Signal
-        signals.entityChanged.active = true;
+        Signals.toggle('entityChanged', true);
         for (const entity of entitiesChanged) {
-            signals.entityChanged.dispatch(entity);
+            Signals.dispatch('entityChanged', entity);
         }
 
         // Transforms Changed Signal
-        signals.transformsChanged.active = true;
-        signals.transformsChanged.dispatch(transformsChanged);
+        Signals.toggle('transformsChanged', true);
+        Signals.dispatch('transformsChanged', transformsChanged);
 
         // Scene Graph Signal
-        signals.sceneGraphChanged.active = true;
-        signals.sceneGraphChanged.dispatch();
+        Signals.toggle('sceneGraphChanged', true);
+        Signals.dispatch('sceneGraphChanged');
 
         // // DEBUG: Show command types in this MultiCmd
         // console.group(`MultiCmdsCommand Execute, Qty: ${this.commands.length}`);

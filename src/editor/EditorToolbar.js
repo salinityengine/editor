@@ -3,9 +3,11 @@ import * as SUEY from 'gui';
 
 import { Advice } from './config/Advice.js';
 import { Config } from './config/Config.js';
-import { EyeMenu } from './EyeMenu.js';
+import { Signals } from './config/Signals.js';
 
 import { EditorModeCommand } from './commands/Commands.js';
+
+import { EyeMenu } from './EyeMenu.js';
 
 class EditorToolbar extends SUEY.Panel {
 
@@ -63,7 +65,7 @@ class EditorToolbar extends SUEY.Panel {
         world.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.WORLD_GRAPH)));
         ui.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.UI_EDITOR)));
 
-        signals.editorModeChanged.add((mode) => {
+        Signals.connect(this, 'editorModeChanged', function(mode) {
             scene.removeClass('osui-selected');
             world.removeClass('osui-selected');
             ui.removeClass('osui-selected');

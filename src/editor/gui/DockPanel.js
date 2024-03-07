@@ -1,6 +1,7 @@
 import * as SUEY from 'gui';
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
+import { Signals } from '../config/Signals.js';
 
 /** Used for Dock panels (Advisor, Explorer, Inspector, Preview, etc.) */
 class DockPanel extends SUEY.Tabbed {
@@ -35,16 +36,10 @@ class DockPanel extends SUEY.Tabbed {
 
         /********** SIGNALS */
 
-        function refreshWindowSize() {
+        Signals.connect(this, 'refreshWindows', function () {
             self.changeWidth(parseFloat(Config.getKey(`resizeX/${self.getName()}`)) * SUEY.Css.guiScale());
             self.changeHeight(parseFloat(Config.getKey(`resizeY/${self.getName()}`)) * SUEY.Css.guiScale());
-        }
-
-        signals.refreshWindows.add(refreshWindowSize);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.refreshWindows.remove(refreshWindowSize);
-        }, { once: true });
+        });
     }
 
     /******************** SIZE */

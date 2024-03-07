@@ -4,6 +4,7 @@ import * as SUEY from 'gui';
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
+import { Signals } from '../../config/Signals.js';
 
 class ProjectGeneralTab extends SUEY.Titled {
 
@@ -73,11 +74,7 @@ class ProjectGeneralTab extends SUEY.Titled {
 
         /***** SIGNALS *****/
 
-        signals.inspectorUpdate.add(updateUI);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.inspectorUpdate.remove(updateUI);
-        }, { once: true });
+        Signals.connect(this, 'inspectorUpdate', updateUI);
 
         /***** INIT *****/
 

@@ -5,6 +5,7 @@ import * as SUEY from 'gui';
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
+import { Signals } from '../../config/Signals.js';
 
 const _color = new SUEY.Iris();
 
@@ -34,7 +35,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         languageDropDown.setOptions(languageOptions);
         languageDropDown.onChange(() => {
             Config.setKey('settings/language', languageDropDown.getValue());
-            signals.refreshSettings.dispatch();
+            Signals.dispatch('refreshSettings');
         });
         const languageRow = props.addRow(Language.getKey('inspector/settings/language'), languageDropDown);
         Advice.attach(languageRow, 'settings/general/language');
@@ -50,7 +51,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         //
         const promodeBox = new SUEY.Checkbox().onChange(() => {
             Config.setKey('promode', (!Config.getKey('promode')));
-            signals.promodeChanged.dispatch();
+            Signals.dispatch('promodeChanged');
         });
         const promodeRow = props.addRow('Pro Mode', promodeBox);
         Advice.attach(promodeRow, 'settings/general/promode');
@@ -186,7 +187,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         const resetButton = new SUEY.Button().addClass('osui-property-button').onClick(() => {
             if (confirm('Reset all editor settings to default values?')) {
                 Config.clear();
-                signals.refreshSettings.dispatch();
+                Signals.dispatch('refreshSettings');
             }
         });
         const resetLabel = Language.getKey('inspector/settings/reset');
@@ -225,11 +226,7 @@ class SettingsGeneralTab extends SUEY.Titled {
 
         /***** SIGNALS *****/
 
-        signals.inspectorUpdate.add(updateUI);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.inspectorUpdate.remove(updateUI);
-        }, { once: true });
+        Signals.connect(this, 'inspectorUpdate', updateUI);
 
         /***** INIT *****/
 

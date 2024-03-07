@@ -1,3 +1,5 @@
+import { Signals } from './Signals.js';
+
 class History {
 
     constructor() {
@@ -7,11 +9,11 @@ class History {
         this.undos = [];
         this.redos = [];
         this.lastCmdTime = new Date();
-        this.historyDisabled = false;
+        this.isDisabled = false;
 
-        // Signals
-        signals.startPlayer.add(function() { self.historyDisabled = true; });
-        signals.stopPlayer.add(function() { self.historyDisabled = false; });
+        // // Signals
+        // Signals.connect(this, 'startPlayer', () => self.isDisabled = true));
+        // Signals.connect(this, 'stopPlayer', () => self.isDisabled = false));
     }
 
     /** Executes new command onto stack, clears old redo history */
@@ -63,16 +65,16 @@ class History {
         this.clearRedos();
 
         // Signal
-        signals.historyChanged.dispatch(cmd);
+        Signals.dispatch('historyChanged', cmd);
     }
 
     undo() {
-        if (this.historyDisabled) {
+        if (this.isDisabled) {
             alert('Undo/Redo disabled while scene is playing.');
             return;
         }
 
-        signals.inspectorBuild.active = editor.inspector.currentItem() !== 'settings'; /* leave 'settings' */
+        Signals.toggle('inspectorBuild', editor.inspector.currentItem() !== 'settings' /* leave 'settings' */);
 
         let cmd = undefined;
         if (this.undos.length > 0) {
@@ -81,21 +83,21 @@ class History {
         if (cmd !== undefined) {
             cmd.undo();
             this.redos.push(cmd);
-            signals.historyChanged.dispatch(cmd);
+            Signals.dispatch('historyChanged', cmd);
         }
 
-        signals.inspectorBuild.active = true;
+        Signals.toggle('inspectorBuild', true);
 
         return cmd;
     }
 
     redo() {
-        if (this.historyDisabled) {
+        if (this.isDisabled) {
             alert('Undo/Redo disabled while scene is playing.');
             return;
         }
 
-        signals.inspectorBuild.active = editor.inspector.currentItem() !== 'settings'; /* leave 'settings' */
+        Signals.toggle('inspectorBuild', editor.inspector.currentItem() !== 'settings' /* leave 'settings' */);
 
         let cmd = undefined;
         if (this.redos.length > 0) {
@@ -105,22 +107,22 @@ class History {
         if (cmd !== undefined) {
             cmd.redo(); /* base class calls command.execute(), can be overridden */
             this.undos.push(cmd);
-            signals.historyChanged.dispatch(cmd);
+            Signals.dispatch('historyChanged', cmd);
         }
 
-        signals.inspectorBuild.active = true;
+        Signals.toggle('inspectorBuild', true);
 
         return cmd;
     }
 
     goToState(id) {
-        if (this.historyDisabled) {
+        if (this.isDisabled) {
             alert('Undo/Redo disabled while scene is playing.');
             return;
         }
 
-        signals.sceneGraphChanged.active = false;
-        signals.historyChanged.active = false;
+        Signals.toggle('sceneGraphChanged', false);
+        Signals.toggle('historyChanged', false);
 
         let cmd = this.undos.length > 0 ? this.undos[this.undos.length - 1] : undefined;
         if (cmd === undefined || id > cmd.id) {
@@ -136,17 +138,17 @@ class History {
             }
         }
 
-        signals.sceneGraphChanged.active = true;
-        signals.historyChanged.active = true;
+        Signals.toggle('sceneGraphChanged', true);
+        Signals.toggle('historyChanged', true);
 
-        signals.sceneGraphChanged.dispatch();
-        signals.historyChanged.dispatch(cmd);
+        Signals.dispatch('sceneGraphChanged');
+        Signals.dispatch('historyChanged', cmd);
     }
 
     clear() {
         this.clearUndos();
         this.clearRedos();
-        signals.historyChanged.dispatch();
+        Signals.dispatch('historyChanged');
     };
 
     clearUndos() {

@@ -8,6 +8,7 @@ import { Config } from './config/Config.js';
 import { History } from './config/History.js';
 import { Language } from './config/Language.js';
 import { Loader } from './config/Loader.js';
+import { Signals } from './config/Signals.js';
 
 import { EditorEvents } from './EditorEvents.js';
 import { EditorToolbar } from './EditorToolbar.js';
@@ -27,13 +28,10 @@ import { View2D } from './view2d/View2D.js';
 
 class Editor extends SUEY.Docker {
 
-    #panels = [];
-
     constructor() {
         super();
         this.addClass('one-editor').selectable(false);
         document.body.appendChild(this.dom);
-        this.fontSizeChange(Config.getKey('scheme/fontSize'));
 
         /********** GLOBAL */
 
@@ -53,9 +51,20 @@ class Editor extends SUEY.Docker {
 
         /********** PROPERTIES */
 
-        // References
+        // Mode Panels
         this.view2d = null;                                     // 2D Scene Editor
         this.worlds = null;                                     // World Graph
+
+        // Floating Panels
+        this.player = null;                                     // Game Player
+        this.scripter = null;                                   // Script Editor
+        this.shaper = null;                                     // Shape Editor
+
+        // Docking Panels
+        this.advisor = null;                                    // Advisor
+        this.explorer = null;                                   // Explorer (Outliner / Assets / Prefabs)
+        this.inspector = null;                                  // Object Inspector
+        this.previewer = null;                                  // Asset Previewer
 
         // Misc
         this.dragInfo = undefined;                              // Stores data for 'dragenter' events
@@ -78,27 +87,14 @@ class Editor extends SUEY.Docker {
 
         /********** ELEMENTS */
 
-        const toolbar = new EditorToolbar();
-        const infoBox = new InfoBox();
-        this.add(toolbar, infoBox);
+        // Toolbar
+        this.add(new EditorToolbar());
 
-        // Display temporary, centered tooltip
-        this.showInfo = function(info) {
-            infoBox.showInfo(info);
-        }
+        // InfoBox
+        this.infoBox = new InfoBox();
+        this.add(this.infoBox);
 
         /********** PANELS */
-
-        // Docking Panels
-        let advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
-        let inspector = new Inspector({ startWidth: 300, minWidth: 190 });
-
-        this.explorer = null;                                   // Explorer (Outliner / Assets / Prefabs)
-        this.player = null;                                     // Game Player
-        this.previewer = null;                                  // Asset Previewer
-        this.scripter = null;                                   // Script Editor
-
-        this.addPanel(advisor, infoBox);
 
         // Scene Editor, 2D
         this.view2d = new View2D();
@@ -120,12 +116,14 @@ class Editor extends SUEY.Docker {
         // this.shaper = new Shaper();
         // this.add(this.shaper);
 
-        // // Docking Panels
+        /***** DOCKING PANELS */
+
+        this.advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
         // this.explorer = new Explorer({ startWidth: 245, minWidth: 70 });
         this.inspector = new Inspector({ startWidth: 300, minWidth: 190 });
         // this.previewer = new Previewer({ startWidth: 300, minWidth: 190 });
 
-        this.addDockPanel(advisor, SUEY.CORNERS.BOTTOM_LEFT);
+        this.addDockPanel(this.advisor, SUEY.CORNERS.BOTTOM_LEFT);
         // this.addDockPanel(this.explorer, SUEY.CORNERS.TOP_LEFT);
         this.addDockPanel(this.inspector, SUEY.CORNERS.TOP_RIGHT);
         // this.addDockPanel(this.previewer, SUEY.CORNERS.BOTTOM_RIGHT);
@@ -139,16 +137,85 @@ class Editor extends SUEY.Docker {
             topLeft.setStyle('bottom', `${parseFloat(SUEY.Css.toEm(totalHeight)) - 0.175}em`);
         }
         botLeft.dom.addEventListener('resized', resizeTopLeftDocks);
-        signals.refreshWindows.add(resizeTopLeftDocks);
-        signals.windowResize.add(resizeTopLeftDocks);
+        Signals.connect(this, 'refreshWindows', resizeTopLeftDocks);
+        Signals.connect(this, 'windowResize', resizeTopLeftDocks);
 
         /********** SIGNALS */
 
-        // Add Editor Signal Callbacks
-        signals.addSignalCallbacks();
+        /******************** PROJECT ********************/
+
+        Signals.connect(this, 'projectLoaded', function() {
+            if (editor.history) editor.history.clear();
+
+            // Clear Inspector Panels
+            Signals.dispatch('inspectorBuild');
+            Signals.dispatch('previewerBuild');
+
+            // Rebuild Outliner
+            Signals.dispatch('sceneGraphChanged');
+
+            // Reset Camera / Lights
+            Signals.dispatch('cameraReset');
+        });
+
+        /******************** EDITOR ********************/
+
+        Signals.connect(this, 'refreshSettings', function() {
+            // Mouse Modes
+            Signals.dispatch('mouseModeChanged', Config.getKey('scene/viewport/mode'));
+            Signals.dispatch('transformModeChanged', Config.getKey('scene/controls/mode'));
+
+            // Font Size Update
+            editor.fontSizeChange(Config.getKey('scheme/fontSize'));
+
+            // Color Scheme
+            editor.setSchemeBackground(Config.getKey('scheme/background'));
+            const schemeColor = Config.getKey('scheme/iconColor');
+            const schemeTint = Config.getKey('scheme/backgroundTint');
+            const schemeSaturation = Config.getKey('scheme/backgroundSaturation');
+            editor.setSchemeColor(schemeColor, schemeTint, schemeSaturation);
+
+            // Transparency
+            const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/panelTransparency')), 1.0), 0.0);
+            SUEY.Css.setVariable('--panel-transparency', panelAlpha);
+
+            // Grids
+            Signals.dispatch('gridChanged');
+
+            // Tabs
+            editor.traverse((child) => {
+                if (child.isElement && child.hasClass('osui-tabbed')) {
+                    child.selectLastKnownTab();
+                }
+            }, false /* applyToSelf */);
+
+            // Rebuild Inspector / Preview from Existing Items
+            Signals.dispatch('inspectorBuild', 'rebuild');
+            Signals.dispatch('previewerBuild', 'rebuild');
+            Signals.dispatch('promodeChanged');
+
+            // Refresh Docks
+            Signals.dispatch('refreshWindows');
+        });
+
+        /******************** SCENE ********************/
+
+        Signals.connect(this, 'entityChanged', function(entity) {
+            if (!entity || !entity.isEntity) return;
+            const activeStageUUID = editor.viewport.world.activeStage().uuid;
+            const stage = entity.parentStage();
+            const world = entity.parentWorld();
+
+            if (stage && world && (stage.uuid === activeStageUUID || world.uuid === activeStageUUID)) {
+                if (entity.isLight || entity.isStage || entity.isWorld) editor.viewport.updateSky();
+                if (entity.isCamera || entity.isLight) editor.viewport.rebuildHelpers();
+                editor.viewport.rebuildColliders();
+            }
+        });
 
         // Dispatch Initial Signals
-        signals.refreshSettings.dispatch(); /* also selects none */
+        this.fontSizeChange(Config.getKey('scheme/fontSize'));
+        Signals.dispatch('refreshSettings'); /* also selects none */
         this.setMode(Config.getKey('settings/editorMode'));
 
         // Enable Button Animations
@@ -160,7 +227,7 @@ class Editor extends SUEY.Docker {
             // loadDemoProject3D(editor.project);
             // editor.view2d.world = editor.project.activeWorld();
             // editor.view2d.stage = editor.view2d.world.activeStage();
-            signals.projectLoaded.dispatch();
+            Signals.dispatch('projectLoaded');
         }, 100);
 
     } // end ctor
@@ -198,12 +265,12 @@ class Editor extends SUEY.Docker {
 
         // // Rebuild Inspector if on 'settings'
         // if (editor.inspector && editor.inspector.currentItem() === 'settings') {
-        //     signals.inspectorBuild.dispatch('rebuild');
+        //     Signals.dispatch('inspectorBuild', 'rebuild');
         // }
 
         // Dispatch Signals
-        signals.windowResize.dispatch(); // refresh panel sizes
-        signals.editorModeChanged.dispatch(mode);
+        Signals.dispatch('windowResize'); // refresh panel sizes
+        Signals.dispatch('editorModeChanged', mode);
     }
 
     mode() {
@@ -225,7 +292,7 @@ class Editor extends SUEY.Docker {
     copy(selection) {
         selection = selection ?? this.selected;
         this.clipboard.copy(selection);
-        signals.clipboardChanged.dispatch();
+        Signals.dispatch('clipboardChanged');
     }
 
     cut() {
@@ -300,7 +367,7 @@ class Editor extends SUEY.Docker {
         // New selection same as current selection? Refresh Inspector (but don't refresh view transformGroup)
         if (SALT.EntityUtils.compareArrayOfEntities(this.selected, filtered)) {
             if (editor.selected.length > 0) {
-                signals.inspectorBuild.dispatch(editor.selected[0]);
+                Signals.dispatch('inspectorBuild', editor.selected[0]);
                 return;
             }
         }
@@ -309,7 +376,7 @@ class Editor extends SUEY.Docker {
         this.selected = [...filtered];
 
         // Selection change signal
-        signals.selectionChanged.dispatch();
+        Signals.dispatch('selectionChanged');
     }
 
     /******************** GUI ********************/
@@ -328,7 +395,7 @@ class Editor extends SUEY.Docker {
         fontSize = SALT.Maths.clamp(fontSize, EDITOR.FONT_SIZE_MIN, EDITOR.FONT_SIZE_MAX);
         Config.setKey('scheme/fontSize', SUEY.Css.toPx(fontSize));
         SUEY.Css.setVariable('--font-size', SUEY.Css.toPx(fontSize));
-        signals.fontSizeChanged.dispatch();
+        Signals.dispatch('fontSizeChanged');
     }
 
     cycleSchemeBackground() {
@@ -348,7 +415,7 @@ class Editor extends SUEY.Docker {
             Config.setKey('scheme/background', background);
         }
         SUEY.ColorScheme.changeBackground(background);
-        signals.schemeChanged.dispatch();
+        Signals.dispatch('schemeChanged');
     }
 
     setSchemeColor(color = SUEY.THEMES.CLASSIC, tint = 0.0, saturation = 0.0, updateSettings = true) {
@@ -358,7 +425,7 @@ class Editor extends SUEY.Docker {
             Config.setKey('scheme/backgroundSaturation', saturation);
         }
         SUEY.ColorScheme.changeColor(color, tint, saturation);
-        signals.schemeChanged.dispatch();
+        Signals.dispatch('schemeChanged');
     }
 
     /******************** INTERACTIVE ********************/
@@ -371,7 +438,7 @@ class Editor extends SUEY.Docker {
         }
     }
 
-    checkKeyState(/* any number of comma seperated EDITOR.KEYS */) {
+    checkKeyState(/* any number of comma separated EDITOR.KEYS */) {
         let keyDown = false;
         for (const key of arguments) {
             keyDown = keyDown || this.keyStates[key];
@@ -411,28 +478,16 @@ class Editor extends SUEY.Docker {
 
     /******************** PANELS ********************/
 
-    addPanel(/* any number or comma separated panels */) {
-        for (const panel of arguments) {
-            if (!panel) return;
-            if (!this.#panels.includes(panel)) this.#panels.push(panel);
-        }
+    /** Update advice window */
+    setAdvisorInfo(title = '', html = '') {
+        if (this.advisor) this.advisor.setInfo(title, html);
         return this;
     }
 
-    getPanel(name) {
-        if (!name) return undefined;
-        name = String(name).toLowerCase();
-        for (const panel of this.#panels) {
-            if (!panel || !panel.name) continue;
-            if (panel.name.toLowerCase() === name) return panel;
-        }
-        return undefined;
-    }
-
-    setAdvisorInfo(title = '', html = '') {
-        const advisor = this.getPanel('Advisor');
-        if (!advisor) return;
-        advisor.setInfo(title, html);
+    /** Display temporary, centered tooltip */
+    showInfo(info) {
+        if (this.infoBox) this.infoBox.popupInfo(info);
+        return this;
     }
 
 }

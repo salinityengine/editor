@@ -2,6 +2,8 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Signals } from '../../config/Signals.js';
+
 class ProjectInfoTab extends SUEY.Titled {
 
     constructor() {
@@ -71,15 +73,9 @@ class ProjectInfoTab extends SUEY.Titled {
 
         /***** SIGNALS *****/
 
-        signals.assetAdded.add(updateUI);
-        signals.assetRemoved.add(updateUI);
-        signals.sceneGraphChanged.add(updateUI);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.assetAdded.remove(updateUI);
-            signals.assetRemoved.remove(updateUI);
-            signals.sceneGraphChanged.remove(updateUI);
-        }, { once: true });
+        Signals.connect(this, 'assetAdded', updateUI);
+        Signals.connect(this, 'assetRemoved', updateUI);
+        Signals.connect(this, 'sceneGraphChanged', updateUI);
 
         /***** INIT *****/
 

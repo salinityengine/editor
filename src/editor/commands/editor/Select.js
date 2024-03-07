@@ -1,5 +1,6 @@
 import * as SALT from 'engine';
 import { Command } from '../Command.js';
+import { Signals } from '../../config/Signals.js';
 
 /** Select on 'execute' or 'undo' */
 class SelectCommand extends Command {
@@ -28,7 +29,7 @@ class SelectCommand extends Command {
     }
 
     invalid() {
-        signals.selectionChanged.dispatch();
+        Signals.dispatch('selectionChanged');
     }
 
     execute() {
