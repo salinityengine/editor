@@ -128,6 +128,8 @@ class Editor extends SUEY.Docker {
         this.addDockPanel(this.inspector, SUEY.CORNERS.TOP_RIGHT);
         // this.addDockPanel(this.previewer, SUEY.CORNERS.BOTTOM_RIGHT);
 
+        /********** SIGNALS */
+
         // Watch Bottom Left Size
         const botLeft = this.getCorner(SUEY.CORNERS.BOTTOM_LEFT);
         const topLeft = this.getCorner(SUEY.CORNERS.TOP_LEFT);
@@ -140,10 +142,7 @@ class Editor extends SUEY.Docker {
         Signals.connect(this, 'refreshWindows', resizeTopLeftDocks);
         Signals.connect(this, 'windowResize', resizeTopLeftDocks);
 
-        /********** SIGNALS */
-
-        /******************** PROJECT ********************/
-
+        // Project Loaded
         Signals.connect(this, 'projectLoaded', function() {
             if (editor.history) editor.history.clear();
 
@@ -158,48 +157,7 @@ class Editor extends SUEY.Docker {
             Signals.dispatch('cameraReset');
         });
 
-        /******************** EDITOR ********************/
-
-        Signals.connect(this, 'refreshSettings', function() {
-            // Mouse Modes
-            Signals.dispatch('mouseModeChanged', Config.getKey('scene/viewport/mode'));
-            Signals.dispatch('transformModeChanged', Config.getKey('scene/controls/mode'));
-
-            // Font Size Update
-            editor.fontSizeChange(Config.getKey('scheme/fontSize'));
-
-            // Color Scheme
-            editor.setSchemeBackground(Config.getKey('scheme/background'));
-            const schemeColor = Config.getKey('scheme/iconColor');
-            const schemeTint = Config.getKey('scheme/backgroundTint');
-            const schemeSaturation = Config.getKey('scheme/backgroundSaturation');
-            editor.setSchemeColor(schemeColor, schemeTint, schemeSaturation);
-
-            // Transparency
-            const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/panelTransparency')), 1.0), 0.0);
-            SUEY.Css.setVariable('--panel-transparency', panelAlpha);
-
-            // Grids
-            Signals.dispatch('gridChanged');
-
-            // Tabs
-            editor.traverse((child) => {
-                if (child.isElement && child.hasClass('osui-tabbed')) {
-                    child.selectLastKnownTab();
-                }
-            }, false /* applyToSelf */);
-
-            // Rebuild Inspector / Preview from Existing Items
-            Signals.dispatch('inspectorBuild', 'rebuild');
-            Signals.dispatch('previewerBuild', 'rebuild');
-            Signals.dispatch('promodeChanged');
-
-            // Refresh Docks
-            Signals.dispatch('refreshWindows');
-        });
-
-        /******************** SCENE ********************/
-
+        // Entity Changed
         Signals.connect(this, 'entityChanged', function(entity) {
             if (!entity || !entity.isEntity) return;
             const activeStageUUID = editor.viewport.world.activeStage().uuid;
@@ -213,9 +171,10 @@ class Editor extends SUEY.Docker {
             }
         });
 
-        // Dispatch Initial Signals
-        this.fontSizeChange(Config.getKey('scheme/fontSize'));
-        Signals.dispatch('refreshSettings'); /* also selects none */
+        /********** INIT */
+
+        // Setup Look / Mode
+        this.refreshSettings(); // also selects none
         this.setMode(Config.getKey('settings/editorMode'));
 
         // Enable Button Animations
@@ -320,14 +279,14 @@ class Editor extends SUEY.Docker {
         if (typeof view.delete === 'function') view.delete();
     }
 
-    /* DOES run through Undo/Redo History */
+    /** DOES run through Undo/Redo History */
     selectAll() {
         const view = this.modeElement();
         if (!view || view.isHidden()) return;
         if (typeof view.selectAll === 'function') view.selectAll();
     }
 
-    /* DOES run through Undo/Redo History */
+    /** DOES run through Undo/Redo History */
     selectNone() {
         const view = this.modeElement();
         if (!view || view.isHidden()) return;
@@ -381,6 +340,46 @@ class Editor extends SUEY.Docker {
 
     /******************** GUI ********************/
 
+    /** Settings were changed, refresh app (color, font size, etc.), dispatch signals */
+    refreshSettings() {
+        // Font Size Update
+        this.fontSizeChange(Config.getKey('scheme/fontSize'));
+
+        // Color Scheme
+        this.setSchemeBackground(Config.getKey('scheme/background'));
+        const schemeColor = Config.getKey('scheme/iconColor');
+        const schemeTint = Config.getKey('scheme/backgroundTint');
+        const schemeSaturation = Config.getKey('scheme/backgroundSaturation');
+        this.setSchemeColor(schemeColor, schemeTint, schemeSaturation);
+
+        // Transparency
+        const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/panelTransparency')), 1.0), 0.0);
+        SUEY.Css.setVariable('--panel-transparency', panelAlpha);
+
+        // Grids
+        Signals.dispatch('gridChanged');
+
+        // Tabs
+        this.traverse((child) => {
+            if (child.isElement && child.hasClass('osui-tabbed')) {
+                child.selectLastKnownTab();
+            }
+        }, false /* applyToSelf */);
+
+        // Mouse Modes
+        Signals.dispatch('mouseModeChanged', Config.getKey('scene/viewport/mode'));
+        Signals.dispatch('transformModeChanged', Config.getKey('scene/controls/mode'));
+
+        // Rebuild Inspector / Preview from Existing Items
+        Signals.dispatch('inspectorBuild', 'rebuild');
+        Signals.dispatch('previewerBuild', 'rebuild');
+        Signals.dispatch('promodeChanged');
+
+        // Refresh Docks
+        Signals.dispatch('refreshWindows');
+        Signals.dispatch('settingsRefreshed');
+    }
+
     fontSizeChange(fontSize) {
         if (fontSize === 'up' || fontSize === 'increase') {
             let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
@@ -400,13 +399,9 @@ class Editor extends SUEY.Docker {
 
     cycleSchemeBackground() {
         let background = parseInt(Config.getKey('scheme/background'), 10);
-        if (background == SUEY.BACKGROUNDS.DARK) {
-            background = SUEY.BACKGROUNDS.MID;
-        } else if (background == SUEY.BACKGROUNDS.MID) {
-            background = SUEY.BACKGROUNDS.LIGHT;
-        } else {
-            background = SUEY.BACKGROUNDS.DARK;
-        }
+        if (background == SUEY.BACKGROUNDS.DARK) background = SUEY.BACKGROUNDS.MID;
+        else if (background == SUEY.BACKGROUNDS.MID) background = SUEY.BACKGROUNDS.LIGHT;
+        else background = SUEY.BACKGROUNDS.DARK;
         this.setSchemeBackground(background);
     }
 

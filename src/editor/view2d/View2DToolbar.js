@@ -247,7 +247,7 @@ class View2DToolbar extends SUEY.Panel {
                 toggle.removeClass('osui-toggled');
                 if (configKey && Config.getKey(configKey)) toggle.addClass('osui-toggled');
             }
-            Signals.connect(toggle, 'refreshSettings', setButtonValue)
+            Signals.connect(toggle, 'settingsRefreshed', setButtonValue)
             setButtonValue();
             return toggle;
         }

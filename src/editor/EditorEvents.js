@@ -163,10 +163,8 @@ function editorKeyDown(event) {
         case Config.getKey('shortcuts/reset'): /* F9 */
             // Persistent Tabs
             const tabs = {};
-            if (editor) {
-                if (editor.explorer) tabs['explorer'] = editor.explorer.currentId();
-                if (editor.inspector) tabs['inspector'] = editor.inspector.currentId();
-            }
+            if (editor.explorer) tabs['explorer'] = editor.explorer.currentId();
+            if (editor.inspector) tabs['inspector'] = editor.inspector.currentId();
 
             // Clear Config
             Config.clear();
@@ -176,7 +174,7 @@ function editorKeyDown(event) {
             if (tabs['inspector']) Config.setKey(`tabs/Inspector`, [ tabs['inspector'] ]);
 
             // Refresh GUI
-            Signals.dispatch('refreshSettings');
+            editor.refreshSettings();
             break;
     }
 }

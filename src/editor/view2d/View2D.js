@@ -63,11 +63,6 @@ class View2D extends SUEY.Panel {
         this.overrideCursor = null;                             // Tracks override cursor (mouse over TransformControls)
         this.startSelection = [];                               // Stores starting selection when mouse down with shift/ctrl
 
-        this.facingPlane = '';                                  // Tracks which plane camera is facing
-        this.camAngleX = 0;                                     // Angle X of camera facing object
-        this.camAngleY = 0;                                     // Angle Y of camera facing object
-        this.camAngleZ = 0;                                     // Angle Z of camera facing object
-
         this.dragStarted = false;                               // True when mouse has moved enough to start 'dragging'
         this.outlineStrength = VIEW2D.STYLING.EDGE_GLOW;      // Hide outlines when in 'rect' mode
 
@@ -132,45 +127,15 @@ class View2D extends SUEY.Panel {
             // Start render timer
             const startTime = performance.now();
 
-            // Update
-            this.update();
-
             // Render (ViewportRender.js)
             this.render();
-
-            // Must manually reset counter (used with multiple render() calls to count all draw calls)
-            editor.totalDrawCalls = this.renderer.info.render.calls;
-            this.renderer.info.reset();
 
             // End render timer, dispatch signal
             Signals.dispatch('sceneRendered', performance.now() - startTime);
         }
 
         // Ask for another animation frame immediately
-        requestAnimationFrame(() => { this.animate(); });
-    }
-
-    /******************** UPDATE ********************/
-
-    update() {
-        // Update all stored updatable objects
-        const deltaTime = this.updateClock.getDelta();
-        for (const object of this.updatables) {
-            object.update(deltaTime);
-        }
-
-        // Update facing plane
-        if (this.selected.length > 0 && this.mouseState === VIEW2D.MOUSE_STATES.DRAGGING) {
-            this.facingPlane = this.dragPlane.cameraFacingPlane;
-            this.camAngleX = this.dragPlane.camAngleX;
-            this.camAngleY = this.dragPlane.camAngleY;
-            this.camAngleZ = this.dragPlane.camAngleZ;
-        } else {
-            this.facingPlane = this.transformControls.cameraFacingWorld;
-            this.camAngleX = this.transformControls.camAngleX;
-            this.camAngleY = this.transformControls.camAngleY;
-            this.camAngleZ = this.transformControls.camAngleZ;
-        }
+        requestAnimationFrame(function() { this.animate(); });
     }
 
     /******************** RESIZE ********************/

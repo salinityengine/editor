@@ -35,7 +35,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         languageDropDown.setOptions(languageOptions);
         languageDropDown.onChange(() => {
             Config.setKey('settings/language', languageDropDown.getValue());
-            Signals.dispatch('refreshSettings');
+            editor.refreshSettings();
         });
         const languageRow = props.addRow(Language.getKey('inspector/settings/language'), languageDropDown);
         Advice.attach(languageRow, 'settings/general/language');
@@ -187,7 +187,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         const resetButton = new SUEY.Button().addClass('osui-property-button').onClick(() => {
             if (confirm('Reset all editor settings to default values?')) {
                 Config.clear();
-                Signals.dispatch('refreshSettings');
+                editor.refreshSettings();
             }
         });
         const resetLabel = Language.getKey('inspector/settings/reset');
