@@ -113,7 +113,7 @@ class SettingsHistoryTab extends SUEY.Titled {
 
         let lastHistorySize = editor.history.undos.length + editor.history.redos.length;
 
-        Signals.connect(this, historyChanged, function() {
+        Signals.connect(this, 'historyChanged', function() {
             let thisHistorySize = editor.history.undos.length + editor.history.redos.length;
             if (lastHistorySize === thisHistorySize) {
                 updateUI();

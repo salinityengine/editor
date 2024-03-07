@@ -4,26 +4,9 @@ import * as SUEY from 'gui';
 import { Config } from './config/Config.js';
 import { Signals } from './config/Signals.js';
 
-let _eventsAdded = false;
+/******************** KEY DOWN */
 
-class EditorEvents {
-
-    static addEvents() {
-        if (!_eventsAdded) {
-            // NOTE: These events are called BEFORE Viewport keydown/keyup events
-            document.addEventListener('keydown', editorKeyDown);
-            document.addEventListener('keyup', editorKeyUp);
-        }
-        _eventsAdded = true;
-    }
-
-}
-
-export { EditorEvents };
-
-/******************** INTERNAL ********************/
-
-function editorKeyDown(event) {
+export function editorKeyDown(editor, event) {
     // Ignore Key Events While Playing
     if (editor.player && editor.player.isPlaying) return;
 
@@ -179,7 +162,9 @@ function editorKeyDown(event) {
     }
 }
 
-function editorKeyUp(event) {
+/******************** KEY UP */
+
+export function editorKeyUp(editor, event) {
 
     // Ignore Key Events While Playing
     if (editor.player && editor.player.isPlaying) return;

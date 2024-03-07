@@ -1,9 +1,12 @@
-import { VERSION, APP_ORIENTATION } from '../constants.js';
-import { ASSET_TYPES, WORLD_TYPES } from '../constants.js';
+import {
+    APP_ORIENTATION,
+    ASSET_TYPES,
+    VERSION,
+    WORLD_TYPES,
+} from '../constants.js';
 
 import { AssetManager } from '../app/AssetManager.js';
 import { Maths } from '../utils/Maths.js';
-
 // import { World } from './world/World.js';
 
 class Project {

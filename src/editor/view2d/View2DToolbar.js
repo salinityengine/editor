@@ -1,6 +1,5 @@
 import * as EDITOR from 'editor';
 import * as SUEY from 'gui';
-import * as VIEW2D from 'view2d';
 
 import { Advice } from '../config/Advice.js';
 import { ColorizeFilter } from '../gui/ColorizeFilter.js';
@@ -107,10 +106,10 @@ class View2DToolbar extends SUEY.Panel {
         move.add(moveIcon, moveGrab);
         zoom.add(zoomIcon);
 
-        select.onClick(() => Signals.dispatch('mouseModeChanged', VIEW2D.MOUSE_MODES.SELECT));
-        look.onClick(() => Signals.dispatch('mouseModeChanged', VIEW2D.MOUSE_MODES.LOOK));
-        move.onClick(() => Signals.dispatch('mouseModeChanged', VIEW2D.MOUSE_MODES.MOVE));
-        zoom.onClick(() => Signals.dispatch('mouseModeChanged', VIEW2D.MOUSE_MODES.ZOOM));
+        select.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.SELECT));
+        look.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.LOOK));
+        move.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.MOVE));
+        zoom.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.ZOOM));
 
         Signals.connect(this, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('osui-selected');
@@ -118,10 +117,10 @@ class View2DToolbar extends SUEY.Panel {
             move.removeClass('osui-selected');
             zoom.removeClass('osui-selected');
             switch (mouseMode) {
-                case VIEW2D.MOUSE_MODES.SELECT: select.addClass('osui-selected'); break;
-                case VIEW2D.MOUSE_MODES.LOOK: look.addClass('osui-selected'); break;
-                case VIEW2D.MOUSE_MODES.MOVE: move.addClass('osui-selected'); break;
-                case VIEW2D.MOUSE_MODES.ZOOM: zoom.addClass('osui-selected'); break;
+                case EDITOR.MOUSE_MODES.SELECT: select.addClass('osui-selected'); break;
+                case EDITOR.MOUSE_MODES.LOOK: look.addClass('osui-selected'); break;
+                case EDITOR.MOUSE_MODES.MOVE: move.addClass('osui-selected'); break;
+                case EDITOR.MOUSE_MODES.ZOOM: zoom.addClass('osui-selected'); break;
             }
         });
 
@@ -174,7 +173,7 @@ class View2DToolbar extends SUEY.Panel {
             }
         });
 
-        /******************** VIEW2D */
+        /******************** VIEW */
 
         const focusEye = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-eye.svg`).setId('tb-focus-eye');
         const focusPupil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-pupil.svg`).setId('tb-focus-pupil');
@@ -194,8 +193,8 @@ class View2DToolbar extends SUEY.Panel {
         toggle.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
 
         Signals.connect(this, 'schemeChanged', function() {
-            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(VIEW2D.COLORS.X_COLOR));
-            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(VIEW2D.COLORS.Y_COLOR));
+            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
+            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });

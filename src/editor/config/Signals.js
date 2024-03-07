@@ -134,7 +134,6 @@ if (_signals.length === 0) {
         if (_signals[signalName]) console.warn(`Create Signals: Duplicate signal with name ('${signalName}')`);
         else _signals[signalName] = new SUEY.Signal();
     }
-    console.log('Created Signals!');
 }
 
 export { Signals };

@@ -11,8 +11,9 @@ class Application extends PIXI.Application {
     } = {}) {
         // https://pixijs.download/release/docs/PIXI.IApplicationOptions.html
         // https://pixijs.download/release/docs/PIXI.IRendererOptions.html
-        super({
-            backgroundColor: '#1099bb',
+        super();
+        this.init({
+            backgroundColor,
             resizeTo: element,
         });
 

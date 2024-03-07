@@ -6,10 +6,10 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { zipSync, strToU8 } from '../../libs/utility/fflate.module.js';
-
 import { Config } from './config/Config.js';
 import { Signals } from './config/Signals.js';
+
+import { zipSync, strToU8 } from '../../libs/utility/fflate.module.js';
 
 class EyeMenu extends SUEY.Menu {
 

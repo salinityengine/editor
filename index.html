@@ -32,38 +32,32 @@
     <script type='importmap'>
         {
             "imports": {
-                "editor":           "../src/editor/EditorConstants.js",
+                "editor":           "../src/editor/Editor.js",
                 "engine":           "../src/engine/Salinity.js",
                 "gui":              "../src/gui/Suey.js",
-                "view2d":           "../src/editor/view2d/View2DConstants.js",
 
                 "pixi" :            "./libs/pixi.min.mjs"
             }
         }
     </script>
 
-    <script src="./libs/matter.min.js"></script>
+    <script src='./libs/matter.min.js'></script>
 
     <script type='module'>
 
-        /***** IMPORTS - SALINITY *****/
+        /***** IMPORTS *****/
 
         import * as PIXI from 'pixi';
         import * as SALT from 'engine';
         import * as SUEY from 'gui';
-
-        import { Signals } from './src/editor/config/Signals.js';
-        import { Editor } from './src/editor/Editor.js';
+        import * as EDITOR from 'editor';
 
         console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
 
         /***** GLOBALS *****/
 
-        window.MATTER = Matter;
-        window.PIXI = PIXI;
-        window.SALT = SALT;
-
-        window.editor = new Editor();
+        window.Matter = Matter;
+        window.editor = new EDITOR.Editor();
 
         /***** TEXT SELECTION *****/
 
@@ -96,43 +90,9 @@
             event.preventDefault();                     // Keeps files dragged from outside app opening in new tab
             event.dataTransfer.dropEffect = 'copy';     // Default mouse cursor for files dragged from outside app
         });
-
         document.addEventListener('drop', (event) => {
             event.preventDefault();                     // Keeps files dragged from outside app opening in new tab
         });
-
-        // import * as PIXI from 'pixi';
-
-        // const app = new SALT.Application({
-        //     element: document.getElementById('display'),
-        //     backgroundColor: '#1099bb',
-        // })
-
-        // // Sprite
-        // const bunny = PIXI.Sprite.from('./files/assets/textures/dragon.png');
-        // bunny.anchor.set(0.5);
-        // bunny.x = app.screen.width / 2;
-        // bunny.y = app.screen.height / 2;
-        // app.stage.addChild(bunny);
-
-        // // Text
-        // const text = new PIXI.Text('This is a PixiJS text', {
-        //     fontFamily: 'Arial',
-        //     fontSize: 24,
-        //     fill: 0xff1010,
-        //     align: 'center',
-        // });
-        // app.stage.addChild(text);
-
-        // // Update
-        // app.ticker.add((delta) => {
-        //     // frame-independent transformation, delta is 1 if running at 100% performance
-
-        //     bunny.rotation += 0.01 * delta;
-
-        //     text.x += 0.1 * delta;
-        //     text.y += 0.1 * delta;
-        // });
 
     </script>
 

@@ -49,7 +49,6 @@ const DEFAULT_SETTINGS = {
 
     'scene/grid/showCanvas':                    true,               // Show main canvas grid?
     'scene/grid/showInfinite':                  true,               // Show momentary infinite grid when dragging?
-    'scene/grid/plane':                         'xy',               // Grid should be drawn on this plane
     'scene/grid/canvasMultiplier':              10,                 // Major size multiplier for checkerboard grid
     'scene/grid/translateSize':                 0.10,               // Grid size for translate, rect tools
     'scene/grid/rotateSize':                    15.0,               // Rotation snap in angle degrees

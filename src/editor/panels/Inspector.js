@@ -1,7 +1,6 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import * as VIEW2D from 'view2d';
 
 import { Config } from '../config/Config.js';
 import { DockPanel } from '../gui/DockPanel.js';
@@ -18,11 +17,11 @@ import { SettingsHistoryTab } from './inspector/SettingsHistoryTab.js';
 import { ProjectGeneralTab } from './inspector/ProjectGeneralTab.js';
 import { ProjectInfoTab } from './inspector/ProjectInfoTab.js';
 
-// import { SceneGridTab } from './inspector/SceneGridTab.js';
+import { SceneGridTab } from './inspector/SceneGridTab.js';
 // import { SceneViewTab } from './inspector/SceneViewTab.js';
 // import { SceneThreeTab } from './inspector/SceneThreeTab.js';
 
-// import { GraphSettingsTab } from './inspector/GraphSettingsTab.js';
+import { GraphSettingsTab } from './inspector/GraphSettingsTab.js';
 
 class Inspector extends DockPanel {
 
@@ -101,7 +100,7 @@ class Inspector extends DockPanel {
 
                 if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
                     // self.addTab('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false });
-                    // self.addTab('grid', new SceneGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
+                    self.addTab('grid', new SceneGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
                     // self.addTab('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true });
                 } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
                     self.addTab('graph', new GraphSettingsTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
@@ -194,7 +193,7 @@ class Inspector extends DockPanel {
             // // 'viewport' Mode?
             // if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
             //     // Don't rebuild inspector during rubberband mode
-            //     if (editor.viewport.mouseState === VIEW2D.MOUSE_STATES.SELECTING) return;
+            //     if (editor.viewport.mouseState === EDITOR.MOUSE_STATES.SELECTING) return;
             // }
 
             // Don't rebuild while dragging new object into scene

@@ -37,7 +37,7 @@ class AddAssetCommand extends Command {
             ONE.AssetManager.addAsset(this.asset);
             this.wasAdded = true;
             if (ONE.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
-                editor.project.traverseWorlds((child) => child.rebuildComponents());
+                this.editor.project.traverseWorlds((child) => child.rebuildComponents());
             }
             Signals.dispatch('assetAdded', this.assetType, this.asset);
             Signals.dispatch('assetSelect', this.assetType, this.asset);
@@ -51,7 +51,7 @@ class AddAssetCommand extends Command {
             ONE.AssetManager.removeAsset(this.asset, false /* dispose */);
             this.wasAdded = false;
             if (ONE.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
-                editor.project.traverseWorlds((child) => child.rebuildComponents());
+                this.editor.project.traverseWorlds((child) => child.rebuildComponents());
             }
             Signals.dispatch('assetRemoved', this.assetType, this.asset);
             Signals.dispatch('inspectorBuild');

@@ -1,6 +1,6 @@
+import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import * as VIEW2D from 'view2d';
 
 // import { SceneUtils } from './SceneUtils.js';
 // import { ViewportEvents } from './ViewportEvents.js';
@@ -29,9 +29,6 @@ class View2D extends SUEY.Panel {
 
         // Forward Function Declarations
         this.addSprites = function() {};                        // Adds sprites to empty entities
-        this.rebuildColliders = function() {};                  // Builds scene 'sceneColliders' from selected Stage
-        this.buildTransformGroup = function() {};               // Builds transform group
-        this.updateTransformGroup = function() {};              // Update selected entities from wireTrackers
 
         // Gui
         this.width = Math.max(2, this.getWidth());              // Width of dom element
@@ -41,74 +38,19 @@ class View2D extends SUEY.Panel {
         this.selected = [];                                     // Objects selected (can differ slightly from editor)
 
         // Objects
-        let _sceneWorld = null;                                 // 'this.world'
-
         this.camera = null;
         this.cameraMode = undefined;
 
         // Controls
-        this.cameraControls = null;
-        this.gizmo = null;
-        this.dragPlane = null;
         this.rubberBandBox = null;
-        this.rubberBandBoxHelper = null;
-        this.transformControls = null;
-        this.paintControls = null;
 
         // Input
-        this.mouseMode = VIEW2D.MOUSE_MODES.SELECT;           // Left mouse button mode
-        this.mouseState = VIEW2D.MOUSE_STATES.NONE;           // Current mouse state
+        this.mouseMode = EDITOR.MOUSE_MODES.SELECT;             // Left mouse button mode
+        this.mouseState = EDITOR.MOUSE_STATES.NONE;             // Current mouse state
         this.mouseIsDown = false;                               // True when mouse down
         this.mouseDownButton = -1;                              // Tracks button on last mouse down
-        this.overrideCursor = null;                             // Tracks override cursor (mouse over TransformControls)
         this.startSelection = [];                               // Stores starting selection when mouse down with shift/ctrl
-
         this.dragStarted = false;                               // True when mouse has moved enough to start 'dragging'
-        this.outlineStrength = VIEW2D.STYLING.EDGE_GLOW;      // Hide outlines when in 'rect' mode
-
-        this.wantsGrid = false;                                 // When true, viewport wants to render grid
-        this.wantsMini = false;                                 // When true, viewport wants to render mini grid
-
-        /******************** VIEW2D */
-
-        Object.defineProperty(this, 'world', {
-            get: function() { return _sceneWorld; },
-            set: function(world) {
-                editor.selectEntities(/* none */);
-                _sceneWorld = (world && world.isWorld) ? world : null;//_emptyWorld;
-
-                // Scene Graph Signal
-                Signals.dispatch('sceneGraphChanged');
-
-                // Active World / Stage Toggles
-                editor.project.setActiveWorld((world && world.isWorld) ? world : undefined);
-                if (world && world.isWorld) {
-                    if (self.stage && world.activeStage() && self.stage.uuid === world.activeStage().uuid) {
-                        // EMPTY
-                    } else {
-                        self.stage = world.activeStage();
-                    }
-                }
-            }
-        });
-
-        Object.defineProperty(this, 'stage', {
-            get: function() { return (_sceneWorld && _sceneWorld.isWorld3D) ? _sceneWorld.activeStage() : undefined; },
-            set: function(stage) {
-                const world = _sceneWorld;
-                if (!world || !world.isWorld) return;
-                world.setActiveStage(stage);
-
-                // Stage Changed Signals
-                Signals.dispatch('stageChanged');
-                self.updateSky();
-
-                // Active World / Stage Toggles
-                SceneUtils.toggleActiveStage(world);
-                SceneUtils.toggleBoundaryObjects(Config.getKey('scene/render/bounds'), stage);
-                SceneUtils.toggleColliders(Config.getKey('scene/render/colliders'));
-            }
-        });
 
         /******************** FINAL SETUP */
 
@@ -116,14 +58,49 @@ class View2D extends SUEY.Panel {
         // ViewportEvents.addEvents(this);
         // ViewportSignals.addSignals(this);
 
-        // First Render
-        requestAnimationFrame(() => { this.animate(); });
+
+        // const app = new SALT.Application({
+        //     element: this.dom,
+        //     backgroundColor: '#1099bb',
+        // })
+
+        // // Sprite
+        // const bunny = PIXI.Sprite.from('./files/assets/textures/dragon.png');
+        // bunny.anchor.set(0.5);
+        // bunny.x = app.screen.width / 2;
+        // bunny.y = app.screen.height / 2;
+        // app.stage.addChild(bunny);
+
+        // // Text
+        // const text = new PIXI.Text('This is a PixiJS text', {
+        //     fontFamily: 'Arial',
+        //     fontSize: 24,
+        //     fill: 0xff1010,
+        //     align: 'center',
+        // });
+        // app.stage.addChild(text);
+
+        // // Update
+        // app.ticker.add((delta) => {
+        //     // frame-independent transformation, delta is 1 if running at 100% performance
+
+        //     bunny.rotation += 0.01 * delta;
+
+        //     text.x += 0.1 * delta;
+        //     text.y += 0.1 * delta;
+        // });
+
+
+        // // First Render
+        // requestAnimationFrame(() => { this.animate(); });
     }
 
     /******************** FRAME ********************/
 
     animate() {
-        if (this.world && this.isDisplayed()) {
+        const self = this;
+
+        if (this.isDisplayed()) {
             // Start render timer
             const startTime = performance.now();
 
@@ -135,7 +112,7 @@ class View2D extends SUEY.Panel {
         }
 
         // Ask for another animation frame immediately
-        requestAnimationFrame(function() { this.animate(); });
+        requestAnimationFrame(() => self.animate());
     }
 
     /******************** RESIZE ********************/
@@ -149,89 +126,28 @@ class View2D extends SUEY.Panel {
     /******************** CLIPBOARD / EDIT ********************/
 
     cut() {
-        if (!this.validWorld()) return;
         // SceneUtils.deleteSelection('Cut' /* commandName */);
     }
 
     paste() {
-        if (!this.validWorld()) return;
         // SceneUtils.duplicateSelection(null, editor.clipboard.items, true /* force copy */, 'Paste');
     }
 
     duplicate(key) {
-        if (!this.validWorld()) return;
         // SceneUtils.duplicateSelection(key);
     }
 
     delete() {
-        if (!this.validWorld()) return;
         // SceneUtils.deleteSelection();
     }
 
     selectAll() {
-        if (!this.validWorld()) return;
         // const activeEntities = this.world.activeStage().getEntities(false /* includeStages */);
         // editor.execute(new SelectCommand(activeEntities, editor.selected));
     }
 
     selectNone() {
-        if (!this.validWorld()) return;
-        editor.execute(new SelectCommand([], editor.selected));
-    }
-
-    /******************** INTERACTION ********************/
-
-    hasFocus(eventType = 'pointer') {
-        if (!document.activeElement.contains(this.dom)) return false;
-
-        let lostFocus = false;
-
-        // Gather classLists from possible active element
-        const elements = [];
-        if (document.activeElement) elements.push(document.activeElement);      // Built into Html5 Document Model
-        if (document.focusedElement) elements.push(document.focusedElement);    // From index.html - focusin / focusout
-        if (document.downOnElement) elements.push(document.downOnElement);      // From index.html - pointerdown
-
-        // console.log(document.activeElement);
-        // console.log(document.focusedElement);
-        // console.log(document.downOnElement);
-
-        // Check for focused classes
-        for (const element of elements) {
-            // Focus was on an element inside a menu
-            lostFocus = lostFocus || SUEY.Utils.isChildOfElementWithClass(element, 'osui-menu');
-
-            // Focus is on a Selected MenuButton
-            lostFocus = lostFocus || (element.classList.contains('osui-menu-button') && element.classList.contains('osui-selected'));
-
-            // Focus is on code editor
-            lostFocus = lostFocus || SUEY.Utils.isChildOfElementWithClass(element, 'CodeMirror');
-
-            // Focus is on a color input
-            lostFocus = lostFocus || element.type === 'color';
-
-            // // Focus is on a Number Text Box
-            // lostFocus = lostFocus || element.classList.contains('osui-text-box') || element.classList.contains('osui-number');
-
-            //
-            // .. insert more cases here ..
-            //
-
-            /***** Extra Key Event Checks *****/
-            if (eventType === 'key') {
-
-                // Focus is on an AssetBox
-                lostFocus = lostFocus || (element.classList.contains('osui-asset-box'));
-
-            }
-        }
-
-        const viewportHasFocus = !lostFocus;
-        return viewportHasFocus;
-    }
-
-    validWorld() {
-        return (this.world && this.world.isWorld && !this.world.locked);
+        // editor.execute(new SelectCommand([], editor.selected));
     }
 
 }

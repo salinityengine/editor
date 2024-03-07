@@ -10,12 +10,12 @@ import { Language } from './config/Language.js';
 import { Loader } from './config/Loader.js';
 import { Signals } from './config/Signals.js';
 
-import { EditorEvents } from './EditorEvents.js';
+import { editorKeyDown, editorKeyUp } from './EditorEvents.js';
 import { EditorToolbar } from './EditorToolbar.js';
+import { InfoBox } from './gui/InfoBox.js';
 
 import { Advisor } from './panels/Advisor.js';
 // import { Explorer } from './panels/Explorer.js';
-import { InfoBox } from './panels/InfoBox.js';
 import { Inspector } from './panels/Inspector.js';
 // import { Player } from './panels/Player.js';
 // import { Previewer } from './panels/Previewer.js';
@@ -30,6 +30,7 @@ class Editor extends SUEY.Docker {
 
     constructor() {
         super();
+        const self = this;
         this.addClass('one-editor').selectable(false);
         document.body.appendChild(this.dom);
 
@@ -83,7 +84,8 @@ class Editor extends SUEY.Docker {
 
         /********** EVENTS */
 
-        EditorEvents.addEvents();
+        document.addEventListener('keydown', (event) => { editorKeyDown(self, event); });
+        document.addEventListener('keyup', (event) => { editorKeyUp(self, event); });
 
         /********** ELEMENTS */
 
@@ -144,7 +146,7 @@ class Editor extends SUEY.Docker {
 
         // Project Loaded
         Signals.connect(this, 'projectLoaded', function() {
-            if (editor.history) editor.history.clear();
+            if (self.history) self.history.clear();
 
             // Clear Inspector Panels
             Signals.dispatch('inspectorBuild');
@@ -160,14 +162,14 @@ class Editor extends SUEY.Docker {
         // Entity Changed
         Signals.connect(this, 'entityChanged', function(entity) {
             if (!entity || !entity.isEntity) return;
-            const activeStageUUID = editor.viewport.world.activeStage().uuid;
+            const activeStageUUID = self.viewport.world.activeStage().uuid;
             const stage = entity.parentStage();
             const world = entity.parentWorld();
 
             if (stage && world && (stage.uuid === activeStageUUID || world.uuid === activeStageUUID)) {
-                if (entity.isLight || entity.isStage || entity.isWorld) editor.viewport.updateSky();
-                if (entity.isCamera || entity.isLight) editor.viewport.rebuildHelpers();
-                editor.viewport.rebuildColliders();
+                if (entity.isLight || entity.isStage || entity.isWorld) self.viewport.updateSky();
+                if (entity.isCamera || entity.isLight) self.viewport.rebuildHelpers();
+                self.viewport.rebuildColliders();
             }
         });
 
@@ -183,9 +185,9 @@ class Editor extends SUEY.Docker {
         /********** DEMO */
 
         setTimeout(() => {
-            // loadDemoProject3D(editor.project);
-            // editor.view2d.world = editor.project.activeWorld();
-            // editor.view2d.stage = editor.view2d.world.activeStage();
+            // loadDemoProject3D(self.project);
+            // self.view2d.world = self.project.activeWorld();
+            // self.view2d.stage = self.view2d.world.activeStage();
             Signals.dispatch('projectLoaded');
         }, 100);
 
@@ -203,12 +205,12 @@ class Editor extends SUEY.Docker {
         }
 
         // // Hide Dock Panels
-        // if (editor.explorer) editor.explorer.hide();
-        // if (editor.inspector) {
+        // if (this.explorer) this.explorer.hide();
+        // if (this.inspector) {
         //     const persistent = [ 'project', 'history', 'settings' ];
-        //     if (!persistent.includes(editor.inspector.currentItem())) editor.inspector.hide();
+        //     if (!persistent.includes(this.inspector.currentItem())) this.inspector.hide();
         // }
-        // if (editor.previewer) editor.previewer.hide();
+        // if (this.previewer) this.previewer.hide();
 
         // Switch Mode
         switch (mode) {
@@ -223,7 +225,7 @@ class Editor extends SUEY.Docker {
         Config.setKey('settings/editorMode', mode);
 
         // // Rebuild Inspector if on 'settings'
-        // if (editor.inspector && editor.inspector.currentItem() === 'settings') {
+        // if (this.inspector && this.inspector.currentItem() === 'settings') {
         //     Signals.dispatch('inspectorBuild', 'rebuild');
         // }
 
@@ -325,8 +327,8 @@ class Editor extends SUEY.Docker {
 
         // New selection same as current selection? Refresh Inspector (but don't refresh view transformGroup)
         if (SALT.EntityUtils.compareArrayOfEntities(this.selected, filtered)) {
-            if (editor.selected.length > 0) {
-                Signals.dispatch('inspectorBuild', editor.selected[0]);
+            if (this.selected.length > 0) {
+                Signals.dispatch('inspectorBuild', this.selected[0]);
                 return;
             }
         }
@@ -426,10 +428,10 @@ class Editor extends SUEY.Docker {
     /******************** INTERACTIVE ********************/
 
     requestScreenshot() {
-        if (editor.player && (editor.player.isPlaying && (editor.player.isPaused != true))) {
-            editor.player.requestScreenshot();
+        if (this.player && (this.player.isPlaying && (this.player.isPaused != true))) {
+            this.player.requestScreenshot();
         } else {
-            editor.wantsScreenshot = true;
+            this.wantsScreenshot = true;
         }
     }
 
@@ -487,4 +489,5 @@ class Editor extends SUEY.Docker {
 
 }
 
+export * from './EditorConstants.js';
 export { Editor };
