@@ -7,7 +7,7 @@ import {
 
 import { AssetManager } from '../app/AssetManager.js';
 import { Maths } from '../utils/Maths.js';
-// import { World } from './world/World.js';
+import { World2D } from './world2d/World2D.js';
 
 class Project {
 
@@ -16,11 +16,11 @@ class Project {
         this.isProject = true;
         this.type = 'Project';
 
-        // Properties
+        // Basic
         this.name = name;
         this.uuid = Maths.uuid();
 
-        // Properties, World
+        // World
         this.activeWorldUUID = null;
 
         // Settings
@@ -183,7 +183,7 @@ class Project {
         for (const worldData of json.worlds) {
             let world = undefined;
             switch (worldData.object.type) {
-                // case 'World3D': world = new World3D().fromJSON(worldData); break;
+                case 'World2D': world = new World2D().fromJSON(worldData); break;
             }
             if (world && world.isWorld) this.addWorld(world);
         }

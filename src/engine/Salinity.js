@@ -18,7 +18,12 @@ export { AssetManager } from './app/AssetManager.js';
 
 /******************** CLASSES - Project  ********************/
 
+// Core
 export { Project } from './project/Project.js';
+
+// World
+export { Stage2D } from './project/world2d/Stage2D.js';
+export { World2D } from './project/world2d/World2D.js';
 
 // Assets
 export { Palette } from './project/assets/Palette.js';

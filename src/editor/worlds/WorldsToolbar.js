@@ -63,8 +63,8 @@ class WorldsToolbar extends SUEY.Panel {
         const addWorld2D = new SUEY.MenuItem('World 2D', `${EDITOR.FOLDER_MENU}node/world2d.svg`);
         const addWorld3D = new SUEY.MenuItem('World 3D', `${EDITOR.FOLDER_MENU}node/world3d.svg`);
         const addUI = new SUEY.MenuItem('UI Screen', `${EDITOR.FOLDER_MENU}node/ui.svg`);
-        // nodeMenu.add(addWorld2D);
-        nodeMenu.add(addWorld3D);
+        nodeMenu.add(addWorld2D);
+        // nodeMenu.add(addWorld3D);
         nodeMenu.add(addUI);
 
         addWorld2D.divIcon.addClass('osui-black-or-white').addClass('osui-drop-shadow');
@@ -78,12 +78,8 @@ class WorldsToolbar extends SUEY.Panel {
         }
 
         addWorld2D.onSelect(() => {
-
-        });
-
-        addWorld3D.onSelect(() => {
-            const world = new SALT.World3D(`World ${editor.project.worldCount() + 1}`);
-            const stage = new SALT.Stage3D('Start');
+            const world = new SALT.World2D(`World ${editor.project.worldCount() + 1}`);
+            const stage = new SALT.Stage2D('Start');
             world.addEntity(stage);
             centerWorldPosition(world);
 
@@ -91,6 +87,10 @@ class WorldsToolbar extends SUEY.Panel {
             cmds.push(new AddWorldCommand(world));
             cmds.push(new SetStageCommand(stage, world));
             editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
+        });
+
+        addWorld3D.onSelect(() => {
+
         });
 
         addUI.onSelect(() => {

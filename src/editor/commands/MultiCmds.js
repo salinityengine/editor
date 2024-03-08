@@ -62,7 +62,7 @@ class MultiCmdsCommand extends Command {
         const transformsChanged = [];
 
         function addToChangedArray(changedArray, entity) {
-            if (!entity || !entity.isEntity3D || !Array.isArray(changedArray)) return;
+            if (!entity || !entity.isEntity || !Array.isArray(changedArray)) return;
             if (SALT.EntityUtils.containsEntity(changedArray, entity) === false) changedArray.push(entity);
         }
 

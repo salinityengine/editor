@@ -24,7 +24,7 @@ import { Inspector } from './panels/Inspector.js';
 import { View2D } from './view2d/View2D.js';
 import { Worlds } from './worlds/Worlds.js';
 
-// import { loadDemoProject3D } from './Demo.js';
+import { loadDemoProject } from './Demo.js';
 
 class Editor extends SUEY.Docker {
 
@@ -185,7 +185,7 @@ class Editor extends SUEY.Docker {
         /********** DEMO */
 
         setTimeout(() => {
-            // loadDemoProject3D(self.project);
+            // loadDemoProject(self.project);
             // self.view2d.world = self.project.activeWorld();
             // self.view2d.stage = self.view2d.world.activeStage();
             Signals.dispatch('projectLoaded');

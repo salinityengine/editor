@@ -389,7 +389,7 @@
 /********** NODES */
 
 #tb-node-plus-sign {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 340deg)) var(--drop-shadow);
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 330deg)) var(--drop-shadow);
 }
 
 /********** SETTINGS */

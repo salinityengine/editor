@@ -4,7 +4,7 @@
 
 # Salinity
 
-Drag and drop 2D JavaScript game engine.
+Easy to use, drag and drop JavaScript game engine.
 
 <br />
 

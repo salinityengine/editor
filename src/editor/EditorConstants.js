@@ -50,7 +50,7 @@ export const FOLDER_TYPES =     './files/editor/types/';
 
 // Component Icons
 export const COMPONENT_ICONS = {
-    // Entity3D
+    // Entity
     'geometry':     `${FOLDER_TYPES}component/geometry.svg`,        // rgb(255, 113, 0)
     'material':     `${FOLDER_TYPES}component/material.svg`,        // rgb(165, 243, 0)
     'mesh':         `${FOLDER_TYPES}component/mesh.svg`,            // #F7DB63
@@ -58,7 +58,7 @@ export const COMPONENT_ICONS = {
     'script':       `${FOLDER_TYPES}component/script.svg`,          // #6E6FFD
     'sprite':       `${FOLDER_TYPES}component/sprite.svg`,          // #5978F2
     'test':         `${FOLDER_TYPES}component/test.svg`,            // rgb(128, 128, 128)
-    // World3D
+    // World
     'physics':      `${FOLDER_TYPES}component/physics.svg`,         // #202020
     'post':         `${FOLDER_TYPES}component/post.svg`,            // rgb(32, 32, 32)
 }

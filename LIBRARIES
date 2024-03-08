@@ -52,6 +52,7 @@
     capacitor               (MIT)       Mobile App          https://github.com/ionic-team/capacitor
     cordova                 (Apache)    Mobile App          https://cordova.apache.org
     electron                (MIT)       Desktop App         https://github.com/electron/electron
+    neutralino.js           (MIT)       Desktop App         https://github.com/neutralinojs/neutralinojs
     nw.js                   (MIT)       Desktop App         https://github.com/nwjs/nw.js
     tauri                   (Apache)    Desktop/Mobile      https://github.com/tauri-apps/tauri
 

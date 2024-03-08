@@ -14,6 +14,7 @@ class Palette {
     }
 
     default16() {
+        this.name = 'Default';
         this.colors = [
             0x000000,   // black
             0x808080,   // gray
@@ -36,6 +37,7 @@ class Palette {
     }
 
     purpleGold() {
+        this.name = 'Purple Gold';
         this.colors = [
             0x000000,   // black
             0xffffff,   // white
