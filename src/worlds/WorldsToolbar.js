@@ -55,6 +55,7 @@ class WorldsToolbar extends SUEY.Panel {
         /******************** ADD NODE */
 
         const nodePlusSign = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}add.svg`).setId('tb-node-plus-sign');
+        nodePlusSign.img.addClass('suey-complement-colorize')
         add.add(nodePlusSign);
 
         const nodeMenu = new SUEY.Menu();
@@ -136,9 +137,6 @@ class WorldsToolbar extends SUEY.Panel {
 
         /******************** SETTINGS */
 
-        // const graphNodes = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}graph-nodes.svg`).setId('tb-graph-nodes');
-        // const graphLines = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}graph-lines.svg`).setId('tb-graph-lines');
-        // graph.add(graphLines, graphNodes);
         const projectStars = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}project-stars.svg`).setId('tb-project-stars');
         const projectShip = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}project-ship.svg`).setId('tb-project-ship');
         proj.add(projectStars, projectShip);

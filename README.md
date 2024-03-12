@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./files/logo/salinity256.png" alt="Salinity"/>
+<img src="./files/logo/salinity256.png" alt="Salinity Engine"/>
 </div>
 
 # Salinity Editor

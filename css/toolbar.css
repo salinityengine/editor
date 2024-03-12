@@ -3,16 +3,16 @@
 /********** EYE */
 
 #tb-eye-closed {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg)) var(--drop-shadow);
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg)) var(--drop-shadow);
 }
 #tb-eye-open {
     filter: none;
 }
 #tb-eye-lid-top {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg));
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg));
 }
 #tb-eye-lid-bottom {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg));
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg));
 }
 
 #tb-eye-closed, #tb-eye-lid-top, #tb-eye-lid-bottom {
@@ -51,7 +51,7 @@
 }
 
 .suey-toolbar-button:hover #tb-edit-pencil-tip, .suey-toolbar-button.suey-selected #tb-edit-pencil-tip {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg));
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg));
     animation: writing 0.7s;
     animation-iteration-count: var(--animation-count);
 }
@@ -223,7 +223,7 @@
 }
 
 #tb-focus-pupil {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 150deg));
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg));
     transition: transform 0.2s ease-out;
 }
 
@@ -382,30 +382,4 @@
 
 .suey-toolbar-button:enabled:hover #tb-settings-shadow, .suey-toolbar-button.suey-selected #tb-settings-shadow {
     transform: rotateZ(-180deg);
-}
-
-/******************** WORLD GRAPH */
-
-/********** NODES */
-
-#tb-node-plus-sign {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 330deg)) var(--drop-shadow);
-}
-
-/********** SETTINGS */
-
-/* Node Graph */
-
-#tb-graph-nodes {
-    filter: saturate(125%) hue-rotate(calc(var(--rotate-hue) + 180deg)) var(--drop-shadow);
-}
-
-#tb-graph-lines {
-    filter: saturate(150%) brightness(2.0) hue-rotate(calc(var(--rotate-hue) + 220deg)) var(--drop-shadow);
-}
-
-.suey-toolbar-button:hover #tb-graph-lines, .suey-toolbar-button.suey-selected #tb-graph-lines {
-    animation: fillDown 0.8s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
 }

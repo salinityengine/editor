@@ -2,10 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Setup Salinity repos:
-    - Editor:
-    - Engine:
-
 Add Goals from Onsight:
 
 Editor Skeleton:
@@ -35,7 +31,6 @@ Engine:
         - Image
 
 Gui:
-    - Property list widget
     - Better docking
         - Drag panels around
 
