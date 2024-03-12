@@ -1,16 +1,10 @@
-/******************** TODO ********************/
+/**********************************************/
+/*                    TO DO                   */
+/**********************************************/
 
-Setup Salinity Engine:
-    - Transfer Onsight repos to Scidian
-        - Onsight
-        - Editor (Onside)
-        - Osui
-        - EyeGL
-    - Setup Salinity repos
-        - Editor:   salinity/slide (move from stevinz/salinity)
-        - Engine:   salinity/salty
-        - Gfx:      salinity/seagl
-        - Gui:      salinity/sooey
+Setup Salinity repos:
+    - Editor:
+    - Engine:
 
 Add Goals from Onsight:
 

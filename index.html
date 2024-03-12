@@ -7,51 +7,49 @@
     <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
     <link rel='icon' type='image/png' href='./files/logo/salinity256.png' />
 
-    <!-- SYTLE: GUI -->
-    <link rel='stylesheet' href='./css/gui/variables.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/core.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/inputs.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/layout.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/menu.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/panels.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/data.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/node.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/interactive.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/tooltip.css' type='text/css'>
-    <link rel='stylesheet' href='./css/gui/options.css' type='text/css'>
+    <!-- -------------------- STYLE -------------------- -->
+
+    <!-- STYLE: SUEY (auto injected with PostCSS) -->
 
     <!-- SYTLE: EDITOR -->
-    <link rel='stylesheet' href='./css/editor/animations.css' type='text/css'>
-    <link rel='stylesheet' href='./css/editor/editor.css' type='text/css'>
-    <link rel='stylesheet' href='./css/editor/panels.css' type='text/css'>
-    <link rel='stylesheet' href='./css/editor/toolbar.css' type='text/css'>
+    <link rel='stylesheet' href='./css/animations.css' type='text/css'>
+    <link rel='stylesheet' href='./css/editor.css' type='text/css'>
+    <link rel='stylesheet' href='./css/panels.css' type='text/css'>
+    <link rel='stylesheet' href='./css/toolbar.css' type='text/css'>
 
 </head>
-<body>
+<body class='preload'>
+
+    <!-- -------------------- IMPORT MAPS -------------------- -->
+
+    <!-- ALTERNATIVE IMPORTS
+            CDN:
+                "engine":           "https://unpkg.com/....",
+                "suey":             "https://unpkg.com/suey/build/suey.module.js",
+    -->
 
     <script type='importmap'>
         {
             "imports": {
-                "editor":           "./src/editor/Editor.js",
-                "engine":           "./src/engine/Salinity.js",
-                "gui":              "./src/gui/Suey.js",
-
-                "pixi" :            "./libs/pixi.min.mjs"
+                "editor":           "./src/Editor.js",
+                "engine":           "../engine/src/Salinity.js",
+                "gui":              "../suey/build/suey.module.js"
             }
         }
     </script>
 
-    <script src='./libs/matter.min.js'></script>
+    <!-- -------------------- EDITOR -------------------- -->
+
+    <script src='../engine/libs/matter.min.js' type='text/javascript'></script>
 
     <script type='module'>
 
         /***** IMPORTS *****/
 
-        import * as PIXI from 'pixi';
         import * as SALT from 'engine';
         import * as SUEY from 'gui';
         import * as EDITOR from 'editor';
-        import { Signals } from './src/editor/config/Signals.js';
+        import { Signals } from './src/config/Signals.js';
 
         console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
 

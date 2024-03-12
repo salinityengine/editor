@@ -2,14 +2,14 @@
 <img src="./files/logo/salinity256.png" alt="Salinity"/>
 </div>
 
-# Salinity
+# Salinity Editor
 
-Easy to use, drag and drop JavaScript game engine.
+Easy to use, drag and drop editor for the [Salinity Engine](https://github.com/salinityengine/engine).
 
 <br />
 
 ## Status
 
-Under development, more info to come...
+Under development, expect frequent breaking changes...
 
 <br />
