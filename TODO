@@ -2,8 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Add Goals from Onsight:
-
 Editor Skeleton:
     - Turn 'functional' signals into editor methods
     - Remove all old three code
@@ -11,28 +9,203 @@ Editor Skeleton:
     - Go through Config
     - Go through Language
 
+Commands:
+    - Seperate editor / views
+        - Add Entity
+        - Select All / None
+
 Editor:
-    - Asset View
-    - Scene Tree
-    - View2D
-        - Multiple Scenes Open same time!
+    - Inspector:
+        - Multi-Select
+            - Only show shared properties in inspector?
+            - Resizing a group of selected objects
+    - Explorer:
+        - Assets
+        - Outliner
+    - View2D:
+        - Multiple scenes open at the same time
         - Editable
-        - Graph
-    - Local storage for current project
-        - https://github.com/mrdoob/three.js/blob/dev/editor/js/Storage.js
-        - https://github.com/DVLP/localStorageDB/blob/master/localdata.js
 
 Engine:
+    - Assets
+        - Image / Atlas
     - Project
         - World
         - Stage
         - Entity
-    - Assets
-        - Image
-
-Gui:
-    - Better docking
-        - Drag panels around
 
 Player:
-    - Run in editor
+    - Editor Window
+
+/******************** SHORT TERM ********************/
+
+Components:
+    - 2D:
+        - Animation
+        - Sprite
+        - Texture Atlas
+            - Be able to drag and drop textures
+    - Animation:
+    - Effects:
+        - Trail
+    - Lights:
+    - Material:
+    - Mesh:
+        - Instanced?
+    - Particle Emitter:
+    - Sound:
+
+Physics:
+
+Script Events:
+    - Default:
+        - Init
+        - Update
+        - Destroy
+    - Physics:
+        - Wake
+        - Sleep
+        - Collide / Seperate
+
+Scripting:
+    - Controls:
+    - Health:
+        - Health / Damage
+        - Death Animation
+    - Items:
+        - Coin
+        - Spring
+    - Movement:
+    - Spawner:
+
+Shape Editor:
+    - Editable points
+    - Save shape
+
+UI Editor:
+    - Editor: (UI Mode)
+    - App: (UI Layer)
+
+View Menu:
+    - Bounds (scene)
+    - Colliders
+    - Joints (motor, spring, etc.)
+
+/******************** LONGER TERM ********************/
+
+Advisor:
+    - Broadcast with signals: add info for all exisiting buttons, etc
+    - Tie into Schema: (i.e. NumberBoxes need to alert user min / max / step, etc)
+
+DockPanels:
+    - Resize up / down on side panels
+    - Docking / Snapping / Dragging
+    - Drag n' Drop to new positions (left / right / bottom)?
+
+Docs:
+    - JSDoc (playcanvas)?
+
+Editor:
+    Drag and Drop:
+        - Support models
+    Loading:
+        - Progress Bar
+    Helpers:
+        - Camera:
+            - Set colors on creation (camera frustum, etc)
+        - Point Light:
+        - Spot Light:
+            - Adjustable look target
+            - Decay / Penumbra / Distance
+
+Library:
+    - Icons:
+        - Scripts
+        - Prefab Categories
+    - Built-in asset library
+    - Asset store?
+
+Lighting:
+    - DirectionalLight:
+    - Shadows:
+
+Menu:
+    File:
+        - New: Popup Dialogs (Warning!, You Sure?, etc)
+        - Import: Add types (Models, etc.)
+        - Export:
+    Help:
+        - Tips: (show tips / hide tips)
+            - Example: 'Having entities as children of objects with non uniform scale has unknown effects'
+        - Samples:
+        - Manual / FAQ / Tutorials / Contact / Bug Report:
+        - Keyboard Layout Map:
+        - About / Version:
+
+Player:
+    - Debug Console:
+
+Post Processing:
+    - Dither:
+        - Blue Noise?
+        - Camera rotation?
+        https://offscreencanvas.com/issues/glsl-dithering/#:~:text=Dithering%20works%20by%20taking%20a,dots%20and%20half%20black%20dots.
+        https://surma.dev/things/ditherpunk/
+    - PixelPerfectPass (Ascii, Pixel):
+        - Improve camera alignment?
+
+Prefabs:
+    - Items:
+        - Spring
+        - Destroyable Block
+    - Enemies:
+        - Back and Forth
+        - Towards Player
+
+Scripting:
+    - Python (using Brython):
+        https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
+    - Visual Scripting:
+
+Side / Bottom Menu:
+    - Scratchpad: Global / project scratchpads (like in Ct.js)
+    - Help:
+    - Web Browser:
+
+Storage:
+    - Autosave
+    - Implement browser storage
+        - https://github.com/mrdoob/three.js/blob/dev/editor/js/Storage.js
+        - https://github.com/DVLP/localStorageDB/blob/master/localdata.js
+
+QR Code:
+    - Load on phone
+
+Windows:
+    - Snap to left / right / center
+    - Dock to bottom?
+
+World Graph:
+    Nodes:
+        - Auto resizing
+        - Save connections
+
+/******************** ENGINE IDEAS ********************/
+
+Textures:
+    - UV Unwrapping: xAtlas - https://github.com/repalash/xatlas-three
+    - Texture Generation: Texgen - https://github.com/mrdoob/texgen.js
+
+Entity Component System (ECS):
+    - bitECS (https://github.com/NateTheGreatt/bitECS)
+    - square (https://github.com/rare-earth/Square)
+
+Multi-threading:
+    - Web workers?
+
+/******************** LIBRARY UPDATES ********************/
+
+    LIBRARY         VERSION     RELEASE
+- CodeMirror 5                  Jun-08-2023     ...need to upgrade to CodeMirror 6?
+- Matter            0.19.0      Feb-16-2023     https://github.com/liabru/matter-js
+- Pixi.js           8.0.0       Mar-05-2024     https://github.com/pixijs/pixijs

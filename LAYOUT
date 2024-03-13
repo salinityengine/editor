@@ -1,0 +1,128 @@
+/******************** FLAGS ********************/
+
+//  Note Flags
+//      - NOTE:         Important reminder
+//      - IDEA:         Possibility for future
+//      - DEBUG:        Code for debugging only
+//      - OPTION:       Alternate code w/ similar operation
+//
+//  Code Flags
+//      - TODO:         Needs to be implemented at some point
+//      - FIXME:        Needs to be fixed at some point
+//      - WARNING:      Very important reminder
+//      - HACK:         Needs improvement
+//      - TEMP:         Daily use ONLY! Temporary for refactoring!
+
+/******************** ARCHITECTURE ********************/
+
+/***** PANELS *****/
+
+Top:
+    Toolbar: Menu
+Sides:
+    Advisor:
+    !! Explorer: (Assets, Prefabs, Scripts)
+    !! Inspector
+    !! Previewer:
+    !! Outliner:
+    !! Color Picker:
+Center:
+    !! Player:
+    !! Scripter: Javascript ?? Python (Brython) ?? Visual Nodes (aka Script Canvas)
+    !! View 2D:
+    !! View 3D:
+    !! Animation Timeline: Import, Models, Keyframe Editing
+    !! Collision Editor:
+    !! Console / Debug (override console.log to capture):
+    !! Font Editor:
+    !! Node Editor:
+    !! Particle Editor: https://www.reddit.com/r/gamemaker/comments/gq6f81/particle_lab_a_particle_designer_for_gamemaker/
+    !! Shape Editor: Vectors? Auto 3D extrusion? Smoothing?
+
+/***** EDITOR MODES *****/
+
+!! Multiplayer / Networking:
+
+!! Pixel / Vector Editor:
+    !! Export to png
+
+Scene Editor:
+    !! 3D Physics Scene:
+        !! Custom Renderer, 'EyeGL'
+        !! Rapier 3D Physics (CCD!)
+
+    !! 2D Physics Scene:
+        !! Pixi Renderer?
+        !! Matter Physics?
+
+!! Sound / Music Editor:
+    !! Audio Component
+    !! Effect Generator
+    !! Song Creator
+
+!! UI Creator:
+
+World Graph:
+    - World Nodes
+
+/***** APP *****/
+
+Platforms:
+    - Web, MacOS (Electron), iOS (Cordova)
+        - Look at Tauri for Desktop AND Mobile, and Capacitor for Mobile!
+        - NW.js has source protection
+    - Live Device Test (QR?)
+
+/******************** FEATURES ********************/
+
+/***** EDITOR *****/
+
+- Customization:
+    - Color schemes
+    - Language support
+
+!! Grid:
+
+- Interactive Controls:
+    - Focus
+    - Move / Rotate / Scale
+    - Rect Tool
+    - Snap Tool
+
+- Save / Load:
+
+- Selection:
+    - Rubberband selection of meshes (using BVH)
+
+- Transform Tools:
+    - Duplication (WASD keyboard controls)
+    - Rotate / Flip
+
+- Undo / Redo:
+
+/***** ENGINE *****/
+
+Entity Component System:
+    - Geometry component
+        - Tons of primitives
+        !! Custom shape / lathe / line / tube geometries
+
+Image-to-Model:
+    !! SVG
+    !! PNG/JPG/BMP
+
+Scripting:
+    - Javascript
+    !! Nodes
+
+/******************** SCIDIAN ********************/
+
+Salinity Website:
+    - User Login
+    - Help Section
+    - Message Board
+
+Social Media:
+    - Blog
+    - Facebook Account
+    - Instagram Account

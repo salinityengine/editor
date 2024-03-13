@@ -1,4 +1,5 @@
 import * as EDITOR from 'editor';
+import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { Config } from './config/Config.js';
@@ -85,7 +86,7 @@ export function editorKeyDown(editor, event) {
             if (event.altKey || event.ctrlKey || event.metaKey) {
                 event.stopPropagation();
                 event.preventDefault();
-                ONE.System.fullscreen();
+                SALT.System.fullscreen();
             }
             break;
 

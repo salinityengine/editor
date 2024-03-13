@@ -9,8 +9,8 @@ class AddAssetCommand extends Command {
 
         this.type = 'AddAssetCommand';
 
-        this.assetType = ONE.AssetManager.checkType(asset);
-        this.name = `Add ${ONE.Strings.capitalize(this.assetType)}`;
+        this.assetType = SALT.AssetManager.checkType(asset);
+        this.name = `Add ${SALT.Strings.capitalize(this.assetType)}`;
         if (asset.name && asset.name !== '') this.name += `: ${asset.name}`;
 
         this.asset = asset;
@@ -33,10 +33,10 @@ class AddAssetCommand extends Command {
     }
 
     execute() {
-        if (!ONE.AssetManager.getAsset(this.asset.uuid)) {
-            ONE.AssetManager.addAsset(this.asset);
+        if (!SALT.AssetManager.getAsset(this.asset.uuid)) {
+            SALT.AssetManager.addAsset(this.asset);
             this.wasAdded = true;
-            if (ONE.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
+            if (SALT.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
                 this.editor.project.traverseWorlds((child) => child.rebuildComponents());
             }
             Signals.dispatch('assetAdded', this.assetType, this.asset);
@@ -48,9 +48,9 @@ class AddAssetCommand extends Command {
 
     undo() {
         if (this.wasAdded) {
-            ONE.AssetManager.removeAsset(this.asset, false /* dispose */);
+            SALT.AssetManager.removeAsset(this.asset, false /* dispose */);
             this.wasAdded = false;
-            if (ONE.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
+            if (SALT.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
                 this.editor.project.traverseWorlds((child) => child.rebuildComponents());
             }
             Signals.dispatch('assetRemoved', this.assetType, this.asset);

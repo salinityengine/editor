@@ -1,0 +1,130 @@
+import * as EDITOR from 'editor';
+import * as SUEY from 'gui';
+
+import { Config } from '../config/Config.js';
+import { DockPanel } from '../gui/DockPanel.js';
+
+// // Settings
+// import { PaintPreview } from './previewer/PaintPreview.js';
+// import { SnapPreview } from './previewer/SnapPreview.js';
+
+// // Assets
+// import { GeometryPreview } from './previewer/GeometryPreview.js';
+// import { MaterialPreview } from './previewer/MaterialPreview.js';
+// import { PalettePreview } from './previewer/PalettePreview.js';
+// import { PrefabPreview } from './previewer/PrefabPreview.js';
+// import { ScriptPreview } from './previewer/ScriptPreview.js';
+// import { ShapePreview } from './previewer/ShapePreview.js';
+// import { TexturePreview } from './previewer/TexturePreview.js';
+
+class Previewer extends DockPanel {
+
+    constructor({
+        style = SUEY.PANEL_STYLES.FANCY,
+        startWidth = null,
+        startHeight = null,
+        minWidth = 0,
+        maxWidth = Infinity,
+        minHeight = 0,
+        maxHeight = Infinity,
+    } = {}) {
+        super({ style, displayEmpty: false, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
+        const self = this;
+        this.setName('Previewer');
+        this.addClass('one-previewer');
+        this.setTabSide(SUEY.TAB_SIDES.LEFT);
+
+        // Flags
+        this.isEmpty = true;
+
+        // Internal Properties
+        let _item = undefined;
+
+        /** Builds Previewer */
+        function build(buildFrom = undefined) {
+            if (buildFrom !== 'rebuild') _item = buildFrom;
+
+            // Delete existing tabs
+            self.clearTabs();
+
+            if (_item) {
+                const color = '#0055CC'; /* background color for magnifying glass icon */
+
+                // TRANSFORM CONTROLS
+                if (_item === 'transformControls') {
+                    if (editor.viewport.transformMode() === 'paint') {
+                        self.addTab('paint', new PaintPreview(), { icon: `${EDITOR.FOLDER_TYPES}paint/palette.svg` });
+                    } else if (editor.viewport.transformMode() === 'snap') {
+                        self.addTab('snap', new SnapPreview(), { icon: `${EDITOR.FOLDER_TYPES}snap/magnet.svg` });
+                    }
+
+                // GEOMETRY
+                } else if (_item.isBufferGeometry) {
+                    self.addTab('preview', new GeometryPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+
+                // MATERIAL
+                } else if (_item.isMaterial) {
+                    self.addTab('preview', new MaterialPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+
+                // PALETTE
+                } else if (_item.isPalette) {
+                    self.addTab('preview', new PalettePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+
+                // SCRIPT
+                } else if (_item.type === 'Script') {
+                    self.addTab('preview', new ScriptPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+
+                // SHAPE
+                } else if (_item.type === 'Shape') {
+                    self.addTab('preview', new ShapePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+
+                // TEXTURE
+                } else if (_item.isTexture) {
+                    self.addTab('preview', new TexturePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+
+                // PREFAB
+                } else if (_item.isPrefab && !_item.isBuiltIn) {
+                    self.addTab('preview', new PrefabPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+                }
+
+            }
+
+            // Hide if empty, select last known tab (stored ranked in Config.js)
+            self.isEmpty = (self.tabs.length === 0);
+            // self.setDisplay((self.isEmpty || !Config.getKey(`panels/show${self.getName()}`)) ? 'none' : '');
+            self.setDisplay(self.isEmpty ? 'none' : '');
+            self.selectLastKnownTab();
+
+            // // DEBUG: Print out number of functions attached to each signal
+            // signals.logSignalCounts();
+
+            // Dispatch Signals
+            signals.previewerChanged.dispatch();
+        }
+
+        // Close Button
+        SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.RIGHT);
+
+        /***** EVENTS *****/
+
+        this.dom.addEventListener('hidden', function(event) {
+            signals.previewerBuild.dispatch();
+        });
+
+        /***** SIGNALS *****/
+
+        signals.previewerBuild.add((buildFrom) => {
+            build(buildFrom);
+        });
+
+        /***** DESTROY *****/
+
+        this.dom.addEventListener('destroy', function() {
+            signals.previewerBuild.remove(build);
+        }, { once: true });
+
+    } // end ctor
+
+}
+
+export { Previewer };

@@ -15,12 +15,12 @@ import { EditorToolbar } from './EditorToolbar.js';
 import { InfoBox } from './gui/InfoBox.js';
 
 import { Advisor } from './panels/Advisor.js';
-// import { Explorer } from './panels/Explorer.js';
+import { Explorer } from './panels/Explorer.js';
 import { Inspector } from './panels/Inspector.js';
-// import { Player } from './panels/Player.js';
-// import { Previewer } from './panels/Previewer.js';
-// import { Scripter } from './panels/Scripter.js';
-// import { Shaper } from './panels/Shaper.js';
+import { Player } from './panels/Player.js';
+import { Previewer } from './panels/Previewer.js';
+import { Scripter } from './panels/Scripter.js';
+import { Shaper } from './panels/Shaper.js';
 import { View2D } from './view2d/View2D.js';
 import { Worlds } from './worlds/Worlds.js';
 
@@ -106,9 +106,9 @@ class Editor extends SUEY.Docker {
         this.worlds = new Worlds();
         this.add(this.worlds);
 
-        // // Script Editor
-        // this.scripter = new Scripter();
-        // this.add(this.scripter);
+        // Script Editor
+        this.scripter = new Scripter();
+        this.add(this.scripter);
 
         // // Game Player
         // this.player = new Player();
@@ -121,14 +121,14 @@ class Editor extends SUEY.Docker {
         /***** DOCKING PANELS */
 
         this.advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
-        // this.explorer = new Explorer({ startWidth: 245, minWidth: 70 });
+        this.explorer = new Explorer({ startWidth: 245, minWidth: 70 });
         this.inspector = new Inspector({ startWidth: 300, minWidth: 190 });
-        // this.previewer = new Previewer({ startWidth: 300, minWidth: 190 });
+        this.previewer = new Previewer({ startWidth: 300, minWidth: 190 });
 
         this.addDockPanel(this.advisor, SUEY.CORNERS.BOTTOM_LEFT);
-        // this.addDockPanel(this.explorer, SUEY.CORNERS.TOP_LEFT);
+        this.addDockPanel(this.explorer, SUEY.CORNERS.TOP_LEFT);
         this.addDockPanel(this.inspector, SUEY.CORNERS.TOP_RIGHT);
-        // this.addDockPanel(this.previewer, SUEY.CORNERS.BOTTOM_RIGHT);
+        this.addDockPanel(this.previewer, SUEY.CORNERS.BOTTOM_RIGHT);
 
         /********** SIGNALS */
 
