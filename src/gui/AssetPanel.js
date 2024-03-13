@@ -7,6 +7,7 @@ import { ColorizeFilter } from './ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 import { RemoveAssetCommand } from '../commands/Commands.js';
+import { Signals } from '../config/Signals.js';
 
 const ASSET_WIDTH = 128;
 const ASSET_HEIGHT = 128;
@@ -50,14 +51,14 @@ class AssetPanel extends OSUI.Shrinkable {
         const buttonRow = new OSUI.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
 
         // 'View Options' Button
-        const viewOptions = new OSUI.Button().addClass('osui-borderless-button');
+        const viewOptions = new OSUI.Button().addClass('suey-borderless-button');
         viewOptions.overflowMenu = OSUI.OVERFLOW.LEFT;
         viewOptions.dom.setAttribute('tooltip', 'View Options');
 
         const shadowBox = new OSUI.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`);
         if (shadowBox.firstImage()) {
             if (shadowBox.firstImage().firstImage()) {
-                shadowBox.firstImage().firstImage().addClass('osui-black-or-white');
+                shadowBox.firstImage().firstImage().addClass('suey-black-or-white');
             }
         }
         viewOptions.add(shadowBox);
@@ -140,15 +141,9 @@ class AssetPanel extends OSUI.Shrinkable {
         }
 
         // Editor / Project Changes
-        signals.projectLoaded.add(forceRebuild);
-        signals.schemeChanged.add(forceRebuild);
-        signals.refreshSettings.add(refreshPanel);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.projectLoaded.remove(forceRebuild);
-            signals.schemeChanged.remove(forceRebuild);
-            signals.refreshSettings.remove(refreshPanel);
-        }, { once: true });
+        Signals.connect(this, 'projectLoaded', forceRebuild);
+        Signals.connect(this, 'schemeChanged', forceRebuild);
+        Signals.connect(this, 'settingsRefreshed', refreshPanel);
 
         /***** INIT *****/
 
@@ -205,7 +200,7 @@ class AssetPanel extends OSUI.Shrinkable {
 
         // Empty Item
         if (clearPanel || !this.#emptyItem) {
-            const empty = new OSUI.Row().addClass('osui-property-full');
+            const empty = new OSUI.Row().addClass('suey-property-full');
             empty.dom.setAttribute('tooltip', Language.getKey('assets/empty'));
             empty.isTemporary = true;
             empty.dom.draggable = false;
@@ -219,7 +214,7 @@ class AssetPanel extends OSUI.Shrinkable {
         }
 
         // Get Assets
-        const assets = SALT.AssetManager.getLibrary(this.type, this.category);
+        const assets = SALT.AssetManager.library(this.type, this.category);
 
         // Remove missing Assets
         for (const assetBox of this.contents().children) {
@@ -242,7 +237,7 @@ class AssetPanel extends OSUI.Shrinkable {
 
     /** Add missing items */
     buildItems(assets) {
-        assets = assets ?? SALT.AssetManager.getLibrary(this.type, this.category);
+        assets = assets ?? SALT.AssetManager.library(this.type, this.category);
         for (const asset of assets) {
             let found = false;
             for (const assetBox of this.contents().children) {

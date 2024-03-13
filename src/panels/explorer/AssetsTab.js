@@ -6,6 +6,7 @@ import { AddAssetCommand } from '../../commands/Commands.js';
 import { AssetPanel } from '../../gui/AssetPanel.js';
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
+import { Signals } from '../../config/Signals.js';
 
 class AssetsTab extends SUEY.Titled {
 
@@ -18,9 +19,9 @@ class AssetsTab extends SUEY.Titled {
         const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
 
         /***** 'Add' Asset *****/
-        const addButton = new SUEY.Button().addClass('osui-borderless-button');
+        const addButton = new SUEY.Button().addClass('suey-borderless-button');
         addButton.dom.setAttribute('tooltip', 'Add Asset');
-        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('osui-complement-colorize'));
+        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu
         const assetMenu = new SUEY.Menu();
@@ -108,17 +109,10 @@ class AssetsTab extends SUEY.Titled {
             }
         }
 
-        signals.assetSelect.add(focusAsset);
-        signals.assetAdded.add(processAssets);
-        signals.assetRemoved.add(processAssets);
-        signals.assetChanged.add(assetChanged);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.assetSelect.remove(focusAsset);
-            signals.assetAdded.remove(processAssets);
-            signals.assetRemoved.remove(processAssets);
-            signals.assetChanged.remove(assetChanged);
-        }, { once: true });
+        Signals.connect(this, 'assetSelect', focusAsset);
+        Signals.connect(this, 'assetAdded', processAssets);
+        Signals.connect(this, 'assetRemoved', processAssets);
+        Signals.connect(this, 'assetChanged', assetChanged);
 
         /***** INIT *****/
 

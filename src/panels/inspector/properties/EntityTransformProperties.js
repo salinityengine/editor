@@ -39,10 +39,10 @@ class EntityTransformProperties extends SUEY.Div {
         const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
 
         // 'Edit Transform' Button
-        const editTransform = new SUEY.Button().addClass('osui-borderless-button');
+        const editTransform = new SUEY.Button().addClass('suey-borderless-button');
         editTransform.overflowMenu = SUEY.OVERFLOW.LEFT;
         editTransform.dom.setAttribute('tooltip', 'Edit Transform');
-        editTransform.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}more.svg`).addClass('osui-rotate-colorize'));
+        editTransform.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}more.svg`).addClass('suey-rotate-colorize'));
 
         // Transform Menu
         const transformMenu = new SUEY.Menu();
@@ -133,7 +133,7 @@ class EntityTransformProperties extends SUEY.Div {
         }
 
         const scaleButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
-        const lockScale = new SUEY.Button().addClass('osui-borderless-button').setStyle('font-size', '90%');
+        const lockScale = new SUEY.Button().addClass('suey-borderless-button').setStyle('font-size', '90%');
         const lockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}lock.svg`);
         const unlockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}unlock.svg`);
         lockScale.add(new SUEY.ShadowBox(lockIcon, unlockIcon));

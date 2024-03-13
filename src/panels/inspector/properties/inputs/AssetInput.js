@@ -14,8 +14,8 @@ class AssetInput {
         const textBox = new SUEY.TextBox();
         textBox.dom.disabled = true;
 
-        const clearButton = new SUEY.Button().addClass('osui-property-button');
-        clearButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}delete.svg`).addClass('osui-triadic-colorize'));
+        const clearButton = new SUEY.Button().addClass('suey-property-button');
+        clearButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
         clearButton.dom.setAttribute('tooltip', 'Clear');
 
         // Event
@@ -28,25 +28,25 @@ class AssetInput {
 
         let textBoxValue;
         textBox.dom.addEventListener('dragenter', () => {
-            if (textBox.hasClass('osui-disabled')) return;
+            if (textBox.hasClass('suey-disabled')) return;
             textBoxValue = textBox.getValue();
             textBox.setValue(`${typeClassName}`);
             const uuid = editor.dragInfo;
             const checkAsset = SALT.AssetManager.getAsset(uuid);
-            textBox.addClass(checkItemType(checkAsset) ? 'osui-yes-drop' : 'osui-no-drop');
+            textBox.addClass(checkItemType(checkAsset) ? 'suey-yes-drop' : 'suey-no-drop');
         });
 
         textBox.dom.addEventListener('dragleave', () => {
-            if (textBox.hasClass('osui-disabled')) return;
+            if (textBox.hasClass('suey-disabled')) return;
             textBox.setValue(textBoxValue);
-            textBox.removeClass('osui-yes-drop', 'osui-no-drop');
+            textBox.removeClass('suey-yes-drop', 'suey-no-drop');
         });
 
         textBox.dom.addEventListener('drop', (event) => {
-            textBox.removeClass('osui-yes-drop', 'osui-no-drop');
+            textBox.removeClass('suey-yes-drop', 'suey-no-drop');
             event.preventDefault();
             event.stopPropagation();
-            if (textBox.hasClass('osui-disabled')) return;
+            if (textBox.hasClass('suey-disabled')) return;
             const uuid = event.dataTransfer.getData('text/plain');
             const checkAsset = SALT.AssetManager.getAsset(uuid);
             if (checkItemType(checkAsset)) {
@@ -71,12 +71,12 @@ class AssetInput {
 
         function updateName() {
             if (checkItemType(asset)) {
-                textBox.addClass('osui-valid-type');
-                textBox.removeClass('osui-invalid-type');
+                textBox.addClass('suey-valid-type');
+                textBox.removeClass('suey-invalid-type');
                 textBox.setValue(asset.name);
             } else {
-                textBox.removeClass('osui-valid-type');
-                textBox.addClass('osui-invalid-type');
+                textBox.removeClass('suey-valid-type');
+                textBox.addClass('suey-invalid-type');
                 textBox.setValue('None');
             }
         }

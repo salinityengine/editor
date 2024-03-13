@@ -101,7 +101,7 @@ class ComponentProperties extends SUEY.PropertyList {
             /***** NO PROPERTIES ADDED (schema empty?) *****/
 
             if (self.children && self.children.length === 0) {
-                const emptyRow = new SUEY.Row().addClass('osui-property-left', 'osui-left-tab-spacing');
+                const emptyRow = new SUEY.Row().addClass('suey-property-left', 'suey-left-tab-spacing');
                 const emptyText = new SUEY.Text('No Properties').setDisabled(true);
                 self.add(emptyRow.add(emptyText));
             }

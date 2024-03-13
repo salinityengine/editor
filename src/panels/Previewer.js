@@ -3,6 +3,7 @@ import * as SUEY from 'gui';
 
 import { Config } from '../config/Config.js';
 import { DockPanel } from '../gui/DockPanel.js';
+import { Signals } from '../config/Signals.js';
 
 // // Settings
 // import { PaintPreview } from './previewer/PaintPreview.js';
@@ -96,10 +97,10 @@ class Previewer extends DockPanel {
             self.selectLastKnownTab();
 
             // // DEBUG: Print out number of functions attached to each signal
-            // signals.logSignalCounts();
+            // Signals.dispatch('logSignalCounts');
 
             // Dispatch Signals
-            signals.previewerChanged.dispatch();
+            Signals.dispatch('previewerChanged');
         }
 
         // Close Button
@@ -108,20 +109,12 @@ class Previewer extends DockPanel {
         /***** EVENTS *****/
 
         this.dom.addEventListener('hidden', function(event) {
-            signals.previewerBuild.dispatch();
+            Signals.dispatch('previewerBuild');
         });
 
         /***** SIGNALS *****/
 
-        signals.previewerBuild.add((buildFrom) => {
-            build(buildFrom);
-        });
-
-        /***** DESTROY *****/
-
-        this.dom.addEventListener('destroy', function() {
-            signals.previewerBuild.remove(build);
-        }, { once: true });
+        Signals.connect(this, 'previewerBuild', (buildFrom) => { build(buildFrom); });
 
     } // end ctor
 

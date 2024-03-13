@@ -63,9 +63,9 @@ class ProjectInfoTab extends SUEY.Titled {
 
             scenesInfo.setTextContent(SALT.Maths.addCommas(sceneCount));
             entitiesInfo.setTextContent(SALT.Maths.addCommas(entityCount));
-            // const geometries = SALT.AssetManager.getLibrary('asset', 'geometry');
-            // const materials = SALT.AssetManager.getLibrary('asset', 'material');
-            // const textures = SALT.AssetManager.getLibrary('asset', 'texture');
+            // const geometries = SALT.AssetManager.library('asset', 'geometry');
+            // const materials = SALT.AssetManager.library('asset', 'material');
+            // const textures = SALT.AssetManager.library('asset', 'texture');
             // geometriesInfo.setTextContent(SALT.Maths.addCommas(geometries.length));
             // materialsInfo.setTextContent(SALT.Maths.addCommas(materials.length));
             // texturesInfo.setTextContent(SALT.Maths.addCommas(textures.length));

@@ -74,7 +74,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         if (item.type === 'angle') value = SALT.Maths.radiansToDegrees(value);
 
         // Widget
-        const numberHolder = new SUEY.Span().addClass('osui-number-holder');
+        const numberHolder = new SUEY.Span().addClass('suey-number-holder');
         const numberBox = new SUEY.NumberBox();
         numberHolder.add(numberBox);
 
@@ -98,7 +98,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         if (String(label) !== '') {
             numberBox.setStyle('text-align', 'right');
             const labelBox = new SUEY.Text(SALT.Strings.capitalize(label) + ':');
-            labelBox.addClass('osui-number-label-box');
+            labelBox.addClass('suey-number-label-box');
             numberHolder.add(labelBox);
         }
 
@@ -111,7 +111,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         // Widget
         const slider = new SUEY.Slider();
-        const slideBox = new SUEY.NumberBox().addClass('osui-property-tiny-row');
+        const slideBox = new SUEY.NumberBox().addClass('suey-property-tiny-row');
 
         // Event
         slider.onInput(() => {
@@ -163,7 +163,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         // Widget
         const numberBox = new SUEY.NumberBox();
-        const plusMinus = new SUEY.Span().addClass('one-plus-minus', 'osui-black-or-white');
+        const plusMinus = new SUEY.Span().addClass('one-plus-minus', 'suey-black-or-white');
         plusMinus.add(new SUEY.VectorBox(`${EDITOR.FOLDER_INSPECTOR}variable.svg`));
         const variableBox = new SUEY.NumberBox();
         variableBox.setStyle('flex', '2 2 auto');
@@ -211,7 +211,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Aspect Ratio Lock Button
         let aspectLocked = false;
         const aspectButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
-        const lockAspect = new SUEY.Button().addClass('osui-borderless-button').setStyle('font-size', '90%');
+        const lockAspect = new SUEY.Button().addClass('suey-borderless-button').setStyle('font-size', '90%');
         const lockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}lock.svg`);
         const unlockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}unlock.svg`);
         function setAspectIconColors() {
@@ -256,7 +256,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         // Widget
         for (let i = 0; i < arraySize; i++) {
-            const numberHolder = new SUEY.Span().addClass('osui-number-holder');
+            const numberHolder = new SUEY.Span().addClass('suey-number-holder');
             const numberBox = new SUEY.NumberBox();
             numberHolder.add(numberBox);
             arrayBoxes.push(numberBox);
@@ -301,7 +301,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             if (String(label) !== '') {
                 numberBox.setStyle('text-align', 'right');
                 const labelBox = new SUEY.Text(SALT.Strings.capitalize(label) + ':');
-                labelBox.addClass('osui-number-label-box');
+                labelBox.addClass('suey-number-label-box');
                 numberHolder.add(labelBox);
             }
 
@@ -353,7 +353,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         // Widget
         for (let i = 0; i < arraySize; i++) {
-            const boolHolder = new SUEY.Span().addClass('osui-number-holder');
+            const boolHolder = new SUEY.Span().addClass('suey-number-holder');
             const boolBox = new SUEY.Checkbox();
             boolHolder.add(boolBox);
             arrayBoxes.push(boolBox);
@@ -487,13 +487,13 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         textBox.dom.disabled = true;
 
         const clearButton = new SUEY.Button();
-        clearButton.addClass('osui-property-button');
-        clearButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}delete.svg`).addClass('osui-triadic-colorize'));
+        clearButton.addClass('suey-property-button');
+        clearButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
         clearButton.dom.setAttribute('tooltip', 'Clear');
 
         // REFRESH ASSET //
         const refreshButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
-        const refreshAsset = new SUEY.Button().addClass('osui-borderless-button');
+        const refreshAsset = new SUEY.Button().addClass('suey-borderless-button');
         refreshAsset.dom.setAttribute('tooltip', `Refresh ${typeClassName}`);
         refreshAsset.setStyle('font-size', '90%');
         const refreshIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}reset.svg`);
@@ -554,25 +554,25 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         let textBoxValue;
         textBox.dom.addEventListener('dragenter', () => {
-            if (textBox.hasClass('osui-disabled')) return;
+            if (textBox.hasClass('suey-disabled')) return;
             textBoxValue = textBox.getValue();
             textBox.setValue(`${typeClassName}`);
             const uuid = editor.dragInfo;
             const checkAsset = SALT.AssetManager.getAsset(uuid);
-            textBox.addClass(checkItemType(checkAsset) ? 'osui-yes-drop' : 'osui-no-drop');
+            textBox.addClass(checkItemType(checkAsset) ? 'suey-yes-drop' : 'suey-no-drop');
         });
 
         textBox.dom.addEventListener('dragleave', () => {
-            if (textBox.hasClass('osui-disabled')) return;
+            if (textBox.hasClass('suey-disabled')) return;
             textBox.setValue(textBoxValue);
-            textBox.removeClass('osui-yes-drop', 'osui-no-drop');
+            textBox.removeClass('suey-yes-drop', 'suey-no-drop');
         });
 
         textBox.dom.addEventListener('drop', (event) => {
-            textBox.removeClass('osui-yes-drop', 'osui-no-drop');
+            textBox.removeClass('suey-yes-drop', 'suey-no-drop');
             event.preventDefault();
             event.stopPropagation();
-            if (textBox.hasClass('osui-disabled')) return;
+            if (textBox.hasClass('suey-disabled')) return;
             const uuid = event.dataTransfer.getData('text/plain');
             const checkAsset = SALT.AssetManager.getAsset(uuid);
             if (checkItemType(checkAsset)) {
@@ -599,12 +599,12 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         function updateName() {
             if (checkItemType(asset)) {
-                textBox.addClass('osui-valid-type');
-                textBox.removeClass('osui-invalid-type');
+                textBox.addClass('suey-valid-type');
+                textBox.removeClass('suey-invalid-type');
                 textBox.setValue(asset.name);
             } else {
-                textBox.removeClass('osui-valid-type');
-                textBox.addClass('osui-invalid-type');
+                textBox.removeClass('suey-valid-type');
+                textBox.addClass('suey-invalid-type');
                 textBox.setValue('None');
             }
         }

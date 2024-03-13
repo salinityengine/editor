@@ -24,9 +24,9 @@ class OutlinerTab extends SUEY.Titled {
         const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
 
         /***** 'Add' Entity *****/
-        const addButton = new SUEY.Button().addClass('osui-borderless-button');
+        const addButton = new SUEY.Button().addClass('suey-borderless-button');
         addButton.dom.setAttribute('tooltip', 'Add Entity');
-        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('osui-complement-colorize'));
+        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu
         const entityMenu = new SUEY.Menu();
@@ -159,12 +159,12 @@ class OutlinerTab extends SUEY.Titled {
 
             function emptyOption(title = 'No World') {
                 const option = document.createElement('div');
-                option.classList.add('osui-no-select');
+                option.classList.add('suey-no-select');
                 option.draggable = false;
                 option.value = -1;
                 option.dropGroup = -1;
                 const optionTitle = document.createElement('span');
-                optionTitle.classList.add('osui-disabled');
+                optionTitle.classList.add('suey-disabled');
                 optionTitle.textContent = `\u00A0 ${title}`; /* unicode literal for a &nbsp; (non breaking space) */
                 option.appendChild(optionTitle);
                 return option;
@@ -249,8 +249,8 @@ class OutlinerTab extends SUEY.Titled {
                 if (!entity.isWorld && _nodeStates.has(entity)) {
                     const state = _nodeStates.get(entity);
                     const opener = document.createElement('span');
-                    opener.classList.add('osui-opener');
-                    if (entity.isEntity && entity.getEntities().length > 0) opener.classList.add(state ? 'osui-is-open' : 'osui-is-closed');
+                    opener.classList.add('suey-opener');
+                    if (entity.isEntity && entity.getEntities().length > 0) opener.classList.add(state ? 'suey-is-open' : 'suey-is-closed');
                     function openerPointerDown(event) {
                         event.preventDefault();
                         event.stopImmediatePropagation();
@@ -268,7 +268,7 @@ class OutlinerTab extends SUEY.Titled {
                         // World Visible
                         const shown = document.createElement('span');
                         shown.classList.add('outliner-visible-checkbox');
-                        shown.classList.add('osui-black-or-white');
+                        shown.classList.add('suey-black-or-white');
                         const eyeIcon = document.createElement('img');
                         eyeIcon.style['max-width'] = '1em';
                         eyeIcon.src = `${EDITOR.FOLDER_MENU}eye.svg`;
@@ -279,7 +279,7 @@ class OutlinerTab extends SUEY.Titled {
                         // World Locked
                         const lockCheck = document.createElement('span');
                         lockCheck.classList.add('outliner-lock-checkbox');
-                        lockCheck.classList.add('osui-black-or-white');
+                        lockCheck.classList.add('suey-black-or-white');
                         const lockIcon = document.createElement('img');
                         lockIcon.style['max-width'] = '1em';
                         lockIcon.src = `${EDITOR.FOLDER_MENU}lock.svg`;
@@ -293,7 +293,7 @@ class OutlinerTab extends SUEY.Titled {
                     if (promode) {
                         const shown = document.createElement('span');
                         shown.classList.add('outliner-visible-checkbox');
-                        shown.classList.add('osui-black-or-white');
+                        shown.classList.add('suey-black-or-white');
                         const eyeIcon = document.createElement('img');
                         eyeIcon.style['max-width'] = '1em';
                         function setVisibleIcon() {
@@ -305,8 +305,8 @@ class OutlinerTab extends SUEY.Titled {
                         shown.appendChild(eyeIcon);
                         shown.addEventListener('click', (event) => event.stopImmediatePropagation());
                         shown.addEventListener('dblclick', (event) => event.stopImmediatePropagation());
-                        shown.addEventListener('pointerenter', (event) => { shown.classList.add('osui-highlight'); });
-                        shown.addEventListener('pointerleave', (event) => { shown.classList.remove('osui-highlight'); });
+                        shown.addEventListener('pointerenter', (event) => { shown.classList.add('suey-highlight'); });
+                        shown.addEventListener('pointerleave', (event) => { shown.classList.remove('suey-highlight'); });
                         shown.addEventListener('pointerup', (event) => event.stopImmediatePropagation());
                         shown.addEventListener('pointerdown', (event) => {
                             event.stopPropagation();
@@ -324,7 +324,7 @@ class OutlinerTab extends SUEY.Titled {
                     // Stage Locked
                     const lockCheck = document.createElement('span');
                     lockCheck.classList.add('outliner-lock-checkbox');
-                    lockCheck.classList.add('osui-black-or-white');
+                    lockCheck.classList.add('suey-black-or-white');
                     const lockIcon = document.createElement('img');
                     lockIcon.style['max-width'] = '1em';
                     function setLockedIcon() {
@@ -336,8 +336,8 @@ class OutlinerTab extends SUEY.Titled {
                     lockCheck.appendChild(lockIcon);
                     lockCheck.addEventListener('click', (event) => event.stopImmediatePropagation());
                     lockCheck.addEventListener('dblclick', (event) => event.stopImmediatePropagation());
-                    lockCheck.addEventListener('pointerenter', (event) => { lockCheck.classList.add('osui-highlight'); });
-                    lockCheck.addEventListener('pointerleave', (event) => { lockCheck.classList.remove('osui-highlight'); });
+                    lockCheck.addEventListener('pointerenter', (event) => { lockCheck.classList.add('suey-highlight'); });
+                    lockCheck.addEventListener('pointerleave', (event) => { lockCheck.classList.remove('suey-highlight'); });
                     lockCheck.addEventListener('pointerup', (event) => event.stopImmediatePropagation());
                     lockCheck.addEventListener('pointerdown', (event) => {
                         event.stopPropagation();
@@ -370,7 +370,7 @@ class OutlinerTab extends SUEY.Titled {
                 return option;
             }
 
-            const viewWorld = editor.viewport.world;
+            const viewWorld = editor.viewport?.world;
             const viewStageUUID = (viewWorld && viewWorld.isWorld) ? viewWorld.activeStage().uuid : -1;
             if (!viewWorld || !viewWorld.isEntity) return treeList.setOptions([ emptyOption() ]);
 
@@ -467,55 +467,6 @@ class OutlinerTab extends SUEY.Titled {
         };
 
         /******************** SIGNALS */
-
-        signals.assetAdded.add((type) => {
-            if (type === 'script') rebuildTree();
-        });
-
-        signals.assetRemoved.add((type) => {
-            if (type === 'script') rebuildTree();
-        });
-
-        signals.promodeChanged.add(() => {
-            rebuildTree();
-        })
-
-        signals.sceneGraphChanged.add(() => {
-            rebuildTree();
-        });
-
-        signals.stageChanged.add(() => {
-            const viewWorld = editor.viewport.world;
-            const viewStageUUID = (viewWorld && viewWorld.isWorld) ? viewWorld.activeStage().uuid : -1;
-            for (const div of treeList.options) {
-                if (div.value == viewStageUUID) div.classList.add('outliner-active-stage');
-                else div.classList.remove('outliner-active-stage');
-            }
-        });
-
-        signals.selectionChanged.add(() => {
-            if (ignoreSelectionChangedSignal === true) return;
-            if (!editor.viewport.world) return rebuildTree();
-
-            let needsRefresh = false;
-            let highlightUUIDs = [];
-            for (let i = 0; i < editor.selected.length; i++) {
-                const entity = editor.selected[i];
-                highlightUUIDs.push(entity.uuid);
-
-                let parent = entity.parent;
-                while (parent && !parent.isStage && !parent.isWorld) {
-                    if (_nodeStates.get(parent) !== true) {
-                        _nodeStates.set(parent, true);
-                        needsRefresh = true;
-                    }
-                    parent = parent.parent;
-                }
-            }
-
-            if (needsRefresh) rebuildTree();
-            else treeList.setValues(highlightUUIDs, true /* scroll to */);
-        });
 
         // Initial Build
         rebuildTree();

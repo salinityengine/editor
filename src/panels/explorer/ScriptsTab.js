@@ -4,6 +4,7 @@ import * as SUEY from 'gui';
 
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
+import { Signals } from '../../config/Signals.js';
 
 import { AddAssetCommand } from '../../commands/Commands.js';
 import { AssetPanel } from '../../gui/AssetPanel.js';
@@ -19,9 +20,9 @@ class ScriptsTab extends SUEY.Titled {
         const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
 
         /***** 'Add' Asset *****/
-        const addButton = new SUEY.Button().addClass('osui-borderless-button');
+        const addButton = new SUEY.Button().addClass('suey-borderless-button');
         addButton.dom.setAttribute('tooltip', 'Add Asset');
-        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('osui-complement-colorize'));
+        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu
         const assetMenu = new SUEY.Menu();
@@ -91,7 +92,7 @@ class ScriptsTab extends SUEY.Titled {
 
         function processScripts(type) {
             if (type !== 'script') return;
-            const scripts = SALT.AssetManager.getLibrary('script'); /* returns all scripts */
+            const scripts = SALT.AssetManager.library('script'); /* returns all scripts */
             for (let i = 0; i < scripts.length; i++) {
                 const script = scripts[i];
                 const category = String(script.category).toLowerCase();
@@ -142,21 +143,11 @@ class ScriptsTab extends SUEY.Titled {
             processScripts('script');
         }
 
-        signals.assetSelect.add(focusAsset);
-        signals.assetAdded.add(processScripts);
-        signals.assetRemoved.add(processScripts);
-        signals.assetChanged.add(assetChanged);
-
-        signals.projectLoaded.add(projectLoaded);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.assetSelect.remove(focusAsset);
-            signals.assetAdded.remove(processScripts);
-            signals.assetRemoved.remove(processScripts);
-            signals.assetChanged.remove(assetChanged);
-
-            signals.projectLoaded.remove(projectLoaded);
-        }, { once: true });
+        Signals.connect(this, 'assetSelect', focusAsset);
+        Signals.connect(this, 'assetAdded', processScripts);
+        Signals.connect(this, 'assetRemoved', processScripts);
+        Signals.connect(this, 'assetChanged', assetChanged);
+        Signals.connect(this, 'projectLoaded', projectLoaded);
 
         /***** INIT *****/
 

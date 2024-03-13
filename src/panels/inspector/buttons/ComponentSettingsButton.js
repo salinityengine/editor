@@ -18,11 +18,11 @@ class ComponentSettingsButton extends SUEY.Button {
         super();
 
         // Setup
-        this.addClass('osui-borderless-button');
+        this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.dom.setAttribute('tooltip', 'Edit Component');
 
-        const shadowBox = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`).addClass('osui-rotate-colorize');
+        const shadowBox = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`).addClass('suey-rotate-colorize');
         if (shadowBox.firstImage()) {
             if (shadowBox.firstImage().firstImage()) {
                 shadowBox.firstImage().firstImage().setStyle('filter', 'brightness(1.25)');

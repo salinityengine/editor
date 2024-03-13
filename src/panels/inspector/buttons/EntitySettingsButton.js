@@ -19,10 +19,10 @@ class EntitySettingsButton extends SUEY.Button {
         if (hideButton) return this.setStyle('display', 'none');
 
         // Setup
-        this.addClass('osui-borderless-button');
+        this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.dom.setAttribute('tooltip', 'Edit Component');
-        this.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}edit.svg`).addClass('osui-rotate-colorize'));
+        this.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}edit.svg`).addClass('suey-rotate-colorize'));
 
         // Properties
         this.componentMenu = new SUEY.Menu();

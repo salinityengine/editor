@@ -17,10 +17,10 @@ class AddComponentButton extends SUEY.Button {
         if (hideButton) return this.setStyle('display', 'none');
 
         // Setup
-        this.addClass('osui-borderless-button');
+        this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.dom.setAttribute('tooltip', 'Add Component');
-        this.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('osui-complement-colorize'));
+        this.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // Properties
         this.componentMenu = new SUEY.Menu();
