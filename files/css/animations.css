@@ -138,6 +138,19 @@
     100%  { transform: translate(   0%,    0%); }
 }
 
+@keyframes wave-front {
+    100% { transform: translateX(-280px); }
+}
+
+@keyframes wave-middle {
+    25.0% { transform: translateY( 4px); }
+    75.0% { transform: translateY(-4px); }
+}
+
+@keyframes wave-back {
+    100% { transform: translateX( 280px); }
+}
+
 @keyframes wiggle {
     0%   { transform: rotateZ(-10deg); }
     20%  { transform: rotateZ( 10deg); }

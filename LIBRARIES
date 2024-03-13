@@ -26,7 +26,6 @@
 
 - Graphics
     pixijs                  (MIT)       2D Graphics         https://github.com/pixijs/pixijs
-    three.js                (MIT)       3D Graphics         https://github.com/mrdoob/three.js
 
 - Physics
     matter-js               (MIT)       2D Physics          https://github.com/liabru/matter-js
@@ -72,6 +71,9 @@
     martinez                (MIT)       Polygon Clipping    https://github.com/w8r/martinez
     poly-decomp.js          (MIT)       Convex Pieces       https://github.com/schteppe/poly-decomp.js
     potpack                 (ISC)       Rect Packing        https://github.com/mapbox/potpack
+
+- Graphics
+    three.js                (MIT)       3D Graphics         https://github.com/mrdoob/three.js
 
 - Textures
     texture-merger          (MIT)       Texture Atlas       https://github.com/oguzeroglu/TextureMerger

@@ -6,7 +6,7 @@ import { Signals } from './Signals.js';
 import { AddAssetCommand } from '../commands/Commands.js';
 import { AddEntityCommand } from '../commands/Commands.js';
 
-import { unzipSync, strFromU8 } from '../../libs/fflate.module.js';
+import { unzipSync, strFromU8 } from '../libs/fflate.module.js';
 
 class Loader {
 

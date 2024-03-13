@@ -9,7 +9,7 @@ import * as SUEY from 'gui';
 import { Config } from './config/Config.js';
 import { Signals } from './config/Signals.js';
 
-import { zipSync, strToU8 } from '../libs/fflate.module.js';
+import { zipSync, strToU8 } from './libs/fflate.module.js';
 
 class EyeMenu extends SUEY.Menu {
 
@@ -131,17 +131,18 @@ class EyeMenu extends SUEY.Menu {
                 toZip['data/project.eye'] = strToU8(output);
 
                 const title = editor.project.name;
-                const manager = new THREE.LoadingManager(function() {
-                    const zipped = zipSync(toZip, { level: 9 });
-                    const filename = ((title !== '') ? title : 'untitled') + '.zip';
-                    SALT.System.saveBuffer(zipped.buffer, filename, 'application/zip');
-                });
 
-                const loader = new THREE.FileLoader(manager);
-                loader.load('./src/export/index.html', function(content) {
-                    content = content.replace('<!-- TITLE -->', title);
-                    toZip['index.html'] = strToU8(content);
-                });
+                // const manager = new THREE.LoadingManager(function() {
+                //     const zipped = zipSync(toZip, { level: 9 });
+                //     const filename = ((title !== '') ? title : 'untitled') + '.zip';
+                //     SALT.System.saveBuffer(zipped.buffer, filename, 'application/zip');
+                // });
+
+                // const loader = new THREE.FileLoader(manager);
+                // loader.load('./src/export/index.html', function(content) {
+                //     content = content.replace('<!-- TITLE -->', title);
+                //     toZip['index.html'] = strToU8(content);
+                // });
                 // loader.load('./src/libs/salinity.min.js', function(content) {
                 //     toZip['libs/salinity.min.js'] = strToU8(content);
                 // });
