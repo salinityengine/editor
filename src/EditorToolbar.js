@@ -23,16 +23,19 @@ class EditorToolbar extends SUEY.Panel {
 
         const eye = new SUEY.ToolbarButton().addClass('suey-complement-button');
         const scene = new SUEY.ToolbarButton(null, 'left').addClass('suey-gray-button');
+        const cube = new SUEY.ToolbarButton(null, 'middle').addClass('suey-gray-button');
         const world = new SUEY.ToolbarButton(null, 'middle').addClass('suey-gray-button');
         const ui = new SUEY.ToolbarButton(null, 'right').addClass('suey-gray-button');
 
         eye.dom.setAttribute('tooltip', 'Menu');
-        scene.dom.setAttribute('tooltip', Config.tooltip('Scene Editor'));
+        scene.dom.setAttribute('tooltip', Config.tooltip('Scene Editor 2D'));
+        cube.dom.setAttribute('tooltip', Config.tooltip('Scene Editor 3D'));
         world.dom.setAttribute('tooltip', Config.tooltip('World Graph'));
         ui.dom.setAttribute('tooltip', Config.tooltip('UI Editor'));
 
         Advice.attach(eye, 'toolbar/eye');
-        Advice.attach(scene, 'toolbar/scene');
+        Advice.attach(scene, 'toolbar/scene2d');
+        Advice.attach(cube, 'toolbar/scene3d');
         Advice.attach(world, 'toolbar/world');
         Advice.attach(ui, 'toolbar/ui');
 
@@ -52,6 +55,9 @@ class EditorToolbar extends SUEY.Panel {
         const sceneFrame = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene-frame.svg`).setId('tb-scene-frame');
         scene.add(/* editPencil, editTip */ sceneFrame);
 
+        const sceneCube = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene-cube.svg`).setId('tb-scene-cube');
+        cube.add(sceneCube);
+
         const worldBackground = new SUEY.VectorBox().setId('tb-world-background');
         worldBackground.setStyle('backgroundImage', `url(${EDITOR.FOLDER_TOOLBAR}world.svg)`);
         world.add(worldBackground);
@@ -62,15 +68,18 @@ class EditorToolbar extends SUEY.Panel {
         ui.add(uiButton, uiJoystick, uiBase);
 
         scene.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.SCENE_EDITOR_2D)));
+        cube.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.SCENE_EDITOR_3D)));
         world.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.WORLD_GRAPH)));
         ui.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.UI_EDITOR)));
 
         Signals.connect(this, 'editorModeChanged', function(mode) {
             scene.removeClass('suey-selected');
+            cube.removeClass('suey-selected');
             world.removeClass('suey-selected');
             ui.removeClass('suey-selected');
             switch (mode) {
                 case EDITOR.MODES.SCENE_EDITOR_2D: scene.addClass('suey-selected'); break;
+                case EDITOR.MODES.SCENE_EDITOR_3D: cube.addClass('suey-selected'); break;
                 case EDITOR.MODES.WORLD_GRAPH: world.addClass('suey-selected'); break;
                 case EDITOR.MODES.UI_EDITOR: ui.addClass('suey-selected'); break;
             }
@@ -78,7 +87,7 @@ class EditorToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(eye, new SUEY.ToolbarSpacer(0.5), scene, world, ui);
+        this.add(eye, new SUEY.ToolbarSpacer(0.5), scene, cube, world, ui);
         editor.toolbarLength = this.children.length;
 
     }

@@ -1,6 +1,6 @@
 /******************** EDITOR */
 
-/********** EYE */
+/********** EYE MENU */
 
 #tb-eye-closed {
     filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg)) var(--drop-shadow);
@@ -43,7 +43,7 @@
     opacity: 0.0;
 }
 
-/********** MODE: SCENE EDITOR */
+/********** MODE: SCENE EDITOR 2D */
 
 .suey-toolbar-button:hover #tb-edit-pencil, .suey-toolbar-button.suey-selected #tb-edit-pencil {
     animation: writing 0.7s;
@@ -54,6 +54,23 @@
     filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg));
     animation: writing 0.7s;
     animation-iteration-count: var(--animation-count);
+}
+
+#tb-scene-frame {
+    transform-origin: 50% 5%; /* specific x-offset | y-offset */
+}
+
+.suey-toolbar-button:hover #tb-scene-frame, .suey-toolbar-button.suey-selected #tb-scene-frame {
+    animation: swing 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/********** MODE: SCENE EDITOR 3D */
+
+.suey-toolbar-button:hover #tb-scene-cube, .suey-toolbar-button.suey-selected #tb-scene-cube {
+    animation: growShrink 1.1s ease-in-out;
+    animation-iteration-count: 1;
 }
 
 /********** MODE: WORLD EDITOR */
@@ -320,18 +337,6 @@
 }
 
 /********** SETTINGS */
-
-/* Scene */
-
-#tb-scene-frame {
-    transform-origin: 50% 5%; /* specific x-offset | y-offset */
-}
-
-.suey-toolbar-button:hover #tb-scene-frame, .suey-toolbar-button.suey-selected #tb-scene-frame {
-    animation: swing 1s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-}
 
 /* Project */
 

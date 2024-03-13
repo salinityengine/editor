@@ -35,7 +35,8 @@ const _values = {
 
         // Toolbar
         'toolbar/eye':                      { title: 'Main Menu', html: `` },
-        'toolbar/scene':                    { title: 'Scene Editor', html: `Editor mode for editing Entities, Stages, and Worlds.` },
+        'toolbar/scene2d':                  { title: 'Scene Editor 2D', html: `Editor mode for editing 2D Worlds, Stages, Entities.` },
+        'toolbar/scene3d':                  { title: 'Scene Editor 3D', html: `Editor mode for editing 3D Worlds, Stages, Entities.` },
         'toolbar/world':                    { title: 'World Graph', html: `Editor mode for interconnecting Worlds and UI Screens.` },
         'toolbar/ui':                       { title: 'UI Editor', html: `Editor mode for editing UI Screens.` },
 
