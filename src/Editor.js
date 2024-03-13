@@ -31,7 +31,7 @@ class Editor extends SUEY.Docker {
     constructor() {
         super();
         const self = this;
-        this.addClass('one-editor').selectable(false);
+        this.addClass('salt-editor').selectable(false);
         document.body.appendChild(this.dom);
 
         /********** GLOBAL */

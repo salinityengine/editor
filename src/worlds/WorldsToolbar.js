@@ -15,7 +15,7 @@ class WorldsToolbar extends SUEY.Panel {
 
     constructor(worldsGraph) {
         super({ style: SUEY.PANEL_STYLES.NSALT });
-        this.setClass('one-toolbar');
+        this.setClass('salt-toolbar');
 
         // Clear Advisor on Leave
         Advice.clear(this);

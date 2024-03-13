@@ -32,7 +32,7 @@ class Previewer extends DockPanel {
         super({ style, displayEmpty: false, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
         const self = this;
         this.setName('Previewer');
-        this.addClass('one-previewer');
+        this.addClass('salt-previewer');
         this.setTabSide(SUEY.TAB_SIDES.LEFT);
 
         // Flags

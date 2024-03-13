@@ -11,7 +11,7 @@ class View3DToolbar extends SUEY.Panel {
 
     constructor() {
         super({ style: SUEY.PANEL_STYLES.NONE });
-        this.setClass('one-toolbar');
+        this.setClass('salt-toolbar');
 
         // Clear Advisor on Leave
         Advice.clear(this);
@@ -228,12 +228,12 @@ class View3DToolbar extends SUEY.Panel {
 
         // Toggle Menu
         const toggleMenu = new SUEY.Menu();
-        toggleMenu.addClass('one-toggle-menu');
+        toggleMenu.addClass('salt-toggle-menu');
         toggleMenu.addClass('suey-menu-under');
-        toggleMenu.addClass('one-button-menu');
+        toggleMenu.addClass('salt-button-menu');
         function createToggleButton(icon = '', tip, configKey, callback = () => {}) {
             const toggle = new SUEY.ToolbarButton(null, null, false /* background */, false /* closesMenus */);
-            toggle.addClass('one-toggle-button');
+            toggle.addClass('salt-toggle-button');
             toggle.add(new SUEY.VectorBox(icon));
             toggle.onClick(() => { toggleButton(); });
             if (tip) toggle.dom.setAttribute('tooltip', tip);
@@ -292,10 +292,10 @@ class View3DToolbar extends SUEY.Panel {
         /** When Player starts / stops, handle graying Editor, hiding 'Play' */
         Signals.connect(this, 'playerStateChanged', function(state) {
             if (state === 'start') {
-                editor.addClass('one-gray-out');
+                editor.addClass('salt-gray-out');
                 play.setStyle('display', 'none', 'pointer-events', 'none');
             } else if (state === 'stop') {
-                editor.removeClass('one-gray-out');
+                editor.removeClass('salt-gray-out');
                 play.setStyle('display', '','pointer-events', 'all');
             }
         });

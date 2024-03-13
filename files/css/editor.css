@@ -16,7 +16,7 @@
 
 /********** PRELOAD */
 
-body.preload *:not(.one-instant-start) { /* used to stop inital page animations */
+body.preload *:not(.salt-instant-start) { /* used to stop inital page animations */
     -webkit-animation-duration: 0s !important;
     animation-duration: 0s !important;
     transition: all 0s !important;
@@ -28,7 +28,7 @@ body {
 
 /********** EDITOR */
 
-.one-editor {
+.salt-editor {
     user-select: none;
     overflow: hidden;
     position: absolute;
@@ -41,7 +41,7 @@ body {
 
 /********** VIEWPORT TOGGLE MENU */
 
-.one-toggle-menu.one-button-menu {
+.salt-toggle-menu.salt-button-menu {
     display: flex !important;
     flex-direction: row !important;
     padding: 0.5em !important;
@@ -49,47 +49,47 @@ body {
     top: calc(100% + var(--pad-large)) !important;
 }
 
-.one-toggle-button {
+.salt-toggle-button {
     border: 2px solid transparent !important;
     box-shadow: none !important;
     filter: contrast(75%) grayscale(100%) !important;
     opacity: 0.7 !important;
 }
 
-.one-toggle-button:hover {
+.salt-toggle-button:hover {
     border: 2px solid rgba(var(--icon)) !important;
     box-shadow: /* pop-out-shadow */
         inset -0.15em  0.15em 0.15em 0 rgba(var(--white), 0.20),
         inset  0.15em -0.15em 0.15em 0 rgba(45, 45, 45, 0.35) !important;
 }
 
-.one-toggle-button:active {
+.salt-toggle-button:active {
     border: 2px solid rgba(var(--icon-dark)) !important;
     box-shadow: inset 0 var(--pad-micro) var(--pad-x-small) 0 rgba(var(--shadow), 0.75) !important; /* sunk-in-shadow */
 }
 
-.one-toggle-button.suey-toggled {
+.salt-toggle-button.suey-toggled {
     border: 2px solid rgba(var(--icon)) !important;
     filter: none !important;
     opacity: 1 !important;
 }
 
-.one-toggle-button.suey-toggled:active {
+.salt-toggle-button.suey-toggled:active {
     border: 2px solid rgba(var(--icon-dark)) !important;
 }
 
 /********** GAME PLAYER */
 
-.one-gray-out .one-advisor,
-.one-gray-out .one-explorer,
-.one-gray-out .one-inspector,
-.one-gray-out .one-previewer,
-.one-gray-out .editor-toolbar, .one-gray-out .suey-flex-box:not(.one-active-toolbar) {
+.salt-gray-out .salt-advisor,
+.salt-gray-out .salt-explorer,
+.salt-gray-out .salt-inspector,
+.salt-gray-out .salt-previewer,
+.salt-gray-out .editor-toolbar, .salt-gray-out .suey-flex-box:not(.salt-active-toolbar) {
     filter: grayscale(1) contrast(0.5) brightness(0.5) /* blur(1px) */ !important;
 }
 
 /* Player Controls */
-.one-active-toolbar {
+.salt-active-toolbar {
     position: absolute;
     right: 1em;
     top: 1em;
@@ -98,16 +98,16 @@ body {
     padding: 0.1em !important;
 }
 
-.suey-window .one-active-toolbar {
+.suey-window .salt-active-toolbar {
     outline: solid 0.21em rgba(var(--button-light), 1);
 }
-.suey-window.suey-active-window .one-active-toolbar {
+.suey-window.suey-active-window .salt-active-toolbar {
     outline: solid 0.21em rgba(var(--icon), 1);
 }
 
 /* Player Controls, Button: Background */
-.one-active-toolbar .suey-toolbar-button,
-.one-active-toolbar .suey-button-background {
+.salt-active-toolbar .suey-toolbar-button,
+.salt-active-toolbar .suey-button-background {
     background-color: transparent;
     background-image: none;
     border: none;
@@ -118,7 +118,7 @@ body {
 }
 
 /* Player Controls, Button: Hover */
-.one-active-toolbar .suey-toolbar-button:hover .suey-button-background {
+.salt-active-toolbar .suey-toolbar-button:hover .suey-button-background {
     background-color: rgba(var(--button-dark), 1) !important;
     box-shadow: /* pop-out-shadow */
         inset var(--minus) var(--pixel) var(--pixel) 0 rgba(var(--white), 0.15),
@@ -127,8 +127,8 @@ body {
 }
 
 /* Player Controls, Button: Active */
-.one-active-toolbar .suey-toolbar-button:active .suey-button-background,
-.one-active-toolbar .suey-toolbar-button.suey-selected .suey-button-background {
+.salt-active-toolbar .suey-toolbar-button:active .suey-button-background,
+.salt-active-toolbar .suey-toolbar-button.suey-selected .suey-button-background {
     background-color: rgba(var(--button-light), 1) !important;
     box-shadow: inset var(--minus) var(--pixel) var(--pad-small) rgba(0, 0, 0, 0.5) !important; /* sunk-in-shadow */
 }
@@ -136,7 +136,7 @@ body {
 /********** INSPECTOR */
 
 /* Keyboard Key Input */
-.one-key-input {
+.salt-key-input {
     caret-color: transparent;
     color: rgb(var(--text)) !important;
     /* background: rgba(var(--button-light), 0.5) !important; */
@@ -152,7 +152,7 @@ body {
     text-align: center !important;
 }
 
-.one-key-input:hover {
+.salt-key-input:hover {
     color: rgb(var(--text-light)) !important;
     /* background: rgba(var(--midlight), 0.5) !important; */
     background: transparent;
@@ -164,7 +164,7 @@ body {
         inset  0.00em  0.15em rgba(var(--white), 0.30) !important;;
 }
 
-.one-key-input:active, .one-key-input:focus {
+.salt-key-input:active, .salt-key-input:focus {
     color: rgb(var(--complement)) !important;
     background: rgba(var(--darklight), 1) !important;
     box-shadow: inset 0 0 0 var(--pixel) rgb(var(--icon)) !important;

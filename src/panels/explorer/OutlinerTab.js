@@ -73,7 +73,7 @@ class OutlinerTab extends SUEY.Titled {
 
         /******************** TREELIST */
 
-        const treeList = new SUEY.TreeList(true /* multiSelect */).addClass('one-outliner');
+        const treeList = new SUEY.TreeList(true /* multiSelect */).addClass('salt-outliner');
         this.add(treeList);
 
         // Change Event (fired on Key Down & Pointer Click)

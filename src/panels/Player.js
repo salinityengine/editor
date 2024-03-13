@@ -14,7 +14,7 @@ class Player extends SUEY.Window {
             width: '60%',
         });
         const self = this;
-        this.addClass('one-player');
+        this.addClass('salt-player');
         this.setDisplay('none');
 
         // App
@@ -42,9 +42,9 @@ class Player extends SUEY.Window {
 
         /***** OUTLINE BOX *****/
 
-        const outlineBox = new SUEY.Div().addClass('one-app-outline');
-        const leftBox = new SUEY.Div().addClass('one-app-side');
-        const rightBox = new SUEY.Div().addClass('one-app-side');
+        const outlineBox = new SUEY.Div().addClass('salt-app-outline');
+        const leftBox = new SUEY.Div().addClass('salt-app-side');
+        const rightBox = new SUEY.Div().addClass('salt-app-side');
         this.add(outlineBox, leftBox, rightBox);
 
         function resizeOutLine() {
@@ -120,7 +120,7 @@ class Player extends SUEY.Window {
         pause.onClick(() => { signals.pausePlayer.dispatch(); });
         stop.onClick(() => { signals.stopPlayer.dispatch(); });
 
-        const playButtons = new SUEY.FlexBox().addClass('one-active-toolbar');
+        const playButtons = new SUEY.FlexBox().addClass('salt-active-toolbar');
         playButtons.add(stop, pause, camera, screen);
         this.add(playButtons);
 

@@ -23,32 +23,32 @@ class Advisor extends DockPanel {
         super({ style, resizers, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
         const self = this;
         this.setName('Advisor');
-        this.addClass('one-advisor');
+        this.addClass('salt-advisor');
         this.setTabSide(SUEY.TAB_SIDES.RIGHT);
 
         /********** WELCOME */
 
-        const welcomeContents = new SUEY.Div().addClass('suey-absolute-box', 'one-advisor-welcome-box');
+        const welcomeContents = new SUEY.Div().addClass('suey-absolute-box', 'salt-advisor-welcome-box');
         welcomeContents.setInnerHtml(`
         <div style='padding-bottom: 0.5em;'>
             <span style='font-size: 110%; color: rgb(var(--triadic2));'>Welcome</span>
             <span style='font-size: 110%; color: rgb(var(--triadic1));'>&nbspto&nbsp</span>
             <span style='font-size: 110%; color: rgb(var(--icon));'>Salinity</span>
         </div>
-        <div class='one-advisor-wave-holder'>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_back one-instant-start'>
+        <div class='salt-advisor-wave-holder'>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_back salt-instant-start'>
                 <pattern id="wave1" patternUnits="userSpaceOnUse" width="280" height="16">
                 <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
                 </pattern>
                 <rect width="100%" height="100%" fill="url(#wave1)"/>
             </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_middle one-instant-start'>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_middle salt-instant-start'>
                 <pattern id="wave2" patternUnits="userSpaceOnUse" width="280" height="16">
                 <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
                 </pattern>
                 <rect width="100%" height="100%" fill="url(#wave2)"/>
             </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_front one-instant-start'>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_front salt-instant-start'>
                 <pattern id="wave3" patternUnits="userSpaceOnUse" width="280" height="16">
                 <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
                 </pattern>
@@ -79,7 +79,7 @@ class Advisor extends DockPanel {
 
         const icon = `${EDITOR.FOLDER_TYPES}advisor.svg`;
         const advisorPanel = this.addTab('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
-        advisorPanel.addClass('one-advisor-panel');
+        advisorPanel.addClass('salt-advisor-panel');
         this.selectFirst();
 
         // Title
@@ -88,8 +88,8 @@ class Advisor extends DockPanel {
         titleDiv.add(titleText);
 
         // Body
-        const bodyScroller = new SUEY.Div().addClass('one-advisor-scroller');
-        const bodyContents = new SUEY.Div().addClass('one-advisor-contents');
+        const bodyScroller = new SUEY.Div().addClass('salt-advisor-scroller');
+        const bodyContents = new SUEY.Div().addClass('salt-advisor-contents');
         bodyScroller.add(welcomeContents, bodyContents);
 
         // Add to Panel

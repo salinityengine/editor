@@ -23,7 +23,7 @@ class Worlds extends SUEY.Graph {
         });
         const self = this;
         this.setClass('Worlds');
-        this.addClass('one-fullscreen');
+        this.addClass('salt-fullscreen');
 
         // Toolbar
         this.add(new WorldsToolbar(this));

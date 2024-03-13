@@ -163,7 +163,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         // Widget
         const numberBox = new SUEY.NumberBox();
-        const plusMinus = new SUEY.Span().addClass('one-plus-minus', 'suey-black-or-white');
+        const plusMinus = new SUEY.Span().addClass('salt-plus-minus', 'suey-black-or-white');
         plusMinus.add(new SUEY.VectorBox(`${EDITOR.FOLDER_INSPECTOR}variable.svg`));
         const variableBox = new SUEY.NumberBox();
         variableBox.setStyle('flex', '2 2 auto');
@@ -446,7 +446,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Widget
         const stringBox = new SUEY.TextBox().setStyle('flex', '1');
         const flexSpacer = new SUEY.FlexSpacer().setStyle('flex', '1');
-        stringBox.addClass('one-key-input');
+        stringBox.addClass('salt-key-input');
 
         // Event
         stringBox.onKeyDown((event) => {

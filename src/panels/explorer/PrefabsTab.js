@@ -23,9 +23,9 @@ class PrefabsTab extends SUEY.Titled {
         this.add(this.panels[general]);
 
         // Add Search Bar
-        const searchDiv = new SUEY.Div().addClass('one-search-holder');
-        const searchIcon = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}search.svg`).addClass('one-search-icon');
-        const searchBox = new SUEY.TextBox('').addClass('one-search-box');
+        const searchDiv = new SUEY.Div().addClass('salt-search-holder');
+        const searchIcon = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}search.svg`).addClass('salt-search-icon');
+        const searchBox = new SUEY.TextBox('').addClass('salt-search-box');
         searchBox.dom.placeholder = Language.getKey('explorer/search');
         searchBox.setValue(this.getSearchTerm());
         searchBox.onInput(() => {

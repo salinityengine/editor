@@ -2,10 +2,6 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-// import { SceneUtils } from './SceneUtils.js';
-// import { ViewportEvents } from './ViewportEvents.js';
-// import { ViewportRender } from './ViewportRender.js';
-// import { ViewportSignals } from './ViewportSignals.js';
 import { View2DToolbar } from './View2DToolbar.js';
 
 import { Config } from '../config/Config.js';
@@ -17,8 +13,8 @@ class View2D extends SUEY.Panel {
     constructor() {
         super();
         const self = this;
-        this.setClass('one-viewport');
-        this.addClass('one-fullscreen');
+        this.setClass('salt-viewport');
+        this.addClass('salt-fullscreen');
         this.selectable(false);
 
         /******************** TOOLBAR */

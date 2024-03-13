@@ -20,8 +20,8 @@ class Shaper extends SUEY.Window {
         SUEY.Interaction.addMaxButton(this, SUEY.CLOSE_SIDES.BOTH, 1.7 /* offset */);
 
         // Elements
-        this.canvas = new SUEY.Canvas(2000, 2000).addClass('one-shaper-canvas');
-        this.points = new SUEY.Div().setClass('one-shaper-points');
+        this.canvas = new SUEY.Canvas(2000, 2000).addClass('salt-shaper-canvas');
+        this.points = new SUEY.Div().setClass('salt-shaper-points');
         this.add(this.canvas, this.points);
 
         // Properties

@@ -1,17 +1,17 @@
 /********** ADVISOR */
 
-.one-advisor {
+.salt-advisor {
     opacity: 1.0;
 }
 
-.one-advisor-panel {
+.salt-advisor-panel {
     display: flex !important;
     flex-direction: column;
     align-items: stretch;
     height: 100%;
 }
 
-.one-advisor-scroller {
+.salt-advisor-scroller {
     position: relative;
     display: flex;
     flex: 1;
@@ -20,7 +20,7 @@
     padding: 0;
 }
 
-.one-advisor-contents {
+.salt-advisor-contents {
     font-size: 86%;
 
     position: relative;
@@ -38,22 +38,22 @@
     user-select: all;
 }
 
-.one-advisor-contents::selection {
+.salt-advisor-contents::selection {
     color: rgba(var(--icon), 1);
     background-color: rgba(var(--blacklight), 1);
 }
 
-.one-advisor-welcome-box {
+.salt-advisor-welcome-box {
     font-size: 100%;
     user-select: none;
     overflow: hidden;
 }
 
-.one-advisor-welcome-box * {
+.salt-advisor-welcome-box * {
     text-shadow: -0.075em 0.075em rgba(var(--black), 0.5);
 }
 
-.one-advisor-wave-holder {
+.salt-advisor-wave-holder {
     z-index: 1;
     position: absolute;
     width: 100%;
@@ -92,7 +92,7 @@
 
 /********** FULLSCREEN */
 
-.one-fullscreen {
+.salt-fullscreen {
     position: absolute;
     margin: auto;
     padding: 0;
@@ -105,7 +105,7 @@
 
 /********** GAME PLAYER */
 
-.one-app-outline {
+.salt-app-outline {
     pointer-events: none;
     position: absolute !important;
     background: transparent;
@@ -119,7 +119,7 @@
     margin: auto;
 }
 
-.one-app-side {
+.salt-app-side {
     pointer-events: none;
     position: absolute !important;
     background: rgba(var(--button-light), 0.7);
@@ -132,7 +132,7 @@
 
 /********** GIZMO */
 
-.one-gizmo {
+.salt-gizmo {
     --gizmoSize: 7.5em;
     --widthRatio: 1.5;
 
@@ -152,11 +152,11 @@
 
 /********** INSPECTOR */
 
-.one-property-panel {
+.salt-property-panel {
     display: block;
 }
 
-.suey-property-right .one-plus-minus {
+.suey-property-right .salt-plus-minus {
     position: relative;
     min-width: 1.0em !important;
     min-height: 1.0em !important;
@@ -164,7 +164,7 @@
     padding: 0;
 }
 
-.one-view-camera {
+.salt-view-camera {
     position: relative;
     margin: var(--pad-small) 0.5em;
     border-radius: var(--radius-small);
@@ -175,36 +175,36 @@
 
 /********** OUTLINER */
 
-.one-outliner .outliner-type {
+.salt-outliner .outliner-type {
     width: 1em;
     height: 1em;
     text-align: left;
 }
 
-.one-outliner .outliner-type:after { content: '●'; }
-.one-outliner .outliner-type-world { color: rgb(var(--triadic2)); }
-.one-outliner .outliner-type-stage { color: rgb(var(--complement)); }
-.one-outliner .outliner-type-camera { color: rgb(var(--triadic1)); }
-.one-outliner .outliner-type-light { color: rgb(var(--triadic4)); }
-.one-outliner .outliner-type-entity { color: rgb(var(--icon)); }
-.one-outliner .outliner-type-mesh { color: rgb(var(--icon)); }
-.one-outliner .outliner-type-sprite { color: rgb(var(--triadic3)); }
-.one-outliner .outliner-type-line { color: #88ee88; }
-.one-outliner .outliner-type-linesegments { color: #88ee88; }
-.one-outliner .outliner-type-points { color: #ee8888; }
-.one-outliner .outliner-type-geometry { color: #aaeeaa; }
-.one-outliner .outliner-type-material { color: #eeaaee; }
+.salt-outliner .outliner-type:after { content: '●'; }
+.salt-outliner .outliner-type-world { color: rgb(var(--triadic2)); }
+.salt-outliner .outliner-type-stage { color: rgb(var(--complement)); }
+.salt-outliner .outliner-type-camera { color: rgb(var(--triadic1)); }
+.salt-outliner .outliner-type-light { color: rgb(var(--triadic4)); }
+.salt-outliner .outliner-type-entity { color: rgb(var(--icon)); }
+.salt-outliner .outliner-type-mesh { color: rgb(var(--icon)); }
+.salt-outliner .outliner-type-sprite { color: rgb(var(--triadic3)); }
+.salt-outliner .outliner-type-line { color: #88ee88; }
+.salt-outliner .outliner-type-linesegments { color: #88ee88; }
+.salt-outliner .outliner-type-points { color: #ee8888; }
+.salt-outliner .outliner-type-geometry { color: #aaeeaa; }
+.salt-outliner .outliner-type-material { color: #eeaaee; }
 
 .suey-option.suey-active .outliner-type {
     text-shadow: var(--minus) var(--pixel) rgba(var(--black), 0.25);
 }
 
-.one-outliner .outliner-active-stage .outliner-entity-name {
+.salt-outliner .outliner-active-stage .outliner-entity-name {
     color: rgb(var(--complement)) !important;
     text-shadow: var(--minus) var(--pixel) rgba(var(--black), 0.25);
 }
 
-.one-outliner .outliner-entity-name.outliner-entity-hidden {
+.salt-outliner .outliner-entity-name.outliner-entity-hidden {
     color: rgb(var(--triadic1)) !important;
     text-shadow: var(--minus) var(--pixel) rgba(var(--black), 0.25);
 }
@@ -260,7 +260,7 @@
 
 /********** RUBBERBAND BOX */
 
-.one-rubberband-box {
+.salt-rubberband-box {
     position: absolute;
     pointer-events: none;
     background-color: rgba(var(--icon), 0.2);
@@ -269,19 +269,19 @@
 
 /********** SEARCH BOX */
 
-.one-search-holder {
+.salt-search-holder {
     display: flex;
     position: relative;
     margin: 0.2em;
 }
 
-.one-search-box {
+.salt-search-box {
     padding: 0.2em 0.25em 0.2em 1.5em !important; /* t r b l */
     margin: none !important;
     width: 100% !important;
 }
 
-.one-search-icon {
+.salt-search-icon {
     pointer-events: none;
     position: absolute;
     left: 0.8em !important;
@@ -290,7 +290,7 @@
 
 /********** SHAPER */
 
-.one-shaper-canvas {
+.salt-shaper-canvas {
     display: flex;
     width: 100%;
     height: 100%;
@@ -298,7 +298,7 @@
 
 /********** TOOLBAR */
 
-.one-toolbar {
+.salt-toolbar {
     position: absolute !important;
     pointer-events: none;
     align-items: safe center;

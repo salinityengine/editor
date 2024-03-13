@@ -22,7 +22,7 @@ class EntityTransformProperties extends SUEY.Div {
 
     constructor(entity) {
         super();
-        this.addClass('one-property-panel');
+        this.addClass('salt-property-panel');
 
         // Scoped Variables
         const entitySize = new THREE.Vector3();

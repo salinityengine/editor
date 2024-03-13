@@ -13,7 +13,7 @@ class EditorToolbar extends SUEY.Panel {
 
     constructor() {
         super({ style: SUEY.PANEL_STYLES.NONE });
-        this.setClass('one-toolbar');
+        this.setClass('salt-toolbar');
         this.addClass('editor-toolbar');
 
         // Clear Advisor on Leave

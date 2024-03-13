@@ -2,10 +2,6 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-// import { SceneUtils } from './SceneUtils.js';
-// import { ViewportEvents } from './ViewportEvents.js';
-// import { ViewportRender } from './ViewportRender.js';
-// import { ViewportSignals } from './ViewportSignals.js';
 import { View3DToolbar } from './View3DToolbar.js';
 
 import { Config } from '../config/Config.js';
@@ -17,13 +13,13 @@ class View3D extends SUEY.Panel {
     constructor() {
         super();
         const self = this;
-        this.setClass('one-viewport');
-        this.addClass('one-fullscreen');
+        this.setClass('salt-viewport');
+        this.addClass('salt-fullscreen');
         this.selectable(false);
 
         /******************** TOOLBAR */
 
-        this.add(new View2DToolbar());
+        this.add(new View3DToolbar());
 
         /******************** PROPERTIES */
 
@@ -51,48 +47,6 @@ class View3D extends SUEY.Panel {
         this.mouseDownButton = -1;                              // Tracks button on last mouse down
         this.startSelection = [];                               // Stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // True when mouse has moved enough to start 'dragging'
-
-        /******************** FINAL SETUP */
-
-        // ViewportRender.addRender(this);
-        // ViewportEvents.addEvents(this);
-        // ViewportSignals.addSignals(this);
-
-
-        // const app = new SALT.Application({
-        //     element: this.dom,
-        //     backgroundColor: '#1099bb',
-        // })
-
-        // // Sprite
-        // const bunny = PIXI.Sprite.from('./files/assets/textures/dragon.png');
-        // bunny.anchor.set(0.5);
-        // bunny.x = app.screen.width / 2;
-        // bunny.y = app.screen.height / 2;
-        // app.stage.addChild(bunny);
-
-        // // Text
-        // const text = new PIXI.Text('This is a PixiJS text', {
-        //     fontFamily: 'Arial',
-        //     fontSize: 24,
-        //     fill: 0xff1010,
-        //     align: 'center',
-        // });
-        // app.stage.addChild(text);
-
-        // // Update
-        // app.ticker.add((delta) => {
-        //     // frame-independent transformation, delta is 1 if running at 100% performance
-
-        //     bunny.rotation += 0.01 * delta;
-
-        //     text.x += 0.1 * delta;
-        //     text.y += 0.1 * delta;
-        // });
-
-
-        // // First Render
-        // requestAnimationFrame(() => { this.animate(); });
     }
 
     /******************** FRAME ********************/

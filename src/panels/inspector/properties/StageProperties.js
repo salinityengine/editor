@@ -11,7 +11,7 @@ class StageProperties extends SUEY.Div {
 
     constructor(entity) {
         super();
-        this.addClass('one-property-panel');
+        this.addClass('salt-property-panel');
 
         /******************** GENERAL */
 

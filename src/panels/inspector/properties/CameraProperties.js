@@ -11,7 +11,7 @@ class CameraProperties extends SUEY.Div {
 
     constructor(camera) {
         super();
-        this.addClass('one-property-panel');
+        this.addClass('salt-property-panel');
 
         /******************** CAMERA */
 
@@ -39,7 +39,7 @@ class CameraProperties extends SUEY.Div {
         let orientation = (editor.project) ? editor.project.settings.orientation : SALT.APP_ORIENTATION.PORTRAIT;
 
         // Add to PropertyList
-        const emptyBox = new SUEY.FlexBox().addClass('one-view-camera');
+        const emptyBox = new SUEY.FlexBox().addClass('salt-view-camera');
         this.add(emptyBox);
 
         const canvas = document.createElement('canvas');
@@ -57,7 +57,7 @@ class CameraProperties extends SUEY.Div {
         emptyBox.dom.appendChild(canvas);
         const ctx = canvas.getContext('2d');
 
-        const outlineBox = new SUEY.Div().addClass('one-app-outline');
+        const outlineBox = new SUEY.Div().addClass('salt-app-outline');
         emptyBox.add(outlineBox);
 
         function resizeOutLine() {

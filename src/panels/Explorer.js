@@ -21,7 +21,7 @@ class Explorer extends DockPanel {
     } = {}) {
         super({ style, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
         this.setName('Explorer');
-        this.addClass('one-explorer');
+        this.addClass('salt-explorer');
         this.setTabSide(SUEY.TAB_SIDES.RIGHT);
 
         // Tabs
