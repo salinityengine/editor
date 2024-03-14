@@ -52,11 +52,15 @@ class EditorToolbar extends SUEY.Panel {
 
         const editPencil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}edit-pencil.svg`).setId('tb-edit-pencil');
         const editTip = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}edit-pencil-tip.svg`).setId('tb-edit-pencil-tip');
-        const sceneFrame = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene-frame.svg`).setId('tb-scene-frame');
-        scene.add(/* editPencil, editTip */ sceneFrame);
+        const scene2DFrame = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene2d-frame.svg`).setId('tb-scene2d-frame');
+        scene.add(/* editPencil, editTip */ scene2DFrame);
 
-        const sceneCube = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene-cube.svg`).setId('tb-scene-cube');
-        cube.add(sceneCube);
+        const scene3DCube = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-cube.svg`).setId('tb-scene3d-cube');
+        const scene3DMtn1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-mtn1.svg`).setId('tb-scene3d-mtn1');
+        const scene3DMtn2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-mtn2.svg`).setId('tb-scene3d-mtn2');
+        const scene3DSun = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-sun.svg`).setId('tb-scene3d-sun');
+        const scene3DFrame = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-frame.svg`).setId('tb-scene3d-frame');
+        cube.add(scene3DCube, scene3DMtn1, scene3DSun, scene3DMtn2, scene3DFrame);
 
         const worldBackground = new SUEY.VectorBox().setId('tb-world-background');
         worldBackground.setStyle('backgroundImage', `url(${EDITOR.FOLDER_TOOLBAR}world.svg)`);

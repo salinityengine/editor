@@ -56,11 +56,11 @@
     animation-iteration-count: var(--animation-count);
 }
 
-#tb-scene-frame {
+#tb-scene2d-frame {
     transform-origin: 50% 5%; /* specific x-offset | y-offset */
 }
 
-.suey-toolbar-button:hover #tb-scene-frame, .suey-toolbar-button.suey-selected #tb-scene-frame {
+.suey-toolbar-button:hover #tb-scene2d-frame, .suey-toolbar-button.suey-selected #tb-scene2d-frame {
     animation: swing 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
@@ -68,9 +68,21 @@
 
 /********** MODE: SCENE EDITOR 3D */
 
-.suey-toolbar-button:hover #tb-scene-cube, .suey-toolbar-button.suey-selected #tb-scene-cube {
-    animation: growShrink 1.1s ease-in-out;
-    animation-iteration-count: 1;
+#tb-scene3d-sun, #tb-scene3d-mtn1, #tb-scene3d-mtn2, #tb-scene3d-frame {
+    filter: none;
+    transition: transform 0.7s ease-in-out;
+}
+
+.suey-toolbar-button:hover #tb-scene3d-sun, .suey-toolbar-button.suey-selected #tb-scene3d-sun {
+    transform: translate(-18%, 12%);
+}
+
+.suey-toolbar-button:hover #tb-scene3d-mtn1, .suey-toolbar-button.suey-selected #tb-scene3d-mtn1 {
+    transform: translate(12%, -8%);
+}
+
+.suey-toolbar-button:hover #tb-scene3d-mtn2, .suey-toolbar-button.suey-selected #tb-scene3d-mtn2 {
+    transform: translate(-6%, 4%);
 }
 
 /********** MODE: WORLD EDITOR */
