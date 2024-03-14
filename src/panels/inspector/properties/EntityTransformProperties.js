@@ -7,6 +7,7 @@ import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { PropertyGroup } from '../../../gui/PropertyGroup.js';
 import { SceneUtils } from '../../../viewport/SceneUtils.js';
+import { Signals } from '../../../config/Signals.js';
 
 import { MultiCmdsCommand } from '../../../commands/Commands.js';
 import { SetPositionCommand } from '../../../commands/Commands.js';
@@ -164,7 +165,7 @@ class EntityTransformProperties extends SUEY.Div {
         const entitySizeY = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).onChange(() => update('y'));
         const entitySizeZ = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).onChange(() => update('z'));
         if (showSize) {
-            SALT.ObjectUtils.identityBoundsCalculate(entity, identitySize);
+            // SALT.ObjectUtils.identityBoundsCalculate(entity, identitySize);
             entitySize.copy(identitySize);
 
             // Add Size Row
@@ -335,7 +336,7 @@ class EntityTransformProperties extends SUEY.Div {
         function entityChanged(changedEntity) {
             if (!changedEntity || !changedEntity.isEntity) return;
             if (changedEntity.uuid === entity.uuid) {
-                SALT.ObjectUtils.identityBoundsCalculate(entity, identitySize);
+                // SALT.ObjectUtils.identityBoundsCalculate(entity, identitySize);
                 updateUI();
             }
         };
@@ -352,15 +353,9 @@ class EntityTransformProperties extends SUEY.Div {
             for (const changedEntity of entityArray) entityChanged(changedEntity);
         }
 
-        signals.entityChanged.add(entityChanged);
-        signals.transformsChanged.add(transformsChanged);
-        signals.schemeChanged.add(setIconColors);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.entityChanged.remove(entityChanged);
-            signals.transformsChanged.remove(transformsChanged);
-            signals.schemeChanged.remove(setIconColors);
-        }, { once: true });
+        Signals.connect(this, 'entityChanged', entityChanged);
+        Signals.connect(this, 'transformsChanged', transformsChanged);
+        Signals.connect(this, 'schemeChanged', setIconColors);
 
         /***** INIT *****/
 

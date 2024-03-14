@@ -22,6 +22,7 @@ import { Previewer } from './panels/Previewer.js';
 import { Scripter } from './panels/Scripter.js';
 import { Shaper } from './panels/Shaper.js';
 import { View2D } from './view2d/View2D.js';
+import { View3D } from './view3d/View3D.js';
 import { Worlds } from './worlds/Worlds.js';
 
 import { loadDemoProject } from './Demo.js';
@@ -53,7 +54,8 @@ class Editor extends SUEY.Docker {
         /********** PROPERTIES */
 
         // Mode Panels
-        this.view2d = null;                                     // 2D Scene Editor
+        this.view2d = null;                                     // Scene Editor 2D
+        this.view3d = null;                                     // Scene Editor 3D
         this.worlds = null;                                     // World Graph
 
         // Floating Panels
@@ -98,25 +100,15 @@ class Editor extends SUEY.Docker {
 
         /********** PANELS */
 
-        // Scene Editor, 2D
-        this.view2d = new View2D();
-        this.add(this.view2d);
+        // Mode Panels
+        this.add(this.view2d = new View2D());
+        this.add(this.view3d = new View3D());
+        this.add(this.worlds = new Worlds());
 
-        // World Graph
-        this.worlds = new Worlds();
-        this.add(this.worlds);
-
-        // Script Editor
-        this.scripter = new Scripter();
-        this.add(this.scripter);
-
-        // // Game Player
-        // this.player = new Player();
-        // this.add(this.player);
-
-        // // Shape Editor
-        // this.shaper = new Shaper();
-        // this.add(this.shaper);
+        // Floating Panels
+        this.add(this.scripter = new Scripter());
+        this.add(this.player = new Player());
+        this.add(this.shaper = new Shaper());
 
         /***** DOCKING PANELS */
 

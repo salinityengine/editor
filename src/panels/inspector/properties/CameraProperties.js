@@ -103,7 +103,7 @@ class CameraProperties extends SUEY.Div {
                 type: camera.type, width: canvas.width, height: canvas.height,
                 fit: (orientation === SALT.APP_ORIENTATION.PORTRAIT) ? 'height' : 'width',
             });
-            SALT.ObjectUtils.copyWorldTransform(camera, tempCam, true /* updateMatrix */);
+            SALT.EntityUtils.copyTransform(camera, tempCam);
             tempCam.updateProjectionMatrix();
 
             SALT.RenderUtils.offscreenRenderer(canvas.width, canvas.height).render(scene, tempCam);

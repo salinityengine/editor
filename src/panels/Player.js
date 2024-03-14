@@ -3,6 +3,7 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { Config } from '../config/Config.js';
+import { Signals } from '../config/Signals.js';
 
 const _size = { x: 0, y: 0 };
 
@@ -27,7 +28,7 @@ class Player extends SUEY.Window {
         this.contents().setStyle('padding', '0');
 
         // Don't want Player transparent
-        self.setStyle('opacity', '1.0');
+        this.setStyle('opacity', '1.0');
 
         // App State
         Object.defineProperties(this, {
@@ -40,7 +41,7 @@ class Player extends SUEY.Window {
         SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.LEFT, 1.7 /* offset */);
         SUEY.Interaction.addMaxButton(this, SUEY.CLOSE_SIDES.LEFT, 1.7 /* offset */);
 
-        /***** OUTLINE BOX *****/
+        /***** OUTLINE BOX */
 
         const outlineBox = new SUEY.Div().addClass('salt-app-outline');
         const leftBox = new SUEY.Div().addClass('salt-app-side');
@@ -116,23 +117,13 @@ class Player extends SUEY.Window {
         pause.add(playPause, playActive);
         stop.add(playStop);
 
-        camera.onClick(() => { editor.requestScreenshot(); });
-        pause.onClick(() => { signals.pausePlayer.dispatch(); });
-        stop.onClick(() => { signals.stopPlayer.dispatch(); });
+        camera.onClick(() => editor.requestScreenshot());
+        pause.onClick(() => editor.player.pause());
+        stop.onClick(() => editor.player.stop());
 
         const playButtons = new SUEY.FlexBox().addClass('salt-active-toolbar');
         playButtons.add(stop, pause, camera, screen);
         this.add(playButtons);
-
-        signals.playerStateChanged.add((state) => {
-            if (state === 'start') {
-                playActive.setStyle('display', 'none', 'pointer-events', 'none');
-                playPause.setStyle('display', '', 'pointer-events', 'all');
-            } else if (state === 'pause') {
-                playActive.setStyle('display', '', 'pointer-events', 'all');
-                playPause.setStyle('display', 'none', 'pointer-events', 'none');
-            }
-        });
 
         // Button Direction / Flex Direction
         function adjustPlayButtons() {
@@ -154,7 +145,60 @@ class Player extends SUEY.Window {
             }
         }
 
-        /***** SCREEN TYPE *****/
+        /******************** START / STOP */
+
+        this.start = function() {
+            if (app.isPlaying) return;
+
+            // Show Player (focus forces Inspector to blur, and edited Inspector variables to auto update)
+            self.setStyle('opacity', '0');
+            self.showWindow();
+            adjustPlayButtons();
+
+            // Save Project to JSON
+            const json = editor.project.toJSON();
+
+            // // DEBUG: Exported project json
+            // console.log(json);
+
+            // Load Project into App
+            app.load(json, false /* load assets? */);
+
+            // Play!
+            app.start();
+            Signals.dispatch('playerStateChanged', 'start');
+
+            // Update Size
+            setTimeout(() => {
+                updateSize();
+                self.setStyle('opacity', '1');
+            }, 50);
+        };
+
+        this.pause = function() {
+            app.pause();
+            Signals.dispatch('playerStateChanged', app.gameClock.isRunning() ? 'start' : 'pause');
+        };
+
+        this.stop = function() {
+            self.setDisplay('none');
+            if (app.isPlaying) {
+                app.stop();
+                Signals.dispatch('playerStateChanged', 'stop');
+            }
+        };
+
+        Signals.connect(this, 'playerStateChanged', function(state) {
+            if (state === 'start') {
+                playActive.setStyle('display', 'none', 'pointer-events', 'none');
+                playPause.setStyle('display', '', 'pointer-events', 'all');
+            } else if (state === 'pause') {
+                playActive.setStyle('display', '', 'pointer-events', 'all');
+                playPause.setStyle('display', 'none', 'pointer-events', 'none');
+            }
+        });
+
+        /******************** SCREEN TYPE */
 
         const screenMenu = new SUEY.Menu();
         const currentScreen = Config.getKey('renderer/screen/name');
@@ -176,7 +220,7 @@ class Player extends SUEY.Window {
         })
         screen.attachMenu(screenMenu);
 
-        /***** RESIZE */
+        /******************** RESIZE */
 
         function updateSize() {
             const width = Math.max(1, self.contents().getWidth());
@@ -186,55 +230,12 @@ class Player extends SUEY.Window {
         this.dom.addEventListener('resizer', () => { updateSize(); });
         window.addEventListener('resize', () => { updateSize(); });
 
-        /***** START / STOP */
-
-        signals.startPlayer.add(function() {
-            if (app.isPlaying) return;
-
-            // Show Player (focus forces Inspector to blur, and edited Inspector variables to auto update)
-            self.setStyle('opacity', '0');
-            self.showWindow();
-            adjustPlayButtons();
-
-            // Save Project to JSON
-            const json = editor.project.toJSON();
-
-            // // DEBUG: Exported project json
-            // console.log(json);
-
-            // Load Project into App
-            app.load(json, false /* load assets? */);
-
-            // Play!
-            app.start();
-            signals.playerStateChanged.dispatch('start');
-
-            // Update Size
-            setTimeout(() => {
-                updateSize();
-                self.setStyle('opacity', '1');
-            }, 50);
-        });
-
-        signals.pausePlayer.add(function() {
-            app.pause();
-            signals.playerStateChanged.dispatch(app.gameClock.isRunning() ? 'start' : 'pause');
-        });
-
-        signals.stopPlayer.add(function() {
-            self.setDisplay('none');
-            if (app.isPlaying) {
-                app.stop();
-                signals.playerStateChanged.dispatch('stop');
-            }
-        });
-
         // Stop Player when Window 'X' is clicked
         this.dom.addEventListener('hidden', () => {
-            signals.stopPlayer.dispatch();
+            self.stop();
         });
 
-        /***** SCREENSHOT */
+        /******************** SCREENSHOT */
 
         this.requestScreenshot = function() {
             // Save Current Size

@@ -287,7 +287,7 @@ class View2DToolbar extends SUEY.Panel {
         const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-arrow.svg`).setId('tb-play-arrow');
         play.add(playArrow);
 
-        play.onClick(() => Signals.dispatch('startPlayer'));
+        play.onClick(() => editor.player.start());
 
         /** When Player starts / stops, handle graying Editor, hiding 'Play' */
         Signals.connect(this, 'playerStateChanged', function(state) {

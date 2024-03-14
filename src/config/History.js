@@ -1,8 +1,10 @@
+import * as SUEY from 'gui';
 import { Signals } from './Signals.js';
 
-class History {
+class History extends SUEY.Div {
 
     constructor() {
+        super();
         const self = this;
 
         // Properties
@@ -11,9 +13,11 @@ class History {
         this.lastCmdTime = new Date();
         this.isDisabled = false;
 
-        // // Signals
-        // Signals.connect(this, 'startPlayer', () => self.isDisabled = true));
-        // Signals.connect(this, 'stopPlayer', () => self.isDisabled = false));
+        // Signals
+        Signals.connect(this, 'playerStateChanged', function(state) {
+            if (state === 'start') self.isDisabled = true;
+            if (state === 'stop') self.isDisabled = false;
+        });
     }
 
     /** Executes new command onto stack, clears old redo history */

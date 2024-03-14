@@ -406,7 +406,7 @@ class OutlinerTab extends SUEY.Titled {
 
             // Multi-selection
             if (editor.selected.length > 0) {
-                const selectedUUIDs = SALT.ObjectUtils.uuidArray(editor.selected);
+                const selectedUUIDs = SALT.EntityUtils.uuidArray(editor.selected);
                 treeList.setValues(selectedUUIDs);
             }
         }

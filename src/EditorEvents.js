@@ -136,7 +136,7 @@ export function editorKeyDown(editor, event) {
 
         // Play Game
         case Config.getKey('shortcuts/play'):
-            Signals.dispatch('startPlayer');
+            editor.player.start();
             break;
 
         // Increase / Decrease Font (Gui) Sizing

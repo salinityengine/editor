@@ -69,7 +69,7 @@ class Scripter extends SUEY.Window {
 
         //     keymap: 'sublime', /* NEEDED FOR CMD-/ & CTRL-/ COMMENTS!? */
         // });
-        // codemirror.setOption('theme', 'onsight');
+        // codemirror.setOption('theme', 'salinity');
 
         // // Codemirror: On Change
         // codemirror.on('change', function() {

@@ -40,9 +40,6 @@ const SIGNAL_NAMES = [
     'previewerUpdate',          // -                    ALERT       Request update UI for current item
 
     // Player
-    'startPlayer',              // -                    FUNCTION    Start the Game Player
-    'pausePlayer',              // -                    FUNCTION    Pause the Game Player
-    'stopPlayer',               // -                    FUNCTION    Stop the Game Player
     'playerStateChanged',       // (state)              ALERT       Player state changed ('start', 'pause', 'stop')
 
     // Viewport
