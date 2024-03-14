@@ -206,16 +206,21 @@ class Editor extends SUEY.Docker {
 
         // Hide Editor Panels
         this.view2d.hide();
+        this.view3d.hide();
         this.worlds.hide();
 
         // Switch Mode
         switch (mode) {
-            case EDITOR.MODES.UI_EDITOR:        break;
+            case EDITOR.MODES.UI_EDITOR:
+                break;
             case EDITOR.MODES.SCENE_EDITOR_2D:
                 this.view2d.display();
                 break;
-            case EDITOR.MODES.SCENE_EDITOR_3D:  break;
-            case EDITOR.MODES.SOUND_EDITOR:     break;
+            case EDITOR.MODES.SCENE_EDITOR_3D:
+                this.view3d.display()
+                break;
+            case EDITOR.MODES.SOUND_EDITOR:
+                break;
             case EDITOR.MODES.WORLD_GRAPH:
             default:
                 this.worlds.display();

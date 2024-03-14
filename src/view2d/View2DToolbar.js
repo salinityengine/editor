@@ -5,7 +5,6 @@ import { Advice } from '../config/Advice.js';
 import { ColorizeFilter } from '../gui/ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
-// import { SceneUtils } from './SceneUtils.js';
 
 class View2DToolbar extends SUEY.Panel {
 
@@ -19,7 +18,6 @@ class View2DToolbar extends SUEY.Panel {
         /******************** BUTTONS */
 
         const select = new SUEY.ToolbarButton(null, 'left');
-        const look = new SUEY.ToolbarButton(null, 'middle');
         const move = new SUEY.ToolbarButton(null, 'middle');
         const zoom = new SUEY.ToolbarButton(null, 'right');
 
@@ -44,7 +42,6 @@ class View2DToolbar extends SUEY.Panel {
         /******************** TOOLTIPS */
 
         select.dom.setAttribute('tooltip', Config.tooltip('Select Mode', Config.getKey('shortcuts/select')));
-        look.dom.setAttribute('tooltip', Config.tooltip('Look Mode', Config.getKey('shortcuts/look')));
         move.dom.setAttribute('tooltip', Config.tooltip('Move Mode', Config.getKey('shortcuts/move')));
         zoom.dom.setAttribute('tooltip', Config.tooltip('Zoom Mode', Config.getKey('shortcuts/zoom')));
 
@@ -69,7 +66,6 @@ class View2DToolbar extends SUEY.Panel {
         /******************** ADVISOR */
 
         Advice.attach(select, 'toolbar/view/select');
-        Advice.attach(look, 'toolbar/view/look');
         Advice.attach(move, 'toolbar/view/move');
         Advice.attach(zoom, 'toolbar/view/zoom');
 
@@ -95,30 +91,24 @@ class View2DToolbar extends SUEY.Panel {
 
         const selectIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-select.svg`).setId('tb-mode-select');
         const selectCursor = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-select-cursor.svg`).setId('tb-mode-select-cursor');
-        const lookIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-look-eye.svg`).setId('tb-mode-look');
-        const lookPupil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-look-pupil.svg`).setId('tb-mode-look-pupil');
         const moveIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-move.svg`).setId('tb-mode-move');
         const moveGrab = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-move-grab.svg`).setId('tb-mode-move-grab');
         const zoomIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-zoom.svg`).setId('tb-mode-zoom');
 
         select.add(selectIcon, selectCursor);
-        look.add(lookIcon, lookPupil);
         move.add(moveIcon, moveGrab);
         zoom.add(zoomIcon);
 
         select.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.SELECT));
-        look.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.LOOK));
         move.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.MOVE));
         zoom.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.ZOOM));
 
         Signals.connect(this, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
-            look.removeClass('suey-selected');
             move.removeClass('suey-selected');
             zoom.removeClass('suey-selected');
             switch (mouseMode) {
                 case EDITOR.MOUSE_MODES.SELECT: select.addClass('suey-selected'); break;
-                case EDITOR.MOUSE_MODES.LOOK: look.addClass('suey-selected'); break;
                 case EDITOR.MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
                 case EDITOR.MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
             }
@@ -336,7 +326,7 @@ class View2DToolbar extends SUEY.Panel {
         const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto').setWidth('50%');
         left.add(new SUEY.ToolbarSpacer(editor.toolbarLength));
         left.add(new SUEY.FlexSpacer());
-        left.add(select, look, move, zoom);
+        left.add(select, move, zoom);
         left.add(new SUEY.FlexSpacer());
 
         const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto');

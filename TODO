@@ -3,8 +3,10 @@
 /**********************************************/
 
 Windows:
-    - Dock to bottom?
-    - Show docking zone
+    - Bottom zone
+        - Scratchpad: Global / project scratchpads (like in Ct.js)
+        - Help:
+        - Web Browser:
 
 Editor Skeleton:
     - Turn 'functional' signals into editor methods
@@ -169,11 +171,6 @@ Scripting:
     - Python (using Brython):
         https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
     - Visual Scripting:
-
-Side / Bottom Menu:
-    - Scratchpad: Global / project scratchpads (like in Ct.js)
-    - Help:
-    - Web Browser:
 
 Storage:
     - Autosave
