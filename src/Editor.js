@@ -247,7 +247,7 @@ class Editor extends SUEY.Docker {
         switch (this.mode()) {
             case EDITOR.MODES.UI_EDITOR:        return undefined;
             case EDITOR.MODES.SCENE_EDITOR_2D:  return this.view2d;
-            case EDITOR.MODES.SCENE_EDITOR_3D:  return undefined;
+            case EDITOR.MODES.SCENE_EDITOR_3D:  return this.view3d;
             case EDITOR.MODES.SOUND_EDITOR:     return undefined;
             case EDITOR.MODES.WORLD_GRAPH:      return this.worlds;
         }
@@ -340,6 +340,8 @@ class Editor extends SUEY.Docker {
 
         // Update selection array
         this.selected = [...filtered];
+
+        console.log('Editor.selectEntities', this.selected.length);
 
         // Selection change signal
         Signals.dispatch('selectionChanged');

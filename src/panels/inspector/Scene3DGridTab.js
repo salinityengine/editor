@@ -5,7 +5,7 @@ import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
-class SceneGridTab extends SUEY.Titled {
+class Scene3DGridTab extends SUEY.Titled {
 
     constructor() {
         super({ title: Language.getKey('inspector/grid/title') });
@@ -110,4 +110,4 @@ class SceneGridTab extends SUEY.Titled {
 
 }
 
-export { SceneGridTab };
+export { Scene3DGridTab };

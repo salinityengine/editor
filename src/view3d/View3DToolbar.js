@@ -18,11 +18,17 @@ class View3DToolbar extends SUEY.Panel {
 
         /******************** BUTTONS */
 
+        // Mouse Modes
         const select = new SUEY.ToolbarButton(null, 'left');
         const look = new SUEY.ToolbarButton(null, 'middle');
         const move = new SUEY.ToolbarButton(null, 'middle');
         const zoom = new SUEY.ToolbarButton(null, 'right');
 
+        // Focus
+        const focus = new SUEY.ToolbarButton();
+        const reset = new SUEY.ToolbarButton();
+
+        // Transform Tools
         const none = new SUEY.ToolbarButton(null, 'left');
         const translate = new SUEY.ToolbarButton(null, 'middle');
         const rotate = new SUEY.ToolbarButton(null, 'middle');
@@ -31,23 +37,30 @@ class View3DToolbar extends SUEY.Panel {
         const snap = new SUEY.ToolbarButton(null, 'middle');
         const paint = new SUEY.ToolbarButton(null, 'right');
 
-        const focus = new SUEY.ToolbarButton();
-        const reset = new SUEY.ToolbarButton();
+        // Views
         const toggle = new SUEY.ToolbarButton().addClass('suey-hover-active');
 
+        // Play
         const play = new SUEY.ToolbarButton();
 
-        const proj = new SUEY.ToolbarButton();
-        const history = new SUEY.ToolbarButton();
-        const settings = new SUEY.ToolbarButton();
+        // Settings
+        const proj = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
+        const history = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
+        const settings = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
 
         /******************** TOOLTIPS */
 
+        // Mouse Modes
         select.dom.setAttribute('tooltip', Config.tooltip('Select Mode', Config.getKey('shortcuts/select')));
         look.dom.setAttribute('tooltip', Config.tooltip('Look Mode', Config.getKey('shortcuts/look')));
         move.dom.setAttribute('tooltip', Config.tooltip('Move Mode', Config.getKey('shortcuts/move')));
         zoom.dom.setAttribute('tooltip', Config.tooltip('Zoom Mode', Config.getKey('shortcuts/zoom')));
 
+        // Focus
+        focus.dom.setAttribute('tooltip', Config.tooltip('Focus On Entity', Config.getKey('shortcuts/focus')));
+        reset.dom.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
+
+        // Transform Tools
         none.dom.setAttribute('tooltip', Config.tooltip('No Tool', Config.getKey('shortcuts/none')));
         translate.dom.setAttribute('tooltip', Config.tooltip('Translate Tool', Config.getKey('shortcuts/translate')));
         rotate.dom.setAttribute('tooltip', Config.tooltip('Rotate Tool', Config.getKey('shortcuts/rotate')));
@@ -56,23 +69,30 @@ class View3DToolbar extends SUEY.Panel {
         snap.dom.setAttribute('tooltip', Config.tooltip('Snap Tool', Config.getKey('shortcuts/snap')));
         paint.dom.setAttribute('tooltip', Config.tooltip('Paint Tool', Config.getKey('shortcuts/paint')));
 
-        focus.dom.setAttribute('tooltip', Config.tooltip('Focus On Entity', Config.getKey('shortcuts/focus')));
-        reset.dom.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
+        // Views
         // toggle.dom.setAttribute('tooltip', 'Toggle Views');
 
+        // Play
         play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
 
+        // Settings
         proj.dom.setAttribute('tooltip', 'Project');
         history.dom.setAttribute('tooltip', 'History');
         settings.dom.setAttribute('tooltip', 'Settings');
 
         /******************** ADVISOR */
 
+        // Mouse Modes
         Advice.attach(select, 'toolbar/view/select');
         Advice.attach(look, 'toolbar/view/look');
         Advice.attach(move, 'toolbar/view/move');
         Advice.attach(zoom, 'toolbar/view/zoom');
 
+        // Focus
+        Advice.attach(focus, 'toolbar/view/focus');
+        Advice.attach(reset, 'toolbar/view/reset');
+
+        // Transform Tools
         Advice.attach(none, 'toolbar/view/none');
         Advice.attach(translate, 'toolbar/view/translate');
         Advice.attach(rotate, 'toolbar/view/rotate');
@@ -81,12 +101,13 @@ class View3DToolbar extends SUEY.Panel {
         Advice.attach(snap, 'toolbar/view/snap');
         Advice.attach(paint, 'toolbar/view/paint');
 
-        Advice.attach(focus, 'toolbar/view/focus');
-        Advice.attach(reset, 'toolbar/view/reset');
+        // Views
         Advice.attach(toggle, 'toolbar/view/toggle');
 
+        // Play
         Advice.attach(play, 'toolbar/view/play');
 
+        // Settings
         Advice.attach(proj, 'toolbar/project');
         Advice.attach(history, 'toolbar/history');
         Advice.attach(settings, 'toolbar/settings');
@@ -122,6 +143,59 @@ class View3DToolbar extends SUEY.Panel {
                 case EDITOR.MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
                 case EDITOR.MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
             }
+        });
+
+        /******************** FOCUS */
+
+        const focusEye = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-eye.svg`).setId('tb-focus-eye');
+        const focusPupil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-pupil.svg`).setId('tb-focus-pupil');
+        // const focusScene = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-scene.svg`).setId('tb-focus-scene');
+        const focusTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-focus-target');
+        focus.add(focusEye, /* focusScene, */ focusPupil, focusTarget);
+
+        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setId('tb-reset-axis-x');
+        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setId('tb-reset-axis-y');
+        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-reset-target');
+        reset.add(resetAxisX, resetAxisY, resetTarget);
+
+        const toggleBack1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-1.svg`).setId('tb-toggle-back-1');
+        const toggleBack2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-2.svg`).setId('tb-toggle-back-2');
+        const toggleButton1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-1.svg`).setId('tb-toggle-button-1');
+        const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setId('tb-toggle-button-2');
+        toggle.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
+
+        Signals.connect(this, 'schemeChanged', function() {
+            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
+            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
+            resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
+            resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
+        });
+
+        reset.onClick(() => Signals.dispatch('cameraReset'));
+        focus.onClick(() => Signals.dispatch('cameraFocus'));
+
+        let _lastTooltip = '';
+
+        Signals.connect(this, 'selectionChanged', function() {
+            // Focus on Scene or Selection?
+            let sceneFocus = false;
+            sceneFocus ||= (editor.selected.length === 0);
+            sceneFocus ||= (editor.selected.length === 1);
+
+            // OPTION: Disable Button
+            focus.setDisabled(editor.selected.length === 0);
+
+            // // OPTION: Scene Icon
+            // focusScene.setDisplay((sceneFocus) ? '' : 'none');
+            // focusEye.setDisplay((sceneFocus) ? 'none' : '');
+            // focusPupil.setDisplay((sceneFocus) ? 'none' : '');
+
+            // OPTION: Tooltip
+            const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
+            if (_lastTooltip !== focusOn) {
+                focus.dom.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
+            }
+            _lastTooltip = focusOn;
         });
 
         /******************** TRANSFORM TOOLS */
@@ -173,58 +247,7 @@ class View3DToolbar extends SUEY.Panel {
             }
         });
 
-        /******************** VIEW */
-
-        const focusEye = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-eye.svg`).setId('tb-focus-eye');
-        const focusPupil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-pupil.svg`).setId('tb-focus-pupil');
-        // const focusScene = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-scene.svg`).setId('tb-focus-scene');
-        const focusTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-focus-target');
-        focus.add(focusEye, /* focusScene, */ focusPupil, focusTarget);
-
-        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setId('tb-reset-axis-x');
-        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setId('tb-reset-axis-y');
-        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-reset-target');
-        reset.add(resetAxisX, resetAxisY, resetTarget);
-
-        const toggleBack1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-1.svg`).setId('tb-toggle-back-1');
-        const toggleBack2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-2.svg`).setId('tb-toggle-back-2');
-        const toggleButton1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-1.svg`).setId('tb-toggle-button-1');
-        const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setId('tb-toggle-button-2');
-        toggle.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
-
-        Signals.connect(this, 'schemeChanged', function() {
-            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
-            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
-            resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
-            resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
-        });
-
-        reset.onClick(() => Signals.dispatch('cameraReset'));
-        focus.onClick(() => Signals.dispatch('cameraFocus'));
-
-        let _lastTooltip = '';
-
-        Signals.connect(this, 'selectionChanged', function() {
-            // Focus on Scene or Selection?
-            let sceneFocus = false;
-            sceneFocus ||= (editor.selected.length === 0);
-            sceneFocus ||= (editor.selected.length === 1);
-
-            // // OPTION: Disable Button
-            // focus.setDisabled(editor.selected.length === 0);
-
-            // // OPTION: Scene Icon
-            // focusScene.setDisplay((sceneFocus) ? '' : 'none');
-            // focusEye.setDisplay((sceneFocus) ? 'none' : '');
-            // focusPupil.setDisplay((sceneFocus) ? 'none' : '');
-
-            // OPTION: Tooltip
-            const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
-            if (_lastTooltip !== focusOn) {
-                focus.dom.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
-            }
-            _lastTooltip = focusOn;
-        });
+        /******************** VIEWS */
 
         // Toggle Menu
         const toggleMenu = new SUEY.Menu();
@@ -333,25 +356,20 @@ class View3DToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto').setWidth('50%');
-        left.add(new SUEY.ToolbarSpacer(editor.toolbarLength));
-        left.add(new SUEY.FlexSpacer());
-        left.add(select, look, move, zoom);
-        left.add(new SUEY.FlexSpacer());
+        // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        // const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
+        // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        // this.add(left, middle, right);
 
-        const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto');
-        middle.add(none, translate, rotate, scale, rect, snap, paint);
-
-        const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto').setWidth('50%');
-        right.add(new SUEY.ToolbarSeparator(), focus, /* INCLUDE?: reset, */ toggle);
-        right.add(new SUEY.FlexSpacer(), play, new SUEY.FlexSpacer());
-        right.add(proj, history, settings);
-
-        left.setStyle('pointerEvents', 'none');
-        middle.setStyle('pointerEvents', 'none');
-        right.setStyle('pointerEvents', 'none');
-
-        this.add(left, middle, right);
+        this.add(new SUEY.ToolbarSpacer(editor.toolbarLength));
+        this.add(new SUEY.FlexSpacer());
+        this.add(select, look, move, zoom, new SUEY.ToolbarSeparator(), focus, /* INCLUDE?: reset, */);
+        this.add(new SUEY.FlexSpacer());
+        this.add(none, translate, rotate, scale, rect, snap, paint);
+        this.add(new SUEY.FlexSpacer());
+        this.add(toggle);
+        this.add(new SUEY.FlexSpacer());
+        this.add(play, new SUEY.ToolbarSpacer(0.5), proj, history, settings);
 
     } // end ctor
 

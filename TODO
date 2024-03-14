@@ -4,6 +4,7 @@
 
 Windows:
     - Bottom zone
+        - Stage List:
         - Scratchpad: Global / project scratchpads (like in Ct.js)
         - Help:
         - Web Browser:

@@ -101,7 +101,7 @@ class View3D extends SUEY.Panel {
     }
 
     selectNone() {
-        // editor.execute(new SelectCommand([], editor.selected));
+        editor.execute(new SelectCommand([], editor.selected));
     }
 
 }

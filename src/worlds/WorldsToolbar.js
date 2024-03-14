@@ -22,37 +22,62 @@ class WorldsToolbar extends SUEY.Panel {
 
         /******************** BUTTONS */
 
+        // Nodes
         const add = new SUEY.ToolbarButton();
 
-        const snap = new SUEY.ToolbarButton();
+        // Focus
         const reset = new SUEY.ToolbarButton();
 
-        const proj = new SUEY.ToolbarButton();
-        const history = new SUEY.ToolbarButton();
-        const settings = new SUEY.ToolbarButton();
+        // Grid
+        const snap = new SUEY.ToolbarButton();
+
+        // Play
+        const play = new SUEY.ToolbarButton();
+
+        // Settings
+        const proj = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
+        const history = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
+        const settings = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
 
         /******************** TOOLTIPS */
 
+        // Nodes
         add.dom.setAttribute('tooltip', 'Add Node');
 
-        snap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid', 'g'));
+        // Focus
         reset.dom.setAttribute('tooltip', Config.tooltip('Reset View', Config.getKey('shortcuts/camera/reset')));
 
+        // Grid
+        snap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid', 'g'));
+
+        // Play
+        play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
+
+        // Settings
         proj.dom.setAttribute('tooltip', 'Project');
         history.dom.setAttribute('tooltip', 'History');
         settings.dom.setAttribute('tooltip', 'Settings');
 
         /******************** ADVISOR */
 
+        // Nodes
         Advice.attach(add, 'toolbar/worlds/add');
-        Advice.attach(snap, 'toolbar/worlds/snap');
+
+        // Focus
         Advice.attach(reset, 'toolbar/worlds/reset');
 
+        // Grid
+        Advice.attach(snap, 'toolbar/worlds/snap');
+
+        // Play
+        Advice.attach(play, 'toolbar/view/play');
+
+        // Settings
         Advice.attach(proj, 'toolbar/project');
         Advice.attach(history, 'toolbar/history');
         Advice.attach(settings, 'toolbar/settings');
 
-        /******************** ADD NODE */
+        /******************** NODES */
 
         const nodePlusSign = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}add.svg`).setId('tb-node-plus-sign');
         nodePlusSign.img.addClass('suey-complement-colorize')
@@ -98,6 +123,24 @@ class WorldsToolbar extends SUEY.Panel {
 
         });
 
+        /******************** FOCUS */
+
+        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setId('tb-reset-axis-x');
+        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setId('tb-reset-axis-y');
+        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-reset-target');
+        reset.add(resetAxisX, resetAxisY, resetTarget);
+
+        Signals.connect(this, 'schemeChanged', function() {
+            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
+            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
+            resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
+            resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
+        });
+
+        reset.onClick(() => {
+            worldsGraph.centerView(true /* resetZoom */, true /* animate */);
+        });
+
         /******************** GRID */
 
         const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setId('SnapMagnet');
@@ -117,22 +160,22 @@ class WorldsToolbar extends SUEY.Panel {
             else snap.removeClass('suey-selected');
         })
 
-        /******************** CAMERA */
+        /******************** PLAY */
 
-        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setId('tb-reset-axis-x');
-        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setId('tb-reset-axis-y');
-        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-reset-target');
-        reset.add(resetAxisX, resetAxisY, resetTarget);
+        const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-arrow.svg`).setId('tb-play-arrow');
+        play.add(playArrow);
 
-        Signals.connect(this, 'schemeChanged', function() {
-            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
-            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
-            resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
-            resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
-        });
+        play.onClick(() => editor.player.start());
 
-        reset.onClick(() => {
-            worldsGraph.centerView(true /* resetZoom */, true /* animate */);
+        /** When Player starts / stops, handle graying Editor, hiding 'Play' */
+        Signals.connect(this, 'playerStateChanged', function(state) {
+            if (state === 'start') {
+                editor.addClass('salt-gray-out');
+                play.setStyle('display', 'none', 'pointer-events', 'none');
+            } else if (state === 'stop') {
+                editor.removeClass('salt-gray-out');
+                play.setStyle('display', '','pointer-events', 'all');
+            }
         });
 
         /******************** SETTINGS */
@@ -169,24 +212,20 @@ class WorldsToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto').setWidth('50%');
-        left.add(new SUEY.ToolbarSpacer(editor.toolbarLength));
-        left.add(new SUEY.FlexSpacer());
-        left.add(add);
-        left.add(new SUEY.FlexSpacer());
+        // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        // const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
+        // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        // this.add(left, middle, right);
 
-        const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto');
-        middle.add(snap, reset);
-
-        const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto').setWidth('50%');
-        right.add(new SUEY.FlexSpacer());
-        right.add(proj, history, settings);
-
-        left.setStyle('pointerEvents', 'none');
-        middle.setStyle('pointerEvents', 'none');
-        right.setStyle('pointerEvents', 'none');
-
-        this.add(left, middle, right);
+        this.add(new SUEY.ToolbarSpacer(editor.toolbarLength));
+        this.add(new SUEY.FlexSpacer());
+        this.add(add);
+        this.add(new SUEY.FlexSpacer());
+        this.add(reset);
+        this.add(new SUEY.FlexSpacer());
+        this.add(snap);
+        this.add(new SUEY.FlexSpacer());
+        this.add(play, new SUEY.ToolbarSpacer(0.5), proj, history, settings);
 
     } // end ctor
 

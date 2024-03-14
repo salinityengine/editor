@@ -17,72 +17,86 @@ class View2DToolbar extends SUEY.Panel {
 
         /******************** BUTTONS */
 
+        // Mouse Modes
         const select = new SUEY.ToolbarButton(null, 'left');
         const move = new SUEY.ToolbarButton(null, 'middle');
         const zoom = new SUEY.ToolbarButton(null, 'right');
 
-        const none = new SUEY.ToolbarButton(null, 'left');
-        const translate = new SUEY.ToolbarButton(null, 'middle');
-        const rotate = new SUEY.ToolbarButton(null, 'middle');
-        const scale = new SUEY.ToolbarButton(null, 'middle');
-        const rect = new SUEY.ToolbarButton(null, 'middle');
-        const snap = new SUEY.ToolbarButton(null, 'middle');
-        const paint = new SUEY.ToolbarButton(null, 'right');
+        // Focus
+        const focus = new SUEY.ToolbarButton(null, 'left');
+        const reset = new SUEY.ToolbarButton(null, 'right');
 
-        const focus = new SUEY.ToolbarButton();
-        const reset = new SUEY.ToolbarButton();
+        // Layer
+        const arrange = new SUEY.ToolbarButton(null, 'left');
+        const transform = new SUEY.ToolbarButton(null, 'right');
+
+        // Views
         const toggle = new SUEY.ToolbarButton().addClass('suey-hover-active');
 
+        // Grid
+        const gridTop = new SUEY.ToolbarButton(null, 'left');
+        const gridResize = new SUEY.ToolbarButton(null, 'middle');
+        const gridSnap = new SUEY.ToolbarButton(null, 'right');
+
+        // Play
         const play = new SUEY.ToolbarButton();
 
-        const proj = new SUEY.ToolbarButton();
-        const history = new SUEY.ToolbarButton();
-        const settings = new SUEY.ToolbarButton();
+        // Settings
+        const proj = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
+        const history = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
+        const settings = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
 
         /******************** TOOLTIPS */
 
+        // Mouse Modes
         select.dom.setAttribute('tooltip', Config.tooltip('Select Mode', Config.getKey('shortcuts/select')));
         move.dom.setAttribute('tooltip', Config.tooltip('Move Mode', Config.getKey('shortcuts/move')));
         zoom.dom.setAttribute('tooltip', Config.tooltip('Zoom Mode', Config.getKey('shortcuts/zoom')));
 
-        none.dom.setAttribute('tooltip', Config.tooltip('No Tool', Config.getKey('shortcuts/none')));
-        translate.dom.setAttribute('tooltip', Config.tooltip('Translate Tool', Config.getKey('shortcuts/translate')));
-        rotate.dom.setAttribute('tooltip', Config.tooltip('Rotate Tool', Config.getKey('shortcuts/rotate')));
-        scale.dom.setAttribute('tooltip', Config.tooltip('Scale Tool', Config.getKey('shortcuts/scale')));
-        rect.dom.setAttribute('tooltip', Config.tooltip('Rect Tool', Config.getKey('shortcuts/rect')));
-        snap.dom.setAttribute('tooltip', Config.tooltip('Snap Tool', Config.getKey('shortcuts/snap')));
-        paint.dom.setAttribute('tooltip', Config.tooltip('Paint Tool', Config.getKey('shortcuts/paint')));
-
+        // Focus
         focus.dom.setAttribute('tooltip', Config.tooltip('Focus On Entity', Config.getKey('shortcuts/focus')));
         reset.dom.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
+
+        // Layer
+        arrange.dom.setAttribute('tooltip', Config.tooltip('Arrange', null));
+        transform.dom.setAttribute('tooltip', Config.tooltip('Transform', null));
+
+        // Views
         // toggle.dom.setAttribute('tooltip', 'Toggle Views');
 
+        // Grid
+        gridSnap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid', 'g'));
+
+        // Play
         play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
 
+        // Settings
         proj.dom.setAttribute('tooltip', 'Project');
         history.dom.setAttribute('tooltip', 'History');
         settings.dom.setAttribute('tooltip', 'Settings');
 
         /******************** ADVISOR */
 
+        // Mouse Modes
         Advice.attach(select, 'toolbar/view/select');
         Advice.attach(move, 'toolbar/view/move');
         Advice.attach(zoom, 'toolbar/view/zoom');
 
-        Advice.attach(none, 'toolbar/view/none');
-        Advice.attach(translate, 'toolbar/view/translate');
-        Advice.attach(rotate, 'toolbar/view/rotate');
-        Advice.attach(scale, 'toolbar/view/scale');
-        Advice.attach(rect, 'toolbar/view/rect');
-        Advice.attach(snap, 'toolbar/view/snap');
-        Advice.attach(paint, 'toolbar/view/paint');
-
+        // Focus
         Advice.attach(focus, 'toolbar/view/focus');
         Advice.attach(reset, 'toolbar/view/reset');
+
+        // Layer
+        Advice.attach(arrange, 'Arrange', 'For moving objects up and down in z-order.');
+        Advice.attach(transform, 'Transform', 'For altering the transform of an object.');
+
+        // Views
         Advice.attach(toggle, 'toolbar/view/toggle');
 
+        // Play
         Advice.attach(play, 'toolbar/view/play');
 
+        // Settings
         Advice.attach(proj, 'toolbar/project');
         Advice.attach(history, 'toolbar/history');
         Advice.attach(settings, 'toolbar/settings');
@@ -114,56 +128,7 @@ class View2DToolbar extends SUEY.Panel {
             }
         });
 
-        /******************** TRANSFORM TOOLS */
-
-        const noneIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-none.svg`).setId('tb-tool-none');
-        const translateIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-translate.svg`).setId('tb-tool-translate');
-        const rotateIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rotate.svg`).setId('tb-tool-rotate');
-        const scaleIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-scale.svg`).setId('tb-tool-scale');
-        const rectLeftTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rect-left-top.svg`).setId('tb-tool-rect-left-top');
-        const rectLeftBot = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rect-left-bot.svg`).setId('tb-tool-rect-left-bot');
-        const rectRightTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rect-right-top.svg`).setId('tb-tool-rect-right-top');
-        const rectRightBot = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rect-right-bot.svg`).setId('tb-tool-rect-right-bot');
-        const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setId('SnapMagnet');
-        const snapAttract = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-attract.svg`).setId('tb-snap-attract');
-        const paintBrush = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}paint-brush.svg`).setId('tb-paint-brush');
-
-        none.add(noneIcon);
-        translate.add(translateIcon);
-        rotate.add(rotateIcon);
-        scale.add(scaleIcon);
-        rect.add(rectLeftBot, rectRightBot, rectLeftTop, rectRightTop);
-        snap.add(snapMagnet, snapAttract);
-        paint.add(paintBrush);
-
-        none.onClick(() => Signals.dispatch('transformModeChanged', 'none'));
-        translate.onClick(() => Signals.dispatch('transformModeChanged', 'translate'));
-        rotate.onClick(() => Signals.dispatch('transformModeChanged', 'rotate'));
-        scale.onClick(() => Signals.dispatch('transformModeChanged', 'scale'));
-        rect.onClick(() => Signals.dispatch('transformModeChanged', 'rect'));
-        snap.onClick(() => Signals.dispatch('transformModeChanged', 'snap'));
-        paint.onClick(() => Signals.dispatch('transformModeChanged', 'paint'));
-
-        Signals.connect(this, 'transformModeChanged', function(mode) {
-            none.removeClass('suey-selected');
-            translate.removeClass('suey-selected');
-            rotate.removeClass('suey-selected');
-            scale.removeClass('suey-selected');
-            rect.removeClass('suey-selected');
-            snap.removeClass('suey-selected');
-            paint.removeClass('suey-selected');
-            switch (mode) {
-                case 'none': none.addClass('suey-selected'); break;
-                case 'translate': translate.addClass('suey-selected'); break;
-                case 'rotate': rotate.addClass('suey-selected'); break;
-                case 'scale': scale.addClass('suey-selected'); break;
-                case 'rect': rect.addClass('suey-selected'); break;
-                case 'snap': snap.addClass('suey-selected'); break;
-                case 'paint': paint.addClass('suey-selected'); break;
-            }
-        });
-
-        /******************** VIEW */
+        /******************** FOCUS */
 
         const focusEye = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-eye.svg`).setId('tb-focus-eye');
         const focusPupil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-pupil.svg`).setId('tb-focus-pupil');
@@ -215,6 +180,14 @@ class View2DToolbar extends SUEY.Panel {
             }
             _lastTooltip = focusOn;
         });
+
+        /******************** LAYER */
+
+        //
+        // TODO
+        //
+
+        /******************** VIEWS */
 
         // Toggle Menu
         const toggleMenu = new SUEY.Menu();
@@ -272,6 +245,12 @@ class View2DToolbar extends SUEY.Panel {
         toggle.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
         toggle.addToSelf(hoverMenu);
 
+        /******************** GRID */
+
+        //
+        // TODO
+        //
+
         /******************** PLAY */
 
         const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-arrow.svg`).setId('tb-play-arrow');
@@ -323,25 +302,20 @@ class View2DToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto').setWidth('50%');
-        left.add(new SUEY.ToolbarSpacer(editor.toolbarLength));
-        left.add(new SUEY.FlexSpacer());
-        left.add(select, move, zoom);
-        left.add(new SUEY.FlexSpacer());
+        // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        // const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
+        // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        // this.add(left, middle, right);
 
-        const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto');
-        middle.add(none, translate, rotate, scale, rect, snap, paint);
-
-        const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto').setWidth('50%');
-        right.add(new SUEY.ToolbarSeparator(), focus, /* INCLUDE?: reset, */ toggle);
-        right.add(new SUEY.FlexSpacer(), play, new SUEY.FlexSpacer());
-        right.add(proj, history, settings);
-
-        left.setStyle('pointerEvents', 'none');
-        middle.setStyle('pointerEvents', 'none');
-        right.setStyle('pointerEvents', 'none');
-
-        this.add(left, middle, right);
+        this.add(new SUEY.ToolbarSpacer(editor.toolbarLength));
+        this.add(new SUEY.FlexSpacer());
+        this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
+        this.add(new SUEY.FlexSpacer());
+        this.add(arrange, transform, new SUEY.ToolbarSeparator(), toggle);
+        this.add(new SUEY.FlexSpacer());
+        this.add(gridTop, gridResize, gridSnap);
+        this.add(new SUEY.FlexSpacer());
+        this.add(play, new SUEY.ToolbarSpacer(0.5), proj, history, settings);
 
     } // end ctor
 
