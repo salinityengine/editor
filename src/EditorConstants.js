@@ -42,11 +42,11 @@ export const FOLDER_CURSORS =   './files/cursors/';
 export const FOLDER_LOGO =      './files/logo/';
 
 // Editor Images
-export const FOLDER_GROUPS =    './files/editor/groups/';
-export const FOLDER_INSPECTOR = './files/editor/inspector/';
-export const FOLDER_MENU =      './files/editor/menu/';
-export const FOLDER_TOOLBAR =   './files/editor/toolbar/';
-export const FOLDER_TYPES =     './files/editor/types/';
+export const FOLDER_GROUPS =    './files/images/groups/';
+export const FOLDER_INSPECTOR = './files/images/inspector/';
+export const FOLDER_MENU =      './files/images/menu/';
+export const FOLDER_TOOLBAR =   './files/images/toolbar/';
+export const FOLDER_TYPES =     './files/images/types/';
 
 // Component Icons
 export const COMPONENT_ICONS = {

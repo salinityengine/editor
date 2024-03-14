@@ -2,9 +2,12 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Windows:
+    - Dock to bottom?
+    - Show docking zone
+
 Editor Skeleton:
     - Turn 'functional' signals into editor methods
-    - Remove all old three code
     - Go through Advice
     - Go through Config
     - Go through Language
@@ -180,10 +183,6 @@ Storage:
 
 QR Code:
     - Load on phone
-
-Windows:
-    - Snap to left / right / center
-    - Dock to bottom?
 
 World Graph:
     Nodes:
