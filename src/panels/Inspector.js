@@ -21,7 +21,7 @@ import { Scene3DGridTab } from './inspector/Scene3DGridTab.js';
 // import { SceneViewTab } from './inspector/SceneViewTab.js';
 // import { SceneThreeTab } from './inspector/SceneThreeTab.js';
 
-import { GraphSettingsTab } from './inspector/GraphSettingsTab.js';
+import { WorldGridTab } from './inspector/WorldGridTab.js';
 
 class Inspector extends DockPanel {
 
@@ -103,7 +103,7 @@ class Inspector extends DockPanel {
                     self.addTab('grid', new Scene3DGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
                     // self.addTab('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true });
                 } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
-                    self.addTab('graph', new GraphSettingsTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
+                    self.addTab('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
                 }
 
             // HISTORY

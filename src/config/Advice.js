@@ -44,6 +44,7 @@ const _values = {
         'toolbar/view/look':                { title: 'Look Mode', html: `Pointer mode prioritizing camera rotation.` },
         'toolbar/view/move':                { title: 'Move Mode', html: `Pointer mode prioritizing camera panning.` },
         'toolbar/view/zoom':                { title: 'Zoom Mode', html: `Pointer mode prioritizing camera zoom.` },
+
         'toolbar/view/none':                { title: 'No Tool', html: `Selection controls for selecting and dragging Entities.` },
         'toolbar/view/translate':           { title: 'Translate Tool', html: `Selection controls for moving Entities.` },
         'toolbar/view/rotate':              { title: 'Rotate Tool', html: `Selection controls for rotating Entities.` },
@@ -51,15 +52,19 @@ const _values = {
         'toolbar/view/rect':                { title: 'Rect Tool', html: `Selection controls for resizing Entities.` },
         'toolbar/view/snap':                { title: 'Snap Tool', html: `Selection controls for snapping Entities at shared edges.` },
         'toolbar/view/paint':               { title: 'Paint Tool', html: `Selection controls for painting Entities surfaces.` },
+
         'toolbar/view/focus':               { title: 'Focus On', html: `Center camera on selection, or on active Stage if no selection.` },
         'toolbar/view/reset':               { title: 'Reset', html: `Resets camera target to origin (0, 0, 0).` },
         'toolbar/view/toggle':              { title: 'Toggle Views', html: `Quick menu for toggling view options.` },
-        'toolbar/view/play':                { title: 'Play Game', html: `Start game preview using the current active World.` },
 
         'toolbar/worlds/add':               { title: 'Add Node', html: `Menu for adding Worlds.` },
-        'toolbar/worlds/snap':              { title: 'Snap to Grid', html: `Toggle snap to grid setting.` },
         'toolbar/worlds/reset':             { title: 'Reset View', html: `Centers camera on selection, or on all Nodes if no selection.` },
 
+        'toolbar/grid/snap':                { title: 'Grid on Top?', html: `Show grid on top of objects?` },
+        'toolbar/grid/snap':                { title: 'Resizes to Grid?', html: `When rotation matches grid angle, resize tool will snap corners to grid.` },
+        'toolbar/grid/snap':                { title: 'Snap to Grid?', html: `During tranlation, should objects snap to align with grid?` },
+
+        'toolbar/play':                     { title: 'Play Game', html: `Start game preview using the current active World.` },
         'toolbar/project':                  { title: 'Project Settings', html: `` },
         'toolbar/history':                  { title: 'History', html: `List of undo / redo actions taken in editor.` },
         'toolbar/settings':                 { title: 'Editor Settings', html: `` },

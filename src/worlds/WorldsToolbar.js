@@ -29,15 +29,15 @@ class WorldsToolbar extends SUEY.Panel {
         const reset = new SUEY.ToolbarButton();
 
         // Grid
-        const snap = new SUEY.ToolbarButton();
+        const gridSnap = new SUEY.ToolbarButton();
 
         // Play
-        const play = new SUEY.ToolbarButton();
+        const play = new SUEY.ToolbarButton().addClass('suey-red-button');
 
         // Settings
-        const proj = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
-        const history = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
-        const settings = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
+        const proj = new SUEY.ToolbarButton().addClass('suey-gray-button');
+        const history = new SUEY.ToolbarButton().addClass('suey-gray-button');
+        const settings = new SUEY.ToolbarButton().addClass('suey-gray-button');
 
         /******************** TOOLTIPS */
 
@@ -48,7 +48,7 @@ class WorldsToolbar extends SUEY.Panel {
         reset.dom.setAttribute('tooltip', Config.tooltip('Reset View', Config.getKey('shortcuts/camera/reset')));
 
         // Grid
-        snap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid', 'g'));
+        gridSnap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
 
         // Play
         play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
@@ -67,10 +67,10 @@ class WorldsToolbar extends SUEY.Panel {
         Advice.attach(reset, 'toolbar/worlds/reset');
 
         // Grid
-        Advice.attach(snap, 'toolbar/worlds/snap');
+        Advice.attach(gridSnap, 'toolbar/grid/snap');
 
         // Play
-        Advice.attach(play, 'toolbar/view/play');
+        Advice.attach(play, 'toolbar/play');
 
         // Settings
         Advice.attach(proj, 'toolbar/project');
@@ -145,24 +145,24 @@ class WorldsToolbar extends SUEY.Panel {
 
         const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setId('SnapMagnet');
         const snapAttract = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-attract.svg`).setId('tb-snap-attract');
-        snap.add(snapMagnet, snapAttract);
+        gridSnap.add(snapMagnet, snapAttract);
 
-        snap.onClick(() => {
-            const snapping = !Config.getKey('graph/grid/snap');
-            Config.setKey('graph/grid/snap', snapping);
+        gridSnap.onClick(() => {
+            const snapping = !Config.getKey('scene/grid/snap');
+            Config.setKey('scene/grid/snap', snapping);
             worldsGraph.snapToGrid = snapping;
             Signals.dispatch('gridChanged');
         });
 
         Signals.connect(this, 'gridChanged', function() {
-            const snapping = Config.getKey('graph/grid/snap');
-            if (snapping) snap.addClass('suey-selected');
-            else snap.removeClass('suey-selected');
+            const snapping = Config.getKey('scene/grid/snap');
+            if (snapping) gridSnap.addClass('suey-selected');
+            else gridSnap.removeClass('suey-selected');
         })
 
         /******************** PLAY */
 
-        const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-arrow.svg`).setId('tb-play-arrow');
+        const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setId('tb-play-arrow');
         play.add(playArrow);
 
         play.onClick(() => editor.player.start());
@@ -223,7 +223,7 @@ class WorldsToolbar extends SUEY.Panel {
         this.add(new SUEY.FlexSpacer());
         this.add(reset);
         this.add(new SUEY.FlexSpacer());
-        this.add(snap);
+        this.add(gridSnap);
         this.add(new SUEY.FlexSpacer());
         this.add(play, new SUEY.ToolbarSpacer(0.5), proj, history, settings);
 

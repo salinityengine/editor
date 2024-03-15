@@ -34,7 +34,32 @@ const DEFAULT_SETTINGS = {
     'search/prefabs':                           '',                 // Prefabs search term
     'search/scripts':                           '',                 // Script search term
 
-    /***** SCENE EDITOR *****/
+    /***** COMMON EDITOR */
+
+    'scene/grid/snap':                          true,               // Use grid ON / OFF
+
+    /***** SCENE 2D EDITOR *****/
+
+
+
+    /***** SCENE 3D EDITOR *****/
+
+    'paint/color':                              0xff0000,           // Brush color
+    'paint/size':                               0.1,                // Brush size
+
+    'snap/tolerance':                           0.3,                // Snap if within distance
+    'snap/offset':                              0,                  // Offset object by this additional distance
+    'snap/upVector':                            'y',                // Up Vector
+
+    /***** SCENE UI EDITOR */
+
+
+    /***** WORLD GRAPH *****/
+
+    'world/curve':                              'curve',            // Line type
+    'world/grid/style':                         'lines',            // Grid type
+
+    /***** UNCATORIGIZED *****/
 
     'scene/viewport/mode':                      'select',           // Current state of Viewport.mouseMode
     'scene/controls/mode':                      'none',             // Current state of TransformControls.mode
@@ -53,7 +78,6 @@ const DEFAULT_SETTINGS = {
     'scene/grid/translateSize':                 0.10,               // Grid size for translate, rect tools
     'scene/grid/rotateSize':                    15.0,               // Rotation snap in angle degrees
     'scene/grid/scaleSize':                     0.1,                // Scale snap in percentange (i.e. 0.1 = 10%)
-    'scene/grid/snap':                          true,               // Use grid ON / OFF
 
     'scene/render/mode':                        'standard',         // Render mode
     'scene/render/bounds':                      false,              // Show scene boundaries?
@@ -65,23 +89,6 @@ const DEFAULT_SETTINGS = {
     'scene/select/showHelpers':                 true,               // Show wireframe helpers (lights, cam, etc)?
     'scene/select/showWireframe':               false,              // Show wireframe of selected objects?
     'scene/select/xrayDrag':                    true,               // Show object start position as xray during drag?
-
-    /***** PAINT *****/
-
-    'paint/color':                              0xff0000,           // Brush color
-    'paint/size':                               0.1,                // Brush size
-
-    /***** SNAP *****/
-
-    'snap/tolerance':                           0.3,                // Snap if within distance
-    'snap/offset':                              0,                  // Offset object by this additional distance
-    'snap/upVector':                            'y',                // Up Vector
-
-    /***** GRAPH *****/
-
-    'graph/curve':                              'curve',            // Line type
-    'graph/grid/style':                         'lines',            // Grid type
-    'graph/grid/snap':                          true,               // Snap to grid in Graph?
 
     /***** SHORTCUT KEYS *****/
 

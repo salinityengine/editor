@@ -49,7 +49,6 @@ const _values = {
         'inspector/project/title':          'Project',
         'inspector/project/name':           'Name',
 
-        'inspector/graph/title':            'Graph',
         'inspector/graph/line':             'Line Type',
         'inspector/graph/grid':             'Grid Style',
 
@@ -84,59 +83,6 @@ const _values = {
     /********** FRENCH **********/
 
     fr: {
-
-        // Main Menu
-        'menubar/file':                     'Fichier',
-        'menubar/file/new':                 'Nouveau',
-        'menubar/file/import':              'Importer',
-        'menubar/file/export/geometry':     'Exporter Geometrie',
-        'menubar/file/export/object':       'Exporter Objet',
-        'menubar/file/export/scene':        'Exporter Scene',
-        'menubar/file/publish':             'Publier',
-
-        'menubar/edit':                     'Edition',
-        'menubar/edit/undo':                'Annuler',
-        'menubar/edit/redo':                'Refaire',
-
-        // Settings
-        'inspector/settings/title':         'Général',
-        'inspector/settings/language':      'Langue',
-        'inspector/settings/style':         'Style',
-        'inspector/settings/reset':         'Réinitialiser les options',
-
-        'inspector/view/title':             'Voir',
-        'inspector/view/camera':            'Appareil Photo',
-        'inspector/view/editorCamera':      "Affichage de l'éditeur",
-        'inspector/view/reset':             'Réinitialiser la caméra',
-        'inspector/view/zoom':              'Zoomer sur la mise au point',
-        'inspector/view/render':            'Rendre',
-        // 'inspector/view/origin':         '',
-        'inspector/view/drawMode':          'Mode Dessin',
-
-        'inspector/grid/title':             'La Grille',
-        'inspector/grid/magnet':            'Instantané',
-        'inspector/grid/snap':              'Aligner sur la Grille',
-        'inspector/grid/style':             'Style',
-        'inspector/grid/size':              'Taille de la Grille',
-        'inspector/grid/visibility':        'Visibilité',
-        'inspector/grid/showCanvas':        'Afficher la grille',
-        'inspector/grid/showInfinite':      'Afficher la mini-grille',
-
-        'inspector/project/title':          'Projet',
-        'inspector/project/name':           'Nom',
-
-        'inspector/graph/title':            'Graph',
-        'inspector/graph/line':             'Line Type',
-        'inspector/graph/grid':             'Grid Style',
-
-        // Entity
-        'inspector/entity/name':            'Nom',
-        'inspector/entity/position':        'Position',
-        'inspector/entity/rotation':        'Rotation',
-        'inspector/entity/scale':           'Échelle',
-
-        'inspector/material/color':         'Couleur',
-        'inspector/material/opacity':       'Opacité',
 
     },
 

@@ -107,20 +107,7 @@ export function editorKeyDown(editor, event) {
 
         // Snap to Grid
         case 'g':
-            switch (editor.mode()) {
-                case EDITOR.MODES.UI_EDITOR:
-                    break;
-                case EDITOR.MODES.SCENE_EDITOR_2D:
-                    break;
-                case EDITOR.MODES.SCENE_EDITOR_3D:
-                    Config.setKey('scene/grid/snap', (!Config.getKey('scene/grid/snap')));
-                    break;
-                case EDITOR.MODES.SOUND_EDITOR:
-                    break;
-                case EDITOR.MODES.WORLD_GRAPH:
-                    Config.setKey('graph/grid/snap', (!Config.getKey('graph/grid/snap')));
-                    break;
-            }
+            Config.setKey('scene/grid/snap', (!Config.getKey('scene/grid/snap')));
             Signals.dispatch('gridChanged');
             break;
 

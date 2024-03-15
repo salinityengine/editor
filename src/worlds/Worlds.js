@@ -18,8 +18,8 @@ class Worlds extends SUEY.Graph {
 
     constructor() {
         super({
-            snapToGrid: Config.getKey('graph/grid/snap'),
-            curveType: Config.getKey('graph/curve')
+            snapToGrid: Config.getKey('scene/grid/snap'),
+            curveType: Config.getKey('world/curve')
         });
         const self = this;
         this.setClass('Worlds');
@@ -164,7 +164,7 @@ class Worlds extends SUEY.Graph {
 
         // Grid Changed
         Signals.connect(this, 'gridChanged', function() {
-            self.snapToGrid = Config.getKey('graph/grid/snap');
+            self.snapToGrid = Config.getKey('scene/grid/snap');
             if (self.isHidden()) return;
             // Update while dragging
             const active = document.activeElement;
@@ -182,8 +182,8 @@ class Worlds extends SUEY.Graph {
 
         // Refresh Settings
         Signals.connect(this, 'settingsRefreshed', function() {
-            self.curveType = Config.getKey('graph/curve');
-            self.changeGridType(Config.getKey('graph/grid/style'));
+            self.curveType = Config.getKey('world/curve');
+            self.changeGridType(Config.getKey('world/grid/style'));
         });
 
         Signals.connect(this, 'fontSizeChanged', function() {

@@ -8,7 +8,7 @@ import { Signals } from '../config/Signals.js';
 
 class View2DToolbar extends SUEY.Panel {
 
-    constructor() {
+    constructor(view2d) {
         super({ style: SUEY.PANEL_STYLES.NONE });
         this.setClass('salt-toolbar');
 
@@ -39,12 +39,12 @@ class View2DToolbar extends SUEY.Panel {
         const gridSnap = new SUEY.ToolbarButton(null, 'right');
 
         // Play
-        const play = new SUEY.ToolbarButton();
+        const play = new SUEY.ToolbarButton().addClass('suey-red-button');
 
         // Settings
-        const proj = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
-        const history = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
-        const settings = new SUEY.ToolbarButton().addClass('suey-triadic1-button');
+        const proj = new SUEY.ToolbarButton().addClass('suey-gray-button');
+        const history = new SUEY.ToolbarButton().addClass('suey-gray-button');
+        const settings = new SUEY.ToolbarButton().addClass('suey-gray-button');
 
         /******************** TOOLTIPS */
 
@@ -65,7 +65,9 @@ class View2DToolbar extends SUEY.Panel {
         // toggle.dom.setAttribute('tooltip', 'Toggle Views');
 
         // Grid
-        gridSnap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid', 'g'));
+        gridTop.dom.setAttribute('tooltip', Config.tooltip('Grid on Top?'));
+        gridResize.dom.setAttribute('tooltip', Config.tooltip('Resize to Grid?'));
+        gridSnap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
 
         // Play
         play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
@@ -93,8 +95,13 @@ class View2DToolbar extends SUEY.Panel {
         // Views
         Advice.attach(toggle, 'toolbar/view/toggle');
 
+        // Grid
+        Advice.attach(gridTop, 'toolbar/grid/top');
+        Advice.attach(gridResize, 'toolbar/grid/resize');
+        Advice.attach(gridSnap, 'toolbar/grid/snap');
+
         // Play
-        Advice.attach(play, 'toolbar/view/play');
+        Advice.attach(play, 'toolbar/play');
 
         // Settings
         Advice.attach(proj, 'toolbar/project');
@@ -247,13 +254,26 @@ class View2DToolbar extends SUEY.Panel {
 
         /******************** GRID */
 
-        //
-        // TODO
-        //
+        const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setId('SnapMagnet');
+        const snapAttract = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-attract.svg`).setId('tb-snap-attract');
+        gridSnap.add(snapMagnet, snapAttract);
+
+        gridSnap.onClick(() => {
+            const snapping = !Config.getKey('scene/grid/snap');
+            Config.setKey('scene/grid/snap', snapping);
+            view2d.snapToGrid = snapping;
+            Signals.dispatch('gridChanged');
+        });
+
+        Signals.connect(this, 'gridChanged', function() {
+            const snapping = Config.getKey('scene/grid/snap');
+            if (snapping) gridSnap.addClass('suey-selected');
+            else gridSnap.removeClass('suey-selected');
+        })
 
         /******************** PLAY */
 
-        const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-arrow.svg`).setId('tb-play-arrow');
+        const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setId('tb-play-arrow');
         play.add(playArrow);
 
         play.onClick(() => editor.player.start());

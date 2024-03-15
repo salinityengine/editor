@@ -2,18 +2,18 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Editor Skeleton:
+    - Go through Config
+    - Go through Advice
+    - Go through Language
+    - Turn 'functional' signals into editor methods
+
 Windows:
     - Bottom zone
         - Stage List:
         - Scratchpad: Global / project scratchpads (like in Ct.js)
         - Help:
         - Web Browser:
-
-Editor Skeleton:
-    - Turn 'functional' signals into editor methods
-    - Go through Advice
-    - Go through Config
-    - Go through Language
 
 Commands:
     - Seperate editor / views

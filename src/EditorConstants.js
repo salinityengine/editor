@@ -5,7 +5,7 @@ export const MODES = {
     SCENE_EDITOR_2D:    'edit2d',
     SCENE_EDITOR_3D:    'edit3d',
     SOUND_EDITOR:       'sound',
-    UI_EDITOR:          'ui',
+    UI_EDITOR:          'editui',
     WORLD_GRAPH:        'world',
 }
 

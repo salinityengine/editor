@@ -19,7 +19,7 @@ class View2D extends SUEY.Panel {
 
         /******************** TOOLBAR */
 
-        this.add(new View2DToolbar());
+        this.add(new View2DToolbar(this));
 
         /******************** PROPERTIES */
 

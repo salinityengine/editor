@@ -23,6 +23,7 @@ import { Scripter } from './panels/Scripter.js';
 import { Shaper } from './panels/Shaper.js';
 import { View2D } from './view2d/View2D.js';
 import { View3D } from './view3d/View3D.js';
+import { ViewUI } from './viewui/ViewUI.js';
 import { Worlds } from './worlds/Worlds.js';
 
 import { loadDemoProject } from './Demo.js';
@@ -56,6 +57,7 @@ class Editor extends SUEY.Docker {
         // Mode Panels
         this.view2d = null;                                     // Scene Editor 2D
         this.view3d = null;                                     // Scene Editor 3D
+        this.viewui = null;                                     // UI Editor
         this.worlds = null;                                     // World Graph
 
         // Floating Panels
@@ -103,6 +105,7 @@ class Editor extends SUEY.Docker {
         // Mode Panels
         this.add(this.view2d = new View2D());
         this.add(this.view3d = new View3D());
+        this.add(this.viewui = new ViewUI());
         this.add(this.worlds = new Worlds());
 
         // Floating Panels
@@ -207,11 +210,13 @@ class Editor extends SUEY.Docker {
         // Hide Editor Panels
         this.view2d.hide();
         this.view3d.hide();
+        this.viewui.hide();
         this.worlds.hide();
 
         // Switch Mode
         switch (mode) {
             case EDITOR.MODES.UI_EDITOR:
+                this.viewui.display();
                 break;
             case EDITOR.MODES.SCENE_EDITOR_2D:
                 this.view2d.display();

@@ -2,13 +2,13 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { View3DToolbar } from './View3DToolbar.js';
+import { ViewUIToolbar } from './ViewUIToolbar.js';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { SelectCommand } from '../commands/Commands.js';
 
-class View3D extends SUEY.Panel {
+class ViewUI extends SUEY.Panel {
 
     constructor() {
         super();
@@ -19,12 +19,9 @@ class View3D extends SUEY.Panel {
 
         /******************** TOOLBAR */
 
-        this.add(new View3DToolbar(this));
+        this.add(new ViewUIToolbar(this));
 
         /******************** PROPERTIES */
-
-        // Forward Function Declarations
-        this.addSprites = function() {};                        // Adds sprites to empty entities
 
         // Gui
         this.width = Math.max(2, this.getWidth());              // Width of dom element
@@ -32,10 +29,6 @@ class View3D extends SUEY.Panel {
 
         // Containers
         this.selected = [];                                     // Objects selected (can differ slightly from editor)
-
-        // Objects
-        this.camera = null;
-        this.cameraMode = undefined;
 
         // Controls
         this.rubberBandBox = null;
@@ -47,26 +40,6 @@ class View3D extends SUEY.Panel {
         this.mouseDownButton = -1;                              // Tracks button on last mouse down
         this.startSelection = [];                               // Stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // True when mouse has moved enough to start 'dragging'
-    }
-
-    /******************** FRAME ********************/
-
-    animate() {
-        const self = this;
-
-        if (this.isDisplayed()) {
-            // Start render timer
-            const startTime = performance.now();
-
-            // Render (ViewportRender.js)
-            this.render();
-
-            // End render timer, dispatch signal
-            Signals.dispatch('sceneRendered', performance.now() - startTime);
-        }
-
-        // Ask for another animation frame immediately
-        requestAnimationFrame(() => self.animate());
     }
 
     /******************** RESIZE ********************/
@@ -106,4 +79,4 @@ class View3D extends SUEY.Panel {
 
 }
 
-export { View3D };
+export { ViewUI };

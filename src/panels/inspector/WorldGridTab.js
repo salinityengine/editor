@@ -6,10 +6,10 @@ import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
-class GraphSettingsTab extends SUEY.Titled {
+class WorldGridTab extends SUEY.Titled {
 
     constructor() {
-        super({ title: Language.getKey('inspector/graph/title') });
+        super({ title: Language.getKey('inspector/grid/title') });
 
         // Property Box
         const props = new SUEY.PropertyList();
@@ -21,7 +21,7 @@ class GraphSettingsTab extends SUEY.Titled {
 
         // Snap to Grid
         const snapGrid = new SUEY.Checkbox().onChange(() => {
-            Config.setKey('graph/grid/snap', (!Config.getKey('graph/grid/snap')));
+            Config.setKey('scene/grid/snap', (!Config.getKey('scene/grid/snap')));
             Signals.dispatch('gridChanged');
         });
         const snapShortcut = new SUEY.MenuShortcut(`G`);
@@ -40,9 +40,9 @@ class GraphSettingsTab extends SUEY.Titled {
             straight:   'Straight',
         });
         lineDrop.onChange(() => {
-            Config.setKey('graph/curve', lineDrop.getValue());
+            Config.setKey('world/curve', lineDrop.getValue());
             if (editor && editor.worlds) {
-                editor.worlds.curveType = Config.getKey('graph/curve');
+                editor.worlds.curveType = Config.getKey('world/curve');
                 editor.worlds.drawLines();
             }
         });
@@ -56,17 +56,17 @@ class GraphSettingsTab extends SUEY.Titled {
             dots:   'Dots',
         });
         gridDrop.onChange(() => {
-            Config.setKey('graph/grid/style', gridDrop.getValue());
-            if (editor && editor.worlds) editor.worlds.changeGridType(Config.getKey('graph/grid/style'));
+            Config.setKey('world/grid/style', gridDrop.getValue());
+            if (editor && editor.worlds) editor.worlds.changeGridType(Config.getKey('world/grid/style'));
         });
         props.addRow(Language.getKey('inspector/graph/grid'), gridDrop);
 
         /***** UPDATE *****/
 
         function updateUI() {
-            snapGrid.setValue(Config.getKey('graph/grid/snap'));
-            lineDrop.setValue(Config.getKey('graph/curve'));
-            gridDrop.setValue(Config.getKey('graph/grid/style'));
+            snapGrid.setValue(Config.getKey('scene/grid/snap'));
+            lineDrop.setValue(Config.getKey('world/curve'));
+            gridDrop.setValue(Config.getKey('world/grid/style'));
         }
 
         /***** SIGNALS *****/
@@ -81,4 +81,4 @@ class GraphSettingsTab extends SUEY.Titled {
 
 }
 
-export { GraphSettingsTab };
+export { WorldGridTab };
