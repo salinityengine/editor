@@ -1,5 +1,3 @@
-/******************** EDITOR */
-
 /********** EYE MENU */
 
 #tb-eye-closed {
@@ -43,7 +41,9 @@
     opacity: 0.0;
 }
 
-/********** MODE: SCENE EDITOR 2D */
+/********** MODES */
+
+/* Scene Edior 2D */
 
 .suey-toolbar-button:hover #tb-edit-pencil, .suey-toolbar-button.suey-selected #tb-edit-pencil {
     animation: writing 0.7s;
@@ -66,7 +66,7 @@
     animation-fill-mode: forwards;
 }
 
-/********** MODE: SCENE EDITOR 3D */
+/* Scene Editor 3D */
 
 #tb-scene3d-sun, #tb-scene3d-mtn1, #tb-scene3d-mtn2, #tb-scene3d-frame {
     filter: none;
@@ -85,7 +85,15 @@
     transform: translate(-6%, 4%);
 }
 
-/********** MODE: WORLD EDITOR */
+/* UI Editor */
+
+.suey-toolbar-button:hover #tb-ui-joystick, .suey-toolbar-button.suey-selected #tb-ui-joystick {
+    transform-origin: bottom center;
+    animation: wiggle 0.8s ease-in-out;
+    animation-iteration-count: 1;
+}
+
+/* World Editor */
 
 #tb-world-background {
     position: absolute;
@@ -105,16 +113,6 @@
 .suey-toolbar-button:hover #tb-world-background, .suey-toolbar-button.suey-selected #tb-world-background {
     background-position: 100%;
 }
-
-/********** MODE: UI EDITOR */
-
-.suey-toolbar-button:hover #tb-ui-joystick, .suey-toolbar-button.suey-selected #tb-ui-joystick {
-    transform-origin: bottom center;
-    animation: wiggle 0.8s ease-in-out;
-    animation-iteration-count: 1;
-}
-
-/******************** VIEWPORT */
 
 /********** MOUSE MODES */
 
@@ -167,6 +165,35 @@
 .suey-toolbar-button:hover #tb-mode-zoom, .suey-toolbar-button.suey-selected #tb-mode-zoom {
     animation: zoomInOut 0.7s ease-in-out;
     animation-iteration-count: 1;
+}
+
+/********** FOCUS */
+
+#tb-focus-target, #tb-reset-target {
+    transform: scale(0.0);
+    transition: transform 0.25s ease-out;
+}
+
+#tb-focus-eye, #tb-reset-axis-x, #tb-reset-axis-y, #tb-focus-scene {
+    transition: transform 0.2s ease-out;
+}
+
+#tb-focus-pupil {
+    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg));
+    transition: transform 0.2s ease-out;
+}
+
+.suey-toolbar-button:enabled:hover #tb-focus-eye, .suey-toolbar-button:enabled:active #tb-focus-eye,
+.suey-toolbar-button:enabled:hover #tb-focus-pupil, .suey-toolbar-button:enabled:active #tb-focus-pupil,
+.suey-toolbar-button:enabled:hover #tb-focus-scene, .suey-toolbar-button:enabled:active #tb-focus-scene,
+.suey-toolbar-button:enabled:hover #tb-reset-axis-x, .suey-toolbar-button:enabled:active #tb-reset-axis-x,
+.suey-toolbar-button:enabled:hover #tb-reset-axis-y, .suey-toolbar-button:enabled:active #tb-reset-axis-y {
+    transform: scale(0.55) translate(calc(var(--pad-micro) * -1), 0);
+}
+
+.suey-toolbar-button:enabled:hover #tb-focus-target, .suey-toolbar-button:enabled:active #tb-focus-target,
+.suey-toolbar-button:enabled:hover #tb-reset-target, .suey-toolbar-button:enabled:active #tb-reset-target {
+    transform: scale(1.0);
 }
 
 /********** TRANSFORM MODES */
@@ -238,38 +265,31 @@
     animation-iteration-count: 2;
 }
 
-/********** VIEW */
+/********** LAYER */
 
-/* Focus, Reset */
-
-#tb-focus-target, #tb-reset-target {
-    transform: scale(0.0);
-    transition: transform 0.25s ease-out;
+#tb-arrange-top    { z-index: 3; }
+#tb-arrange-middle { z-index: 1; }
+#tb-arrange-bottom { z-index: 0;
+    filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
+}
+#tb-arrange-top, #tb-arrange-middle, #tb-arrange-bottom {
+    transition: all 0.3s ease-in-out;
 }
 
-#tb-focus-eye, #tb-reset-axis-x, #tb-reset-axis-y, #tb-focus-scene {
-    transition: transform 0.2s ease-out;
+.suey-toolbar-button:hover #tb-arrange-top, .suey-toolbar-button.suey-selected #tb-arrange-top {
+    transform: translate(0%, 20%);
 }
 
-#tb-focus-pupil {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg));
-    transition: transform 0.2s ease-out;
+.suey-toolbar-button:hover #tb-arrange-middle, .suey-toolbar-button.suey-selected #tb-arrange-middle {
+    transform: translate(0%, 20%);
 }
 
-.suey-toolbar-button:enabled:hover #tb-focus-eye, .suey-toolbar-button:enabled:active #tb-focus-eye,
-.suey-toolbar-button:enabled:hover #tb-focus-pupil, .suey-toolbar-button:enabled:active #tb-focus-pupil,
-.suey-toolbar-button:enabled:hover #tb-focus-scene, .suey-toolbar-button:enabled:active #tb-focus-scene,
-.suey-toolbar-button:enabled:hover #tb-reset-axis-x, .suey-toolbar-button:enabled:active #tb-reset-axis-x,
-.suey-toolbar-button:enabled:hover #tb-reset-axis-y, .suey-toolbar-button:enabled:active #tb-reset-axis-y {
-    transform: scale(0.55) translate(calc(var(--pad-micro) * -1), 0);
+.suey-toolbar-button:hover #tb-arrange-bottom, .suey-toolbar-button.suey-selected #tb-arrange-bottom {
+    transform: translate(0%, -38%);
+    z-index: 5;
 }
 
-.suey-toolbar-button:enabled:hover #tb-focus-target, .suey-toolbar-button:enabled:active #tb-focus-target,
-.suey-toolbar-button:enabled:hover #tb-reset-target, .suey-toolbar-button:enabled:active #tb-reset-target {
-    transform: scale(1.0);
-}
-
-/* Toggle Options */
+/********** VIEWS */
 
 #tb-toggle-back-1 { opacity: 1; }
 #tb-toggle-back-2 { opacity: 0; }

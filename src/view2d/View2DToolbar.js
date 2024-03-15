@@ -5,6 +5,7 @@ import { Advice } from '../config/Advice.js';
 import { ColorizeFilter } from '../gui/ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
+import { ToggleButton } from '../gui/ToggleButton.js';
 
 class View2DToolbar extends SUEY.Panel {
 
@@ -31,7 +32,7 @@ class View2DToolbar extends SUEY.Panel {
         const transform = new SUEY.ToolbarButton(null, 'right');
 
         // Views
-        const toggle = new SUEY.ToolbarButton().addClass('suey-hover-active');
+        const views = new SUEY.ToolbarButton().addClass('suey-hover-active');
 
         // Grid
         const gridTop = new SUEY.ToolbarButton(null, 'left');
@@ -62,7 +63,7 @@ class View2DToolbar extends SUEY.Panel {
         transform.dom.setAttribute('tooltip', Config.tooltip('Transform', null));
 
         // Views
-        // toggle.dom.setAttribute('tooltip', 'Toggle Views');
+        // views.dom.setAttribute('tooltip', 'Toggle Views');
 
         // Grid
         gridTop.dom.setAttribute('tooltip', Config.tooltip('Grid on Top?'));
@@ -80,20 +81,20 @@ class View2DToolbar extends SUEY.Panel {
         /******************** ADVISOR */
 
         // Mouse Modes
-        Advice.attach(select, 'toolbar/view/select');
-        Advice.attach(move, 'toolbar/view/move');
-        Advice.attach(zoom, 'toolbar/view/zoom');
+        Advice.attach(select, 'toolbar/mouse/select');
+        Advice.attach(move, 'toolbar/mouse/move');
+        Advice.attach(zoom, 'toolbar/mouse/zoom');
 
         // Focus
-        Advice.attach(focus, 'toolbar/view/focus');
-        Advice.attach(reset, 'toolbar/view/reset');
+        Advice.attach(focus, 'toolbar/focus/onto');
+        Advice.attach(reset, 'toolbar/focus/reset');
 
         // Layer
-        Advice.attach(arrange, 'Arrange', 'For moving objects up and down in z-order.');
+        Advice.attach(arrange, 'toolbar/layer/arrange');
         Advice.attach(transform, 'Transform', 'For altering the transform of an object.');
 
         // Views
-        Advice.attach(toggle, 'toolbar/view/toggle');
+        Advice.attach(views, 'toolbar/scene/views');
 
         // Grid
         Advice.attach(gridTop, 'toolbar/grid/top');
@@ -148,12 +149,6 @@ class View2DToolbar extends SUEY.Panel {
         const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
-        const toggleBack1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-1.svg`).setId('tb-toggle-back-1');
-        const toggleBack2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-2.svg`).setId('tb-toggle-back-2');
-        const toggleButton1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-1.svg`).setId('tb-toggle-button-1');
-        const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setId('tb-toggle-button-2');
-        toggle.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
-
         Signals.connect(this, 'schemeChanged', function() {
             const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
             const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
@@ -190,67 +185,55 @@ class View2DToolbar extends SUEY.Panel {
 
         /******************** LAYER */
 
-        //
-        // TODO
-        //
+        const arrangeTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-top.svg`).setId('tb-arrange-top');
+        const arrangeMiddle = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-middle.svg`).setId('tb-arrange-middle');
+        const arrangeBottom = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-bottom.svg`).setId('tb-arrange-bottom');
+        arrange.add(arrangeBottom, arrangeMiddle, arrangeTop);
+
+
+
 
         /******************** VIEWS */
 
-        // Toggle Menu
-        const toggleMenu = new SUEY.Menu();
-        toggleMenu.addClass('salt-toggle-menu');
-        toggleMenu.addClass('suey-menu-under');
-        toggleMenu.addClass('salt-button-menu');
-        function createToggleButton(icon = '', tip, configKey, callback = () => {}) {
-            const toggle = new SUEY.ToolbarButton(null, null, false /* background */, false /* closesMenus */);
-            toggle.addClass('salt-toggle-button');
-            toggle.add(new SUEY.VectorBox(icon));
-            toggle.onClick(() => { toggleButton(); });
-            if (tip) toggle.dom.setAttribute('tooltip', tip);
-            function toggleButton() {
-                if (configKey) Config.setKey(configKey, (!Config.getKey(configKey)));
-                setButtonValue();
-                if (typeof callback === 'function') callback();
-            }
-            function setButtonValue() {
-                toggle.removeClass('suey-toggled');
-                if (configKey && Config.getKey(configKey)) toggle.addClass('suey-toggled');
-            }
-            Signals.connect(toggle, 'settingsRefreshed', setButtonValue)
-            setButtonValue();
-            return toggle;
-        }
+        const toggleBack1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-1.svg`).setId('tb-toggle-back-1');
+        const toggleBack2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-2.svg`).setId('tb-toggle-back-2');
+        const toggleButton1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-1.svg`).setId('tb-toggle-button-1');
+        const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setId('tb-toggle-button-2');
+        views.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
+
+        // Views Menu
+        const viewsMenu = new SUEY.Menu();
+        viewsMenu.addClass('salt-toggle-menu');
+        viewsMenu.addClass('suey-menu-under');
+        viewsMenu.addClass('salt-button-menu');
         // Boundary Toggle
         const boundaryIcon = `${EDITOR.FOLDER_MENU}toggle/boundary.svg`;
-        const boundaryItem = createToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
+        const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
             const bounds = Config.getKey('scene/render/bounds');
-
             // SceneUtils.toggleBoundaryObjects(bounds, editor.view2d.world.activeStage());
-
         });
-        toggleMenu.add(boundaryItem);
+        viewsMenu.add(boundaryItem);
         // Colliders Toggle
         const collidersIcon = `${EDITOR.FOLDER_MENU}toggle/colliders.svg`;
-        const collidersItem = createToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
+        const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
             SceneUtils.toggleColliders();
         });
-        toggleMenu.add(collidersItem);
+        viewsMenu.add(collidersItem);
         // Joints Toggle
         const jointsIcon = `${EDITOR.FOLDER_MENU}toggle/joints.svg`;
-        const jointsItem = createToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
-        toggleMenu.add(jointsItem);
-
+        const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
+        viewsMenu.add(jointsItem);
         // Attach Menu
         const hoverMenu = new SUEY.Menu().addClass('suey-menu-show', 'suey-invisible-menu');
         const hoverItem = new SUEY.MenuItem().addClass('suey-invisible-menu-item');
-        hoverItem.attachSubMenu(toggleMenu);
+        hoverItem.attachSubMenu(viewsMenu);
         hoverMenu.add(hoverItem);
 
         // Prepare Button
-        toggle.setStyle('overflow', 'visible');
-        toggle.setStyle('z-index', '1');
-        toggle.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
-        toggle.addToSelf(hoverMenu);
+        views.setStyle('overflow', 'visible');
+        views.setStyle('z-index', '1');
+        views.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
+        views.addToSelf(hoverMenu);
 
         /******************** GRID */
 
@@ -282,10 +265,10 @@ class View2DToolbar extends SUEY.Panel {
         Signals.connect(this, 'playerStateChanged', function(state) {
             if (state === 'start') {
                 editor.addClass('salt-gray-out');
-                play.setStyle('display', 'none', 'pointer-events', 'none');
+                play.setStyle('opacity', '0', 'pointer-events', 'none');
             } else if (state === 'stop') {
                 editor.removeClass('salt-gray-out');
-                play.setStyle('display', '','pointer-events', 'all');
+                play.setStyle('opacity', '1','pointer-events', 'all');
             }
         });
 
@@ -331,7 +314,7 @@ class View2DToolbar extends SUEY.Panel {
         this.add(new SUEY.FlexSpacer());
         this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
         this.add(new SUEY.FlexSpacer());
-        this.add(arrange, transform, new SUEY.ToolbarSeparator(), toggle);
+        this.add(arrange, transform, new SUEY.ToolbarSeparator(), views);
         this.add(new SUEY.FlexSpacer());
         this.add(gridTop, gridResize, gridSnap);
         this.add(new SUEY.FlexSpacer());

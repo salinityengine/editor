@@ -34,10 +34,10 @@ class EditorToolbar extends SUEY.Panel {
         ui.dom.setAttribute('tooltip', Config.tooltip('UI Editor'));
 
         Advice.attach(eye, 'toolbar/eye');
-        Advice.attach(scene2d, 'toolbar/scene2d');
-        Advice.attach(scene3d, 'toolbar/scene3d');
-        Advice.attach(world, 'toolbar/world');
-        Advice.attach(ui, 'toolbar/ui');
+        Advice.attach(scene2d, 'toolbar/mode/scene2d');
+        Advice.attach(scene3d, 'toolbar/mode/scene3d');
+        Advice.attach(world, 'toolbar/mode/world');
+        Advice.attach(ui, 'toolbar/mode/ui');
 
         /******************** EYE MENU */
 

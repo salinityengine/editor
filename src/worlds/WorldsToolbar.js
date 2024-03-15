@@ -171,10 +171,10 @@ class WorldsToolbar extends SUEY.Panel {
         Signals.connect(this, 'playerStateChanged', function(state) {
             if (state === 'start') {
                 editor.addClass('salt-gray-out');
-                play.setStyle('display', 'none', 'pointer-events', 'none');
+                play.setStyle('opacity', '0', 'pointer-events', 'none');
             } else if (state === 'stop') {
                 editor.removeClass('salt-gray-out');
-                play.setStyle('display', '','pointer-events', 'all');
+                play.setStyle('opacity', '1','pointer-events', 'all');
             }
         });
 

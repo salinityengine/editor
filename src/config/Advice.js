@@ -33,37 +33,48 @@ const _values = {
         'settings/style/opacity':           { title: 'Opacity', html: `Background opacity of editor panels.` },
         'settings/reset':                   { title: 'Reset', html: `Resets all settings to default values.` },
 
-        // Toolbar
+        // Toolbar, Modes
         'toolbar/eye':                      { title: 'Main Menu', html: `` },
-        'toolbar/scene2d':                  { title: 'Scene Editor 2D', html: `Editor mode for editing 2D Worlds, Stages, Entities.` },
-        'toolbar/scene3d':                  { title: 'Scene Editor 3D', html: `Editor mode for editing 3D Worlds, Stages, Entities.` },
-        'toolbar/world':                    { title: 'World Graph', html: `Editor mode for interconnecting Worlds and UI Screens.` },
-        'toolbar/ui':                       { title: 'UI Editor', html: `Editor mode for editing UI Screens.` },
+        'toolbar/mode/scene2d':             { title: 'Scene Editor 2D', html: `Editor mode for editing 2D Worlds, Stages, Entities.` },
+        'toolbar/mode/scene3d':             { title: 'Scene Editor 3D', html: `Editor mode for editing 3D Worlds, Stages, Entities.` },
+        'toolbar/mode/world':               { title: 'World Graph', html: `Editor mode for interconnecting Worlds and UI Screens.` },
+        'toolbar/mode/ui':                  { title: 'UI Editor', html: `Editor mode for editing UI Screens.` },
 
-        'toolbar/view/select':              { title: 'Select Mode', html: `Pointer mode prioritizing rubberband selection.` },
-        'toolbar/view/look':                { title: 'Look Mode', html: `Pointer mode prioritizing camera rotation.` },
-        'toolbar/view/move':                { title: 'Move Mode', html: `Pointer mode prioritizing camera panning.` },
-        'toolbar/view/zoom':                { title: 'Zoom Mode', html: `Pointer mode prioritizing camera zoom.` },
-
-        'toolbar/view/none':                { title: 'No Tool', html: `Selection controls for selecting and dragging Entities.` },
-        'toolbar/view/translate':           { title: 'Translate Tool', html: `Selection controls for moving Entities.` },
-        'toolbar/view/rotate':              { title: 'Rotate Tool', html: `Selection controls for rotating Entities.` },
-        'toolbar/view/scale':               { title: 'Scale Tool', html: `Selection controls for resizing Entities.` },
-        'toolbar/view/rect':                { title: 'Rect Tool', html: `Selection controls for resizing Entities.` },
-        'toolbar/view/snap':                { title: 'Snap Tool', html: `Selection controls for snapping Entities at shared edges.` },
-        'toolbar/view/paint':               { title: 'Paint Tool', html: `Selection controls for painting Entities surfaces.` },
-
-        'toolbar/view/focus':               { title: 'Focus On', html: `Center camera on selection, or on active Stage if no selection.` },
-        'toolbar/view/reset':               { title: 'Reset', html: `Resets camera target to origin (0, 0, 0).` },
-        'toolbar/view/toggle':              { title: 'Toggle Views', html: `Quick menu for toggling view options.` },
-
+        // Toolbar, Nodes
         'toolbar/worlds/add':               { title: 'Add Node', html: `Menu for adding Worlds.` },
+
+        // Toolbar, Mouse Modes
+        'toolbar/mouse/select':             { title: 'Select Mode', html: `Pointer mode prioritizing rubberband selection.` },
+        'toolbar/mouse/look':               { title: 'Look Mode', html: `Pointer mode prioritizing camera rotation.` },
+        'toolbar/mouse/move':               { title: 'Move Mode', html: `Pointer mode prioritizing camera panning.` },
+        'toolbar/mouse/zoom':               { title: 'Zoom Mode', html: `Pointer mode prioritizing camera zoom.` },
+
+        // Toolbar, Transform Modes
+        'toolbar/transform/none':           { title: 'No Tool', html: `Selection controls for selecting and dragging Entities.` },
+        'toolbar/transform/translate':      { title: 'Translate Tool', html: `Selection controls for moving Entities.` },
+        'toolbar/transform/rotate':         { title: 'Rotate Tool', html: `Selection controls for rotating Entities.` },
+        'toolbar/transform/scale':          { title: 'Scale Tool', html: `Selection controls for resizing Entities.` },
+        'toolbar/transform/rect':           { title: 'Rect Tool', html: `Selection controls for resizing Entities.` },
+        'toolbar/transform/snap':           { title: 'Snap Tool', html: `Selection controls for snapping Entities at shared edges.` },
+        'toolbar/transform/paint':          { title: 'Paint Tool', html: `Selection controls for painting Entities surfaces.` },
+
+        // Toolbar, Focus
+        'toolbar/focus/onto':               { title: 'Focus On', html: `Center camera on selection, or on active Stage if no selection.` },
+        'toolbar/focus/reset':              { title: 'Reset View', html: `Resets camera target to origin (0, 0, 0).` },
         'toolbar/worlds/reset':             { title: 'Reset View', html: `Centers camera on selection, or on all Nodes if no selection.` },
 
+        // Toolbar, Layer
+        'toolbar/layer/arrange':            { title: 'Arrange', html: `Menu for moving object forward / backward through the z-order.` },
+
+        // Toolbar, Views
+        'toolbar/scene/views':              { title: 'Toggle Views', html: `Quick menu for toggling view options.` },
+
+        // Toolbar, Grid
         'toolbar/grid/snap':                { title: 'Grid on Top?', html: `Show grid on top of objects?` },
         'toolbar/grid/snap':                { title: 'Resizes to Grid?', html: `When rotation matches grid angle, resize tool will snap corners to grid.` },
         'toolbar/grid/snap':                { title: 'Snap to Grid?', html: `During tranlation, should objects snap to align with grid?` },
 
+        // Toolbar, Settings
         'toolbar/play':                     { title: 'Play Game', html: `Start game preview using the current active World.` },
         'toolbar/project':                  { title: 'Project Settings', html: `` },
         'toolbar/history':                  { title: 'History', html: `List of undo / redo actions taken in editor.` },

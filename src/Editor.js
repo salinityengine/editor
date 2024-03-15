@@ -175,7 +175,7 @@ class Editor extends SUEY.Docker {
         this.setMode(Config.getKey('settings/editorMode'));
 
         // Enable Button Animations
-        setTimeout(() => document.body.classList.remove('preload'), 1200);
+        setTimeout(() => document.body.classList.remove('preload'), 1000);
 
         /********** DEMO */
 

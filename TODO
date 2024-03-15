@@ -2,9 +2,12 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Toolbar:
+    - View2D Toolbar graphics
+    - Move 'play' / 'settings' to EditorToolbar
+
 Editor Skeleton:
     - Go through Config
-    - Go through Advice
     - Go through Language
     - Turn 'functional' signals into editor methods
 

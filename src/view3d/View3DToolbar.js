@@ -6,6 +6,7 @@ import { ColorizeFilter } from '../gui/ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 // import { SceneUtils } from './SceneUtils.js';
+import { ToggleButton } from '../gui/ToggleButton.js';
 
 class View3DToolbar extends SUEY.Panel {
 
@@ -38,7 +39,7 @@ class View3DToolbar extends SUEY.Panel {
         const paint = new SUEY.ToolbarButton(null, 'right');
 
         // Views
-        const toggle = new SUEY.ToolbarButton().addClass('suey-hover-active');
+        const views = new SUEY.ToolbarButton().addClass('suey-hover-active');
 
         // Play
         const play = new SUEY.ToolbarButton().addClass('suey-red-button');
@@ -70,7 +71,7 @@ class View3DToolbar extends SUEY.Panel {
         paint.dom.setAttribute('tooltip', Config.tooltip('Paint Tool', Config.getKey('shortcuts/paint')));
 
         // Views
-        // toggle.dom.setAttribute('tooltip', 'Toggle Views');
+        // views.dom.setAttribute('tooltip', 'Toggle Views');
 
         // Play
         play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
@@ -83,26 +84,26 @@ class View3DToolbar extends SUEY.Panel {
         /******************** ADVISOR */
 
         // Mouse Modes
-        Advice.attach(select, 'toolbar/view/select');
-        Advice.attach(look, 'toolbar/view/look');
-        Advice.attach(move, 'toolbar/view/move');
-        Advice.attach(zoom, 'toolbar/view/zoom');
+        Advice.attach(select, 'toolbar/mouse/select');
+        Advice.attach(look, 'toolbar/mouse/look');
+        Advice.attach(move, 'toolbar/mouse/move');
+        Advice.attach(zoom, 'toolbar/mouse/zoom');
 
         // Focus
-        Advice.attach(focus, 'toolbar/view/focus');
-        Advice.attach(reset, 'toolbar/view/reset');
+        Advice.attach(focus, 'toolbar/focus/onto');
+        Advice.attach(reset, 'toolbar/focus/reset');
 
         // Transform Tools
-        Advice.attach(none, 'toolbar/view/none');
-        Advice.attach(translate, 'toolbar/view/translate');
-        Advice.attach(rotate, 'toolbar/view/rotate');
-        Advice.attach(scale, 'toolbar/view/scale');
-        Advice.attach(rect, 'toolbar/view/rect');
-        Advice.attach(snap, 'toolbar/view/snap');
-        Advice.attach(paint, 'toolbar/view/paint');
+        Advice.attach(none, 'toolbar/transform/none');
+        Advice.attach(translate, 'toolbar/transform/translate');
+        Advice.attach(rotate, 'toolbar/transform/rotate');
+        Advice.attach(scale, 'toolbar/transform/scale');
+        Advice.attach(rect, 'toolbar/transform/rect');
+        Advice.attach(snap, 'toolbar/transform/snap');
+        Advice.attach(paint, 'toolbar/transform/paint');
 
         // Views
-        Advice.attach(toggle, 'toolbar/view/toggle');
+        Advice.attach(views, 'toolbar/scene/views');
 
         // Play
         Advice.attach(play, 'toolbar/play');
@@ -157,12 +158,6 @@ class View3DToolbar extends SUEY.Panel {
         const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setId('tb-reset-axis-y');
         const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
-
-        const toggleBack1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-1.svg`).setId('tb-toggle-back-1');
-        const toggleBack2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-2.svg`).setId('tb-toggle-back-2');
-        const toggleButton1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-1.svg`).setId('tb-toggle-button-1');
-        const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setId('tb-toggle-button-2');
-        toggle.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
 
         Signals.connect(this, 'schemeChanged', function() {
             const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
@@ -249,46 +244,33 @@ class View3DToolbar extends SUEY.Panel {
 
         /******************** VIEWS */
 
+        const toggleBack1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-1.svg`).setId('tb-toggle-back-1');
+        const toggleBack2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-2.svg`).setId('tb-toggle-back-2');
+        const toggleButton1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-1.svg`).setId('tb-toggle-button-1');
+        const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setId('tb-toggle-button-2');
+        views.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
+
         // Toggle Menu
         const toggleMenu = new SUEY.Menu();
         toggleMenu.addClass('salt-toggle-menu');
         toggleMenu.addClass('suey-menu-under');
         toggleMenu.addClass('salt-button-menu');
-        function createToggleButton(icon = '', tip, configKey, callback = () => {}) {
-            const toggle = new SUEY.ToolbarButton(null, null, false /* background */, false /* closesMenus */);
-            toggle.addClass('salt-toggle-button');
-            toggle.add(new SUEY.VectorBox(icon));
-            toggle.onClick(() => { toggleButton(); });
-            if (tip) toggle.dom.setAttribute('tooltip', tip);
-            function toggleButton() {
-                if (configKey) Config.setKey(configKey, (!Config.getKey(configKey)));
-                setButtonValue();
-                if (typeof callback === 'function') callback();
-            }
-            function setButtonValue() {
-                toggle.removeClass('suey-toggled');
-                if (configKey && Config.getKey(configKey)) toggle.addClass('suey-toggled');
-            }
-            Signals.connect(toggle, 'settingsRefreshed', setButtonValue)
-            setButtonValue();
-            return toggle;
-        }
         // Boundary Toggle
         const boundaryIcon = `${EDITOR.FOLDER_MENU}toggle/boundary.svg`;
-        const boundaryItem = createToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
+        const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
             const bounds = Config.getKey('scene/render/bounds');
             // SceneUtils.toggleBoundaryObjects(bounds, view3d.world.activeStage());
         });
         toggleMenu.add(boundaryItem);
         // Colliders Toggle
         const collidersIcon = `${EDITOR.FOLDER_MENU}toggle/colliders.svg`;
-        const collidersItem = createToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
+        const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
             SceneUtils.toggleColliders();
         });
         toggleMenu.add(collidersItem);
         // Joints Toggle
         const jointsIcon = `${EDITOR.FOLDER_MENU}toggle/joints.svg`;
-        const jointsItem = createToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
+        const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
         toggleMenu.add(jointsItem);
 
         // Attach Menu
@@ -298,10 +280,10 @@ class View3DToolbar extends SUEY.Panel {
         hoverMenu.add(hoverItem);
 
         // Prepare Button
-        toggle.setStyle('overflow', 'visible');
-        toggle.setStyle('z-index', '1');
-        toggle.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
-        toggle.addToSelf(hoverMenu);
+        views.setStyle('overflow', 'visible');
+        views.setStyle('z-index', '1');
+        views.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
+        views.addToSelf(hoverMenu);
 
         /******************** PLAY */
 
@@ -314,10 +296,10 @@ class View3DToolbar extends SUEY.Panel {
         Signals.connect(this, 'playerStateChanged', function(state) {
             if (state === 'start') {
                 editor.addClass('salt-gray-out');
-                play.setStyle('display', 'none', 'pointer-events', 'none');
+                play.setStyle('opacity', '0', 'pointer-events', 'none');
             } else if (state === 'stop') {
                 editor.removeClass('salt-gray-out');
-                play.setStyle('display', '','pointer-events', 'all');
+                play.setStyle('opacity', '1','pointer-events', 'all');
             }
         });
 
@@ -365,7 +347,7 @@ class View3DToolbar extends SUEY.Panel {
         this.add(new SUEY.FlexSpacer());
         this.add(none, translate, rotate, scale, rect, snap, paint);
         this.add(new SUEY.FlexSpacer());
-        this.add(toggle);
+        this.add(views);
         this.add(new SUEY.FlexSpacer());
         this.add(play, new SUEY.ToolbarSpacer(0.5), proj, history, settings);
 
