@@ -96,34 +96,34 @@ class Inspector extends DockPanel {
 
             // SETTINGS
             if (_item === 'settings') {
-                self.addTab('settings', new SettingsGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/general.svg`, color: '#C04145', shrink: true });
+                self.addNewTab('settings', new SettingsGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/general.svg`, color: '#C04145', shrink: true });
 
                 if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
-                    // self.addTab('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false });
-                    self.addTab('grid', new Scene3DGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
-                    // self.addTab('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true });
+                    // self.addNewTab('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false });
+                    self.addNewTab('grid', new Scene3DGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
+                    // self.addNewTab('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true });
                 } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
-                    self.addTab('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
+                    self.addNewTab('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
                 }
 
             // HISTORY
             } else if (_item === 'history') {
-                self.addTab('history', new SettingsHistoryTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/history.svg`, color: '#BF4044', shadow: false, shrink: 0.75 });
+                self.addNewTab('history', new SettingsHistoryTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/history.svg`, color: '#BF4044', shadow: false, shrink: 0.75 });
 
             // PROJECT
             } else if (_item === 'project') {
-                self.addTab('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}project/general.svg`, color: '#773399' });
-                self.addTab('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_TYPES}project/info.svg`, color: '#66C7FF', shrink: true });
+                self.addNewTab('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}project/general.svg`, color: '#773399' });
+                self.addNewTab('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_TYPES}project/info.svg`, color: '#66C7FF', shrink: true });
 
             // PALETTE
             } else if (_item && _item.isPalette) {
-                self.addTab('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_TYPES}asset/palette.svg`, color: '#a0a0a0', shrink: true });
+                self.addNewTab('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_TYPES}asset/palette.svg`, color: '#a0a0a0', shrink: true });
 
             // TEXTURE
             } else if (_item && _item.isTexture) {
                 let icon = `${EDITOR.FOLDER_TYPES}asset/texture.svg`;
                 if (_item.isCubeTexture) icon = `${EDITOR.FOLDER_TYPES}asset/cube-texture.svg`;
-                self.addTab('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true });
+                self.addNewTab('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true });
 
             // ENTITY
             } else if (_item && _item.isEntity) {
@@ -138,7 +138,7 @@ class Inspector extends DockPanel {
                 else { /* isEntity */ tabType = 'entity'; icon = `${EDITOR.FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
 
                 // Entity Tab
-                self.addTab(tabType, new EntityTab(entity), { icon, color, shrink, shadow });
+                self.addNewTab(tabType, new EntityTab(entity), { icon, color, shrink, shadow });
 
                 // Component Tabs
                 const components = entity.components;
@@ -157,7 +157,7 @@ class Inspector extends DockPanel {
                         if (!ComponentClass) continue;
                         const icon = EDITOR.COMPSALTNT_ICONS[compType] ?? ComponentClass.config.icon ?? '';
                         const color = ComponentClass.config.color;
-                        self.addTab(compType, new ComponentTab(entity, compType), { icon, color, shrink: true });
+                        self.addNewTab(compType, new ComponentTab(entity, compType), { icon, color, shrink: true });
                     }
                 }
 
@@ -169,7 +169,7 @@ class Inspector extends DockPanel {
                 emptyText.setStyle('justifyContent', 'center');
                 emptyText.setStyle('paddingTop', '1em').setStyle('paddingBottom', '1em');
                 empty.add(emptyTitle, emptyText);
-                self.addTab('inspector', empty, { icon: `${EDITOR.FOLDER_TYPES}inspector.svg` });
+                self.addNewTab('inspector', empty, { icon: `${EDITOR.FOLDER_TYPES}inspector.svg` });
 
                 self.isEmpty = true;
             }

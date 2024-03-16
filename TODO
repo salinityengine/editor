@@ -2,6 +2,11 @@
 /*                    TO DO                   */
 /**********************************************/
 
+DockPanels (Tabbed):
+    - Drag n' Drop to new positions (left / right / bottom)?
+    - Resize up / down on side panels
+    - Docking / Snapping / Dragging
+
 Toolbar:
     - View2D Toolbar graphics
     - Move 'play' / 'settings' to EditorToolbar
@@ -105,11 +110,6 @@ View Menu:
 Advisor:
     - Broadcast with signals: add info for all exisiting buttons, etc
     - Tie into Schema: (i.e. NumberBoxes need to alert user min / max / step, etc)
-
-DockPanels:
-    - Resize up / down on side panels
-    - Docking / Snapping / Dragging
-    - Drag n' Drop to new positions (left / right / bottom)?
 
 Docs:
     - JSDoc (playcanvas)?

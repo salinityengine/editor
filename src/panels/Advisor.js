@@ -78,7 +78,7 @@ class Advisor extends DockPanel {
         /********** TAB PANEL */
 
         const icon = `${EDITOR.FOLDER_TYPES}advisor.svg`;
-        const advisorPanel = this.addTab('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
+        const advisorPanel = this.addNewTab('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
         advisorPanel.addClass('salt-advisor-panel');
         this.selectFirst();
 

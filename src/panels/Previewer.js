@@ -54,38 +54,38 @@ class Previewer extends DockPanel {
                 // TRANSFORM CONTROLS
                 if (_item === 'transformControls') {
                     if (editor.viewport.transformMode() === 'paint') {
-                        self.addTab('paint', new PaintPreview(), { icon: `${EDITOR.FOLDER_TYPES}paint/palette.svg` });
+                        self.addNewTab('paint', new PaintPreview(), { icon: `${EDITOR.FOLDER_TYPES}paint/palette.svg` });
                     } else if (editor.viewport.transformMode() === 'snap') {
-                        self.addTab('snap', new SnapPreview(), { icon: `${EDITOR.FOLDER_TYPES}snap/magnet.svg` });
+                        self.addNewTab('snap', new SnapPreview(), { icon: `${EDITOR.FOLDER_TYPES}snap/magnet.svg` });
                     }
 
                 // GEOMETRY
                 } else if (_item.isBufferGeometry) {
-                    self.addTab('preview', new GeometryPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+                    self.addNewTab('preview', new GeometryPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
 
                 // MATERIAL
                 } else if (_item.isMaterial) {
-                    self.addTab('preview', new MaterialPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+                    self.addNewTab('preview', new MaterialPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
 
                 // PALETTE
                 } else if (_item.isPalette) {
-                    self.addTab('preview', new PalettePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+                    self.addNewTab('preview', new PalettePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
 
                 // SCRIPT
                 } else if (_item.type === 'Script') {
-                    self.addTab('preview', new ScriptPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+                    self.addNewTab('preview', new ScriptPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
 
                 // SHAPE
                 } else if (_item.type === 'Shape') {
-                    self.addTab('preview', new ShapePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+                    self.addNewTab('preview', new ShapePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
 
                 // TEXTURE
                 } else if (_item.isTexture) {
-                    self.addTab('preview', new TexturePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+                    self.addNewTab('preview', new TexturePreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
 
                 // PREFAB
                 } else if (_item.isPrefab && !_item.isBuiltIn) {
-                    self.addTab('preview', new PrefabPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
+                    self.addNewTab('preview', new PrefabPreview(_item), { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color });
                 }
 
             }

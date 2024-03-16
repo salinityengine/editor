@@ -34,10 +34,10 @@ class Explorer extends DockPanel {
         this.defaultTab = 'scene';
 
         // Add Panels
-        this.addTab('outliner', this.outliner, { icon: `${EDITOR.FOLDER_TYPES}outliner.svg` });
-        this.addTab('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
-        this.addTab('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
-        this.addTab('scripts', this.scripts, { icon: `${EDITOR.FOLDER_TYPES}script.svg`, color: '#090B11' });
+        this.addNewTab('outliner', this.outliner, { icon: `${EDITOR.FOLDER_TYPES}outliner.svg` });
+        this.addNewTab('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
+        this.addNewTab('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
+        this.addNewTab('scripts', this.scripts, { icon: `${EDITOR.FOLDER_TYPES}script.svg`, color: '#090B11' });
 
         // Close Button
         SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.LEFT);
