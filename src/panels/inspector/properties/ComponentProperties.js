@@ -146,7 +146,7 @@ class ComponentProperties extends SUEY.PropertyList {
                 editor.execute(new ChangeComponentCommand(component, newData, data));
 
                 // Store current scroll position
-                const parent = SUEY.Utils.parentScroller(self);
+                const parent = SUEY.Dom.parentScroller(self);
                 const scrollPosition = (parent) ? parent.scrollTop : 0;
 
                 // Delay (to allow checkbox to animate)
