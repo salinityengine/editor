@@ -3,6 +3,7 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { Config } from '../../../config/Config.js';
+import { Signals } from '../../../config/Signals.js';
 
 import { ChangeComponentCommand } from '../../../commands/Commands.js';
 import { addProperty } from './AddProperty.js';
@@ -37,7 +38,7 @@ class ComponentProperties extends SUEY.PropertyList {
         buildPanel();
 
         this.onPointerLeave(() => {
-            signals.advisorInfo.dispatch();
+            Signals.dispatch('advisorInfo');
         });
 
         // ----- END CTOR ----- (ONLY FUNCTIONS BELOW)
@@ -46,16 +47,16 @@ class ComponentProperties extends SUEY.PropertyList {
 
         function buildPanel() {
 
-            // Verify that Editor hasn't changed selection
-            const entity = component.entity;
-            if (entity && entity.isEntity) {
-                if (editor.inspector.currentItem() && editor.inspector.currentItem().uuid === entity.uuid) {
-                    // OKAY
-                } else {
-                    // INSPECTOR CHANGED
-                    return;
-                }
-            }
+            // // Verify that Editor hasn't changed selection
+            // const entity = component.entity;
+            // if (entity && entity.isEntity) {
+            //     if (editor.inspector.currentItem() && editor.inspector.currentItem().uuid === entity.uuid) {
+            //         // OKAY
+            //     } else {
+            //         // INSPECTOR CHANGED
+            //         return;
+            //     }
+            // }
 
             // CLEAR
             self.clearContents();

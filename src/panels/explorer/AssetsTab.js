@@ -86,7 +86,7 @@ class AssetsTab extends SUEY.Titled {
             if (!asset || !asset.uuid) return;
             const panel = self.panels[type];
             if (panel) {
-                editor.explorer.selectTab('assets');
+                editor.selectTab('assets');
                 panel.setExpanded();
                 const assetBox = document.getElementById(asset.uuid);
                 if (assetBox) setTimeout(() => { assetBox.focus(); assetBox.click(); }, 0);

@@ -323,17 +323,6 @@ class View3DToolbar extends SUEY.Panel {
         history.onClick(() => Signals.dispatch('inspectorBuild', 'history'));
         settings.onClick(() => Signals.dispatch('inspectorBuild', 'settings'));
 
-        Signals.connect(this, 'inspectorChanged', function() {
-            proj.removeClass('suey-selected');
-            history.removeClass('suey-selected');
-            settings.removeClass('suey-selected');
-            if (!editor.inspector) return;
-            const item = editor.inspector.currentItem();
-            if (item === 'project') proj.addClass('suey-selected');
-            if (item === 'history') history.addClass('suey-selected');
-            if (item === 'settings') settings.addClass('suey-selected');
-        });
-
         /******************** ADD TO TOOLBAR */
 
         // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');

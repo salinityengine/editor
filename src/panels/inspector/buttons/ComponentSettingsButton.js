@@ -2,6 +2,8 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Signals } from '../../../config/Signals.js';
+
 import { AddAssetCommand } from '../../../commands/Commands.js';
 import { AddComponentCommand } from '../../../commands/Commands.js';
 import { MultiCmdsCommand } from '../../../commands/Commands.js';
@@ -61,12 +63,12 @@ class ComponentSettingsButton extends SUEY.Button {
                 if (direction === 'up') {
                     if (positionIndex > 0) {
                         SALT.System.swapArrayItems(entity.components, positions[positionIndex], positions[positionIndex - 1]);
-                        signals.inspectorBuild.dispatch('rebuild');
+                        Signals.dispatch('inspectorBuild', 'rebuild');
                     }
                 } else { /* if (direction === 'down') { */
                     if (positionIndex < positions.length - 1) {
                         SALT.System.swapArrayItems(entity.components, positions[positionIndex], positions[positionIndex + 1]);
-                        signals.inspectorBuild.dispatch('rebuild');
+                        Signals.dispatch('inspectorBuild', 'rebuild');
                     }
                 }
             }

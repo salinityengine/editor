@@ -78,8 +78,6 @@ class History extends SUEY.Div {
             return;
         }
 
-        Signals.toggle('inspectorBuild', editor.inspector.currentItem() !== 'settings' /* leave 'settings' */);
-
         let cmd = undefined;
         if (this.undos.length > 0) {
             cmd = this.undos.pop();
@@ -90,8 +88,6 @@ class History extends SUEY.Div {
             Signals.dispatch('historyChanged', cmd);
         }
 
-        Signals.toggle('inspectorBuild', true);
-
         return cmd;
     }
 
@@ -100,8 +96,6 @@ class History extends SUEY.Div {
             alert('Undo/Redo disabled while scene is playing.');
             return;
         }
-
-        Signals.toggle('inspectorBuild', editor.inspector.currentItem() !== 'settings' /* leave 'settings' */);
 
         let cmd = undefined;
         if (this.redos.length > 0) {
@@ -113,8 +107,6 @@ class History extends SUEY.Div {
             this.undos.push(cmd);
             Signals.dispatch('historyChanged', cmd);
         }
-
-        Signals.toggle('inspectorBuild', true);
 
         return cmd;
     }

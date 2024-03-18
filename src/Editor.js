@@ -65,12 +65,6 @@ class Editor extends SUEY.Docker {
         this.scripter = null;                                   // Script Editor
         this.shaper = null;                                     // Shape Editor
 
-        // Docking Panels
-        this.advisor = null;                                    // Advisor
-        this.explorer = null;                                   // Explorer (Outliner / Assets / Prefabs)
-        this.inspector = null;                                  // Object Inspector
-        this.previewer = null;                                  // Asset Previewer
-
         // Misc
         this.dragInfo = undefined;                              // Stores data for 'dragenter' events
         this.selected = [];                                     // Current Selection
@@ -115,15 +109,10 @@ class Editor extends SUEY.Docker {
 
         /***** DOCKING PANELS */
 
-        this.advisor = new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 });
-        this.explorer = new Explorer({ startWidth: 245, minWidth: 70 });
-        this.inspector = new Inspector({ startWidth: 300, minWidth: 190 });
-        this.previewer = new Previewer({ startWidth: 300, minWidth: 190 });
-
-        this.addDockPanel(this.advisor, SUEY.CORNERS.BOTTOM_LEFT);
-        this.addDockPanel(this.explorer, SUEY.CORNERS.TOP_LEFT);
-        this.addDockPanel(this.inspector, SUEY.CORNERS.TOP_RIGHT);
-        this.addDockPanel(this.previewer, SUEY.CORNERS.BOTTOM_RIGHT);
+        this.addDockPanel(new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 }), SUEY.CORNERS.BOTTOM_LEFT);
+        this.addDockPanel(new Explorer({ startWidth: 245, minWidth: 70 }), SUEY.CORNERS.TOP_LEFT);
+        this.addDockPanel(new Inspector({ startWidth: 300, minWidth: 190 }), SUEY.CORNERS.TOP_RIGHT);
+        this.addDockPanel(new Previewer({ startWidth: 300, minWidth: 190 }), SUEY.CORNERS.BOTTOM_RIGHT);
 
         /********** SIGNALS */
 
@@ -199,13 +188,9 @@ class Editor extends SUEY.Docker {
             window.dispatchEvent(new Event('hidden'));
         }
 
-        // // Hide Dock Panels
-        // if (this.explorer) this.explorer.hide();
-        // if (this.inspector) {
-        //     const persistent = [ 'project', 'history', 'settings' ];
-        //     if (!persistent.includes(this.inspector.currentItem())) this.inspector.hide();
-        // }
-        // if (this.previewer) this.previewer.hide();
+        //
+        // TODO: Hide Panels
+        //
 
         // Hide Editor Panels
         this.view2d.hide();
@@ -234,10 +219,9 @@ class Editor extends SUEY.Docker {
         }
         Config.setKey('settings/editorMode', mode);
 
-        // // Rebuild Inspector if on 'settings'
-        // if (this.inspector && this.inspector.currentItem() === 'settings') {
-        //     Signals.dispatch('inspectorBuild', 'rebuild');
-        // }
+        //
+        // TODO: Rebuild Inspector if on 'settings'
+        //
 
         // Dispatch Signals
         Signals.dispatch('windowResize'); // refresh panel sizes
@@ -487,10 +471,14 @@ class Editor extends SUEY.Docker {
 
     /******************** PANELS ********************/
 
-    /** Update advice window */
-    setAdvisorInfo(title = '', html = '') {
-        if (this.advisor) this.advisor.setInfo(title, html);
-        return this;
+    /** If tab is present in Editor, ensures tab is active */
+    selectTab(tabId = '') {
+        //
+        // TODO: Find and select tab
+        //
+        // Example
+        //  tabbedPanel.selectTab('assets');
+        //
     }
 
     /** Display temporary, centered tooltip */

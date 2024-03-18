@@ -21,7 +21,6 @@ class Advisor extends DockPanel {
         maxHeight = Infinity,
     } = {}) {
         super({ style, resizers, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
-        const self = this;
         this.setName('Advisor');
         this.addClass('salt-advisor');
         this.setTabSide(SUEY.TAB_SIDES.RIGHT);
@@ -151,7 +150,7 @@ class Advisor extends DockPanel {
         this.onPointerLeave(() => {
             active = true;
             buttonRow.setStyle('display', 'none');
-            self.setInfo();
+            setInfo();
         });
 
         this.dom.addEventListener('hidden', () => {
@@ -162,6 +161,15 @@ class Advisor extends DockPanel {
         /********** SET INFO */
 
         function setInfo(title, html = '') {
+            if (!active) return;
+            if (title && ((titles.length === 0) || (titles.length > 0 && title !== titles[0]))) {
+                titles.unshift(title);
+                bodies.unshift(html ?? '');
+                while (titles.length > maxSize) { titles.pop(); }
+                while (bodies.length > maxSize) { bodies.pop(); }
+                history = 0;
+            }
+
             if (title === _title) return;
             if (title) {
                 titleText.setInnerHtml(title);
@@ -176,20 +184,13 @@ class Advisor extends DockPanel {
                 history = -1;
             }
             _title = title;
-        }
 
-        this.setInfo = function (title, html) {
-            if (!active) return;
-            if (title && ((titles.length === 0) || (titles.length > 0 && title !== titles[0]))) {
-                titles.unshift(title);
-                bodies.unshift(html ?? '');
-                while (titles.length > maxSize) { titles.pop(); }
-                while (bodies.length > maxSize) { bodies.pop(); }
-                history = 0;
-            }
-            setInfo(title, html);
             updateButtons();
         }
+
+        /***** SIGNALS *****/
+
+        Signals.connect(this, 'advisorInfo', setInfo);
 
         /***** INIT *****/
 

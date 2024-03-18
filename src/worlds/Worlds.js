@@ -22,7 +22,7 @@ class Worlds extends SUEY.Graph {
             curveType: Config.getKey('world/curve')
         });
         const self = this;
-        this.setClass('Worlds');
+        this.setClass('salt-worlds');
         this.addClass('salt-fullscreen');
 
         // Toolbar

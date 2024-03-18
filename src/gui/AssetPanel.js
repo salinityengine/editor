@@ -284,7 +284,7 @@ class AssetPanel extends OSUI.Shrinkable {
             } else if (this.type === 'material') {
                 SALT.RenderUtils.renderGeometryToCanvas(canvas, null /* geometry */, asset /* material */);
             } else if (this.type === 'palette') {
-                item.onDblClick(() => { signals.inspectorBuild.dispatch(asset); });
+                item.onDblClick(() => { Signals.dispatch('inspectorBuild', asset); });
                 canvas.style['border-radius'] = 'var(--radius-small)';
                 CanvasUtils.drawPalette(canvas, asset /* palette */);
             } else if (this.type === 'shape') {
@@ -294,7 +294,7 @@ class AssetPanel extends OSUI.Shrinkable {
                 SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
                 shapeGeometry.dispose();
             } else if (this.type === 'texture') {
-                item.onDblClick(() => { signals.inspectorBuild.dispatch(asset); });
+                item.onDblClick(() => { Signals.dispatch('inspectorBuild', asset); });
                 const texture = asset;
                 if (texture.image && texture.image.complete) texture.needsUpdate = true;
                 SALT.RenderUtils.renderTextureToCanvas(canvas, texture);
@@ -337,12 +337,12 @@ class AssetPanel extends OSUI.Shrinkable {
                 innerBox.dom.appendChild(canvas);
                 SALT.RenderUtils.renderMeshToCanvas(canvas, prefab);
             }
-            item.onDblClick(() => { signals.inspectorBuild.dispatch(prefab); });
+            item.onDblClick(() => { Signals.dispatch('inspectorBuild', prefab); });
             item.onKeyDown((event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
                     event.stopPropagation();
-                    signals.inspectorBuild.dispatch(prefab);
+                    Signals.dispatch('inspectorBuild', prefab);
                 }
             });
 

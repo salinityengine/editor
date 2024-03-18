@@ -5,6 +5,7 @@ import * as SUEY from 'gui';
 import { ColorizeFilter } from '../../../gui/ColorizeFilter.js';
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
+import { Signals } from '../../../config/Signals.js';
 
 import { ChangeComponentCommand } from '../../../commands/Commands.js';
 import { MultiCmdsCommand } from '../../../commands/Commands.js';
@@ -658,7 +659,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         propertyRow.onPointerEnter(() => {
             const info = item.info ?? Language.getKey('advisor/noInfo');
-            signals.advisorInfo.dispatch(itemName, info);
+            Signals.dispatch('advisorInfo', itemName, info);
         });
 
         if (leftWidgets.length > 0) {

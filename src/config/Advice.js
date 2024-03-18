@@ -1,4 +1,5 @@
 import { Config } from './Config.js';
+import { Signals } from './Signals.js';
 
 const _values = {
 
@@ -92,9 +93,9 @@ class Advice {
         title = advice.title ?? title;
         html = advice.html ?? html;
         if (element.isElement) {
-            element.onPointerEnter(() => { editor.setAdvisorInfo(title, html); });
+            element.onPointerEnter(() => { Signals.dispatch('advisorInfo', title, html); });
         } else if (element instanceof HTMLElement) {
-            element.addEventListener('pointerenter', () => { editor.setAdvisorInfo(title, html); });
+            element.addEventListener('pointerenter', () => { Signals.dispatch('advisorInfo', title, html); });
         }
     }
 
@@ -102,9 +103,9 @@ class Advice {
     static clear(element) {
         if (!element || !window.editor) return;
         if (element.isElement) {
-            element.onPointerLeave(() => { editor.setAdvisorInfo(); });
+            element.onPointerLeave(() => { Signals.dispatch('advisorInfo'); });
         } else if (element instanceof HTMLElement) {
-            element.addEventListener('pointerleave', () => { editor.setAdvisorInfo(); });
+            element.addEventListener('pointerleave', () => { Signals.dispatch('advisorInfo'); });
         }
     }
 

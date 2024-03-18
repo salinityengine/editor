@@ -130,26 +130,6 @@
     backdrop-filter: blur(2px) contrast(0.8) grayscale(0.8);
 }
 
-/********** GIZMO */
-
-.salt-gizmo {
-    --gizmoSize: 7.5em;
-    --widthRatio: 1.5;
-
-    /* background-color: rgba(255, 0, 0, 0.1); */
-
-    position: absolute !important;
-    border-radius: 50%;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-    right: 0; /* calc(50% - ((var(--gizmoSize) / 2) * var(--widthRatio))); */
-    bottom: 0;
-    height: var(--gizmoSize);
-    width: calc(var(--gizmoSize) * var(--widthRatio));
-    margin: 0;
-}
-
 /********** INSPECTOR */
 
 .salt-property-panel {

@@ -6,6 +6,7 @@ const SIGNAL_NAMES = [
     /***** EDITOR **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
     // General
+    'advisorInfo',              // (title, html)        FUNCTION    New Advisor title / text
     'editorModeChanged',        // -                    ALERT       Editor mode was changed
     'clipboardChanged',         // -                    ALERT       Clipboard was changed
     'historyChanged',           // (command)            ALERT       History was changed
