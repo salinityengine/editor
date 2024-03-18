@@ -55,7 +55,7 @@ class WorldsToolbar extends SUEY.Panel {
 
         /******************** NODES */
 
-        const nodePlusSign = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}add.svg`).setId('tb-node-plus-sign');
+        const nodePlusSign = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}add.svg`).setID('tb-node-plus-sign');
         nodePlusSign.img.addClass('suey-complement-colorize')
         add.add(nodePlusSign);
 
@@ -101,9 +101,9 @@ class WorldsToolbar extends SUEY.Panel {
 
         /******************** FOCUS */
 
-        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setId('tb-reset-axis-x');
-        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setId('tb-reset-axis-y');
-        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setId('tb-reset-target');
+        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
+        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
+        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
         Signals.connect(this, 'schemeChanged', function() {
@@ -119,8 +119,8 @@ class WorldsToolbar extends SUEY.Panel {
 
         /******************** GRID */
 
-        const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setId('SnapMagnet');
-        const snapAttract = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-attract.svg`).setId('tb-snap-attract');
+        const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
+        const snapAttract = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         gridSnap.add(snapMagnet, snapAttract);
 
         gridSnap.onClick(() => {

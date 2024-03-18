@@ -68,13 +68,13 @@ class Inspector extends DockPanel {
                 // Some items (settings, history, project) are slightly persistent on Entity selection
                 if (!buildFrom || buildFrom.isEntity) {
                     if (_item === 'settings') {
-                        if (self.selectedId === 'three') return;
+                        if (self.selectedID === 'three') return;
                     }
                     if (_item === 'history') {
                         return;
                     }
                     if (_item === 'project') {
-                        if (self.selectedId === 'info') return;
+                        if (self.selectedID === 'info') return;
                     }
                 }
 

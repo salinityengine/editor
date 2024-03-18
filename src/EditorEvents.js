@@ -137,7 +137,7 @@ export function editorKeyDown(editor, event) {
             //
             // Example:
             //      const tabs = {};
-            //      tabs['inspector'] = inspector.currentId();
+            //      tabs['inspector'] = inspector.selectedID;
 
             // Clear Config
             Config.clear();

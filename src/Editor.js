@@ -477,7 +477,7 @@ class Editor extends SUEY.Docker {
         // TODO: Find and select tab
         //
         // Example
-        //  tabbedPanel.selectTab('assets');
+        //  Tabbed.selectTab('assets');
         //
     }
 

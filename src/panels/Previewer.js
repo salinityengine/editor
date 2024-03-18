@@ -91,7 +91,7 @@ class Previewer extends DockPanel {
             }
 
             // Hide if empty, select last known tab (stored ranked in Config.js)
-            self.isEmpty = (self.tabs.length === 0);
+            self.isEmpty = (self.panels.length === 0);
             // self.setDisplay((self.isEmpty || !Config.getKey(`panels/show${self.getName()}`)) ? 'none' : '');
             self.setDisplay(self.isEmpty ? 'none' : '');
             self.selectLastKnownTab();

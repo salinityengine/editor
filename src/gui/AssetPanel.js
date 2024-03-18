@@ -261,7 +261,7 @@ class AssetPanel extends OSUI.Shrinkable {
         const item = new OSUI.AssetBox(asset.name, this.getViewKey());
         item.dom.draggable = true;
         item.uuid = asset.uuid;
-        item.setId(asset.uuid);
+        item.setID(asset.uuid);
 
         let innerBox = undefined;
 

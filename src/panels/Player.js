@@ -105,13 +105,13 @@ class Player extends SUEY.Window {
         pause.dom.setAttribute('tooltip', 'Pause Game');
         stop.dom.setAttribute('tooltip', 'Stop Game');
 
-        const screenMonitor = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}screen-monitor.svg`).setId('tb-screen-monitor');
-        const cameraBody = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-body.svg`).setId('tb-camera-body');
-        const cameraLens = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-lens.svg`).setId('tb-camera-lens');
-        const cameraFlash = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-flash.svg`).setId('tb-camera-flash');
-        const playPause = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-pause.svg`).setId('tb-play-pause');
-        const playActive = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setId('tb-play-active');
-        const playStop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-stop.svg`).setId('tb-play-stop');
+        const screenMonitor = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}screen-monitor.svg`).setID('tb-screen-monitor');
+        const cameraBody = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-body.svg`).setID('tb-camera-body');
+        const cameraLens = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-lens.svg`).setID('tb-camera-lens');
+        const cameraFlash = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-flash.svg`).setID('tb-camera-flash');
+        const playPause = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-pause.svg`).setID('tb-play-pause');
+        const playActive = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setID('tb-play-active');
+        const playStop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-stop.svg`).setID('tb-play-stop');
         screen.add(screenMonitor);
         camera.add(cameraBody, cameraLens, cameraFlash);
         pause.add(playPause, playActive);

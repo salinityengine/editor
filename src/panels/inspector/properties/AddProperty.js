@@ -22,7 +22,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
     // Row with No Title
     const rowWidgets = [];
 
-    // Titled Row, with Left & Right Widgets
+    // Labeled Row, with Left & Right Widgets
     const leftWidgets = [];
     const rightWidgets = [];
 
