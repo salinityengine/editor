@@ -8,7 +8,7 @@ DockPanels (Tabbed):
         - Ability to drag tab around in the current dock tab order
         - Don't clear docks (i.e. closing inspector clears all panels, yikes)
         - If dock has no panels, should hide
-        - If no dock in corer, new dock should appear
+        - If no dock in corner, new dock should appear
     - Dock Zones
         - Four Corners + One extra top left
         - Bottom

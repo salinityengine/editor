@@ -1,3 +1,20 @@
+/********** TOOLBAR */
+
+.salt-toolbar {
+    position: absolute !important;
+    pointer-events: none;
+    align-items: safe center;
+    display: flex;
+    flex-direction: row;
+    left: 0;
+    top: 0;
+    height: calc(var(--button-size) + (var(--pad-small) * 2));
+    width: 100%;
+    padding: var(--pad-small);
+    padding-bottom: var(--pad-micro);
+    z-index: 1; /* Toolbar */
+}
+
 /********** EYE MENU */
 
 #tb-eye-closed {

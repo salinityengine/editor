@@ -39,7 +39,58 @@ body {
     margin: auto;
 }
 
-/********** VIEWPORT TOGGLE MENU */
+/********** FULLSCREEN */
+
+.salt-fullscreen {
+    position: absolute;
+    margin: auto;
+    padding: 0;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 0; /* Fullscreen */
+}
+
+/********** INPUT */
+
+/* Keyboard Key Input */
+.salt-key-input {
+    caret-color: transparent;
+    color: rgb(var(--text)) !important;
+    /* background: rgba(var(--button-light), 0.5) !important; */
+    background: transparent;
+
+    border: var(--border-micro) solid rgba(var(--shadow), 0.5) !important;
+    outline: var(--border-micro) solid transparent !important;
+    box-shadow:
+        inset  0.00em -0.15em rgba(var(--black), 0.15),
+        inset  0.15em  0.00em rgba(var(--black), 0.15),
+        inset -0.15em  0.00em rgba(var(--white), 0.15),
+        inset  0.00em  0.15em rgba(var(--white), 0.15) !important;
+    text-align: center !important;
+}
+
+.salt-key-input:hover {
+    color: rgb(var(--text-light)) !important;
+    /* background: rgba(var(--midlight), 0.5) !important; */
+    background: transparent;
+
+    box-shadow:
+        inset  0.00em -0.15em rgba(var(--black), 0.30),
+        inset  0.15em  0.00em rgba(var(--black), 0.30),
+        inset -0.15em  0.00em rgba(var(--white), 0.30),
+        inset  0.00em  0.15em rgba(var(--white), 0.30) !important;;
+}
+
+.salt-key-input:active, .salt-key-input:focus {
+    color: rgb(var(--complement)) !important;
+    background: rgba(var(--darklight), 1) !important;
+    box-shadow: inset 0 0 0 var(--pixel) rgb(var(--icon)) !important;
+    outline: var(--border-micro) solid rgba(var(--shadow), 1.0) !important;
+}
+
+/********** POPUP TOGGLE MENU */
 
 .salt-toggle-menu.salt-button-menu {
     display: flex !important;
@@ -76,97 +127,4 @@ body {
 
 .salt-toggle-button.suey-toggled:active {
     border: 2px solid rgba(var(--icon-dark)) !important;
-}
-
-/********** GAME PLAYER */
-
-.salt-gray-out .salt-advisor,
-.salt-gray-out .salt-explorer,
-.salt-gray-out .salt-inspector,
-.salt-gray-out .salt-previewer,
-.salt-gray-out .editor-toolbar, .salt-gray-out .suey-flex-box:not(.salt-active-toolbar) {
-    filter: grayscale(1) contrast(0.5) brightness(0.5) /* blur(1px) */ !important;
-}
-
-/* Player Controls */
-.salt-active-toolbar {
-    position: absolute;
-    right: 1em;
-    top: 1em;
-    background-color: rgba(var(--darklight), 1);
-    border-radius: var(--radius-small);
-    padding: 0.1em !important;
-}
-
-.suey-window .salt-active-toolbar {
-    outline: solid 0.21em rgba(var(--button-light), 1);
-}
-.suey-window.suey-active-window .salt-active-toolbar {
-    outline: solid 0.21em rgba(var(--icon), 1);
-}
-
-/* Player Controls, Button: Background */
-.salt-active-toolbar .suey-toolbar-button,
-.salt-active-toolbar .suey-button-background {
-    background-color: transparent;
-    background-image: none;
-    border: none;
-    outline: none; /* for macos */
-    box-shadow: none;
-    z-index: 0;
-    filter: none;
-}
-
-/* Player Controls, Button: Hover */
-.salt-active-toolbar .suey-toolbar-button:hover .suey-button-background {
-    background-color: rgba(var(--button-dark), 1) !important;
-    box-shadow: /* pop-out-shadow */
-        inset var(--minus) var(--pixel) var(--pixel) 0 rgba(var(--white), 0.15),
-        inset var(--pixel) var(--minus) var(--pixel) 0 rgba(45, 45, 45, 0.15) !important;
-    filter: none !important;
-}
-
-/* Player Controls, Button: Active */
-.salt-active-toolbar .suey-toolbar-button:active .suey-button-background,
-.salt-active-toolbar .suey-toolbar-button.suey-selected .suey-button-background {
-    background-color: rgba(var(--button-light), 1) !important;
-    box-shadow: inset var(--minus) var(--pixel) var(--pad-small) rgba(0, 0, 0, 0.5) !important; /* sunk-in-shadow */
-}
-
-/********** INSPECTOR */
-
-/* Keyboard Key Input */
-.salt-key-input {
-    caret-color: transparent;
-    color: rgb(var(--text)) !important;
-    /* background: rgba(var(--button-light), 0.5) !important; */
-    background: transparent;
-
-    border: var(--border-micro) solid rgba(var(--shadow), 0.5) !important;
-    outline: var(--border-micro) solid transparent !important;
-    box-shadow:
-        inset  0.00em -0.15em rgba(var(--black), 0.15),
-        inset  0.15em  0.00em rgba(var(--black), 0.15),
-        inset -0.15em  0.00em rgba(var(--white), 0.15),
-        inset  0.00em  0.15em rgba(var(--white), 0.15) !important;
-    text-align: center !important;
-}
-
-.salt-key-input:hover {
-    color: rgb(var(--text-light)) !important;
-    /* background: rgba(var(--midlight), 0.5) !important; */
-    background: transparent;
-
-    box-shadow:
-        inset  0.00em -0.15em rgba(var(--black), 0.30),
-        inset  0.15em  0.00em rgba(var(--black), 0.30),
-        inset -0.15em  0.00em rgba(var(--white), 0.30),
-        inset  0.00em  0.15em rgba(var(--white), 0.30) !important;;
-}
-
-.salt-key-input:active, .salt-key-input:focus {
-    color: rgb(var(--complement)) !important;
-    background: rgba(var(--darklight), 1) !important;
-    box-shadow: inset 0 0 0 var(--pixel) rgb(var(--icon)) !important;
-    outline: var(--border-micro) solid rgba(var(--shadow), 1.0) !important;
 }
