@@ -16,7 +16,6 @@ DockPanels (Tabbed):
 
 Toolbar:
     - View2D Toolbar graphics
-    - Move 'play' / 'settings' to EditorToolbar
 
 Editor Skeleton:
     - Go through Config

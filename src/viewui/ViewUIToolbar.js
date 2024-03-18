@@ -35,14 +35,6 @@ class ViewUIToolbar extends SUEY.Panel {
         const gridResize = new SUEY.ToolbarButton(null, 'middle');
         const gridSnap = new SUEY.ToolbarButton(null, 'right');
 
-        // Play
-        const play = new SUEY.ToolbarButton().addClass('suey-red-button');
-
-        // Settings
-        const proj = new SUEY.ToolbarButton().addClass('suey-gray-button');
-        const history = new SUEY.ToolbarButton().addClass('suey-gray-button');
-        const settings = new SUEY.ToolbarButton().addClass('suey-gray-button');
-
         /******************** TOOLTIPS */
 
         // Mouse Modes
@@ -63,14 +55,6 @@ class ViewUIToolbar extends SUEY.Panel {
         gridResize.dom.setAttribute('tooltip', Config.tooltip('Resize to Grid?'));
         gridSnap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
 
-        // Play
-        play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
-
-        // Settings
-        proj.dom.setAttribute('tooltip', 'Project');
-        history.dom.setAttribute('tooltip', 'History');
-        settings.dom.setAttribute('tooltip', 'Settings');
-
         /******************** ADVISOR */
 
         // Mouse Modes
@@ -88,14 +72,6 @@ class ViewUIToolbar extends SUEY.Panel {
 
         // Grid
         Advice.attach(gridSnap, 'toolbar/grid/snap');
-
-        // Play
-        Advice.attach(play, 'toolbar/play');
-
-        // Settings
-        Advice.attach(proj, 'toolbar/project');
-        Advice.attach(history, 'toolbar/history');
-        Advice.attach(settings, 'toolbar/settings');
 
         /******************** MOUSE MODES */
 
@@ -183,44 +159,6 @@ class ViewUIToolbar extends SUEY.Panel {
         // TODO
         //
 
-        /******************** PLAY */
-
-        const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setId('tb-play-arrow');
-        play.add(playArrow);
-
-        play.onClick(() => editor.player.start());
-
-        /** When Player starts / stops, handle graying Editor, hiding 'Play' */
-        Signals.connect(this, 'playerStateChanged', function(state) {
-            if (state === 'start') {
-                editor.addClass('salt-gray-out');
-                play.setStyle('opacity', '0', 'pointer-events', 'none');
-            } else if (state === 'stop') {
-                editor.removeClass('salt-gray-out');
-                play.setStyle('opacity', '1','pointer-events', 'all');
-            }
-        });
-
-        /******************** SETTINGS */
-
-        const projectStars = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}project-stars.svg`).setId('tb-project-stars');
-        const projectShip = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}project-ship.svg`).setId('tb-project-ship');
-        proj.add(projectStars, projectShip);
-        const historyClock = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-clock.svg`).setId('tb-history-clock');
-        const historySecond = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-second.svg`).setId('tb-history-second');
-        const historyMinute = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-minute.svg`).setId('tb-history-minute');
-        const historyHour = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-hour.svg`).setId('tb-history-hour');
-        const historyCenter = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-center.svg`).setId('tb-history-center');
-        history.add(historyClock, historySecond, historyMinute, historyHour, historyCenter);
-        const settingsCenter = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-center.svg`).setId('tb-settings-center');
-        const settingsGear = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-gear.svg`).setId('tb-settings-gear');
-        const settingsShadow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-shadow.svg`).setId('tb-settings-shadow');
-        settings.add(settingsGear, settingsShadow, settingsCenter);
-
-        proj.onClick(() => Signals.dispatch('inspectorBuild', 'project'));
-        history.onClick(() => Signals.dispatch('inspectorBuild', 'history'));
-        settings.onClick(() => Signals.dispatch('inspectorBuild', 'settings'));
-
         /******************** ADD TO TOOLBAR */
 
         // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
@@ -228,7 +166,7 @@ class ViewUIToolbar extends SUEY.Panel {
         // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
         // this.add(left, middle, right);
 
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarLength));
+        this.add(new SUEY.ToolbarSpacer(editor.toolbarLeftLength));
         this.add(new SUEY.FlexSpacer());
         this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
         this.add(new SUEY.FlexSpacer());
@@ -236,7 +174,7 @@ class ViewUIToolbar extends SUEY.Panel {
         this.add(new SUEY.FlexSpacer());
         this.add(gridTop, gridResize, gridSnap);
         this.add(new SUEY.FlexSpacer());
-        this.add(play, new SUEY.ToolbarSpacer(0.5), proj, history, settings);
+        this.add(new SUEY.ToolbarSpacer(editor.toolbarRightLength));
 
     } // end ctor
 

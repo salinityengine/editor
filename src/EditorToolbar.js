@@ -26,18 +26,30 @@ class EditorToolbar extends SUEY.Panel {
         const scene3d = new SUEY.ToolbarButton(null, 'middle').addClass('suey-brown-button');
         const world = new SUEY.ToolbarButton(null, 'middle').addClass('suey-brown-button');
         const ui = new SUEY.ToolbarButton(null, 'right').addClass('suey-brown-button');
+        const play = new SUEY.ToolbarButton().addClass('suey-red-button');
+        const proj = new SUEY.ToolbarButton().addClass('suey-gray-button');
+        const history = new SUEY.ToolbarButton().addClass('suey-gray-button');
+        const settings = new SUEY.ToolbarButton().addClass('suey-gray-button');
 
         eye.dom.setAttribute('tooltip', 'Menu');
         scene2d.dom.setAttribute('tooltip', Config.tooltip('Scene Editor 2D'));
         scene3d.dom.setAttribute('tooltip', Config.tooltip('Scene Editor 3D'));
         world.dom.setAttribute('tooltip', Config.tooltip('World Graph'));
         ui.dom.setAttribute('tooltip', Config.tooltip('UI Editor'));
+        play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
+        proj.dom.setAttribute('tooltip', 'Project');
+        history.dom.setAttribute('tooltip', 'History');
+        settings.dom.setAttribute('tooltip', 'Settings');
 
         Advice.attach(eye, 'toolbar/eye');
         Advice.attach(scene2d, 'toolbar/mode/scene2d');
         Advice.attach(scene3d, 'toolbar/mode/scene3d');
         Advice.attach(world, 'toolbar/mode/world');
         Advice.attach(ui, 'toolbar/mode/ui');
+        Advice.attach(play, 'toolbar/play');
+        Advice.attach(proj, 'toolbar/project');
+        Advice.attach(history, 'toolbar/history');
+        Advice.attach(settings, 'toolbar/settings');
 
         /******************** EYE MENU */
 
@@ -89,10 +101,54 @@ class EditorToolbar extends SUEY.Panel {
             }
         });
 
+        /******************** PLAY */
+
+        const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setId('tb-play-arrow');
+        play.add(playArrow);
+
+        play.onClick(() => editor.player.start());
+
+        /** When Player starts / stops, handle graying Editor, hiding 'Play' */
+        Signals.connect(this, 'playerStateChanged', function(state) {
+            if (state === 'start') {
+                editor.addClass('salt-gray-out');
+                play.setStyle('opacity', '0', 'pointer-events', 'none');
+            } else if (state === 'stop') {
+                editor.removeClass('salt-gray-out');
+                play.setStyle('opacity', '1','pointer-events', 'all');
+            }
+        });
+
+        /******************** SETTINGS */
+
+        const projectStars = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}project-stars.svg`).setId('tb-project-stars');
+        const projectShip = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}project-ship.svg`).setId('tb-project-ship');
+        proj.add(projectStars, projectShip);
+        const historyClock = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-clock.svg`).setId('tb-history-clock');
+        const historySecond = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-second.svg`).setId('tb-history-second');
+        const historyMinute = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-minute.svg`).setId('tb-history-minute');
+        const historyHour = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-hour.svg`).setId('tb-history-hour');
+        const historyCenter = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-center.svg`).setId('tb-history-center');
+        history.add(historyClock, historySecond, historyMinute, historyHour, historyCenter);
+        const settingsCenter = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-center.svg`).setId('tb-settings-center');
+        const settingsGear = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-gear.svg`).setId('tb-settings-gear');
+        const settingsShadow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-shadow.svg`).setId('tb-settings-shadow');
+        settings.add(settingsGear, settingsShadow, settingsCenter);
+
+        proj.onClick(() => Signals.dispatch('inspectorBuild', 'project'));
+        history.onClick(() => Signals.dispatch('inspectorBuild', 'history'));
+        settings.onClick(() => Signals.dispatch('inspectorBuild', 'settings'));
+
         /******************** ADD TO TOOLBAR */
 
-        this.add(eye, new SUEY.ToolbarSpacer(0.5), scene2d, scene3d, world, ui);
-        editor.toolbarLength = this.children.length;
+        const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        left.add(eye, new SUEY.ToolbarSpacer(0.5), scene2d, scene3d, world, ui, new SUEY.FlexSpacer());
+        right.add(new SUEY.FlexSpacer(), play, new SUEY.ToolbarSpacer(0.5), proj, history, settings);
+        this.add(left, right);
+
+        editor.toolbarLeftLength = left.children.length - 1;
+        editor.toolbarRightLength = right.children.length - 1;
 
     }
 
