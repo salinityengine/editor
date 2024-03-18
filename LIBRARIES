@@ -23,63 +23,88 @@
 //                    2024-04-01 - version 4.0 - (JS, Pixi)
 //
 
+/******************** INLCUDED ********************/
+
+    LIBRARY             VERSION     RELEASE
+- CodeMirror 5                      Jun 08, 2023        ...upgrade to CodeMirror 6?
+- fflate                0.8.2       Feb 06, 2024        https://github.com/101arrowz/fflate
+- Matter                0.19.0      Feb 16, 2023        https://github.com/liabru/matter-js
+- Pixi.js               8.0.0       Mar 05, 2024        https://github.com/pixijs/pixijs
+
 /******************** LIBRARIES ********************/
 
+- Engine
+    taro                (MIT)       Components          https://github.com/Cloud9c/taro
+
 - Graphics
-    pixijs                  (MIT)       2D Graphics         https://github.com/pixijs/pixijs
+    pixijs              (MIT)       2D Graphics         https://github.com/pixijs/pixijs
 
 - Physics
-    matter-js               (MIT)       2D Physics          https://github.com/liabru/matter-js
+    matter-js           (MIT)       2D Physics          https://github.com/liabru/matter-js
 
 - Gui
-    js-signals              (MIT)       Signals/Slots       https://github.com/millermedeiros/js-signals
+    js-signals          (MIT)       Signals/Slots       https://github.com/millermedeiros/js-signals
+    three-ui            (MIT)       Elements            https://github.com/mrdoob/three.js/blob/master/editor/js/libs/ui.js
 
 - Utility
-    fflate                  (MIT)       Zip Archive         https://github.com/101arrowz/fflate
+    fflate              (MIT)       Zip Archive         https://github.com/101arrowz/fflate
 
 /******************** ASSETS ********************/
 
 - Images
-    flaticon                (Premium)   https://www.flaticon.com/
+    flaticon            (Premium)   https://www.flaticon.com/
 
 - Fonts
-    aileron                 (CC0)       https://github.com/Nicholaiii/Aileron (source - http://dotcolon.net)
-    roboto                  (Apache)    https://fonts.google.com/specimen/Roboto (source - google)
+    aileron             (CC0)       https://github.com/Nicholaiii/Aileron (source - http://dotcolon.net)
+    roboto              (Apache)    https://fonts.google.com/specimen/Roboto (source - google)
 
 /******************** FUTURE ********************/
 
 - App
-    capacitor               (MIT)       Mobile App          https://github.com/ionic-team/capacitor
-    cordova                 (Apache)    Mobile App          https://cordova.apache.org
-    electron                (MIT)       Desktop App         https://github.com/electron/electron
-    neutralino.js           (MIT)       Desktop App         https://github.com/neutralinojs/neutralinojs
-    nw.js                   (MIT)       Desktop App         https://github.com/nwjs/nw.js
-    tauri                   (Apache)    Desktop/Mobile      https://github.com/tauri-apps/tauri
+    capacitor           (MIT)       Mobile App          https://github.com/ionic-team/capacitor
+    cordova             (Apache)    Mobile App          https://cordova.apache.org
+    electron            (MIT)       Desktop App         https://github.com/electron/electron
+    neutralino.js       (MIT)       Desktop App         https://github.com/neutralinojs/neutralinojs
+    nw.js               (MIT)       Desktop App         https://github.com/nwjs/nw.js
+    tauri               (Apache)    Desktop/Mobile      https://github.com/tauri-apps/tauri
 
 - Audio
-    howler.js               (MIT)       Audio Playback      https://github.com/goldfire/howler.js
-    tone.js                 (MIT)       Audio Creation      https://github.com/Tonejs/Tone.js
+    howler.js           (MIT)       Audio Playback      https://github.com/goldfire/howler.js
+    tone.js             (MIT)       Audio Creation      https://github.com/Tonejs/Tone.js
+
+- Code Analysis
+    jshint              (MIT)       Code Analysis       https://github.com/jshint/jshint
+    jsonlint            (MIT)       Code Analysis       https://github.com/zaach/jsonlint
+    ternjs              (MIT)       Code Analysis       https://github.com/ternjs/tern
 
 - Code Editing
-    blockly                 (Apache)    Visual Code         https://developers.google.com/blockly
-    brython                 (BSD)       Python Scripting    https://github.com/brython-dev/brython
+    acorn               (MIT)       Code Parser         https://github.com/acornjs/acorn
+    blockly             (Apache)    Visual Code         https://developers.google.com/blockly
+    brython             (BSD)       Python Scripting    https://github.com/brython-dev/brython
+    code-mirror         (MIT)       Code Editor         https://github.com/codemirror/CodeMirror
+    esprima             (BSD)       Code Parser         https://github.com/jquery/esprima
+
+- Entity Component System
+    square              (MIT)       ECS                 https://github.com/harshdoesdev/square
 
 - Geometry (2D)
-    concaveman              (ISC)       Concave Hull        https://github.com/mapbox/concaveman
-    convexhull-js           (MIT)       Convex Hull         https://github.com/indy256/convexhull-js
-    delaunator              (ISC)       Deaunay Triangluate https://github.com/mapbox/delaunator
-    earcut                  (ISC)       Polygon Triangluate https://github.com/mapbox/earcut
-    martinez                (MIT)       Polygon Clipping    https://github.com/w8r/martinez
-    poly-decomp.js          (MIT)       Convex Pieces       https://github.com/schteppe/poly-decomp.js
-    potpack                 (ISC)       Rect Packing        https://github.com/mapbox/potpack
+    concaveman          (ISC)       Concave Hull        https://github.com/mapbox/concaveman
+    convexhull-js       (MIT)       Convex Hull         https://github.com/indy256/convexhull-js
+    delaunator          (ISC)       Deaunay Triangluate https://github.com/mapbox/delaunator
+    earcut              (ISC)       Polygon Triangluate https://github.com/mapbox/earcut
+    martinez            (MIT)       Polygon Clipping    https://github.com/w8r/martinez
+    poly-decomp.js      (MIT)       Convex Pieces       https://github.com/schteppe/poly-decomp.js
+    potpack             (ISC)       Rect Packing        https://github.com/mapbox/potpack
 
 - Graphics
-    three.js                (MIT)       3D Graphics         https://github.com/mrdoob/three.js
+    three.js            (MIT)       3D Graphics         https://github.com/mrdoob/three.js
 
 - Textures
-    texture-merger          (MIT)       Texture Atlas       https://github.com/oguzeroglu/TextureMerger
+    texgen              (MIT)       Texture Generation  https://github.com/mrdoob/texgen.js
+    texture-merger      (MIT)       Texture Atlas       https://github.com/oguzeroglu/TextureMerger
+    xAtlas              (MIT)       UV Unwrapping       https://github.com/repalash/xatlas-three
 
 - Utility
-    clipboard.js            (MIT)       Clipboard           https://github.com/zenorocha/clipboard.js
-    idb                     (ISC)       Storage             https://github.com/jakearchibald/idb
-    local-storage-db        (MIT)       Storage             https://github.com/DVLP/localStorageDB
+    clipboard.js        (MIT)       Clipboard           https://github.com/zenorocha/clipboard.js
+    idb                 (ISC)       Storage             https://github.com/jakearchibald/idb
+    local-storage-db    (MIT)       Storage             https://github.com/DVLP/localStorageDB

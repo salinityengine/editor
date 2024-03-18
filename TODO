@@ -3,9 +3,16 @@
 /**********************************************/
 
 DockPanels (Tabbed):
-    - Drag n' Drop to new positions (left / right / bottom)?
-    - Resize up / down on side panels
-    - Docking / Snapping / Dragging
+    - Drag tabs to new docks
+        - Highlight new potentional dock while over
+        - Ability to drag tab around in the current dock tab order
+        - Don't clear docks (i.e. closing inspector clears all panels, yikes)
+        - If dock has no panels, should hide
+        - If no dock in corer, new dock should appear
+    - Dock Zones
+        - Four Corners + One extra top left
+        - Bottom
+        - Resize corner docks up down (dividers)
 
 Toolbar:
     - View2D Toolbar graphics
@@ -16,196 +23,179 @@ Editor Skeleton:
     - Go through Language
     - Turn 'functional' signals into editor methods
 
-Windows:
-    - Bottom zone
-        - Stage List:
-        - Scratchpad: Global / project scratchpads (like in Ct.js)
-        - Help:
-        - Web Browser:
-
-Commands:
-    - Seperate editor / views
+Undo / Redo Commands:
+    - Separate editor / views
         - Add Entity
         - Select All / None
 
-Editor:
-    - Inspector:
+Panels:
+    Inspector:
         - Multi-Select
             - Only show shared properties in inspector?
             - Resizing a group of selected objects
-    - Explorer:
+    Explorer:
         - Assets
+            - Image / Atlas
         - Outliner
-    - View2D:
+        - Prefabs
+        - Scripts
+    Previewer:
+
+View2D:
+    Editor:
+        - Build from Suey.Graph
         - Multiple scenes open at the same time
-        - Editable
+        - Rubberband selection
+        - Snap to grid
+        - Duplication (WASD keyboard controls)
+        - Rotate / Flip
+    Scenes:
+        - Stage List
+        - Arrange / Connections
 
-Engine:
-    - Assets
-        - Image / Atlas
-    - Project
-        - World
-        - Stage
-        - Entity
+Project:
+    - World
+    - Stage
+    - Entity
 
-Player:
-    - Editor Window
-
-/******************** SHORT TERM ********************/
-
-Components:
-    - 2D:
-        - Animation
-        - Sprite
-        - Texture Atlas
-            - Be able to drag and drop textures
-    - Animation:
-    - Effects:
-        - Trail
-    - Lights:
-    - Material:
-    - Mesh:
-        - Instanced?
-    - Particle Emitter:
-    - Sound:
-
-Physics:
-
-Script Events:
-    - Default:
-        - Init
-        - Update
-        - Destroy
-    - Physics:
-        - Wake
-        - Sleep
-        - Collide / Seperate
-
-Scripting:
-    - Controls:
-    - Health:
-        - Health / Damage
-        - Death Animation
-    - Items:
-        - Coin
-        - Spring
-    - Movement:
-    - Spawner:
-
-Shape Editor:
-    - Editable points
-    - Save shape
-
-UI Editor:
-    - Editor: (UI Mode)
-    - App: (UI Layer)
-
-View Menu:
-    - Bounds (scene)
-    - Colliders
-    - Joints (motor, spring, etc.)
-
-/******************** LONGER TERM ********************/
-
-Advisor:
-    - Broadcast with signals: add info for all exisiting buttons, etc
-    - Tie into Schema: (i.e. NumberBoxes need to alert user min / max / step, etc)
-
-Docs:
-    - JSDoc (playcanvas)?
+/******************** LONG TERM ********************/
 
 Editor:
-    Drag and Drop:
-        - Support models
     Loading:
         - Progress Bar
-    Helpers:
-        - Camera:
-            - Set colors on creation (camera frustum, etc)
-        - Point Light:
-        - Spot Light:
-            - Adjustable look target
-            - Decay / Penumbra / Distance
+    File Menu:
+        New: Popup Dialogs (Warning!, You Sure?, etc)
+        Save / Load:
+        Import / Export:
+    Help Menu:
+        Tips: (show tips / hide tips)
+        Samples / Manual / FAQ / Tutorials / Contact / Bug Report:
+        Keyboard Layout Map:
+    Storage:
+        - Autosave
+        - Implement browser storage
+            https://github.com/mrdoob/three.js/blob/dev/editor/js/Storage.js
+            https://github.com/DVLP/localStorageDB/blob/master/localdata.js
 
-Library:
-    - Icons:
-        - Scripts
-        - Prefab Categories
-    - Built-in asset library
-    - Asset store?
+Modes:
+    UI Editor:
+    View2D:
+        View Menu:
+            - Bounds (scene)
+            - Colliders
+            - Joints (motor, spring, etc.)
+    World Graph:
+        - Nodes:
+            - Auto resizing
+            - Save connections
 
-Lighting:
-    - DirectionalLight:
-    - Shadows:
+Panels:
+    Advisor:
+        - Add info for all exisiting buttons, etc
+        - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
+    Player:
+        - Debug Console, override console.log to capture?
+        - QR Code to load on phone
 
-Menu:
-    File:
-        - New: Popup Dialogs (Warning!, You Sure?, etc)
-        - Import: Add types (Models, etc.)
-        - Export:
-    Help:
-        - Tips: (show tips / hide tips)
-            - Example: 'Having entities as children of objects with non uniform scale has unknown effects'
-        - Samples:
-        - Manual / FAQ / Tutorials / Contact / Bug Report:
-        - Keyboard Layout Map:
-        - About / Version:
-
-Player:
-    - Debug Console:
-
-Post Processing:
-    - Dither:
-        - Blue Noise?
-        - Camera rotation?
-        https://offscreencanvas.com/issues/glsl-dithering/#:~:text=Dithering%20works%20by%20taking%20a,dots%20and%20half%20black%20dots.
-        https://surma.dev/things/ditherpunk/
-    - PixelPerfectPass (Ascii, Pixel):
-        - Improve camera alignment?
-
-Prefabs:
-    - Items:
-        - Spring
-        - Destroyable Block
-    - Enemies:
-        - Back and Forth
-        - Towards Player
+Project:
+    Entity:
+        Physics:
+        Transform:
+        Layering:
+        Movement:
+        Spawning:
+            - Random
+    Components:
+        Animation:
+        Collision:
+        Controls:
+            - Touch Damage
+            - Touch Drag
+            - Slingshot
+        Effects:
+            - Trail
+        Health / Damage:
+            - Death Animation, option to fade away
+            - Auto damage
+        Physics:
+            - Body (Rigid / Blob)
+        Postprocessing:
+        Sound:
+        Sprite:
+            - Texture Atlas
+                - Be able to drag and drop textures
+                - Remove textures
+    Objects:
+        Enemies:
+            - Back and Forth
+            - Towards Player
+        Items:
+            - Coin / Collectables
+            - Destroyable Block
+            - Spring
+        Light:
+            - Shadows
+        Particle Emitter:
+            - Confetti
+            - Smoke
+    UI:
+        Joystick:
+        Touch to Spawn:
 
 Scripting:
-    - Python (using Brython):
-        https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
-    - Visual Scripting:
+    Events:
+        Default: Init, Update, Destroy
+        Physics: Wake, Sleep, Collide / Seperate
+    Scripter:
+        Python (Brython): https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
+        Visual Scripting:
 
-Storage:
-    - Autosave
-    - Implement browser storage
-        - https://github.com/mrdoob/three.js/blob/dev/editor/js/Storage.js
-        - https://github.com/DVLP/localStorageDB/blob/master/localdata.js
+/******************** FUTURE ********************/
 
-QR Code:
-    - Load on phone
+Additional Panels / Windows:
+    Animator: Keyframe Editing
+    Collision Editor:
+    Color Picker:
+    Font Editor:
+    Helper:
+    Image Editor:
+        - Export to png
+        - Vectors
+    Particle Editor:
+    Scratchpad: Global / project scratchpads (like in Ct.js)
+    Shape Editor: Editable points. Save shapes.
+Analytics / Advertising:
+Asset Store:
+Docs:
+    - JSDoc (playcanvas), https://github.com/jsdoc/jsdoc
+    - Webdoc (pixi), https://github.com/webdoc-labs/webdoc
+Leaderboards:
+Multiplayer / Networking:
+Plugins:
+Sound / Music Editor:
+    - Effect Generator
+    - Song Creator
 
-World Graph:
-    Nodes:
-        - Auto resizing
-        - Save connections
+/******************** ONLINE ********************/
 
-/******************** ENGINE IDEAS ********************/
+Patreon:
+Website:
+    - User Login
+    - Help Section
+    - Message Board
+    - Blog
+    - Social Media
 
-Textures:
-    - UV Unwrapping: xAtlas - https://github.com/repalash/xatlas-three
-    - Texture Generation: Texgen - https://github.com/mrdoob/texgen.js
+/******************** FLAGS ********************/
 
-Entity Component System (ECS):
-    - bitECS (https://github.com/NateTheGreatt/bitECS)
-    - square (https://github.com/rare-earth/Square)
-
-Multi-threading:
-    - Web workers?
-
-/******************** LIBRARY UPDATES ********************/
-
-    LIBRARY         VERSION     RELEASE
-- CodeMirror 5                  Jun-08-2023     ...need to upgrade to CodeMirror 6?
-- Matter            0.19.0      Feb-16-2023     https://github.com/liabru/matter-js
-- Pixi.js           8.0.0       Mar-05-2024     https://github.com/pixijs/pixijs
+!! NOTES
+    NOTE:         Important reminder
+    IDEA:         Possibility for future
+    WARNING:      Important reminder
+    DEBUG:        Code for debugging only
+    OPTION:       Alternate code w/ similar operation
+!! TO DO
+    TODO:         Needs to be implemented
+    FIXME:        Needs to be fixed
+    HACK:         Needs improvement
+    TEMP:         Temporary for refactoring
