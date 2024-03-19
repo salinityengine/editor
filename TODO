@@ -7,6 +7,7 @@ Toolbar:
         - Grid
 
 DockPanel / Tabbed:
+    - Mouse over tab shows TabID in Advisor
     - Drag tabs to new docks
         - Highlight new potentional dock while over
         - Ability to drag tab around in the current dock tab order

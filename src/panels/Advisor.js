@@ -161,15 +161,6 @@ class Advisor extends DockPanel {
         /********** SET INFO */
 
         function setInfo(title, html = '') {
-            if (!active) return;
-            if (title && ((titles.length === 0) || (titles.length > 0 && title !== titles[0]))) {
-                titles.unshift(title);
-                bodies.unshift(html ?? '');
-                while (titles.length > maxSize) { titles.pop(); }
-                while (bodies.length > maxSize) { bodies.pop(); }
-                history = 0;
-            }
-
             if (title === _title) return;
             if (title) {
                 titleText.setInnerHtml(title);
@@ -184,13 +175,24 @@ class Advisor extends DockPanel {
                 history = -1;
             }
             _title = title;
+        }
 
+        function wantsToUpdate(title, html = '') {
+            if (!active) return;
+            if (title && ((titles.length === 0) || (titles.length > 0 && title !== titles[0]))) {
+                titles.unshift(title);
+                bodies.unshift(html ?? '');
+                while (titles.length > maxSize) { titles.pop(); }
+                while (bodies.length > maxSize) { bodies.pop(); }
+                history = 0;
+            }
+            setInfo(title, html);
             updateButtons();
         }
 
         /***** SIGNALS *****/
 
-        Signals.connect(this, 'advisorInfo', setInfo);
+        Signals.connect(this, 'advisorInfo', wantsToUpdate);
 
         /***** INIT *****/
 
