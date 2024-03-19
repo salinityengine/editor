@@ -89,23 +89,15 @@ class Advice {
 
     /** Assigns an 'Element' or 'HTMLElement' to the Advisor on pointer enter */
     static attach(element, title /* or key */ = '', html = '') {
-        if (!element || !window.editor) return;
+        if (!element) return;
         const advice = Advice.getKey(title);
         title = advice.title ?? title;
         html = advice.html ?? html;
         if (element.isElement) {
             element.onPointerEnter(() => { Signals.dispatch('advisorInfo', title, html); });
-        } else if (element instanceof HTMLElement) {
-            element.addEventListener('pointerenter', () => { Signals.dispatch('advisorInfo', title, html); });
-        }
-    }
-
-    /** Clears Advisor info on 'Element' or 'HTMLElement' pointer leave */
-    static clear(element) {
-        if (!element || !window.editor) return;
-        if (element.isElement) {
             element.onPointerLeave(() => { Signals.dispatch('advisorInfo'); });
         } else if (element instanceof HTMLElement) {
+            element.addEventListener('pointerenter', () => { Signals.dispatch('advisorInfo', title, html); });
             element.addEventListener('pointerleave', () => { Signals.dispatch('advisorInfo'); });
         }
     }

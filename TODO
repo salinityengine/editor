@@ -2,12 +2,10 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Toolbar:
-    - View2D Toolbar graphics
-        - Grid
-
 DockPanel / Tabbed:
-    - Mouse over tab shows TabID in Advisor
+    - Floater:
+        - Inherits 'Tab', allows for custom mouse over
+        - Mouse over tab shows TabID in Advisor
     - Drag tabs to new docks
         - Highlight new potentional dock while over
         - Ability to drag tab around in the current dock tab order
@@ -18,6 +16,10 @@ DockPanel / Tabbed:
         - Four Corners + One extra top left
         - Bottom
         - Resize corner docks up down (dividers)
+
+Toolbar:
+    - View2D Toolbar graphics
+        - Grid
 
 Editor Skeleton:
     - Go through Config

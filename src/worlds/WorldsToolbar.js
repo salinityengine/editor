@@ -17,9 +17,6 @@ class WorldsToolbar extends SUEY.Panel {
         super({ style: SUEY.PANEL_STYLES.NSALT });
         this.setClass('salt-toolbar');
 
-        // Clear Advisor on Leave
-        Advice.clear(this);
-
         /******************** BUTTONS */
 
         // Nodes

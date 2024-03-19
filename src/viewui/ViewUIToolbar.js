@@ -12,9 +12,6 @@ class ViewUIToolbar extends SUEY.Panel {
         super({ style: SUEY.PANEL_STYLES.NONE });
         this.setClass('salt-toolbar');
 
-        // Clear Advisor on Leave
-        Advice.clear(this);
-
         /******************** BUTTONS */
 
         // Mouse Modes

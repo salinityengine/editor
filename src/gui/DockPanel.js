@@ -32,8 +32,6 @@ class DockPanel extends SUEY.Tabbed {
             self.setTabPriority(tabName);
         });
 
-        Advice.clear(this);
-
         /********** SIGNALS */
 
         Signals.connect(this, 'refreshWindows', function () {

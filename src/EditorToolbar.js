@@ -16,9 +16,6 @@ class EditorToolbar extends SUEY.Panel {
         this.setClass('salt-toolbar');
         this.addClass('editor-toolbar');
 
-        // Clear Advisor on Leave
-        Advice.clear(this);
-
         /******************** BUTTONS */
 
         const eye = new SUEY.ToolbarButton().addClass('suey-complement-button');
