@@ -26,15 +26,6 @@ class ViewUIToolbar extends SUEY.Panel {
         const focus = new SUEY.ToolbarButton(null, 'left');
         const reset = new SUEY.ToolbarButton(null, 'right');
 
-        // Layer
-        const arrange = new SUEY.ToolbarButton(null, 'left');
-        const transform = new SUEY.ToolbarButton(null, 'right');
-
-        // Grid
-        const gridTop = new SUEY.ToolbarButton(null, 'left');
-        const gridResize = new SUEY.ToolbarButton(null, 'middle');
-        const gridSnap = new SUEY.ToolbarButton(null, 'right');
-
         /******************** TOOLTIPS */
 
         // Mouse Modes
@@ -46,15 +37,6 @@ class ViewUIToolbar extends SUEY.Panel {
         focus.dom.setAttribute('tooltip', Config.tooltip('Focus On Entity', Config.getKey('shortcuts/focus')));
         reset.dom.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
 
-        // Layer
-        arrange.dom.setAttribute('tooltip', Config.tooltip('Arrange', null));
-        transform.dom.setAttribute('tooltip', Config.tooltip('Transform', null));
-
-        // Grid
-        gridTop.dom.setAttribute('tooltip', Config.tooltip('Grid on Top?'));
-        gridResize.dom.setAttribute('tooltip', Config.tooltip('Resize to Grid?'));
-        gridSnap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
-
         /******************** ADVISOR */
 
         // Mouse Modes
@@ -65,13 +47,6 @@ class ViewUIToolbar extends SUEY.Panel {
         // Focus
         Advice.attach(focus, 'toolbar/focus/onto');
         Advice.attach(reset, 'toolbar/focus/reset');
-
-        // Layer
-        Advice.attach(arrange, 'Arrange', 'For moving objects up and down in z-order.');
-        Advice.attach(transform, 'Transform', 'For altering the transform of an object.');
-
-        // Grid
-        Advice.attach(gridSnap, 'toolbar/grid/snap');
 
         /******************** MOUSE MODES */
 
@@ -147,32 +122,11 @@ class ViewUIToolbar extends SUEY.Panel {
             _lastTooltip = focusOn;
         });
 
-        /******************** LAYER */
-
-        //
-        // TODO
-        //
-
-        /******************** GRID */
-
-        //
-        // TODO
-        //
-
         /******************** ADD TO TOOLBAR */
 
-        // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
-        // const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
-        // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
-        // this.add(left, middle, right);
-
         this.add(new SUEY.ToolbarSpacer(editor.toolbarLeftLength));
-        this.add(new SUEY.FlexSpacer());
+        this.add(new SUEY.ToolbarSpacer(1.0));
         this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
-        this.add(new SUEY.FlexSpacer());
-        this.add(arrange, transform);
-        this.add(new SUEY.FlexSpacer());
-        this.add(gridTop, gridResize, gridSnap);
         this.add(new SUEY.FlexSpacer());
         this.add(new SUEY.ToolbarSpacer(editor.toolbarRightLength));
 

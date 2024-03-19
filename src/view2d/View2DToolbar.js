@@ -344,13 +344,8 @@ class View2DToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
-        // const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
-        // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
-        // this.add(left, middle, right);
-
         this.add(new SUEY.ToolbarSpacer(editor.toolbarLeftLength));
-        this.add(new SUEY.FlexSpacer());
+        this.add(new SUEY.ToolbarSpacer(1.0));
         this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
         this.add(new SUEY.FlexSpacer());
         this.add(arrange, transform, new SUEY.ToolbarSeparator(), views);
