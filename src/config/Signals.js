@@ -35,11 +35,6 @@ const SIGNAL_NAMES = [
     'inspectorChanged',         // -                    ALERT       Inspector was just built / rebuilt
     'inspectorUpdate',          // -                    ALERT       Request update UI for current item
 
-    // Previewer
-    'previewerBuild',           // (item)               FUNCTION    Build Previewer with item
-    'previewerChanged',         // -                    ALERT       Previewer was just built / rebuilt
-    'previewerUpdate',          // -                    ALERT       Request update UI for current item
-
     // Player
     'playerStateChanged',       // (state)              ALERT       Player state changed ('start', 'pause', 'stop')
 

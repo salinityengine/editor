@@ -13,6 +13,7 @@ class Scripter extends SUEY.Window {
             width: '60%',
         });
         const self = this;
+        this.setName('Scripter');
         this.setDisplay('none');
 
         // Panel Widgets

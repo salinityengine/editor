@@ -105,7 +105,7 @@ const DEFAULT_SETTINGS = {
     'shortcuts/snap':                           '6',                // Shortcut Key: Transform - 'snap'
     'shortcuts/paint':                          '7',                // Shortcut Key: Transform - 'paint'
 
-    'shortcuts/play':                           'F5',               // Shortcut Key: Start/Stop Game Previewer
+    'shortcuts/play':                           'F5',               // Shortcut Key: Start/Stop Game Player
     'shortcuts/reset':                          'F9',               // Shortcut Key: Reset Settings
 
     'shortcuts/focus':                          'f',                // Shortcut Key: Focus

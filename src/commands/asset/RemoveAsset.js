@@ -37,7 +37,6 @@ class RemoveAssetCommand extends Command {
             }
             Signals.dispatch('assetRemoved', this.assetType, this.asset);
             Signals.dispatch('inspectorBuild');
-            Signals.dispatch('previewerBuild');
         }
     }
 
@@ -51,7 +50,6 @@ class RemoveAssetCommand extends Command {
             Signals.dispatch('assetAdded', this.assetType, this.asset);
             Signals.dispatch('assetSelect', this.assetType, this.asset);
             Signals.dispatch('inspectorBuild');
-            Signals.dispatch('previewerBuild');
         }
     }
 

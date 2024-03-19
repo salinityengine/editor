@@ -356,7 +356,7 @@ class AssetPanel extends OSUI.Shrinkable {
 
         // SELECT
         item.onFocus(() => {
-            signals.previewerBuild.dispatch(asset);
+            Signals.dispatch('inspectorBuild', asset);
         });
 
         // KEY PRESS

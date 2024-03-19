@@ -4,7 +4,6 @@
 
 DockPanel / Tabbed:
     - Floater:
-        - Inherits 'Tab', allows for custom mouse over
         - Mouse over tab shows TabID in Advisor
     - Drag tabs to new docks
         - Highlight new potentional dock while over
@@ -42,7 +41,6 @@ Panels:
         - Outliner
         - Prefabs
         - Scripts
-    Previewer:
 
 View2D:
     Editor:

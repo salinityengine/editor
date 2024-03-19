@@ -9,6 +9,7 @@ class Shaper extends SUEY.Window {
             width: '60%',
         });
         const self = this;
+        this.setName('Shaper');
         this.setStyle('display', 'none');
 
         // Background Color

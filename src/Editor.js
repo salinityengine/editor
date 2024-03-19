@@ -18,7 +18,6 @@ import { Advisor } from './panels/Advisor.js';
 import { Explorer } from './panels/Explorer.js';
 import { Inspector } from './panels/Inspector.js';
 import { Player } from './panels/Player.js';
-import { Previewer } from './panels/Previewer.js';
 import { Scripter } from './panels/Scripter.js';
 import { Shaper } from './panels/Shaper.js';
 import { View2D } from './view2d/View2D.js';
@@ -28,7 +27,7 @@ import { Worlds } from './worlds/Worlds.js';
 
 import { loadDemoProject } from './Demo.js';
 
-class Editor extends SUEY.Docker {
+class Editor extends SUEY.Docker2 {
 
     constructor() {
         super();
@@ -112,7 +111,6 @@ class Editor extends SUEY.Docker {
         this.addDockPanel(new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 }), SUEY.CORNERS.BOTTOM_LEFT);
         this.addDockPanel(new Explorer({ startWidth: 245, minWidth: 70 }), SUEY.CORNERS.TOP_LEFT);
         this.addDockPanel(new Inspector({ startWidth: 300, minWidth: 190 }), SUEY.CORNERS.TOP_RIGHT);
-        this.addDockPanel(new Previewer({ startWidth: 300, minWidth: 190 }), SUEY.CORNERS.BOTTOM_RIGHT);
 
         /********** SIGNALS */
 
@@ -132,9 +130,8 @@ class Editor extends SUEY.Docker {
         Signals.connect(this, 'projectLoaded', function() {
             if (self.history) self.history.clear();
 
-            // Clear Inspector Panels
+            // Clear Inspector
             Signals.dispatch('inspectorBuild');
-            Signals.dispatch('previewerBuild');
 
             // Rebuild Outliner
             Signals.dispatch('sceneGraphChanged');
@@ -370,7 +367,6 @@ class Editor extends SUEY.Docker {
 
         // Rebuild Inspector / Preview from Existing Items
         Signals.dispatch('inspectorBuild', 'rebuild');
-        Signals.dispatch('previewerBuild', 'rebuild');
         Signals.dispatch('promodeChanged');
 
         // Refresh Docks
@@ -489,5 +485,9 @@ class Editor extends SUEY.Docker {
 
 }
 
+// Export Constants
 export * from './EditorConstants.js';
-export { Editor };
+
+// Export as Singleton
+const editor = new Editor();
+export { editor };

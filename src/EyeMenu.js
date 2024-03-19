@@ -207,7 +207,7 @@ class EyeMenu extends SUEY.Menu {
         /******************** MENU: WINDOW ********************/
 
         let windowHide, windowShow;
-        let windowAdvisor, windowExplorer, windowInspector, windowPreviewer;
+        let windowAdvisor, windowExplorer, windowInspector;
         let windowFullscreen;
 
         if (useWindow) {
@@ -217,7 +217,6 @@ class EyeMenu extends SUEY.Menu {
             windowAdvisor = new SUEY.MenuItem('Show Advisor').keepOpen();
             windowExplorer = new SUEY.MenuItem('Show Explorer').keepOpen();
             windowInspector = new SUEY.MenuItem('Show Inspector').keepOpen();
-            windowPreviewer = new SUEY.MenuItem('Show Previewer').keepOpen();
 
             const fullscreenTxt = `${SALT.System.metaKeyOS()}↵`; // `${SALT.System.metaKeyOS()}Enter`;
             windowFullscreen = new SUEY.MenuItem('Enter Fullscreen', `${EDITOR.FOLDER_MENU}main/window/fullscreen.svg`, fullscreenTxt);
@@ -235,7 +234,6 @@ class EyeMenu extends SUEY.Menu {
             windowAdvisor.onSelect(() => { toggleShowPanel('panels/showAdvisor'); });
             windowExplorer.onSelect(() => { toggleShowPanel('panels/showExplorer'); });
             windowInspector.onSelect(() => { toggleShowPanel('panels/showInspector'); });
-            windowPreviewer.onSelect(() => { toggleShowPanel('panels/showPreviewer'); });
             windowFullscreen.onSelect(() => { SALT.System.fullscreen(); });
 
             function toggleShowPanel(key) {
@@ -247,13 +245,11 @@ class EyeMenu extends SUEY.Menu {
                 // const showAdvisor = Config.getKey('panels/showAdvisor');
                 // const showExplorer = Config.getKey('panels/showExplorer');
                 // const showInspector = Config.getKey('panels/showInspector');
-                // const showPreviewer = Config.getKey('panels/showPreviewer');
                 // windowAdvisor.setChecked(showAdvisor);
                 // windowExplorer.setChecked(showExplorer);
                 // windowInspector.setChecked(showInspector);
-                // windowPreviewer.setChecked(showPreviewer);
-                // windowHide.setDisabled(!showExplorer && !showInspector && !showAdvisor && !showPreviewer);
-                // windowShow.setDisabled(showExplorer && showInspector && showAdvisor && showPreviewer);
+                // windowHide.setDisabled(!showExplorer && !showInspector && !showAdvisor);
+                // windowShow.setDisabled(showExplorer && showInspector && showAdvisor);
             });
         }
 
@@ -301,7 +297,7 @@ class EyeMenu extends SUEY.Menu {
             if (useWindow) {
                 itemWindow.attachSubMenu(new SUEY.Menu().add(
                     windowHide, windowShow, new SUEY.MenuSeparator(),
-                    // windowAdvisor, windowExplorer, windowInspector, windowPreviewer, new SUEY.MenuSeparator(),
+                    // windowAdvisor, windowExplorer, windowInspector, new SUEY.MenuSeparator(),
                     windowFullscreen
                 ));
                 this.add(itemWindow);
