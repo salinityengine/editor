@@ -306,6 +306,13 @@
     z-index: 5;
 }
 
+#tb-arrange-back,
+#tb-arrange-backward,
+#tb-arrange-forward,
+#tb-arrange-front {
+    filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
+}
+
 /********** VIEWS */
 
 #tb-toggle-back-1 { opacity: 1; }

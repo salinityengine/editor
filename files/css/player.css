@@ -38,7 +38,7 @@
 }
 
 /* Player Controls, Button: Hover */
-.salt-active-toolbar .suey-toolbar-button:hover .suey-button-background {
+.salt-active-toolbar .suey-toolbar-button:hover > .suey-button-background {
     background-color: rgba(var(--button-dark), 1) !important;
     box-shadow: /* pop-out-shadow */
         inset var(--minus) var(--pixel) var(--pixel) 0 rgba(var(--white), 0.15),
@@ -47,8 +47,8 @@
 }
 
 /* Player Controls, Button: Active */
-.salt-active-toolbar .suey-toolbar-button:active .suey-button-background,
-.salt-active-toolbar .suey-toolbar-button.suey-selected .suey-button-background {
+.salt-active-toolbar .suey-toolbar-button:active > .suey-button-background,
+.salt-active-toolbar .suey-toolbar-button.suey-selected > .suey-button-background {
     background-color: rgba(var(--button-light), 1) !important;
     box-shadow: inset var(--minus) var(--pixel) var(--pad-small) rgba(0, 0, 0, 0.5) !important; /* sunk-in-shadow */
 }

@@ -28,8 +28,8 @@ class View2DToolbar extends SUEY.Panel {
         const reset = new SUEY.ToolbarButton(null, 'right');
 
         // Layer
-        const arrange = new SUEY.ToolbarButton(null, 'left');
-        const transform = new SUEY.ToolbarButton(null, 'right');
+        const arrange = new SUEY.ToolbarButton(null, 'left').addClass('suey-hover-active');
+        const transform = new SUEY.ToolbarButton(null, 'right').addClass('suey-hover-active');
 
         // Views
         const views = new SUEY.ToolbarButton().addClass('suey-hover-active');
@@ -51,7 +51,7 @@ class View2DToolbar extends SUEY.Panel {
         reset.dom.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
 
         // Layer
-        arrange.dom.setAttribute('tooltip', Config.tooltip('Arrange', null));
+        // arrange.dom.setAttribute('tooltip', Config.tooltip('Arrange', null));
         transform.dom.setAttribute('tooltip', Config.tooltip('Transform', null));
 
         // Views
@@ -166,8 +166,54 @@ class View2DToolbar extends SUEY.Panel {
         const arrangeBottom = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-bottom.svg`).setID('tb-arrange-bottom');
         arrange.add(arrangeBottom, arrangeMiddle, arrangeTop);
 
+        // To Back
+        const backIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-back-1.svg`).setID('tb-arrange-back');
+        const backIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-back-2.svg`);
+        const backItem = new SUEY.ToolbarButton().add(backIcon1, backIcon2);
 
+        // Backward
+        const backwardIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-backward-1.svg`).setID('tb-arrange-backward');
+        const backwardIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-backward-2.svg`);
+        const backwardItem = new SUEY.ToolbarButton().add(backwardIcon1, backwardIcon2);
 
+        // Forward
+        const forwardIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-forward-1.svg`).setID('tb-arrange-forward');
+        const forwardIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-forward-2.svg`);
+        const forwardItem = new SUEY.ToolbarButton().add(forwardIcon1, forwardIcon2);
+
+        // To Front
+        const frontIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-front-1.svg`).setID('tb-arrange-front');
+        const frontIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-front-2.svg`);
+        const frontItem = new SUEY.ToolbarButton().add(frontIcon1, frontIcon2);
+
+        backItem.dom.setAttribute('tooltip', Config.tooltip('Send to Back', null));
+        backwardItem.dom.setAttribute('tooltip', Config.tooltip('Send Backward', null));
+        forwardItem.dom.setAttribute('tooltip', Config.tooltip('Send Forward', null));
+        frontItem.dom.setAttribute('tooltip', Config.tooltip('Send to Front', null));
+
+        Advice.attach(backItem, 'Send to Back', 'Send selected object(s) to back.');
+        Advice.attach(backwardItem, 'Send Backward', 'Send selected object(s) back one.');
+        Advice.attach(forwardItem, 'Send Forward', 'Send selected object(s) forward one.');
+        Advice.attach(frontItem, 'Send to Front', 'Send selected object(s) to the front.');
+
+        // Arrange Menu
+        const arrangeMenu = new SUEY.Menu();
+        arrangeMenu.addClass('salt-toggle-menu');
+        arrangeMenu.addClass('suey-menu-under');
+        arrangeMenu.addClass('salt-button-menu');
+        arrangeMenu.add(backItem, backwardItem, forwardItem, frontItem);
+
+        // Attach Menu
+        const hoverArrangeMenu = new SUEY.Menu().addClass('suey-menu-show', 'suey-invisible-menu');
+        const hoverArrangeItem = new SUEY.MenuItem().addClass('suey-invisible-menu-item');
+        hoverArrangeItem.attachSubMenu(arrangeMenu);
+        hoverArrangeMenu.add(hoverArrangeItem);
+
+        // Prepare Button
+        arrange.setStyle('overflow', 'visible');
+        arrange.setStyle('z-index', '1');
+        arrange.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
+        arrange.addToSelf(hoverArrangeMenu);
 
         /******************** VIEWS */
 
@@ -177,39 +223,41 @@ class View2DToolbar extends SUEY.Panel {
         const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setID('tb-toggle-button-2');
         views.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
 
-        // Views Menu
-        const viewsMenu = new SUEY.Menu();
-        viewsMenu.addClass('salt-toggle-menu');
-        viewsMenu.addClass('suey-menu-under');
-        viewsMenu.addClass('salt-button-menu');
         // Boundary Toggle
         const boundaryIcon = `${EDITOR.FOLDER_MENU}toggle/boundary.svg`;
         const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
             const bounds = Config.getKey('scene/render/bounds');
             // SceneUtils.toggleBoundaryObjects(bounds, editor.view2d.world.activeStage());
         });
-        viewsMenu.add(boundaryItem);
+
         // Colliders Toggle
         const collidersIcon = `${EDITOR.FOLDER_MENU}toggle/colliders.svg`;
         const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
-            SceneUtils.toggleColliders();
+            // SceneUtils.toggleColliders();
         });
-        viewsMenu.add(collidersItem);
+
         // Joints Toggle
         const jointsIcon = `${EDITOR.FOLDER_MENU}toggle/joints.svg`;
         const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
-        viewsMenu.add(jointsItem);
+
+        // Views Menu
+        const viewsMenu = new SUEY.Menu();
+        viewsMenu.addClass('salt-toggle-menu');
+        viewsMenu.addClass('suey-menu-under');
+        viewsMenu.addClass('salt-button-menu');
+        viewsMenu.add(boundaryItem, collidersItem, jointsItem);
+
         // Attach Menu
-        const hoverMenu = new SUEY.Menu().addClass('suey-menu-show', 'suey-invisible-menu');
-        const hoverItem = new SUEY.MenuItem().addClass('suey-invisible-menu-item');
-        hoverItem.attachSubMenu(viewsMenu);
-        hoverMenu.add(hoverItem);
+        const hoverToggleMenu = new SUEY.Menu().addClass('suey-menu-show', 'suey-invisible-menu');
+        const hoverToggleItem = new SUEY.MenuItem().addClass('suey-invisible-menu-item');
+        hoverToggleItem.attachSubMenu(viewsMenu);
+        hoverToggleMenu.add(hoverToggleItem);
 
         // Prepare Button
         views.setStyle('overflow', 'visible');
         views.setStyle('z-index', '1');
         views.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
-        views.addToSelf(hoverMenu);
+        views.addToSelf(hoverToggleMenu);
 
         /******************** GRID */
 
