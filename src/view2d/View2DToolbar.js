@@ -52,7 +52,7 @@ class View2DToolbar extends SUEY.Panel {
 
         // Layer
         // arrange.dom.setAttribute('tooltip', Config.tooltip('Arrange', null));
-        transform.dom.setAttribute('tooltip', Config.tooltip('Transform', null));
+        // transform.dom.setAttribute('tooltip', Config.tooltip('Transform', null));
 
         // Views
         // views.dom.setAttribute('tooltip', 'Toggle Views');
@@ -75,7 +75,7 @@ class View2DToolbar extends SUEY.Panel {
 
         // Layer
         Advice.attach(arrange, 'toolbar/layer/arrange');
-        Advice.attach(transform, 'Transform', 'For altering the transform of an object.');
+        Advice.attach(transform, 'toolbar/layer/transform');
 
         // Views
         Advice.attach(views, 'toolbar/scene/views');
@@ -161,6 +161,8 @@ class View2DToolbar extends SUEY.Panel {
 
         /******************** LAYER */
 
+        /***** ARRANGE */
+
         const arrangeTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-top.svg`).setID('tb-arrange-top');
         const arrangeMiddle = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-middle.svg`).setID('tb-arrange-middle');
         const arrangeBottom = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-bottom.svg`).setID('tb-arrange-bottom');
@@ -214,6 +216,68 @@ class View2DToolbar extends SUEY.Panel {
         arrange.setStyle('z-index', '1');
         arrange.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
         arrange.addToSelf(hoverArrangeMenu);
+
+        /***** TRANSFORM */
+
+        const transformFront = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-front.svg`).setID('tb-transform-front');
+        const transformBack = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-back.svg`).setID('tb-transform-back');
+        transform.add(transformBack, transformFront);
+
+        // Reset
+        const resetIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-reset-1.svg`).setID('tb-transform-reset');
+        const resetIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-reset-2.svg`);
+        const resetItem = new SUEY.ToolbarButton().add(resetIcon1, resetIcon2);
+
+        // Flip Horizontal
+        const horizontalIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-horizontal-1.svg`).setID('tb-transform-horizontal');
+        const horizontalIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-horizontal-2.svg`);
+        const horizontalItem = new SUEY.ToolbarButton().add(horizontalIcon2, horizontalIcon1);
+
+        // Flip Vertical
+        const verticalIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-vertical-1.svg`).setID('tb-transform-vertical');
+        const verticalIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-vertical-2.svg`);
+        const verticalItem = new SUEY.ToolbarButton().add(verticalIcon2, verticalIcon1);
+
+        // Rotate Left
+        const leftIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-left-1.svg`).setID('tb-transform-left');
+        const leftIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-left-2.svg`);
+        const leftItem = new SUEY.ToolbarButton().add(leftIcon2, leftIcon1);
+
+        // Rotate Right
+        const rightIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-right-1.svg`).setID('tb-transform-right');
+        const rightIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-right-2.svg`);
+        const rightItem = new SUEY.ToolbarButton().add(rightIcon2, rightIcon1);
+
+        resetItem.dom.setAttribute('tooltip', Config.tooltip('Reset Transform', null));
+        horizontalItem.dom.setAttribute('tooltip', Config.tooltip('Flip Horizontal', null));
+        verticalItem.dom.setAttribute('tooltip', Config.tooltip('Flip Vertical', null));
+        leftItem.dom.setAttribute('tooltip', Config.tooltip('Rotate Left', null));
+        rightItem.dom.setAttribute('tooltip', Config.tooltip('Rotate Right', null));
+
+        Advice.attach(resetItem, 'Reset Transform', 'Resets selected object(s) transform to a Scale of X:1, Y:1 and a Rotation of 0 degrees.');
+        Advice.attach(horizontalItem, 'Flip Horizontal', 'Flips the selected object(s) horizontally.');
+        Advice.attach(verticalItem, 'Flip Vertical', 'Flips the selected object(s) vertically.');
+        Advice.attach(leftItem, 'Rotate Left', 'Rotates the selected object(s) counter-clockwise by 90 degrees.');
+        Advice.attach(rightItem, 'Rotate Right', 'Rotates the selected object(s) clockwise by 90 degrees.');
+
+        // Arrange Menu
+        const transformMenu = new SUEY.Menu();
+        transformMenu.addClass('salt-toggle-menu');
+        transformMenu.addClass('suey-menu-under');
+        transformMenu.addClass('salt-button-menu');
+        transformMenu.add(resetItem, horizontalItem, verticalItem, leftItem, rightItem);
+
+        // Attach Menu
+        const hoverTransformMenu = new SUEY.Menu().addClass('suey-menu-show', 'suey-invisible-menu');
+        const hoverTransformItem = new SUEY.MenuItem().addClass('suey-invisible-menu-item');
+        hoverTransformItem.attachSubMenu(transformMenu);
+        hoverTransformMenu.add(hoverTransformItem);
+
+        // Prepare Button
+        transform.setStyle('overflow', 'visible');
+        transform.setStyle('z-index', '1');
+        transform.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
+        transform.addToSelf(hoverTransformMenu);
 
         /******************** VIEWS */
 

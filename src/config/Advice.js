@@ -66,6 +66,7 @@ const _values = {
 
         // Toolbar, Layer
         'toolbar/layer/arrange':            { title: 'Arrange', html: `Menu for moving object forward / backward through the z-order.` },
+        'toolbar/layer/transform':          { title: 'Transform', html: `Menu for altering the transform of an object.` },
 
         // Toolbar, Views
         'toolbar/scene/views':              { title: 'Toggle Views', html: `Quick menu for toggling view options.` },

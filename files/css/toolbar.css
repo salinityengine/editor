@@ -284,6 +284,8 @@
 
 /********** LAYER */
 
+/* Arrange */
+
 #tb-arrange-top    { z-index: 3; }
 #tb-arrange-middle { z-index: 1; }
 #tb-arrange-bottom { z-index: 0;
@@ -310,6 +312,29 @@
 #tb-arrange-backward,
 #tb-arrange-forward,
 #tb-arrange-front {
+    filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
+}
+
+/* Transform */
+
+#tb-transform-front {
+    filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg));
+}
+
+#tb-transform-front, #tb-transform-back {
+    transition: all 0.3s ease-in-out;
+}
+
+.suey-toolbar-button:hover #tb-transform-front, .suey-toolbar-button.suey-selected #tb-transform-front,
+.suey-toolbar-button:hover #tb-transform-back, .suey-toolbar-button.suey-selected #tb-transform-back {
+    transform: rotateY(180deg);
+}
+
+#tb-transform-reset,
+#tb-transform-horizontal,
+#tb-transform-vertical,
+#tb-transform-left,
+#tb-transform-right {
     filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
 }
 

@@ -2,6 +2,10 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Toolbar:
+    - View2D Toolbar graphics
+        - Grid
+
 DockPanel / Tabbed:
     - Drag tabs to new docks
         - Highlight new potentional dock while over
@@ -13,9 +17,6 @@ DockPanel / Tabbed:
         - Four Corners + One extra top left
         - Bottom
         - Resize corner docks up down (dividers)
-
-Toolbar:
-    - View2D Toolbar graphics
 
 Editor Skeleton:
     - Go through Config
