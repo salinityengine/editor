@@ -1,9 +1,5 @@
 /********** ADVISOR */
 
-.salt-advisor {
-    opacity: 1.0;
-}
-
 .salt-advisor-panel {
     /*display: flex !important;*/
     flex-direction: column;

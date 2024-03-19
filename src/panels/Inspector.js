@@ -37,7 +37,6 @@ class Inspector extends DockPanel {
         super({ style, displayEmpty: false, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
         const self = this;
         this.setName('Inspector');
-        this.addClass('salt-inspector');
         this.setTabSide(SUEY.TAB_SIDES.LEFT);
 
         // Flags

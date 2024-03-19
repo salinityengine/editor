@@ -12,9 +12,11 @@ DockPanel / Tabbed:
         - If dock has no panels, should hide
         - If no dock in corner, new dock should appear
     - Dock Zones
-        - Four Corners + One extra top left
+        - Four Corners
         - Bottom
         - Resize corner docks up down (dividers)
+    - Click on Tab collapses dock
+    - Move 'CloseButton' from DockPanels to FloaterPanels (Tabs)
 
 Toolbar:
     - View2D Toolbar graphics

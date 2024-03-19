@@ -1,9 +1,6 @@
 /********** GAME PLAYER */
 
-.salt-gray-out .salt-advisor,
-.salt-gray-out .salt-explorer,
-.salt-gray-out .salt-inspector,
-.salt-gray-out .editor-toolbar, .salt-gray-out .suey-flex-box:not(.salt-active-toolbar) {
+.salt-gray-out * {
     filter: grayscale(1) contrast(0.5) brightness(0.5) /* blur(1px) */ !important;
 }
 

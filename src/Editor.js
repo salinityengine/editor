@@ -10,6 +10,7 @@ import { Language } from './config/Language.js';
 import { Loader } from './config/Loader.js';
 import { Signals } from './config/Signals.js';
 
+import { DockPanel } from './gui/DockPanel.js';
 import { editorKeyDown, editorKeyUp } from './EditorEvents.js';
 import { EditorToolbar } from './EditorToolbar.js';
 import { InfoBox } from './gui/InfoBox.js';
@@ -108,15 +109,33 @@ class Editor extends SUEY.Docker2 {
 
         /***** DOCKING PANELS */
 
-        this.addDockPanel(new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 }), SUEY.CORNERS.BOTTOM_LEFT);
-        this.addDockPanel(new Explorer({ startWidth: 245, minWidth: 70 }), SUEY.CORNERS.TOP_LEFT);
-        this.addDockPanel(new Inspector({ startWidth: 300, minWidth: 190 }), SUEY.CORNERS.TOP_RIGHT);
+        this.addDockPanel(new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 }), SUEY.DOCK_LOCATIONS.BOTTOM_LEFT);
+        this.addDockPanel(new Explorer({ startWidth: 245, minWidth: 70 }), SUEY.DOCK_LOCATIONS.TOP_LEFT);
+        this.addDockPanel(new Inspector({ startWidth: 300, minWidth: 190 }), SUEY.DOCK_LOCATIONS.TOP_RIGHT);
+
+        const dock4 = new DockPanel({ startWidth:300, minWidth: 190, startHeight: 147 });
+        dock4.setTabSide(SUEY.TAB_SIDES.LEFT);
+        // // Tabs
+        // this.outliner = new OutlinerTab();
+        // this.assets = new AssetsTab();
+        // this.prefabs = new PrefabsTab();
+        // this.scripts = new ScriptsTab();
+        // // Set Default Tab
+        // this.defaultTab = 'scene';
+        // // Add Panels
+        // this.addNewTab('outliner', this.outliner, { icon: `${EDITOR.FOLDER_TYPES}outliner.svg` });
+        // this.addNewTab('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
+        // this.addNewTab('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
+        // this.addNewTab('scripts', this.scripts, { icon: `${EDITOR.FOLDER_TYPES}script.svg`, color: '#090B11' });
+        // // Close Button
+        // SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.LEFT);
+        this.addDockPanel(dock4, SUEY.DOCK_LOCATIONS.BOTTOM_RIGHT);
 
         /********** SIGNALS */
 
         // Watch Bottom Left Size
-        const botLeft = this.getCorner(SUEY.CORNERS.BOTTOM_LEFT);
-        const topLeft = this.getCorner(SUEY.CORNERS.TOP_LEFT);
+        const botLeft = this.getCorner(SUEY.DOCK_LOCATIONS.BOTTOM_LEFT);
+        const topLeft = this.getCorner(SUEY.DOCK_LOCATIONS.TOP_LEFT);
         function resizeTopLeftDocks() {
             let totalHeight = 0;
             for (const child of botLeft.children) totalHeight += child.getHeight();
@@ -467,13 +486,13 @@ class Editor extends SUEY.Docker2 {
 
     /******************** PANELS ********************/
 
-    /** If tab is present in Editor, ensures tab is active */
-    selectTab(tabId = '') {
+    /** If tab (floater panel) is present in Editor, ensures tab is active */
+    selectPanel(tabID = '') {
         //
         // TODO: Find and select tab
         //
-        // Example
-        //  Tabbed.selectTab('assets');
+        // If Floater is in Tabbed:
+        //      Tabbed.selectTab('assets');
         //
     }
 

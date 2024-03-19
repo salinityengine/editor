@@ -82,10 +82,10 @@ class ScriptsTab extends SUEY.Titled {
                 const category = asset.category ?? unknown;
                 const panel = self.panels[category];
                 if (panel) {
-                    editor.selectTab('scripts');
+                    editor.selectPanel('scripts');
                     panel.setExpanded();
                     const assetBox = document.getElementById(asset.uuid);
-                    if (assetBox) setTimeout(() => {assetBox.focus(); assetBox.click(); }, 0);
+                    if (assetBox) setTimeout(() => { assetBox.focus(); assetBox.click(); }, 0);
                 }
             }
         }

@@ -22,7 +22,6 @@ class Advisor extends DockPanel {
     } = {}) {
         super({ style, resizers, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
         this.setName('Advisor');
-        this.addClass('salt-advisor');
         this.setTabSide(SUEY.TAB_SIDES.RIGHT);
 
         /********** WELCOME */
