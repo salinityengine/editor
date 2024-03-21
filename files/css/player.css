@@ -1,7 +1,7 @@
 /********** GAME PLAYER */
 
 .salt-gray-out * {
-    filter: grayscale(1) contrast(0.5) brightness(0.5) /* blur(1px) */ !important;
+    /* filter: grayscale(1) contrast(0.5) brightness(0.5) */ /* blur(1px) */ /* !important; */
 }
 
 /* Player Controls */

@@ -28,7 +28,7 @@ import { Worlds } from './worlds/Worlds.js';
 
 import { loadDemoProject } from './Demo.js';
 
-class Editor extends SUEY.Docker2 {
+class Editor extends SUEY.Docker {
 
     constructor() {
         super();
@@ -113,7 +113,7 @@ class Editor extends SUEY.Docker2 {
         this.addDockPanel(new Explorer({ startWidth: 245, minWidth: 70 }), SUEY.DOCK_LOCATIONS.TOP_LEFT);
         this.addDockPanel(new Inspector({ startWidth: 300, minWidth: 190 }), SUEY.DOCK_LOCATIONS.TOP_RIGHT);
 
-        const dock4 = new DockPanel({ startWidth:300, minWidth: 190, startHeight: 147 });
+        const dock4 = new DockPanel({ startWidth:300, minWidth: 190, startHeight: 147, resizers: [ SUEY.RESIZERS.TOP, SUEY.RESIZERS.LEFT ] });
         dock4.setTabSide(SUEY.TAB_SIDES.LEFT);
         // // Tabs
         // this.outliner = new OutlinerTab();

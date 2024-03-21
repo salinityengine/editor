@@ -3,21 +3,20 @@
 /**********************************************/
 
 DockPanel / Tabbed:
-    - Floater:
-        - Mouse over tab shows TabID in Advisor
+    - Docker2:
+        - Don't show all of Tabbed if not anything to show
     - Drag tabs to new docks
-        - Highlight new potentional dock while over
+        - Highlight new potentional dock while over (if no dock, new dock should appear)
         - Ability to drag tab around in the current dock tab order
         - Don't clear docks (i.e. closing inspector clears all panels, yikes)
         - If dock has no panels, should hide
-        - If no dock in corner, new dock should appear
     - Dock Zones
-        - Four Corners
-        - Bottom
+        - Four Corners + Bottom
         - Resize corner docks up down (dividers)
     - Click on Tab collapses dock
-    - Move 'CloseButton' from DockPanels to FloaterPanels (Tabs)
-
+    - Floater:
+        - Move 'CloseButton' from DockPanels to FloaterPanels (Tabs)
+        - Mouse over tab shows TabID in Advisor
 Toolbar:
     - View2D Toolbar graphics
         - Grid
