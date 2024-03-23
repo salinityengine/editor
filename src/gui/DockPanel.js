@@ -29,7 +29,7 @@ class DockPanel extends SUEY.Tabbed {
 
         this.dom.addEventListener('tab-changed', function(event) {
             const tabName = event.value;
-            self.setTabPriority(tabName);
+            if (tabName) self.setTabPriority(tabName);
         });
 
         /********** SIGNALS */

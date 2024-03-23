@@ -3,22 +3,21 @@
 /**********************************************/
 
 DockPanel / Tabbed:
-    - Docker2:
-        - Don't show all of Tabbed if not anything to show
-    - Drag tabs to new docks
-        - Highlight new potentional dock while over (if no dock, new dock should appear)
-        - Ability to drag tab around in the current dock tab order
-        - Don't clear docks (i.e. closing inspector clears all panels, yikes)
-        - If dock has no panels, should hide
-    - Dock Zones
-        - Four Corners + Bottom
-        - Resize corner docks up down (dividers)
-    - Click on Tab collapses dock
-    - Floater:
+    - Minimum dock size (no teeny tiny docks)?
+    - Ability to drag tab button around in the current dock tab button order
+    - Drop tab into new Window (from 'center')
+    - Click on an active TabButton collapses dock?
+    Floater:
         - Move 'CloseButton' from DockPanels to FloaterPanels (Tabs)
+            - Check how does Player close button work (make sure we don't mess it up)
         - Mouse over tab shows TabID in Advisor
+    Editor Docks:
+        - Use Docker2
+        - Don't clear docks (i.e. closing inspector clears all panels, yikes)
+        - ...finally, rename Docker2
+
 Toolbar:
-    - View2D Toolbar graphics
+    - View2D Toolbar images
         - Grid
 
 Editor Skeleton:
@@ -33,15 +32,17 @@ Undo / Redo Commands:
 
 Panels:
     Inspector:
+        - Rename 'Tabs' to 'List' / 'Group' / 'Heading' / 'Piece' / 'Family' / 'Bite'?
+            - If 'group', rename Component.group to component.family?
         - Multi-Select
             - Only show shared properties in inspector?
             - Resizing a group of selected objects
-    Explorer:
-        - Assets
-            - Image / Atlas
-        - Outliner
-        - Prefabs
-        - Scripts
+    !! Explorer: remove and move contents to their own tabs
+    Assets:
+        - Image / Atlas
+    Outliner:
+    Prefabs:
+    Scripts:
 
 View2D:
     Editor:
