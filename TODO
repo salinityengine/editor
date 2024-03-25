@@ -3,10 +3,15 @@
 /**********************************************/
 
 DockPanel / Tabbed:
-    - Minimum dock size (no teeny tiny docks)?
-    - Ability to drag tab button around in the current dock tab button order
-    - Drop tab into new Window (from 'center')
-    - Click on an active TabButton collapses dock?
+    TabButton:
+        - Drag tab around TabButtons, keep in tab buttons (clone) & highlight orange
+        - Click on an active TabButton collapses dock?
+        - Hide / Show Windows - option for all tab panels to collapse (keep TabButtons), bring back sections as clicked
+        - Drag to four edges of main window
+    Tabbed:
+        - Play with auto sizing some more?
+    Window:
+        - Drop tab into new Window (from 'center')
     Floater:
         - Move 'CloseButton' from DockPanels to FloaterPanels (Tabs)
             - Check how does Player close button work (make sure we don't mess it up)
@@ -32,8 +37,7 @@ Undo / Redo Commands:
 
 Panels:
     Inspector:
-        - Rename 'Tabs' to 'List' / 'Group' / 'Heading' / 'Piece' / 'Family' / 'Bite'?
-            - If 'group', rename Component.group to component.family?
+        - Rename 'Tabs' to 'Block'
         - Multi-Select
             - Only show shared properties in inspector?
             - Resizing a group of selected objects

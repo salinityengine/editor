@@ -38,10 +38,10 @@ class AddComponentButton extends SUEY.Button {
                 const config = ComponentClass.config ?? {};
                 if (!config.multiple && entity.getComponent(type)) continue;
 
-                // GROUPS: [ 'Entity3D', 'World3D' ]
-                if (!config.group) continue;
-                const groups = Array.isArray(config.group) ? config.group : [ config.group ];
-                if (groups.indexOf(entity.componentGroup()) === -1) continue;
+                // FAMILY: [ 'Entity3D', 'World3D' ]
+                if (!config.family) continue;
+                const families = Array.isArray(config.family) ? config.family : [ config.family ];
+                if (families.indexOf(entity.componentFamily()) === -1) continue;
 
                 // Add Component
                 const compName = SALT.Strings.capitalize(type);

@@ -58,7 +58,7 @@ class ScriptsTab extends SUEY.Titled {
 
         // No Category
         const unknown = 'unknown';
-        this.panels[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${EDITOR.FOLDER_GROUPS}scripts/general.svg`, view: 'list' });
+        this.panels[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${EDITOR.FOLDER_COLLECTIONS}scripts/general.svg`, view: 'list' });
         this.add(this.panels[unknown]);
 
         // Add Search Bar
@@ -101,9 +101,9 @@ class ScriptsTab extends SUEY.Titled {
                 if (!self.panels[category]) {
                     let icon = '';
                     switch (category) {
-                        case 'camera': icon = `${EDITOR.FOLDER_GROUPS}scripts/camera.svg`; break;
-                        case 'control': icon = `${EDITOR.FOLDER_GROUPS}scripts/control.svg`; break;
-                        case 'entity': icon = `${EDITOR.FOLDER_GROUPS}scripts/entity.svg`; break;
+                        case 'camera': icon = `${EDITOR.FOLDER_COLLECTIONS}scripts/camera.svg`; break;
+                        case 'control': icon = `${EDITOR.FOLDER_COLLECTIONS}scripts/control.svg`; break;
+                        case 'entity': icon = `${EDITOR.FOLDER_COLLECTIONS}scripts/entity.svg`; break;
 
                         //
                         // ADDITIONAL CUSTOM CATEGORY ICONS HERE
