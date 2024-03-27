@@ -144,9 +144,9 @@ class View2DToolbar extends SUEY.Panel {
             // focus.setDisabled(editor.selected.length === 0);
 
             // // OPTION: Scene Icon
-            // focusScene.setDisplay((sceneFocus) ? '' : 'none');
-            // focusEye.setDisplay((sceneFocus) ? 'none' : '');
-            // focusPupil.setDisplay((sceneFocus) ? 'none' : '');
+            // focusScene.setStyle('display', (sceneFocus) ? '' : 'none');
+            // focusEye.setStyle('display', (sceneFocus) ? 'none' : '');
+            // focusPupil.setStyle('display', (sceneFocus) ? 'none' : '');
 
             // OPTION: Tooltip
             const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');

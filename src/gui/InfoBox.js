@@ -19,9 +19,8 @@ class InfoBox extends SUEY.Div {
         // Set Position
         const left = (window.innerWidth / 2) - (this.getWidth() / 2);
         const top = (window.innerHeight / 2) - (this.getHeight() / 2);
-        this.setLeft(`${left}px`);
-        // this.setTop(`${top}`);
-        this.setTop('4.5em');
+        this.setStyle('left', `${left}px`);
+        this.setStyle('top', '4.5em'); // `${top}px`);
 
         // Show
         this.addClass('suey-updated');

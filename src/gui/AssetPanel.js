@@ -7,6 +7,7 @@ import { ColorizeFilter } from './ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 import { RemoveAssetCommand } from '../commands/Commands.js';
+import { Shaper } from '../panels/Shaper.js';
 import { Signals } from '../config/Signals.js';
 
 const ASSET_WIDTH = 128;
@@ -179,16 +180,16 @@ class AssetPanel extends OSUI.Shrinkable {
             if (!child.isElement || child.isTemporary) continue;
             const name = (child.name) ? String(child.name).toLowerCase() : '';
             if (name.indexOf(this.#searchTerm) !== -1) {
-                child.setDisplay('');
+                child.setStyle('display', '');
             } else {
-                child.setDisplay('none');
+                child.setStyle('display', 'none');
                 hidden++;
             }
         }
         ///// #OPTION: Only show when panel is empty
-        this.#emptyItem?.setDisplay((children.length <= 1) ? '' : 'none');
+        this.#emptyItem?.setStyle('display', (children.length <= 1) ? '' : 'none');
         ///// #OPTION: Show if all items hidden
-        // this.#emptyItem?.setDisplay((hidden === children.length - 1) ? '' : 'none');
+        // this.#emptyItem?.setStyle('display', (hidden === children.length - 1) ? '' : 'none');
         return this;
     }
 
@@ -288,7 +289,10 @@ class AssetPanel extends OSUI.Shrinkable {
                 canvas.style['border-radius'] = 'var(--radius-small)';
                 CanvasUtils.drawPalette(canvas, asset /* palette */);
             } else if (this.type === 'shape') {
-                item.onDblClick(() => { editor.shaper.showWindow(asset); });
+                item.onDblClick(() => {
+                    const shaper = editor.getPanelByID('shaper') ?? new Shaper();
+                    editor.shaper.showWindow(asset);
+                });
                 const renderHexColor = 0xff00ff; // OSUI.ColorScheme.color(OSUI.TRAIT.TRIADIC1);
                 const shapeGeometry = new THREE.ShapeGeometry(asset /* shape */);
                 SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);

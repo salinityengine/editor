@@ -1,12 +1,13 @@
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-class Shaper extends SUEY.Window {
+class Shaper extends SUEY.Floater {
 
     constructor() {
         super({
             height: '85%',
             width: '60%',
+            title: 'Shaper',
         });
         const self = this;
         this.setName('Shaper');
@@ -14,11 +15,6 @@ class Shaper extends SUEY.Window {
 
         // Background Color
         this.contents().setStyle('backgroundColor', 'rgb(var(--background-light))');
-
-        // Panel Widgets
-        this.addTitleBar('Shaper', true /* draggable */);
-        SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.BOTH, 1.7 /* offset */);
-        SUEY.Interaction.addMaxButton(this, SUEY.CLOSE_SIDES.BOTH, 1.7 /* offset */);
 
         // Elements
         this.canvas = new SUEY.Canvas(2000, 2000).addClass('salt-shaper-canvas');
@@ -178,7 +174,7 @@ class Shaper extends SUEY.Window {
 
     showWindow(shape) {
         this.setShape(shape);
-        super.showWindow();
+
     }
 
 }

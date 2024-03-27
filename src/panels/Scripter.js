@@ -11,15 +11,12 @@ class Scripter extends SUEY.Window {
         super({
             height: '85%',
             width: '60%',
+            title: 'Scripter',
+            buttonSides: SUEY.CLOSE_SIDES.BOTH,
         });
         const self = this;
         this.setName('Scripter');
-        this.setDisplay('none');
-
-        // Panel Widgets
-        this.addTitleBar('Scripter', true /* draggable */);
-        SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.BOTH, 1.7 /* offset */);
-        SUEY.Interaction.addMaxButton(this, SUEY.CLOSE_SIDES.BOTH, 1.7 /* offset */);
+        this.setStyle('display', 'none');
 
         // Match inner panel background with CodeMirror
         this.contents().setStyle('backgroundColor', 'rgb(var(--background-light))');
@@ -31,7 +28,7 @@ class Scripter extends SUEY.Window {
 
         // Title Bar
         const title = new SUEY.TextBox();
-        title.setColor('rgb(var(--highlight))');
+        title.setStyle('color', 'rgb(var(--highlight))');
         title.setStyle('marginLeft', '1.0em');
         title.setStyle('width', 'calc(100% - 3em)');
         title.setStyle('padding', '0.3em 0.7em');

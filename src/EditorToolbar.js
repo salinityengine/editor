@@ -139,15 +139,15 @@ class EditorToolbar extends SUEY.Panel {
         /******************** ADD TO TOOLBAR */
 
         // // OPTION: Middle Centered
-        // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
         // const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
-        // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
         // this.add(left, middle, right);
 
         // // OPTION: Spacer, SUEY.ToolbarSpacer(0.5) / SUEY.ToolbarSeparator()
 
-        const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
-        const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none').setWidth('50%');
+        const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
+        const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
         left.add(eye, new SUEY.ToolbarSeparator(), scene2d, scene3d, world, ui, new SUEY.FlexSpacer());
         right.add(new SUEY.FlexSpacer(), play, new SUEY.ToolbarSeparator(), proj, history, settings);
         this.add(left, right);

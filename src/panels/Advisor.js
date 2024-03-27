@@ -164,13 +164,13 @@ class Advisor extends DockPanel {
             if (title) {
                 titleText.setInnerHtml(title);
                 bodyContents.setInnerHtml(html);
-                bodyContents.setOpacity(1.0);
-                welcomeContents.setOpacity(0.0);
+                bodyContents.setStyle('opacity', '1.0');
+                welcomeContents.setStyle('opacity', '0.0');
             } else {
                 titleText.setInnerHtml(advice.title);
                 bodyContents.setInnerHtml('');
-                bodyContents.setOpacity(0.0);
-                welcomeContents.setOpacity(1.0);
+                bodyContents.setStyle('opacity', '0.0');
+                welcomeContents.setStyle('opacity', '1.0');
                 history = -1;
             }
             _title = title;

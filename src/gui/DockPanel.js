@@ -35,8 +35,8 @@ class DockPanel extends SUEY.Tabbed {
         /********** SIGNALS */
 
         Signals.connect(this, 'refreshWindows', function () {
-            self.changeWidth(parseFloat(Config.getKey(`resizeX/${self.getName()}`)) * SUEY.Css.guiScale());
-            self.changeHeight(parseFloat(Config.getKey(`resizeY/${self.getName()}`)) * SUEY.Css.guiScale());
+            // self.changeWidth(parseFloat(Config.getKey(`resizeX/${self.getName()}`)) * SUEY.Css.guiScale());
+            // self.changeHeight(parseFloat(Config.getKey(`resizeY/${self.getName()}`)) * SUEY.Css.guiScale());
         });
     }
 

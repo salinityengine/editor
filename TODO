@@ -2,24 +2,11 @@
 /*                    TO DO                   */
 /**********************************************/
 
-DockPanel / Tabbed:
-    TabButton:
-        - Drag tab around TabButtons, keep in tab buttons (clone) & highlight orange
-        - Click on an active TabButton collapses dock?
-        - Hide / Show Windows - option for all tab panels to collapse (keep TabButtons), bring back sections as clicked
-        - Drag to four edges of main window
-    Tabbed:
-        - Play with auto sizing some more?
-    Window:
-        - Drop tab into new Window (from 'center')
-    Floater:
-        - Move 'CloseButton' from DockPanels to FloaterPanels (Tabs)
-            - Check how does Player close button work (make sure we don't mess it up)
-        - Mouse over tab shows TabID in Advisor
-    Editor Docks:
-        - Use Docker2
-        - Don't clear docks (i.e. closing inspector clears all panels, yikes)
-        - ...finally, rename Docker2
+Editor Docks:
+    - Replace 'addDockPanel' with 'addDock'
+    - Don't clear docks (i.e. closing inspector clears all panels, yikes)
+    - Mouse over tab shows TabID in Advisor
+    - Save dock layout in Config
 
 Toolbar:
     - View2D Toolbar images

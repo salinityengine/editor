@@ -62,8 +62,6 @@ class Editor extends SUEY.Docker {
 
         // Floating Panels
         this.player = null;                                     // Game Player
-        this.scripter = null;                                   // Script Editor
-        this.shaper = null;                                     // Shape Editor
 
         // Misc
         this.dragInfo = undefined;                              // Stores data for 'dragenter' events
@@ -103,18 +101,19 @@ class Editor extends SUEY.Docker {
         this.add(this.worlds = new Worlds());
 
         // Floating Panels
-        this.add(this.scripter = new Scripter());
+        this.add(new Scripter());
         this.add(this.player = new Player());
-        this.add(this.shaper = new Shaper());
+        this.add(new Shaper());
 
         /***** DOCKING PANELS */
 
-        this.addDockPanel(new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 }), SUEY.DOCK_LOCATIONS.BOTTOM_LEFT);
-        this.addDockPanel(new Explorer({ startWidth: 245, minWidth: 70 }), SUEY.DOCK_LOCATIONS.TOP_LEFT);
-        this.addDockPanel(new Inspector({ startWidth: 300, minWidth: 190 }), SUEY.DOCK_LOCATIONS.TOP_RIGHT);
+        // this.addDockPanel(new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 }), SUEY.DOCK_LOCATIONS.BOTTOM_LEFT);
+        // this.addDockPanel(new Explorer({ startWidth: 245, minWidth: 70 }), SUEY.DOCK_LOCATIONS.TOP_LEFT);
+        // this.addDockPanel(new Inspector({ startWidth: 300, minWidth: 190 }), SUEY.DOCK_LOCATIONS.TOP_RIGHT);
 
         const dock4 = new DockPanel({ startWidth:300, minWidth: 190, startHeight: 147, resizers: [ SUEY.RESIZERS.TOP, SUEY.RESIZERS.LEFT ] });
         dock4.setTabSide(SUEY.TAB_SIDES.LEFT);
+
         // // Tabs
         // this.outliner = new OutlinerTab();
         // this.assets = new AssetsTab();
@@ -129,21 +128,22 @@ class Editor extends SUEY.Docker {
         // this.addNewTab('scripts', this.scripts, { icon: `${EDITOR.FOLDER_TYPES}script.svg`, color: '#090B11' });
         // // Close Button
         // SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.LEFT);
-        this.addDockPanel(dock4, SUEY.DOCK_LOCATIONS.BOTTOM_RIGHT);
+
+        // this.addDockPanel(dock4, SUEY.DOCK_LOCATIONS.BOTTOM_RIGHT);
 
         /********** SIGNALS */
 
-        // Watch Bottom Left Size
-        const botLeft = this.getCorner(SUEY.DOCK_LOCATIONS.BOTTOM_LEFT);
-        const topLeft = this.getCorner(SUEY.DOCK_LOCATIONS.TOP_LEFT);
-        function resizeTopLeftDocks() {
-            let totalHeight = 0;
-            for (const child of botLeft.children) totalHeight += child.getHeight();
-            topLeft.setStyle('bottom', `${parseFloat(SUEY.Css.toEm(totalHeight)) - 0.175}em`);
-        }
-        botLeft.dom.addEventListener('resized', resizeTopLeftDocks);
-        Signals.connect(this, 'refreshWindows', resizeTopLeftDocks);
-        Signals.connect(this, 'windowResize', resizeTopLeftDocks);
+        // // Watch Bottom Left Size
+        // const botLeft = this.getCorner(SUEY.DOCK_LOCATIONS.BOTTOM_LEFT);
+        // const topLeft = this.getCorner(SUEY.DOCK_LOCATIONS.TOP_LEFT);
+        // function resizeTopLeftDocks() {
+        //     let totalHeight = 0;
+        //     for (const child of botLeft.children) totalHeight += child.getHeight();
+        //     topLeft.setStyle('bottom', `${parseFloat(SUEY.Css.toEm(totalHeight)) - 0.175}em`);
+        // }
+        // botLeft.dom.addEventListener('resized', resizeTopLeftDocks);
+        // Signals.connect(this, 'refreshWindows', resizeTopLeftDocks);
+        // Signals.connect(this, 'windowResize', resizeTopLeftDocks);
 
         // Project Loaded
         Signals.connect(this, 'projectLoaded', function() {
@@ -400,7 +400,7 @@ class Editor extends SUEY.Docker {
         } else if (fontSize === 'down' || fontSize === 'decrease') {
             let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
             addSize = Math.floor((SUEY.Css.fontSize() - addSize + 10.0) / 10.0);
-            fontSize = Math.min(EDITOR.FONT_SIZE_MAX, SUEY.Css.fontSize() - addSize);
+            fontSize = Math.max(EDITOR.FONT_SIZE_MIN, SUEY.Css.fontSize() - addSize);
         } else {
             fontSize = parseInt(fontSize);
         }
@@ -488,12 +488,9 @@ class Editor extends SUEY.Docker {
 
     /** If tab (floater panel) is present in Editor, ensures tab is active */
     selectPanel(tabID = '') {
-        //
-        // TODO: Find and select tab
-        //
-        // If Floater is in Tabbed:
-        //      Tabbed.selectTab('assets');
-        //
+        if (tabID && tabID.isElement) tabID = tabID.id;
+        const panel = this.getPanelByID(tabID);
+        if (panel && panel.dock) panel.dock.selectTab(tabID);
     }
 
     /** Display temporary, centered tooltip */

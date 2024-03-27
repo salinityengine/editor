@@ -22,6 +22,8 @@ body.preload *:not(.salt-instant-start) { /* used to stop inital page animations
     transition: all 0s !important;
 }
 
+/********** HTML */
+
 body {
     overflow: hidden; /* important for SUEY.Window resizing */
 }

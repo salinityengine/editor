@@ -175,9 +175,9 @@ class Inspector extends DockPanel {
 
             // Show / Hide
             if (self.isEmpty) {
-                self.setDisplay('none');
+                self.setStyle('display', 'none');
             } else {
-                self.setDisplay(''); // (!Config.getKey(`panels/show${self.getName()}`))? 'none' : '');
+                self.setStyle('display', ''); // (!Config.getKey(`panels/show${self.getName()}`))? 'none' : '');
             }
 
             // Select Last Known Tab (stored ranked in Config.js)

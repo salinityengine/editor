@@ -146,7 +146,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         const smallerShortcut = '-';
         smallerButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/style/smaller.svg`));
         const smallShortcutText = new SUEY.Div(smallerShortcut).setClass('suey-menu-shortcut');
-        smallShortcutText.setDisplay('block').setStyle('textAlign', 'right').setStyle('paddingLeft', '0').setStyle('paddingRight', '0.55em');
+        smallShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         smallerButton.add(smallShortcutText);
         smallerButton.dom.setAttribute('tooltip', Config.tooltip(smallerLabel, smallerShortcut));
 
@@ -158,7 +158,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         const largerShortcut = '+';
         largerButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/style/larger.svg`));
         const largeShortcutText = new SUEY.Div(largerShortcut).setClass('suey-menu-shortcut');
-        largeShortcutText.setDisplay('block').setStyle('textAlign', 'right').setStyle('paddingLeft', '0').setStyle('paddingRight', '0.55em');
+        largeShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         largerButton.add(largeShortcutText);
         largerButton.dom.setAttribute('tooltip', Config.tooltip(largerLabel, largerShortcut));
 

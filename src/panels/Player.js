@@ -13,10 +13,12 @@ class Player extends SUEY.Window {
         super({
             height: '85%',
             width: '60%',
+            title: 'Player',
         });
         const self = this;
         this.addClass('salt-player');
-        this.setDisplay('none');
+        this.setName('Player');
+        this.setStyle('display', 'none');
 
         // App
         const app = new SALT.App();
@@ -35,11 +37,6 @@ class Player extends SUEY.Window {
             isPlaying: { get: function() { return app.isPlaying; }, },
             isPaused: { get: function() { return app.gameClock.isStopped(); }, },
         });
-
-        // Panel Widgets
-        this.addTitleBar('Player', true /* draggable */);
-        SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.LEFT, 1.7 /* offset */);
-        SUEY.Interaction.addMaxButton(this, SUEY.CLOSE_SIDES.LEFT, 1.7 /* offset */);
 
         /***** OUTLINE BOX */
 
@@ -181,7 +178,7 @@ class Player extends SUEY.Window {
         };
 
         this.stop = function() {
-            self.setDisplay('none');
+            self.setStyle('display', 'none');
             if (app.isPlaying) {
                 app.stop();
                 Signals.dispatch('playerStateChanged', 'stop');
@@ -227,13 +224,16 @@ class Player extends SUEY.Window {
             const height = Math.max(1, self.contents().getHeight());
             app.setSize(width, height);
         }
-        this.dom.addEventListener('resizer', () => { updateSize(); });
-        window.addEventListener('resize', () => { updateSize(); });
+        this.dom.addEventListener('resizer', () => updateSize());
+        window.addEventListener('resize', () => updateSize());
 
         // Stop Player when Window 'X' is clicked
         this.dom.addEventListener('hidden', () => {
             self.stop();
         });
+        this.dom.addEventListener('destroy', function() {
+            self.stop();
+        }, { once: true });
 
         /******************** SCREENSHOT */
 
