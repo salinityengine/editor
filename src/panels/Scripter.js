@@ -262,7 +262,7 @@ class Scripter extends SUEY.Window {
 
         // /***** EVENTS *****/
 
-        // this.dom.addEventListener('hidden', () => {
+        // this.on('hidden', () => {
         //     editing = false;
         //     if (currentScript && currentScript.isScript) {
         //         signals.assetSelect.dispatch('script', currentScript);

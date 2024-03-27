@@ -86,9 +86,9 @@ class Player extends SUEY.Window {
             }
         }
         const resizeObserver = new ResizeObserver(resizeOutLine).observe(this.dom);
-        this.dom.addEventListener('destroy', function() {
+        this.on('destroy', function() {
             if (resizeObserver) resizeObserver.disconnect();
-        }, { once: true });
+        });
 
         /***** TOOLBAR BUTTONS */
 
@@ -224,16 +224,12 @@ class Player extends SUEY.Window {
             const height = Math.max(1, self.contents().getHeight());
             app.setSize(width, height);
         }
-        this.dom.addEventListener('resizer', () => updateSize());
+        this.on('resizer', () => updateSize());
         window.addEventListener('resize', () => updateSize());
 
         // Stop Player when Window 'X' is clicked
-        this.dom.addEventListener('hidden', () => {
-            self.stop();
-        });
-        this.dom.addEventListener('destroy', function() {
-            self.stop();
-        }, { once: true });
+        this.on('hidden', () => { self.stop(); });
+        this.on('destroy', () => { self.stop(); });
 
         /******************** SCREENSHOT */
 

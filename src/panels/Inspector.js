@@ -208,7 +208,7 @@ class Inspector extends DockPanel {
 
         /***** EVENTS *****/
 
-        this.dom.addEventListener('hidden', () => {
+        this.on('hidden', () => {
             _item = undefined;
             setTimeout(() => Signals.dispatch('inspectorBuild'), 0);
         });

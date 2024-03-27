@@ -82,9 +82,9 @@ class CameraProperties extends SUEY.Div {
             outlineBox.setStyle('opacity', '1');
         }
         const resizeObserver = new ResizeObserver(resizeOutLine).observe(emptyBox.dom);
-        emptyBox.dom.addEventListener('destroy', function() {
+        emptyBox.on('destroy', () => {
             if (resizeObserver) resizeObserver.disconnect();
-        }, { once: true });
+        });
 
         /***** UPDATE *****/
 
@@ -130,10 +130,12 @@ class CameraProperties extends SUEY.Div {
         signals.entityChanged.add(entityChanged);
         signals.transformsChanged.add(transformsChanged);
 
-        this.dom.addEventListener('destroy', function() {
+        /***** DESTROY *****/
+
+        this.on('destroy', () => {
             signals.entityChanged.remove(entityChanged);
             signals.transformsChanged.remove(transformsChanged);
-        }, { once: true });
+        });
 
         /***** INIT *****/
 

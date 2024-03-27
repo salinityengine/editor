@@ -55,7 +55,7 @@ class ComponentTab extends SUEY.Titled {
 
             // EXPANDED?
             compGroup.setExpanded(component.expanded, false /* event? */)
-            compGroup.dom.addEventListener('expand', () => {
+            compGroup.on('expand', () => {
                 component.expanded = compGroup.isExpanded;
             });
 

@@ -80,9 +80,9 @@ class EntitySettingsButton extends SUEY.Button {
 
         /***** DESTROY *****/
 
-        this.dom.addEventListener('destroy', function() {
+        this.on('destroy', () => {
             signals.clipboardChanged.remove(updateClipboard);
-        }, { once: true });
+        });
 
         /***** INIT *****/
 

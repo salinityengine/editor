@@ -57,9 +57,11 @@ class StageProperties extends SUEY.Div {
 
         signals.entityChanged.add(entityChangeCallback);
 
-        this.dom.addEventListener('destroy', function() {
+        /***** DESTROY *****/
+
+        this.on('destroy', () => {
             signals.entityChanged.remove(entityChangeCallback);
-        }, { once: true });
+        });
 
         /***** INIT *****/
 

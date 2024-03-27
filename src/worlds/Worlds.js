@@ -77,7 +77,7 @@ class Worlds extends SUEY.Graph {
                     editor.execute(new MultiCmdsCommand(cmds, 'Change World Position' + (cmds.length > 1 ? 's' : '')));
                 }
             }
-            node.dom.addEventListener('dragged', nodeDrag);
+            node.on('dragged', nodeDrag);
 
             return node;
         }

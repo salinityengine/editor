@@ -32,11 +32,11 @@ class Shaper extends SUEY.Floater {
             self.canvas.height = Math.max(1, self.contents().getHeight());
             self.drawShape();
         }
-        this.dom.addEventListener('resizer', () => { updateSize(); });
+        this.on('resizer', () => { updateSize(); });
         window.addEventListener('resize', () => { updateSize(); });
 
         // Initial Scale / Offset
-        this.dom.addEventListener('displayed', () => {
+        this.on('displayed', () => {
             self.canvas.width = Math.max(1, self.contents().getWidth());
             self.canvas.height = Math.max(1, self.contents().getHeight());
             const shape = self.shape;

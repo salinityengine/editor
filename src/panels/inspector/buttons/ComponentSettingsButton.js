@@ -127,9 +127,11 @@ class ComponentSettingsButton extends SUEY.Button {
         }
         signals.clipboardChanged.add(updateClipboard);
 
-        this.dom.addEventListener('destroy', function() {
+        /***** DESTROY *****/
+
+        this.on('destroy', () => {
             signals.clipboardChanged.remove(updateClipboard);
-        }, { once: true });
+        });
 
         /***** INIT *****/
 

@@ -76,9 +76,9 @@ class AddComponentButton extends SUEY.Button {
 
         /***** DESTROY *****/
 
-        this.dom.addEventListener('destroy', function() {
+        this.on('destroy', () => {
             signals.componentChanged.remove(buildMenu);
-        }, { once: true });
+        });
 
         /***** INIT *****/
 
