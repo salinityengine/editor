@@ -37,7 +37,7 @@ class ComponentProperties extends SUEY.PropertyList {
         // Initial Build
         buildPanel();
 
-        this.onPointerLeave(() => {
+        this.on('pointerleave', () => {
             Signals.dispatch('advisorInfo');
         });
 

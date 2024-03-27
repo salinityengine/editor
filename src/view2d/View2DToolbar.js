@@ -211,7 +211,7 @@ class View2DToolbar extends SUEY.Panel {
         // Prepare Button
         arrange.setStyle('overflow', 'visible');
         arrange.setStyle('z-index', '1');
-        arrange.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
+        arrange.on('pointerenter', () => { document.dispatchEvent(new Event('closemenu')); });
         arrange.addToSelf(hoverArrangeMenu);
 
         /***** TRANSFORM */
@@ -273,7 +273,7 @@ class View2DToolbar extends SUEY.Panel {
         // Prepare Button
         transform.setStyle('overflow', 'visible');
         transform.setStyle('z-index', '1');
-        transform.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
+        transform.on('pointerenter', () => { document.dispatchEvent(new Event('closemenu')); });
         transform.addToSelf(hoverTransformMenu);
 
         /******************** VIEWS */
@@ -317,7 +317,7 @@ class View2DToolbar extends SUEY.Panel {
         // Prepare Button
         views.setStyle('overflow', 'visible');
         views.setStyle('z-index', '1');
-        views.onPointerEnter(() => { document.dispatchEvent(new Event('closemenu')); });
+        views.on('pointerenter', () => { document.dispatchEvent(new Event('closemenu')); });
         views.addToSelf(hoverToggleMenu);
 
         /******************** GRID */

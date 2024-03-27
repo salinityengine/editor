@@ -17,7 +17,7 @@ class ProjectGeneralTab extends SUEY.Titled {
         this.add(props);
 
         // Name
-        const projectName = new SUEY.TextBox().onChange(() => {
+        const projectName = new SUEY.TextBox().on('change', () => {
             editor.project.name = projectName.getValue();
         });
         const nameRow = props.addRow(Language.getKey('inspector/project/name'), projectName);
@@ -36,7 +36,7 @@ class ProjectGeneralTab extends SUEY.Titled {
         const orientSelect = new SUEY.Dropdown();
         orientSelect.overflowMenu = SUEY.OVERFLOW.LEFT;
         orientSelect.setOptions(orientOptions);
-        orientSelect.onChange(() => {
+        orientSelect.on('change', () => {
             editor.project.settings.orientation = orientSelect.getValue();
         });
         const orientRow = props.addRow('Orientation', orientSelect);
@@ -49,7 +49,7 @@ class ProjectGeneralTab extends SUEY.Titled {
 
         // Preload
         const preload = new SUEY.NumberBox().setPrecision(3).setStep(0.1);
-        preload.onChange(() => {
+        preload.on('change', () => {
             editor.project.settings.preload = preload.getValue();
         });
         const preloadRow = props.addRow('Preload', preload);
@@ -57,7 +57,7 @@ class ProjectGeneralTab extends SUEY.Titled {
 
         // Unload
         const unload = new SUEY.NumberBox().setPrecision(3).setStep(0.1);
-        unload.onChange(() => {
+        unload.on('change', () => {
             editor.project.settings.unload = unload.getValue();
         });
         const unloadRow = props.addRow('Unload', unload);

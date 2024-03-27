@@ -9,7 +9,7 @@ class SelectInput extends SUEY.Dropdown {
 
         this.setOptions(options);
 
-        this.onChange(() => {
+        this.on('change', () => {
             if (typeof callback !== 'function') return;
             callback(self.getValue());
         });

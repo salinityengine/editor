@@ -33,7 +33,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         const languageDropDown = new SUEY.Dropdown();
         languageDropDown.overflowMenu = SUEY.OVERFLOW.LEFT;
         languageDropDown.setOptions(languageOptions);
-        languageDropDown.onChange(() => {
+        languageDropDown.on('change', () => {
             Config.setKey('settings/language', languageDropDown.getValue());
             editor.refreshSettings();
         });
@@ -49,7 +49,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         //      - Extra 'Settings' options
         //
         //
-        const promodeBox = new SUEY.Checkbox().onChange(() => {
+        const promodeBox = new SUEY.Checkbox().on('change', () => {
             Config.setKey('promode', (!Config.getKey('promode')));
             Signals.dispatch('promodeChanged');
         });
@@ -169,7 +169,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         // OPACITY //
 
         const alphaSlider = new SUEY.Slider();
-        alphaSlider.onInput(() => {
+        alphaSlider.on('input', () => {
             const panelAlpha = SALT.Maths.clamp(parseFloat(alphaSlider.getValue()), 0.0, 1.0);
             Config.setKey('scheme/panelTransparency', panelAlpha);
             SUEY.Css.setVariable('--panel-transparency', panelAlpha);

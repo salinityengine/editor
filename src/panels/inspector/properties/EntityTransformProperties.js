@@ -100,9 +100,9 @@ class EntityTransformProperties extends SUEY.Div {
         // Position
         const gridSize = parseFloat(Config.getKey('scene/grid/translateSize'));
         const moveSize = gridSize; // (Config.getKey('scene/grid/snap')) ? gridSize : EDITOR.BASE_MOVE;
-        const entityPositionX = new SUEY.NumberBox(0).setStep(moveSize).onChange(update);
-        const entityPositionY = new SUEY.NumberBox(0).setStep(moveSize).onChange(update);
-        const entityPositionZ = new SUEY.NumberBox(0).setStep(moveSize).onChange(update);
+        const entityPositionX = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
+        const entityPositionY = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
+        const entityPositionZ = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
         entityPositionX.setStyle('color', 'rgb(var(--triadic1))');
         entityPositionY.setStyle('color', 'rgb(var(--triadic2))');
         entityPositionZ.setStyle('color', 'rgb(var(--complement))');
@@ -111,9 +111,9 @@ class EntityTransformProperties extends SUEY.Div {
         }
 
         // Rotation
-        const entityRotationX = new SUEY.NumberBox(0).setStep(5).setPrecision(2).setUnit('°').onChange(update);
-        const entityRotationY = new SUEY.NumberBox(0).setStep(5).setPrecision(2).setUnit('°').onChange(update);
-        const entityRotationZ = new SUEY.NumberBox(0).setStep(5).setPrecision(2).setUnit('°').onChange(update);
+        const entityRotationX = new SUEY.NumberBox(0).setStep(5).setPrecision(2).setUnit('°').on('change', update);
+        const entityRotationY = new SUEY.NumberBox(0).setStep(5).setPrecision(2).setUnit('°').on('change', update);
+        const entityRotationZ = new SUEY.NumberBox(0).setStep(5).setPrecision(2).setUnit('°').on('change', update);
         entityRotationX.setStyle('color', 'rgb(var(--triadic1))');
         entityRotationY.setStyle('color', 'rgb(var(--triadic2))');
         entityRotationZ.setStyle('color', 'rgb(var(--complement))');
@@ -122,9 +122,9 @@ class EntityTransformProperties extends SUEY.Div {
         }
 
         // Scale
-        const entityScaleX = new SUEY.NumberBox(1).setStep(0.1).setNudge(0.1).onChange(() => update('x'));
-        const entityScaleY = new SUEY.NumberBox(1).setStep(0.1).setNudge(0.1).onChange(() => update('y'));
-        const entityScaleZ = new SUEY.NumberBox(1).setStep(0.1).setNudge(0.1).onChange(() => update('z'));
+        const entityScaleX = new SUEY.NumberBox(1).setStep(0.1).setNudge(0.1).on('change', () => update('x'));
+        const entityScaleY = new SUEY.NumberBox(1).setStep(0.1).setNudge(0.1).on('change', () => update('y'));
+        const entityScaleZ = new SUEY.NumberBox(1).setStep(0.1).setNudge(0.1).on('change', () => update('z'));
         entityScaleX.setStyle('color', 'rgb(var(--triadic1))');
         entityScaleY.setStyle('color', 'rgb(var(--triadic2))');
         entityScaleZ.setStyle('color', 'rgb(var(--complement))');
@@ -138,7 +138,7 @@ class EntityTransformProperties extends SUEY.Div {
         const lockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}lock.svg`);
         const unlockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}unlock.svg`);
         lockScale.add(new SUEY.ShadowBox(lockIcon, unlockIcon));
-        lockScale.onPointerDown(() => {
+        lockScale.on('pointerdown', () => {
             Config.setKey('scene/transform/aspectLock', !Config.getKey('scene/transform/aspectLock'));
             setScaleIconState();
         });
@@ -161,9 +161,9 @@ class EntityTransformProperties extends SUEY.Div {
         setIconColors();
 
         // Size
-        const entitySizeX = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).onChange(() => update('x'));
-        const entitySizeY = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).onChange(() => update('y'));
-        const entitySizeZ = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).onChange(() => update('z'));
+        const entitySizeX = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).on('change', () => update('x'));
+        const entitySizeY = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).on('change', () => update('y'));
+        const entitySizeZ = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).on('change', () => update('z'));
         if (showSize) {
             // SALT.ObjectUtils.identityBoundsCalculate(entity, identitySize);
             entitySize.copy(identitySize);
@@ -176,12 +176,12 @@ class EntityTransformProperties extends SUEY.Div {
         }
 
         // Billboard
-        const billboardBox = new SUEY.Checkbox().onChange(() => {
+        const billboardBox = new SUEY.Checkbox().on('change', () => {
             const isBillboard = billboardBox.getValue();
             editor.execute(new SetValueCommand(entity, 'lookAtCamera', isBillboard, false /* recursive */));
         });
         const yOnlyTitle = new SUEY.Text(`Y Only`).selectable(false);
-        const lookAtYOnlyBox = new SUEY.Checkbox().onChange(() => {
+        const lookAtYOnlyBox = new SUEY.Checkbox().on('change', () => {
             const isYOnly = lookAtYOnlyBox.getValue();
             editor.execute(new SetValueCommand(entity, 'lookAtYOnly', isYOnly, false /* recursive */));
         });
@@ -190,7 +190,7 @@ class EntityTransformProperties extends SUEY.Div {
         }
 
         // Visible
-        const visibleBox = new SUEY.Checkbox().onChange(() => {
+        const visibleBox = new SUEY.Checkbox().on('change', () => {
             const isVisible = visibleBox.getValue();
             editor.execute(new SetValueCommand(entity, 'visible', isVisible, false /* recursive */));
         });
@@ -206,19 +206,19 @@ class EntityTransformProperties extends SUEY.Div {
         }
 
         // Bloom
-        const bloomBox = new SUEY.Checkbox().onChange(() => {
+        const bloomBox = new SUEY.Checkbox().on('change', () => {
             editor.execute(new SetValueCommand(entity, 'bloom', bloomBox.getValue(), true /* recursive */));
         });
         shadowGroup.addRow('Bloom', bloomBox);
 
         // Cast Shadow
-        const castBox = new SUEY.Checkbox().onChange(() => {
+        const castBox = new SUEY.Checkbox().on('change', () => {
             editor.execute(new SetValueCommand(entity, 'castShadow', castBox.getValue(), true /* recursive */));
         });
         shadowGroup.addRow('Cast Shadow', castBox);
 
         // Receive Shadow
-        const receiveBox = new SUEY.Checkbox().onChange(() => {
+        const receiveBox = new SUEY.Checkbox().on('change', () => {
             editor.execute(new SetValueCommand(entity, 'receiveShadow', receiveBox.getValue(), true /* recursive */));
         });
         shadowGroup.addRow('Receive Shadow', receiveBox);

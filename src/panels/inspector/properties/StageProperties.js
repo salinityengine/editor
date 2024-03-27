@@ -21,21 +21,21 @@ class StageProperties extends SUEY.Div {
 
         // Enabled
         const stageEnabled = new SUEY.Checkbox();
-        stageEnabled.onChange(() => {
+        stageEnabled.on('change', () => {
             editor.execute(new SetValueCommand(entity, 'enabled', stageEnabled.getValue()));
         });
         displayGroup.addRow('Enabled', stageEnabled);
 
         // Start
         const stageStart = new SUEY.NumberBox(0).setStep(1).setNudge(0.1).setMin(0);
-        stageStart.onChange(() => {
+        stageStart.on('change', () => {
             editor.execute(new SetValueCommand(entity, 'start', stageStart.getValue()));
         });
         displayGroup.addRow('Start', stageStart);
 
         // Finish
         const stageFinish = new SUEY.NumberBox(0).setStep(1).setNudge(0.1).setMin(-1);
-        stageFinish.onChange(() => {
+        stageFinish.on('change', () => {
             editor.execute(new SetValueCommand(entity, 'finish', stageFinish.getValue()));
         });
         displayGroup.addRow('Finish', stageFinish);

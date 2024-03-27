@@ -29,12 +29,12 @@ class WorldProperties extends SUEY.Div {
         const backgroundStyle = new SUEY.Dropdown();
         backgroundStyle.overflowMenu = SUEY.OVERFLOW.LEFT;
         backgroundStyle.setOptions(backgroundOptions);
-        backgroundStyle.onChange(() => { updateBackground(); });
+        backgroundStyle.on('change', () => { updateBackground(); });
         backgroundGroup.addRow('Style', backgroundStyle);
 
         // Background Color
         const backgroundColor = new SUEY.Color();
-        backgroundColor.onChange(() => { updateBackground(); });
+        backgroundColor.on('change', () => { updateBackground(); });
         const bgColorRow = backgroundGroup.addRow('Color', backgroundColor);
 
         // Background Texture
@@ -64,31 +64,31 @@ class WorldProperties extends SUEY.Div {
         const fogStyle = new SUEY.Dropdown();
         fogStyle.overflowMenu = SUEY.OVERFLOW.LEFT;
         fogStyle.setOptions(fogOptions);
-        fogStyle.onChange(() => { updateFog(); });
+        fogStyle.on('change', () => { updateFog(); });
         fogGroup.addRow('Style', fogStyle);
 
         // Fog Color
         const fogColor = new SUEY.Color();
-        fogColor.onChange(() => { updateFog(); });
+        fogColor.on('change', () => { updateFog(); });
         const fogColorRow = fogGroup.addRow('Color', fogColor);
 
         // Fog Near
         const fogNear = new SUEY.NumberBox(1);
         fogNear.setPrecision(2).setStep(10);
-        fogNear.onChange(() => { updateFog(); });
+        fogNear.on('change', () => { updateFog(); });
         const fogNearRow = fogGroup.addRow('Near', fogNear);
 
         // Fog Far
         const fogFar = new SUEY.NumberBox(1000);
         fogFar.setPrecision(2).setStep(10);
-        fogFar.onChange(() => { updateFog(); });
+        fogFar.on('change', () => { updateFog(); });
         const fogFarRow = fogGroup.addRow('Far', fogFar);
 
         // Fog Density
         const fogDensity = new SUEY.NumberBox();
         fogDensity.setMin(0).setMax(1).setPrecision(5).setStep(0.00025).setNudge(0.00025);
         fogDensity.setValue(0.00025);
-        fogDensity.onChange(() => { updateFog(); });
+        fogDensity.on('change', () => { updateFog(); });
         const fogDensityRow = fogGroup.addRow('Density', fogDensity);
 
         function updateFog() {
@@ -109,14 +109,14 @@ class WorldProperties extends SUEY.Div {
 
         // X Pos
         const nodeX = new SUEY.NumberBox(0).setStep(25).setNudge(5);
-        nodeX.onChange(() => {
+        nodeX.on('change', () => {
             editor.execute(new SetValueCommand(entity, 'xPos', nodeX.getValue()));
         });
         nodeGroup.addRow('X', nodeX);
 
         // Y Pos
         const nodeY = new SUEY.NumberBox(0).setStep(25).setNudge(5);
-        nodeY.onChange(() => {
+        nodeY.on('change', () => {
             editor.execute(new SetValueCommand(entity, 'yPos', nodeY.getValue()));
         });
         nodeGroup.addRow('Y', nodeY);

@@ -78,12 +78,12 @@ class AssetPanel extends OSUI.Shrinkable {
 
         /***** EVENTS*****/
 
-        function onExpand() {
+        function panelExpand() {
             self.setExpandKey(self.isExpanded);
         }
 
         // Asset Selection
-        function onKeyDown(event) {
+        function panelKeyDown(event) {
             let selected = undefined;
 
             // Get children, remove 'EmptyBox'
@@ -113,13 +113,8 @@ class AssetPanel extends OSUI.Shrinkable {
             }
         }
 
-        this.dom.addEventListener('expand', onExpand);
-        this.dom.addEventListener('keydown', onKeyDown);
-
-        this.dom.addEventListener('destroy', function() {
-            self.dom.removeEventListener('expand', onExpand);
-            self.dom.addEventListener('keydown', onKeyDown);
-        }, { once: true });
+        this.on('expand', panelExpand);
+        this.on('keydown', panelKeyDown);
 
         /***** SIGNALS *****/
 
@@ -285,11 +280,11 @@ class AssetPanel extends OSUI.Shrinkable {
             } else if (this.type === 'material') {
                 SALT.RenderUtils.renderGeometryToCanvas(canvas, null /* geometry */, asset /* material */);
             } else if (this.type === 'palette') {
-                item.onDblClick(() => { Signals.dispatch('inspectorBuild', asset); });
+                item.on('dblclick', () => { Signals.dispatch('inspectorBuild', asset); });
                 canvas.style['border-radius'] = 'var(--radius-small)';
                 CanvasUtils.drawPalette(canvas, asset /* palette */);
             } else if (this.type === 'shape') {
-                item.onDblClick(() => {
+                item.on('dblclick', () => {
                     const shaper = editor.getPanelByID('shaper') ?? new Shaper();
                     editor.shaper.showWindow(asset);
                 });
@@ -298,7 +293,7 @@ class AssetPanel extends OSUI.Shrinkable {
                 SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
                 shapeGeometry.dispose();
             } else if (this.type === 'texture') {
-                item.onDblClick(() => { Signals.dispatch('inspectorBuild', asset); });
+                item.on('dblclick', () => { Signals.dispatch('inspectorBuild', asset); });
                 const texture = asset;
                 if (texture.image && texture.image.complete) texture.needsUpdate = true;
                 SALT.RenderUtils.renderTextureToCanvas(canvas, texture);
@@ -317,8 +312,8 @@ class AssetPanel extends OSUI.Shrinkable {
             let sourceIcon = '';
             if (script.format === SALT.SCRIPT_FORMAT.JAVASCRIPT) sourceIcon = `${EDITOR.FOLDER_MENU}outliner/js.svg`;
             innerBox = new OSUI.VectorBox(sourceIcon).enableDragging();
-            item.onDblClick(() => { signals.editScript.dispatch(script); });
-            item.onKeyDown((event) => {
+            item.on('dblclick', () => { signals.editScript.dispatch(script); });
+            item.on('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
                     event.stopPropagation();
@@ -341,8 +336,8 @@ class AssetPanel extends OSUI.Shrinkable {
                 innerBox.dom.appendChild(canvas);
                 SALT.RenderUtils.renderMeshToCanvas(canvas, prefab);
             }
-            item.onDblClick(() => { Signals.dispatch('inspectorBuild', prefab); });
-            item.onKeyDown((event) => {
+            item.on('dblclick', () => { Signals.dispatch('inspectorBuild', prefab); });
+            item.on('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
                     event.stopPropagation();
@@ -359,12 +354,12 @@ class AssetPanel extends OSUI.Shrinkable {
         item.add(innerBox);
 
         // SELECT
-        item.onFocus(() => {
+        item.on('focus', () => {
             Signals.dispatch('inspectorBuild', asset);
         });
 
         // KEY PRESS
-        item.onKeyDown((event) => {
+        item.on('keydown', (event) => {
             if (event.key === 'Delete') {
                 event.preventDefault();
                 event.stopPropagation();
@@ -373,7 +368,7 @@ class AssetPanel extends OSUI.Shrinkable {
         });
 
         // DRAG & DROP
-        item.dom.addEventListener('dragstart', (event) => {
+        item.on('dragstart', (event) => {
             if (innerBox) event.dataTransfer.setDragImage(innerBox.dom, 0, 0);
             event.dataTransfer.clearData();
             event.dataTransfer.setData('text/plain', asset.uuid);
@@ -381,7 +376,7 @@ class AssetPanel extends OSUI.Shrinkable {
             editor.dragInfo = asset.uuid; /* for dragenter events */
         });
 
-        item.dom.addEventListener('dragend', (event) => {
+        item.on('dragend', (event) => {
             signals.dropEnded.dispatch();
         });
 

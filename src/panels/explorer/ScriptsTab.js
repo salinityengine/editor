@@ -67,7 +67,7 @@ class ScriptsTab extends SUEY.Titled {
         const searchBox = new SUEY.TextBox('').addClass('salt-search-box');
         searchBox.dom.placeholder = Language.getKey('explorer/search');
         searchBox.setValue(this.getSearchTerm());
-        searchBox.onInput(() => {
+        searchBox.on('input', () => {
             self.setSearchTerm(searchBox.getValue());
             self.searchPanels();
         });

@@ -34,7 +34,7 @@ class Scripter extends SUEY.Window {
         title.setStyle('padding', '0.3em 0.7em');
         header.add(title);
 
-        title.onChange(() => {
+        title.on('change', () => {
             if (currentScript && currentScript.isScript) {
                 editor.execute(new SetAssetValueCommand(currentScript, 'name', title.getValue()));
             }

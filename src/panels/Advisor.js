@@ -141,18 +141,18 @@ class Advisor extends DockPanel {
         SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.LEFT);
 
         // Events
-        this.onPointerEnter(() => {
+        this.on('pointerenter', () => {
             active = false;
             buttonRow.setStyle('display', '');
         });
 
-        this.onPointerLeave(() => {
+        this.on('pointerleave', () => {
             active = true;
             buttonRow.setStyle('display', 'none');
             setInfo();
         });
 
-        this.dom.addEventListener('hidden', () => {
+        this.on('hidden', () => {
             Config.setKey('panels/showAdvisor', !Config.getKey('panels/showAdvisor'));
             Signals.dispatch('refreshWindows');
         });

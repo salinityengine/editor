@@ -56,7 +56,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         selectDropDown.overflowMenu = SUEY.OVERFLOW.LEFT;
 
         // Event
-        selectDropDown.onChange(() => {
+        selectDropDown.on('change', () => {
             value = selectDropDown.getValue();
             updateComponent(item, propKey, value);
         });
@@ -80,7 +80,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         numberHolder.add(numberBox);
 
         // Event
-        numberBox.onChange(() => {
+        numberBox.on('change', () => {
             value = numberBox.getValue();
             if (item.type === 'angle') value = SALT.Maths.degreesToRadians(value);
             updateComponent(item, propKey, value);
@@ -115,19 +115,19 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const slideBox = new SUEY.NumberBox().addClass('suey-property-tiny-row');
 
         // Event
-        slider.onInput(() => {
+        slider.on('input', () => {
             value = slider.getValue();
             updateComponent(item, propKey, value, true /* forceSmall */);
             slideBox.setValue(value);
         });
 
-        slider.onChange(() => {
+        slider.on('change', () => {
             value = slider.getValue();
             updateComponent(item, propKey, value);
             slideBox.setValue(value);
         });
 
-        slideBox.onChange(() => {
+        slideBox.on('change', () => {
             value = slideBox.getValue();
             updateComponent(item, propKey, value);
             slider.setValue(value);
@@ -175,9 +175,8 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             value = [ parseFloat(numberBox.getValue()), parseFloat(variableBox.getValue()) ];
             updateComponent(item, propKey, value);
         }
-
-        numberBox.onChange(() => { numberBoxesChanged(); });
-        variableBox.onChange(() => { numberBoxesChanged(); });
+        numberBox.on('change', numberBoxesChanged);
+        variableBox.on('change', numberBoxesChanged);
 
         // Init
         const boxes = [ numberBox, variableBox ];
@@ -231,7 +230,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             leftWidgets.push(aspectButtonRow);
             // Setup
             lockAspect.add(new SUEY.ShadowBox(lockIcon, unlockIcon));
-            lockAspect.onPointerDown(() => {
+            lockAspect.on('pointerdown', () => {
                 aspectLocked = !aspectLocked;
                 if (aspectLocked) {
                     setArrayFromBoxes(originalValues);
@@ -243,9 +242,9 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             setAspectIconState();
             // Signals
             signals.schemeChanged.add(setAspectIconColors);
-            propertyList.dom.addEventListener('destroy', function() {
+            propertyList.on('destroy', function() {
                 signals.schemeChanged.remove(setAspectIconColors);
-            }, { once: true });
+            });
         }
 
         // Helpers
@@ -273,7 +272,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             }
 
             // Event
-            numberBox.onChange(() => {
+            numberBox.on('change', () => {
                 if (aspectLocked) {
                     const newValue = parseFloat(arrayBoxes[i].getValue());
                     for (let j = 0; j < arrayBoxes.length; j++) {
@@ -321,7 +320,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const boolBox = new SUEY.Checkbox();
 
         // Event
-        boolBox.onChange(() => {
+        boolBox.on('change', () => {
             value = boolBox.getValue();
             updateComponent(item, propKey, value);
         });
@@ -373,7 +372,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             }
 
             // Event
-            boolBox.onChange(() => {
+            boolBox.on('change', () => {
                 setArrayFromBoxes(value);
                 updateComponent(item, propKey, value);
             });
@@ -396,12 +395,12 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const colorButton = new SUEY.Color();
 
         // Event
-        colorButton.onInput(() => {
+        colorButton.on('input', () => {
             value = colorButton.getHexValue();
             updateComponent(item, propKey, value, true /* forceSmall */);
         });
 
-        colorButton.onChange(() => {
+        colorButton.on('change', () => {
             value = colorButton.getHexValue();
             updateComponent(item, propKey, value);
         });
@@ -429,7 +428,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         }
 
         // Event
-        stringBox.onChange(() => {
+        stringBox.on('change', () => {
             value = stringBox.getValue();
             updateComponent(item, propKey, value);
         });
@@ -450,15 +449,14 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         stringBox.addClass('salt-key-input');
 
         // Event
-        stringBox.onKeyDown((event) => {
+        stringBox.on('keydown', (event) => {
             event.stopPropagation();
             event.preventDefault();
-
             value = event.key;
             updateComponent(item, propKey, value);
             setKeyBoxText(value);
         });
-        stringBox.onKeyUp((event) => {
+        stringBox.on('keyup', (event) => {
             event.stopPropagation();
             event.preventDefault();
         });
@@ -520,10 +518,10 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Button: Signals
         signals.assetChanged.add(scriptChanged);
         signals.schemeChanged.add(setIconColors);
-        propertyList.dom.addEventListener('destroy', function() {
+        propertyList.on('destroy', function() {
             signals.assetChanged.remove(scriptChanged);
             signals.schemeChanged.remove(setIconColors);
-        }, { once: true });
+        });
 
         // Button: Click
         refreshAsset.add(new SUEY.ShadowBox(refreshIcon));
@@ -546,7 +544,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         //////////
 
         // Event
-        textBox.onPointerDown(() => {
+        textBox.on('pointerdown', () => {
             if (asset) {
                 const verifyType = SALT.AssetManager.checkType(asset);
                 signals.assetSelect.dispatch(verifyType, asset);
@@ -554,7 +552,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         });
 
         let textBoxValue;
-        textBox.dom.addEventListener('dragenter', () => {
+        textBox.on('dragenter', () => {
             if (textBox.hasClass('suey-disabled')) return;
             textBoxValue = textBox.getValue();
             textBox.setValue(`${typeClassName}`);
@@ -563,13 +561,13 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             textBox.addClass(checkItemType(checkAsset) ? 'suey-yes-drop' : 'suey-no-drop');
         });
 
-        textBox.dom.addEventListener('dragleave', () => {
+        textBox.on('dragleave', () => {
             if (textBox.hasClass('suey-disabled')) return;
             textBox.setValue(textBoxValue);
             textBox.removeClass('suey-yes-drop', 'suey-no-drop');
         });
 
-        textBox.dom.addEventListener('drop', (event) => {
+        textBox.on('drop', (event) => {
             textBox.removeClass('suey-yes-drop', 'suey-no-drop');
             event.preventDefault();
             event.stopPropagation();
@@ -657,7 +655,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const itemName = SALT.Strings.addSpaces(SALT.Strings.capitalize(baseName));
         const propertyRow = propertyList.addRow(itemName, ...rightWidgets);
 
-        propertyRow.onPointerEnter(() => {
+        propertyRow.on('pointerenter', () => {
             const info = item.info ?? Language.getKey('advisor/noInfo');
             Signals.dispatch('advisorInfo', itemName, info);
         });

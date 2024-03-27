@@ -20,7 +20,7 @@ class WorldGridTab extends SUEY.Titled {
         props.addHeader(Language.getKey('inspector/grid/magnet'), `${EDITOR.FOLDER_INSPECTOR}settings/grid/snap.svg`);
 
         // Snap to Grid
-        const snapGrid = new SUEY.Checkbox().onChange(() => {
+        const snapGrid = new SUEY.Checkbox().on('change', () => {
             Config.setKey('scene/grid/snap', (!Config.getKey('scene/grid/snap')));
             Signals.dispatch('gridChanged');
         });
@@ -39,7 +39,7 @@ class WorldGridTab extends SUEY.Titled {
             zigzag:     'Sharp',
             straight:   'Straight',
         });
-        lineDrop.onChange(() => {
+        lineDrop.on('change', () => {
             Config.setKey('world/curve', lineDrop.getValue());
             if (editor && editor.worlds) {
                 editor.worlds.curveType = Config.getKey('world/curve');
@@ -55,7 +55,7 @@ class WorldGridTab extends SUEY.Titled {
             lines:  'Lines',
             dots:   'Dots',
         });
-        gridDrop.onChange(() => {
+        gridDrop.on('change', () => {
             Config.setKey('world/grid/style', gridDrop.getValue());
             if (editor && editor.worlds) editor.worlds.changeGridType(Config.getKey('world/grid/style'));
         });

@@ -33,7 +33,7 @@ class SettingsHistoryTab extends SUEY.Titled {
 
         // Key Down / Pointer Click
         let ignoreObjectSelectedSignal = false;
-        treeList.onChange(() => {
+        treeList.on('change', () => {
             ignoreObjectSelectedSignal = true;
             editor.history.goToState(parseInt(treeList.getValue()));
             treeList.setValue(editor.history.undos.length);

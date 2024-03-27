@@ -14,7 +14,7 @@ class EntityProperties extends SUEY.PropertyList {
         /******************** GENERAL */
 
         // NAME
-        const entityName = new SUEY.TextBox().onChange(() => {
+        const entityName = new SUEY.TextBox().on('change', () => {
             editor.execute(new SetValueCommand(entity, 'name', entityName.getValue()));
         });
         this.addRow(Language.getKey('inspector/entity/name'), entityName);

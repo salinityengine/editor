@@ -16,10 +16,10 @@ class AssetInput {
 
         const clearButton = new SUEY.Button().addClass('suey-property-button');
         clearButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
-        clearButton.dom.setAttribute('tooltip', 'Clear');
+        clearButton.setAttribute('tooltip', 'Clear');
 
         // Event
-        textBox.onPointerDown(() => {
+        textBox.on('pointerdown', () => {
             if (asset) {
                 const verifyType = SALT.AssetManager.checkType(asset);
                 signals.assetSelect.dispatch(verifyType, asset);
@@ -27,7 +27,7 @@ class AssetInput {
         });
 
         let textBoxValue;
-        textBox.dom.addEventListener('dragenter', () => {
+        textBox.on('dragenter', () => {
             if (textBox.hasClass('suey-disabled')) return;
             textBoxValue = textBox.getValue();
             textBox.setValue(`${typeClassName}`);
@@ -36,13 +36,13 @@ class AssetInput {
             textBox.addClass(checkItemType(checkAsset) ? 'suey-yes-drop' : 'suey-no-drop');
         });
 
-        textBox.dom.addEventListener('dragleave', () => {
+        textBox.on('dragleave', () => {
             if (textBox.hasClass('suey-disabled')) return;
             textBox.setValue(textBoxValue);
             textBox.removeClass('suey-yes-drop', 'suey-no-drop');
         });
 
-        textBox.dom.addEventListener('drop', (event) => {
+        textBox.on('drop', (event) => {
             textBox.removeClass('suey-yes-drop', 'suey-no-drop');
             event.preventDefault();
             event.stopPropagation();

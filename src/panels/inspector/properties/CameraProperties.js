@@ -27,7 +27,7 @@ class CameraProperties extends SUEY.Div {
             OrthographicCamera: 'Orthographic',
         };
         typeDrop.setOptions(typeOptions);
-        typeDrop.onChange(() => {
+        typeDrop.on('change', () => {
             const newType = typeDrop.getValue();
             const oldType = camera.type;
             editor.execute(new CallbackEntityCommand(camera, () => { camera.changeType(newType); }, () => { camera.changeType(oldType); }, 'Set Camera Type'));

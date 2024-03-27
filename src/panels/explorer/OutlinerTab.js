@@ -78,7 +78,7 @@ class OutlinerTab extends SUEY.Titled {
 
         // Change Event (fired on Key Down & Pointer Click)
         let ignoreSelectionChangedSignal = false;
-        treeList.onChange(() => {
+        treeList.on('change', () => {
             if (!editor.viewport.validWorld()) return;
             const viewWorld = editor.viewport.world;
             const uuids = treeList.getValues();
@@ -127,7 +127,7 @@ class OutlinerTab extends SUEY.Titled {
             ignoreSelectionChangedSignal = false;
         });
 
-        treeList.onDblClick((event) => {
+        treeList.on('dblclick', (event) => {
             if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
                 /* NOTHING */
             } else {

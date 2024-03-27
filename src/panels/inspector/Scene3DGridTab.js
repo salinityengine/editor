@@ -19,7 +19,7 @@ class Scene3DGridTab extends SUEY.Titled {
         props.addHeader(Language.getKey('inspector/grid/magnet'), `${EDITOR.FOLDER_INSPECTOR}settings/grid/snap.svg`);
 
         // Snap to Grid
-        const snapGrid = new SUEY.Checkbox().onChange(() => {
+        const snapGrid = new SUEY.Checkbox().on('change', () => {
             Config.setKey('scene/grid/snap', (!Config.getKey('scene/grid/snap')));
             Signals.dispatch('gridChanged');
         });
@@ -33,7 +33,7 @@ class Scene3DGridTab extends SUEY.Titled {
         // Grid Size
         const gridSizeBox = new SUEY.NumberBox();
         gridSizeBox.setPrecision(3).setRange(0.00, 100).setStep(0.01);
-        gridSizeBox.onChange(() => {
+        gridSizeBox.on('change', () => {
             Config.setKey('scene/grid/translateSize', gridSizeBox.getValue());
             Signals.dispatch('gridChanged');
         });
@@ -43,7 +43,7 @@ class Scene3DGridTab extends SUEY.Titled {
         const gridMultiSlider = new SUEY.Slider();
 
         let gridTimeout = null; /* timeout to limit firing */
-        gridMultiSlider.onInput(() => {
+        gridMultiSlider.on('input', () => {
             clearTimeout(gridTimeout);
             gridTimeout = setTimeout(() => {
                 if (gridMultiSlider && gridMultiSlider.dom && gridMultiBox && gridMultiBox.dom) {
@@ -54,7 +54,7 @@ class Scene3DGridTab extends SUEY.Titled {
         });
 
         const gridMultiBox = new SUEY.NumberBox().addClass('suey-property-tiny-row');
-        gridMultiBox.onChange(() => {
+        gridMultiBox.on('change', () => {
             Config.setKey('scene/grid/canvasMultiplier', gridMultiBox.getValue());
             Signals.dispatch('gridChanged');
         });
@@ -71,7 +71,7 @@ class Scene3DGridTab extends SUEY.Titled {
         props.addHeader(Language.getKey('inspector/grid/visibility'), `${EDITOR.FOLDER_INSPECTOR}settings/grid/visibility.svg`);
 
         // Show Grid
-        const showGrid = new SUEY.Checkbox().onChange(() => {
+        const showGrid = new SUEY.Checkbox().on('change', () => {
             Config.setKey('scene/grid/showCanvas', (!Config.getKey('scene/grid/showCanvas')));
             Signals.dispatch('gridChanged');
         });
@@ -80,7 +80,7 @@ class Scene3DGridTab extends SUEY.Titled {
         props.addRow(Language.getKey('inspector/grid/showCanvas'), showGrid, new SUEY.FlexSpacer(), showGridShortcut);
 
         // Mini Grid
-        const miniGrid = new SUEY.Checkbox().onChange(() => {
+        const miniGrid = new SUEY.Checkbox().on('change', () => {
             Config.setKey('scene/grid/showInfinite', (!Config.getKey('scene/grid/showInfinite')));
             Signals.dispatch('gridChanged');
         });

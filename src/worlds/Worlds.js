@@ -123,12 +123,12 @@ class Worlds extends SUEY.Graph {
         /********** EVENTS */
 
         // Displayed
-        this.dom.addEventListener('displayed', () => {
+        this.on('displayed', () => {
             self.centerView(true /* resetZoom */, false /* animate */);
-        }, { once: true });
+        }, true /* once? */);
 
         // Selected
-        this.dom.addEventListener('selected', () => {
+        this.on('selected', () => {
             // World(s) were selected
             const selected = self.selectedWorlds();
             for (let i = selected.length - 1; i >= 0; i--) {
@@ -144,15 +144,14 @@ class Worlds extends SUEY.Graph {
             }
 
             // Did not select World(s)
-            editor.execute(new SelectCommand(selected, [...editor.selected]));
+            editor.execute(new SelectCommand(selected, [ ...editor.selected ]));
         });
 
         // Zoom
-        function onMouseZoom(event) {
+        this.on('wheel', (event) => {
             event.preventDefault();
             editor.showInfo(`${parseInt(self.getScale() * 100)}%`);
-        }
-        this.onWheel(onMouseZoom);
+        });
 
         /********** SIGNALS */
 
