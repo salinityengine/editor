@@ -12,11 +12,15 @@ import { AssetPanel } from '../gui/AssetPanel.js';
 /**
  * Scripts
  */
-class Library extends SUEY.Titled {
+class Library extends SUEY.Floater {
 
     constructor() {
-        super({ title: 'Scripts' });
-        const self = this;
+        const icon = `${EDITOR.FOLDER_TYPES}script.svg`;
+        super('library', null, { icon, color: '#090B11' });
+
+        /******************** TITLED PANEL */
+
+        const panel = new SUEY.Titled({ title: 'Scripts' });
 
         /******************** HEADER BUTTONS */
 
@@ -85,7 +89,7 @@ class Library extends SUEY.Titled {
                 const category = asset.category ?? unknown;
                 const panel = self.panels[category];
                 if (panel) {
-                    editor.selectPanel('scripts');
+                    editor.selectFloater('scripts');
                     panel.setExpanded();
                     const assetBox = document.getElementById(asset.uuid);
                     if (assetBox) setTimeout(() => { assetBox.focus(); assetBox.click(); }, 0);

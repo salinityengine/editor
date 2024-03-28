@@ -18,7 +18,7 @@ class ComponentProperties extends SUEY.PropertyList {
         // Store component for 'addProperty' access
         this._component = component;
 
-        /***** COMPSALTNT INFO *****/
+        /***** COMPONENT INFO *****/
 
         // Get component Class prototype
         const ComponentClass = SALT.ComponentManager.registered(component.type);

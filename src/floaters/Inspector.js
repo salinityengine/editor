@@ -183,13 +183,6 @@ class Inspector extends SUEY.Floater {
             // Add Tabs
             self.addTab(...tabs);
 
-            // Show / Hide
-            if (self.isEmpty) {
-                self.setStyle('display', 'none');
-            } else {
-                self.setStyle('display', ''); // (!Config.getKey(`panels/show${self.name}`))? 'none' : '');
-            }
-
             // Select Last Known Tab (stored ranked in Config.js)
             self.selectLastKnownTab();
 

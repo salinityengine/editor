@@ -7,7 +7,7 @@ import { ColorizeFilter } from './ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 import { RemoveAssetCommand } from '../commands/Commands.js';
-import { Shaper } from '../panels/Shaper.js';
+import { Shaper } from '../floaters/Shaper.js';
 import { Signals } from '../config/Signals.js';
 
 const ASSET_WIDTH = 128;
@@ -20,7 +20,7 @@ class AssetPanel extends OSUI.Shrinkable {
     #viewStart = 'icon';
     #viewString = '';
 
-    /* Asset panel supports current types: asset, prefab */
+    /* Supports current types: asset, prefab */
     constructor({
         type,
         category,           // 'primitive', 'item', etc.
@@ -285,7 +285,7 @@ class AssetPanel extends OSUI.Shrinkable {
                 CanvasUtils.drawPalette(canvas, asset /* palette */);
             } else if (this.type === 'shape') {
                 item.on('dblclick', () => {
-                    const shaper = editor.getPanelByID('shaper') ?? new Shaper();
+                    const shaper = editor.getFloaterByID('shaper') ?? new Shaper();
                     editor.shaper.showWindow(asset);
                 });
                 const renderHexColor = 0xff00ff; // OSUI.ColorScheme.color(OSUI.TRAIT.TRIADIC1);

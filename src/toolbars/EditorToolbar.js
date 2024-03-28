@@ -1,11 +1,11 @@
 import * as EDITOR from 'editor';
 import * as SUEY from 'gui';
 
-import { Advice } from './config/Advice.js';
-import { Config } from './config/Config.js';
-import { Signals } from './config/Signals.js';
+import { Advice } from '../config/Advice.js';
+import { Config } from '../config/Config.js';
+import { Signals } from '../config/Signals.js';
 
-import { EditorModeCommand } from './commands/Commands.js';
+import { EditorModeCommand } from '../commands/Commands.js';
 
 import { EyeMenu } from './EyeMenu.js';
 
@@ -104,7 +104,7 @@ class EditorToolbar extends SUEY.Panel {
         play.add(playArrow);
 
         play.onClick(() => {
-            const player = editor.getPanelByID('player', true /* build? */);
+            const player = editor.getFloaterByID('player', true /* build? */);
             player.start();
         });
 

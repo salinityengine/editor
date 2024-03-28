@@ -15,7 +15,7 @@ class Advisor extends SUEY.Floater {
     constructor() {
         const icon = `${EDITOR.FOLDER_TYPES}advisor.svg`;
         super('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
-        this.addClass('salt-advisor-panel');
+        this.addClass('salt-advisor');
 
         /********** WELCOME */
 
@@ -66,7 +66,7 @@ class Advisor extends SUEY.Floater {
         let history = 0;
         let maxSize = 25;
 
-        /********** TAB PANEL */
+        /********** CONTENTS */
 
         // Title
         const titleDiv = new SUEY.Div().addClass('suey-tab-title').setStyle('user-select', 'all');
@@ -78,7 +78,7 @@ class Advisor extends SUEY.Floater {
         const bodyContents = new SUEY.Div().addClass('salt-advisor-contents');
         bodyScroller.add(welcomeContents, bodyContents);
 
-        // Add to Panel
+        // Add to Advisor
         this.add(titleDiv, bodyScroller);
 
         /********** HEADER BUTTONS */

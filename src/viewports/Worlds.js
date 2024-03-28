@@ -4,7 +4,7 @@ import * as SUEY from 'gui';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
-import { WorldsToolbar } from './WorldsToolbar.js';
+import { WorldsToolbar } from '../toolbars/WorldsToolbar.js';
 
 // import { AddWorldCommand } from '../commands/Commands.js';
 // import { MultiCmdsCommand } from '../commands/Commands.js';

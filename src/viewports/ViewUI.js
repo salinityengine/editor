@@ -2,7 +2,7 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { ViewUIToolbar } from './ViewUIToolbar.js';
+import { ViewUIToolbar } from '../toolbars/ViewUIToolbar.js';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';

@@ -1,8 +1,7 @@
 import * as SUEY from 'gui';
 
-import { Config } from './Config.js';
-
 const SIGNAL_NAMES = [
+
     /***** EDITOR **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
     // General
@@ -27,17 +26,8 @@ const SIGNAL_NAMES = [
     // Scene
     'sceneRendered',            // (timeToRenderMs)     ALERT       Scene was rendered
 
-    /***** PANELS **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
+    /***** VIEWPORTS **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
-    // Inspector
-    'inspectorBuild',           // (item)               FUNCTION    Build with object, string, 'rebuild'
-    'inspectorChanged',         // -                    ALERT       Inspector was just built / rebuilt
-    'inspectorUpdate',          // -                    ALERT       Request update UI for current item
-
-    // Player
-    'playerStateChanged',       // (state)              ALERT       Player state changed ('start', 'pause', 'stop')
-
-    // Viewport
     'mouseModeChanged',         // (mouse mode)         FUNCTION    Change mouse mode
     'mouseStateChanged',        // (state, cursor)      ALERT       Mouse state was changed
 
@@ -58,6 +48,16 @@ const SIGNAL_NAMES = [
 
     'dropEnded',                // -                    ALERT       Fired when 'viewport.dropInfo' was set and drag done
 
+    /***** FLOATERS **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
+
+    // Inspector
+    'inspectorBuild',           // (item)               FUNCTION    Build with object, string, 'rebuild'
+    'inspectorChanged',         // -                    ALERT       Inspector was just built / rebuilt
+    'inspectorUpdate',          // -                    ALERT       Request update UI for current item
+
+    // Player
+    'playerStateChanged',       // (state)              ALERT       Player state changed ('start', 'pause', 'stop')
+
     /***** PROJECT *************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
     // Scene Graph
@@ -71,6 +71,7 @@ const SIGNAL_NAMES = [
     'assetRemoved',             // (type, asset)        ALERT       Asset removed from AssetManager
     'assetChanged',             // (type, asset)        ALERT       Asset was changed
     'assetSelect',              // (type, asset)        FUNCTION    Select Asset in Explorer
+
 ];
 
 class Signals {

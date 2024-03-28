@@ -10,24 +10,23 @@ import { Language } from './config/Language.js';
 import { Loader } from './config/Loader.js';
 import { Signals } from './config/Signals.js';
 
-import { editorKeyDown, editorKeyUp } from './EditorEvents.js';
-import { EditorToolbar } from './EditorToolbar.js';
+import { EditorToolbar } from './toolbars/EditorToolbar.js';
 import { InfoBox } from './gui/InfoBox.js';
 
-import { Advisor } from './panels/Advisor.js';
-import { Coder } from './panels/Coder.js';
-import { Inspector } from './panels/Inspector.js';
-import { Library } from './panels/Library.js';
-import { Outliner } from './panels/Outliner.js';
-import { Player } from './panels/Player.js';
-import { Resources } from './panels/Resources.js';
-import { Shaper } from './panels/Shaper.js';
-import { Things } from './panels/Things.js';
+import { Advisor } from './floaters/Advisor.js';
+import { Coder } from './floaters/Coder.js';
+import { Inspector } from './floaters/Inspector.js';
+import { Library } from './floaters/Library.js';
+import { Outliner } from './floaters/Outliner.js';
+import { Player } from './floaters/Player.js';
+import { Resources } from './floaters/Resources.js';
+import { Shaper } from './floaters/Shaper.js';
+import { Things } from './floaters/Things.js';
 
-import { View2D } from './view2d/View2D.js';
-import { View3D } from './view3d/View3D.js';
-import { ViewUI } from './viewui/ViewUI.js';
-import { Worlds } from './worlds/Worlds.js';
+import { View2D } from './viewports/View2D.js';
+import { View3D } from './viewports/View3D.js';
+import { ViewUI } from './viewports/ViewUI.js';
+import { Worlds } from './viewports/Worlds.js';
 
 import { loadDemoProject } from './Demo.js';
 
@@ -63,7 +62,7 @@ class Editor extends SUEY.Div {
         this.docker = null;                                     // Docker
         this.infoBox = null;                                    // Popup Information
 
-        // Mode Panels
+        // Viewports
         this.view2d = null;                                     // Scene Editor 2D
         this.view3d = null;                                     // Scene Editor 3D
         this.viewui = null;                                     // UI Editor
@@ -95,20 +94,13 @@ class Editor extends SUEY.Div {
         this.add(this.docker = new SUEY.Docker());
         this.add(this.infoBox = new InfoBox());
 
-        /********** PANELS */
-
-        // Mode Panels
         this.add(this.view2d = new View2D());
         this.add(this.view3d = new View3D());
         this.add(this.viewui = new ViewUI());
         this.add(this.worlds = new Worlds());
 
-        /***** DOCKING PANELS */
-
+        // TODO: Add Docks / Floaters
         //
-        // TODO: Add Panels
-        //
-
         const dockLeft = this.docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
         const tabby1 = dockLeft.enableTabs();
         tabby1.addTab(new Advisor());
@@ -182,10 +174,10 @@ class Editor extends SUEY.Div {
 
     setMode(mode) {
         //
-        // TODO: Hide Docks (Floater / Docker / Tabbed / Window)
+        // TODO: Hide Docks (Floaters / Docker / Tabbed / Window)
         //
 
-        // Hide Editor Panels
+        // Hide Viewports
         this.view2d.hide();
         this.view3d.hide();
         this.viewui.hide();
@@ -217,7 +209,7 @@ class Editor extends SUEY.Div {
         //
 
         // Dispatch Signals
-        Signals.dispatch('windowResize'); // refresh panel sizes
+        Signals.dispatch('windowResize'); // refresh sizes
         Signals.dispatch('editorModeChanged', mode);
     }
 
@@ -268,14 +260,14 @@ class Editor extends SUEY.Div {
         if (typeof view.delete === 'function') view.delete();
     }
 
-    /** DOES run through Undo/Redo History */
+    /** NOTE: Runs through Undo/Redo History */
     selectAll() {
         const view = this.modeElement();
         if (!view || view.isHidden()) return;
         if (typeof view.selectAll === 'function') view.selectAll();
     }
 
-    /** DOES run through Undo/Redo History */
+    /** NOTE: Runs through Undo/Redo History */
     selectNone() {
         const view = this.modeElement();
         if (!view || view.isHidden()) return;
@@ -299,7 +291,7 @@ class Editor extends SUEY.Div {
     /******************** SELECTION ********************/
 
     /**
-     * DOES NOT run through Undo/Redo History
+     * NOTE: Does NOT run through Undo/Redo History
      * Emits 'selectionChanged' signal upon new seleciton
      */
     selectEntities(/* entity, entity array, or any number of entites to select */) {
@@ -408,7 +400,7 @@ class Editor extends SUEY.Div {
     /******************** INTERACTIVE ********************/
 
     requestScreenshot() {
-        const player = this.getPanelByID('player', false /* build? */);
+        const player = this.getFloaterByID('player', false /* build? */);
         if (player && (player.isPlaying && !player.isPaused)) {
             player.requestScreenshot();
         } else {
@@ -456,13 +448,13 @@ class Editor extends SUEY.Div {
             this.keyStates[EDITOR.KEYS.SPACE];
     }
 
-    /******************** PANELS ********************/
+    /******************** FLOATERS ********************/
 
-    getPanelByID(tabID, build = false) {
-        let panel = super.getPanelByID(tabID);
-        if (!panel && build) {
+    getFloaterByID(tabID, build = false) {
+        let floater = super.getFloaterByID(tabID);
+        if (!floater && build) {
             //
-            // TODO: Build missing panel, then add & select
+            // TODO: Build missing floater, then add & select
             //
 
             this.add(new Coder());
@@ -470,21 +462,21 @@ class Editor extends SUEY.Div {
             this.add(new Shaper());
             // new Advisor();
             // new Inspector();
-            // new Library();       // new SUEY.Floater('scripts', this.scripts, { icon: `${EDITOR.FOLDER_TYPES}script.svg`, color: '#090B11' });
+            // new Library();
             // new Outliner();      // new SUEY.Floater('outliner', this.outliner, { icon: `${EDITOR.FOLDER_TYPES}outliner.svg` });
             // new Resources();     // new SUEY.Floater('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
             // new Things();        // new SUEY.Floater('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
             // this.addTab(...);
 
         }
-        return panel;
+        return floater;
     }
 
-    /** If tab (floater panel) is present in Editor, ensures tab is active */
-    selectPanel(tabID = '') {
+    /** If Floater is present in Editor, ensures parent Dock Tab is active */
+    selectFloater(tabID = '') {
         if (tabID && tabID.isElement) tabID = tabID.id;
-        const panel = this.getPanelByID(tabID);
-        if (panel && panel.dock) panel.dock.selectTab(tabID);
+        const floater = this.getFloaterByID(tabID);
+        if (floater && floater.dock) floater.dock.selectTab(tabID);
     }
 
     /** Display temporary, centered tooltip */
@@ -520,8 +512,189 @@ class Editor extends SUEY.Div {
 }
 
 // Export Constants
-export * from './EditorConstants.js';
+export * from './constants.js';
 
 // Export as Singleton
 const editor = new Editor();
 export { editor };
+
+/******************** INTERNAL ********************/
+
+function editorKeyDown(editor, event) {
+    // Ignore Key Events While Playing
+    const player = editor.getFloaterByID('player', false /* build? */);
+    if (player && player.isPlaying) return;
+
+    // Modifier Keys
+    editor.updateModifiers(event);
+    switch (event.key) {
+        case ' ': /* Space */
+            editor.setKeyState(EDITOR.KEYS.SPACE, true);
+            break;
+    }
+
+    // Cut, Copy, Paste
+    if (event.ctrlKey || event.metaKey) {
+        if (event.key === 'c' || event.key === 'v' || event.key === 'x') {
+            switch (event.key) {
+                case 'c':
+                    const text = window.getSelection().toString();
+                    if (text && typeof text === 'string' && text !== '') { return /* default copy */; }
+                    event.stopPropagation();
+                    event.preventDefault();
+                    editor.copy();
+                    return;
+                case 'v':
+                    event.stopPropagation();
+                    event.preventDefault();
+                    editor.paste();
+                    return;
+                case 'x':
+                    event.stopPropagation();
+                    event.preventDefault();
+                    editor.cut();
+                    return;
+            }
+        }
+    }
+
+    // Keys
+    switch (event.key) {
+        case 'a':
+        case 'w':
+        case 's':
+        case 'd':
+            event.stopPropagation();
+            event.preventDefault();
+
+            // Select All
+            if (event.key === 'a' && (event.ctrlKey || event.metaKey)) {
+                editor.selectAll();
+                break;
+            }
+
+            // Duplicate
+            editor.duplicate(event.key);
+            break;
+
+        case 'Backspace':
+        case 'Delete':
+            event.stopPropagation();
+            event.preventDefault();
+            editor.delete();
+            break;
+
+        // Select None
+        case 'Escape':
+            event.stopPropagation();
+            event.preventDefault();
+            // Check for Clear Selection
+            const text = window.getSelection().toString();
+            if (text && typeof text === 'string' && text !== '') { return window.clearSelection(); }
+            // Select None
+            editor.selectNone();
+            break;
+
+        // Fullscreen
+        case 'Enter':
+            if (event.altKey || event.ctrlKey || event.metaKey) {
+                event.stopPropagation();
+                event.preventDefault();
+                SALT.System.fullscreen();
+            }
+            break;
+
+        // Undo / Redo
+        case 'z':
+            if (event.ctrlKey || event.metaKey) {
+                if (editor.checkKeyState(EDITOR.KEYS.SHIFT)) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    editor.redo();
+                } else {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    editor.undo();
+                }
+            }
+            break;
+
+        // Snap to Grid
+        case 'g':
+            Config.setKey('scene/grid/snap', (!Config.getKey('scene/grid/snap')));
+            Signals.dispatch('gridChanged');
+            break;
+
+        // Camera Focus on Object
+        case Config.getKey('shortcuts/focus'):
+            Signals.dispatch('cameraFocus');
+            break;
+
+        // Reset camera
+        case 'r':
+            Signals.dispatch('cameraReset');
+            break;
+
+        // Play Game
+        case Config.getKey('shortcuts/play'):
+            const player = editor.getFloaterByID('player', true /* build? */);
+            player.start();
+            break;
+
+        // Increase / Decrease Font (Gui) Sizing
+        case '-': editor.fontSizeChange('down'); break;
+        case '=': editor.fontSizeChange('up'); break;
+
+        // Reset all settings
+        case Config.getKey('shortcuts/reset'): /* F9 */
+            //
+            // TODO: Persistent Tabs / Docks, Save Tabs
+            //
+            // Example:
+            //      const tabs = {};
+            //      tabs['inspector'] = inspector.selectedID;
+
+            // Clear Config
+            Config.clear();
+
+            //
+            // TODO: Persistent Tabs / Docks, Restore
+            //
+            // Example:
+            //      Config.setKey(`tabs/Inspector`, [ tabs['inspector'] ]);
+
+            // Refresh GUI
+            editor.refreshSettings();
+            break;
+    }
+}
+
+function editorKeyUp(editor, event) {
+    // Ignore Key Events While Playing
+    const player = editor.getFloaterByID('player', false /* build? */);
+    if (player && player.isPlaying) return;
+
+    // Modifier Keys
+    editor.updateModifiers(event);
+    switch (event.key) {
+        case ' ': /* Space */
+            editor.setKeyState(EDITOR.KEYS.SPACE, false);
+            break;
+    }
+
+    // Color Schemes
+    switch (event.key) {
+        case '~': editor.cycleSchemeBackground(); break;
+        case '!': editor.setSchemeColor(SUEY.THEMES.CLASSIC,    0.00); break;
+        case '@': editor.setSchemeColor(SUEY.THEMES.FLAMINGO,   0.10); break;
+        case '#': editor.setSchemeColor(SUEY.THEMES.NAVY,       0.20); break;
+        case '$': editor.setSchemeColor(SUEY.THEMES.GRAPE,      0.15); break;
+        case '%': editor.setSchemeColor(SUEY.THEMES.RUST,       0.20); break;
+        case '^': editor.setSchemeColor(SUEY.THEMES.CARROT,     0.20); break;
+        case '&': editor.setSchemeColor(SUEY.THEMES.COFFEE,     0.20); break;
+        case '*': editor.setSchemeColor(SUEY.THEMES.GOLDEN,     0.15); break;
+        case '(': editor.setSchemeColor(SUEY.THEMES.EMERALD,    0.10); break;
+        case ')': editor.setSchemeColor(SUEY.Iris.randomHex(),  0.10); break;
+    }
+
+}

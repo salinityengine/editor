@@ -2,28 +2,26 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Docker:
-    MainWindow:
-        - Way to save docker positions, load back again
+Floaters:
+    Coder:
+    Inspector:
+        - Rename 'Tabs' to 'Block'
+    Library:
+    Outliner:
+    Player:
+    Resources:
+    Shaper:
+    Things:
 
-Editor Docks:
-    - Replace 'addDockPanel' with 'addDock'
-        - Advisor
-        - Coder
-        - Inspector
-        - Library
-        - Outliner
-        - Player
-        - Resources
-        - Shaper
-        - Things
-    - Don't clear docks (i.e. closing inspector clears all panels, yikes)
+Docks:
+    - Dock Positions
+        - Save positions/sizes to Config
+        - Load positions/sizes from Config
+        - Reset positions/sizes
     - Mouse over tab shows TabID in Advisor
-    - Save dock layout in Config
 
 Toolbar:
-    - View2D Toolbar images
-        - Grid
+    - View2D Toolbar 'Grid' images
 
 Editor Skeleton:
     - Go through Config
@@ -34,17 +32,6 @@ Undo / Redo Commands:
     - Separate editor / views
         - Add Entity
         - Select All / None
-
-Panels:
-    Inspector:
-        - Rename 'Tabs' to 'Block'
-        - Multi-Select
-            - Only show shared properties in inspector?
-            - Resizing a group of selected objects
-    Assets: Image / Atlas
-    Outliner:
-    Things:
-    Scripts:
 
 View2D:
     Editor:
@@ -62,6 +49,11 @@ Project:
     - World
     - Stage
     - Entity
+
+Inspector:
+    - Multi-Select
+        - Only show shared properties in inspector?
+        - Resizing a group of selected objects
 
 /******************** LONG TERM ********************/
 
@@ -94,7 +86,7 @@ Modes:
             - Auto resizing
             - Save connections
 
-Panels:
+Floaters:
     Advisor:
         - Add info for all exisiting buttons, etc
         - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
@@ -157,7 +149,7 @@ Scripting:
 
 /******************** FUTURE ********************/
 
-Additional Panels / Windows:
+Additional Floaters:
     Animator: Keyframe Editing
     Collision Editor:
     Color Picker:

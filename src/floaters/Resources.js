@@ -89,7 +89,7 @@ class Resources extends SUEY.Titled {
             if (!asset || !asset.uuid) return;
             const panel = self.panels[type];
             if (panel) {
-                editor.selectPanel('assets');
+                editor.selectFloater('assets');
                 panel.setExpanded();
                 const assetBox = document.getElementById(asset.uuid);
                 if (assetBox) setTimeout(() => { assetBox.focus(); assetBox.click(); }, 0);

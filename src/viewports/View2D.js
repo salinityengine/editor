@@ -2,13 +2,13 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { View3DToolbar } from './View3DToolbar.js';
+import { View2DToolbar } from '../toolbars/View2DToolbar.js';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { SelectCommand } from '../commands/Commands.js';
 
-class View3D extends SUEY.Panel {
+class View2D extends SUEY.Panel {
 
     constructor() {
         super();
@@ -19,7 +19,7 @@ class View3D extends SUEY.Panel {
 
         /******************** TOOLBAR */
 
-        this.add(new View3DToolbar(this));
+        this.add(new View2DToolbar(this));
 
         /******************** PROPERTIES */
 
@@ -106,4 +106,4 @@ class View3D extends SUEY.Panel {
 
 }
 
-export { View3D };
+export { View2D };

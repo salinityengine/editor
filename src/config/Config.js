@@ -24,11 +24,6 @@ const DEFAULT_SETTINGS = {
     'scheme/fontSize':                          '14px',             // Font / Gui size, originally 14px
     'scheme/panelTransparency':                 0.85,               // Panel transparency
 
-    'panels/showAdvisor':                       true,
-    'panels/showExplorer':                      true,
-    'panels/showInspector':                     true,
-    'panels/showPreview':                       true,
-
     'search/outliner':                          '',                 // Outliner search term
     'search/assets':                            '',                 // Asset search term
     'search/prefabs':                           '',                 // Prefabs search term
