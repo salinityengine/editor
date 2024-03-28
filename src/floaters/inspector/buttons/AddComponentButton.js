@@ -44,7 +44,7 @@ class AddComponentButton extends SUEY.Button {
                 if (families.indexOf(entity.componentFamily()) === -1) continue;
 
                 // Add Component
-                const compName = SALT.Strings.capitalize(type);
+                const compName = SUEY.Strings.capitalize(type);
                 const compIcon = EDITOR.COMPONENT_ICONS[type] ?? config.icon ?? ``;
                 const menuItem = new SUEY.MenuItem(compName, compIcon);
                 menuItem.onSelect(() => {

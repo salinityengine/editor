@@ -47,7 +47,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Value
         const selectOptions = {};
         for (let option of item.select) {
-            selectOptions[option] = SALT.Strings.addSpaces(SALT.Strings.capitalize(option));
+            selectOptions[option] = SUEY.Strings.addSpaces(SUEY.Strings.capitalize(option));
         }
         if (!isNaN(value)) value = Object.keys(selectOptions)[value];
 
@@ -98,7 +98,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         numberBox.setValue(value);
         if (String(label) !== '') {
             numberBox.setStyle('text-align', 'right');
-            const labelBox = new SUEY.Text(SALT.Strings.capitalize(label) + ':');
+            const labelBox = new SUEY.Text(SUEY.Strings.capitalize(label) + ':');
             labelBox.addClass('suey-number-label-box');
             numberHolder.add(labelBox);
         }
@@ -147,7 +147,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         slider.setValue(value);
         slideBox.setValue(value);
 
-        let digits = SALT.Strings.countDigits(parseInt(max)) + precision;
+        let digits = SUEY.Strings.countDigits(parseInt(max)) + precision;
         if (precision > 0) digits += 0.5;
         slideBox.dom.style.setProperty('--min-width', `${digits + 1.5}ch`);
 
@@ -300,7 +300,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
             if (String(label) !== '') {
                 numberBox.setStyle('text-align', 'right');
-                const labelBox = new SUEY.Text(SALT.Strings.capitalize(label) + ':');
+                const labelBox = new SUEY.Text(SUEY.Strings.capitalize(label) + ':');
                 labelBox.addClass('suey-number-label-box');
                 numberHolder.add(labelBox);
             }
@@ -479,7 +479,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Asset / Prefab Type
         let asset = SALT.AssetManager.getAsset(value);
         const className = item['class'] ?? item.type;
-        const typeClassName = SALT.Strings.capitalize(className);
+        const typeClassName = SUEY.Strings.capitalize(className);
 
         // Widget
         const textBox = new SUEY.TextBox();
@@ -652,7 +652,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
     // Add Widgets as Right Column, with optional Left Column widgets
     } else if (rightWidgets.length > 0) {
         const baseName = item['alias'] ?? propKey;
-        const itemName = SALT.Strings.addSpaces(SALT.Strings.capitalize(baseName));
+        const itemName = SUEY.Strings.addSpaces(SUEY.Strings.capitalize(baseName));
         const propertyRow = propertyList.addRow(itemName, ...rightWidgets);
 
         propertyRow.on('pointerenter', () => {

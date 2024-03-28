@@ -102,9 +102,12 @@ class Editor extends SUEY.Div {
         // TODO: Add Docks / Floaters
         //
         const dockLeft = this.docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
+
         const tabby1 = dockLeft.enableTabs();
         tabby1.addTab(new Advisor());
-        tabby1.selectFirst();
+
+        const tabby2 = dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%').enableTabs();
+        tabby2.addTab(new Advisor());
 
         /********** SIGNALS */
 
@@ -408,6 +411,12 @@ class Editor extends SUEY.Div {
         }
     }
 
+    /** Display temporary, centered tooltip */
+    showInfo(info) {
+        if (this.infoBox) this.infoBox.popupInfo(info);
+        return this;
+    }
+
     /******************** KEYBOARD ********************/
 
     checkKeyState(/* any number of comma separated EDITOR.KEYS */) {
@@ -453,19 +462,22 @@ class Editor extends SUEY.Div {
     getFloaterByID(tabID, build = false) {
         let floater = super.getFloaterByID(tabID);
         if (!floater && build) {
+
             //
             // TODO: Build missing floater, then add & select
             //
 
-            this.add(new Coder());
-            this.add(new Player());
-            this.add(new Shaper());
+            // this.addTab(new Coder());
+            // this.addTab(new Player());
+            // this.addTab(new Shaper());
+
             // new Advisor();
             // new Inspector();
             // new Library();
             // new Outliner();      // new SUEY.Floater('outliner', this.outliner, { icon: `${EDITOR.FOLDER_TYPES}outliner.svg` });
             // new Resources();     // new SUEY.Floater('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
             // new Things();        // new SUEY.Floater('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
+
             // this.addTab(...);
 
         }
@@ -477,12 +489,6 @@ class Editor extends SUEY.Div {
         if (tabID && tabID.isElement) tabID = tabID.id;
         const floater = this.getFloaterByID(tabID);
         if (floater && floater.dock) floater.dock.selectTab(tabID);
-    }
-
-    /** Display temporary, centered tooltip */
-    showInfo(info) {
-        if (this.infoBox) this.infoBox.popupInfo(info);
-        return this;
     }
 
     // // TODO: Select Last Known Tab
@@ -696,5 +702,4 @@ function editorKeyUp(editor, event) {
         case '(': editor.setSchemeColor(SUEY.THEMES.EMERALD,    0.10); break;
         case ')': editor.setSchemeColor(SUEY.Iris.randomHex(),  0.10); break;
     }
-
 }

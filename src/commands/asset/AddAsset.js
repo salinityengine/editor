@@ -1,4 +1,5 @@
 import * as SALT from 'engine';
+import * as SUEY from 'gui';
 import { Command } from '../Command.js';
 import { Signals } from '../../config/Signals.js';
 
@@ -10,7 +11,7 @@ class AddAssetCommand extends Command {
         this.type = 'AddAssetCommand';
 
         this.assetType = SALT.AssetManager.checkType(asset);
-        this.name = `Add ${SALT.Strings.capitalize(this.assetType)}`;
+        this.name = `Add ${SUEY.Strings.capitalize(this.assetType)}`;
         if (asset.name && asset.name !== '') this.name += `: ${asset.name}`;
 
         this.asset = asset;

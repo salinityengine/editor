@@ -5,16 +5,17 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-let _title = '__NOT_SET__';
-
 /**
  * Helpful Advice
  */
 class Advisor extends SUEY.Floater {
 
+    #title = '__NOT_SET__';
+
     constructor() {
         const icon = `${EDITOR.FOLDER_TYPES}advisor.svg`;
         super('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
+        const self = this;
         this.addClass('salt-advisor');
 
         /********** WELCOME */
@@ -140,7 +141,7 @@ class Advisor extends SUEY.Floater {
         /********** SET INFO */
 
         function setInfo(title, html = '') {
-            if (title === _title) return;
+            if (title === self.#title) return;
             if (title) {
                 titleText.setInnerHtml(title);
                 bodyContents.setInnerHtml(html);
@@ -153,7 +154,7 @@ class Advisor extends SUEY.Floater {
                 welcomeContents.setStyle('opacity', '1.0');
                 history = -1;
             }
-            _title = title;
+            self.#title = title;
         }
 
         function wantsToUpdate(title, html = '') {

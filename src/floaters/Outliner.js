@@ -219,7 +219,7 @@ class Outliner extends SUEY.Titled {
                     optionName.classList.add('outliner-entity-hidden');
                 }
                 optionName.style['padding-left'] = '0.35em';
-                optionName.textContent = SALT.Strings.escapeHTML(entity.name);
+                optionName.textContent = SUEY.Strings.escapeHTML(entity.name);
                 columnName.appendChild(optionName);
 
                 // 'JS' Image (if Entity has Scripts)

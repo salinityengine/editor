@@ -86,7 +86,7 @@ class ComponentSettingsButton extends SUEY.Button {
         // 'Save to Assets' (saves Component as Asset)
         if (component && _saveTypes.includes(component.type)) {
             const saveIcon = `${EDITOR.FOLDER_MENU}component/copy.svg`;
-            const saveItem = new SUEY.MenuItem(`Save ${SALT.Strings.capitalize(component.type)} to Assets`, saveIcon);
+            const saveItem = new SUEY.MenuItem(`Save ${SUEY.Strings.capitalize(component.type)} to Assets`, saveIcon);
             saveItem.onSelect(() => {
                 switch (component.type) {
                     case 'geometry':

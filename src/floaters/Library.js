@@ -116,7 +116,7 @@ class Library extends SUEY.Floater {
                         // ADDITIONAL CUSTOM CATEGORY ICONS HERE
                         //
                     }
-                    const title = SALT.Strings.capitalize(category);
+                    const title = SUEY.Strings.capitalize(category);
                     self.panels[category] = new AssetPanel({ type: 'script', category, title, icon, view: 'list' });
                     self.add(self.panels[category]);
                 }

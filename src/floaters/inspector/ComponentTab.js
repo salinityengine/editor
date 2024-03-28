@@ -40,7 +40,7 @@ class ComponentTab extends SUEY.Titled {
 
         /******************** PROPERTY BOXES */
 
-        const compName = SALT.Strings.capitalize(compType);
+        const compName = SUEY.Strings.capitalize(compType);
         const components = entity.getComponentsByType(compType);
 
         for (let i = 0; i < components.length; i++) {

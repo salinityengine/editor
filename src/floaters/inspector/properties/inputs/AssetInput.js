@@ -8,7 +8,7 @@ class AssetInput {
 
         // Asset / Prefab Type
         let asset = SALT.AssetManager.getAsset(initialUUID);
-        const typeClassName = SALT.Strings.capitalize(assetType);
+        const typeClassName = SUEY.Strings.capitalize(assetType);
 
         // Widget
         const textBox = new SUEY.TextBox();

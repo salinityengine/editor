@@ -1,6 +1,7 @@
 // https://github.com/mrdoob/three.js/blob/master/editor/js/Loader.js
 
 import * as SALT from 'engine';
+import * as SUEY from 'gui'
 import { Signals } from './Signals.js';
 
 import { AddAssetCommand } from '../commands/Commands.js';
@@ -85,7 +86,7 @@ class Loader {
                         const contents = event.target.result;
 
                         SALT.AssetManager.loadTexture(contents, (texture) => {
-                            texture.name = SALT.Strings.nameFromUrl(file.name);
+                            texture.name = SUEY.Strings.nameFromUrl(file.name);
                             editor.execute(new AddAssetCommand(texture));
                         });
 
