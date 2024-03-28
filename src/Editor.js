@@ -12,7 +12,7 @@ import { Signals } from './config/Signals.js';
 
 import { editorKeyDown, editorKeyUp } from './EditorEvents.js';
 import { EditorToolbar } from './EditorToolbar.js';
-import { MainWindow } from './gui/MainWindow.js';
+import { InfoBox } from './gui/InfoBox.js';
 
 import { Advisor } from './panels/Advisor.js';
 import { Coder } from './panels/Coder.js';
@@ -31,12 +31,13 @@ import { Worlds } from './worlds/Worlds.js';
 
 import { loadDemoProject } from './Demo.js';
 
-class Editor extends MainWindow {
+class Editor extends SUEY.Div {
 
     constructor() {
         super();
         const self = this;
         this.addClass('salt-editor').selectable(false);
+        this.addClass('salt-disable-animations');
         document.body.appendChild(this.dom);
 
         /********** GLOBAL */
@@ -57,11 +58,26 @@ class Editor extends MainWindow {
 
         /********** PROPERTIES */
 
+        // Elements
+        this.toolbar = null;                                    // Toolbar
+        this.docker = null;                                     // Docker
+        this.infoBox = null;                                    // Popup Information
+
         // Mode Panels
         this.view2d = null;                                     // Scene Editor 2D
         this.view3d = null;                                     // Scene Editor 3D
         this.viewui = null;                                     // UI Editor
         this.worlds = null;                                     // World Graph
+
+        // Input
+        this.keyStates = {                                      // Track modifier keys
+            'alt': false,
+            'control': false,
+            'meta': false,
+            'shift': false,
+            'space': false,
+        };
+        this.modifierKey = false;                               // True when currently a modifier key pressed
 
         // Misc
         this.dragInfo = undefined;                              // Stores data for 'dragenter' events
@@ -75,8 +91,9 @@ class Editor extends MainWindow {
 
         /********** ELEMENTS */
 
-        // Toolbar
-        this.add(new EditorToolbar());
+        this.add(this.toolbar = new EditorToolbar());
+        this.add(this.docker = new SUEY.Docker());
+        this.add(this.infoBox = new InfoBox());
 
         /********** PANELS */
 
@@ -92,20 +109,33 @@ class Editor extends MainWindow {
         // TODO: Add Panels
         //
 
+        const dockLeft = this.docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
+        const tabby1 = dockLeft.enableTabs();
+        tabby1.addTab(new Advisor());
+        tabby1.selectFirst();
+
         /********** SIGNALS */
+
+        // // TODO: Tab Priority
+        // this.on('tab-changed', (event) => {
+        //     const tabName = event.value;
+        //     if (tabName) self.setTabPriority(tabName);
+        // });
 
         // Project Loaded
         Signals.connect(this, 'projectLoaded', function() {
-            if (self.history) self.history.clear();
+            if (self.history) self.history.clear();     // clear history
+            Signals.dispatch('inspectorBuild');         // clear inspector
+            Signals.dispatch('sceneGraphChanged');      // rebuild outliner
+            Signals.dispatch('cameraReset');            // reset camera
+        });
 
-            // Clear Inspector
-            Signals.dispatch('inspectorBuild');
-
-            // Rebuild Outliner
-            Signals.dispatch('sceneGraphChanged');
-
-            // Reset Camera / Lights
-            Signals.dispatch('cameraReset');
+        // Settings Refreshed
+        Signals.connect(this, 'settingsRefreshed', function() {
+            Signals.dispatch('gridChanged');
+            Signals.dispatch('mouseModeChanged', Config.getKey('scene/viewport/mode'));
+            Signals.dispatch('transformModeChanged', Config.getKey('scene/controls/mode'));
+            Signals.dispatch('inspectorBuild', 'rebuild');
         });
 
         // Entity Changed
@@ -114,7 +144,6 @@ class Editor extends MainWindow {
             const activeStageUUID = self.viewport.world.activeStage().uuid;
             const stage = entity.parentStage();
             const world = entity.parentWorld();
-
             if (stage && world && (stage.uuid === activeStageUUID || world.uuid === activeStageUUID)) {
                 if (entity.isLight || entity.isStage || entity.isWorld) self.viewport.updateSky();
                 if (entity.isCamera || entity.isLight) self.viewport.rebuildHelpers();
@@ -124,8 +153,9 @@ class Editor extends MainWindow {
 
         /********** INIT */
 
-        // Set Mode
-        this.setMode(Config.getKey('settings/editorMode'));
+        this.setMode(Config.getKey('settings/editorMode'));                     // set editor mode
+        this.refreshSettings();                                                 // also selects none
+        setTimeout(() => self.removeClass('salt-disable-animations'), 1000);    // allow button animations
 
         /********** DEMO */
 
@@ -137,6 +167,16 @@ class Editor extends MainWindow {
         }, 100);
 
     } // end ctor
+
+    // // TODO: Save Dock Sizes
+    // changeWidth(width) {
+    //     width = super.changeWidth(width);
+    //     if (width != null) Config.setKey(`resizeX/${this.name}`, (width / SUEY.Css.guiScale()).toFixed(3));
+    // }
+    // changeHeight(height) {
+    //     height = super.changeHeight(height);
+    //     if (height != null) Config.setKey(`resizeY/${this.name}`, (height / SUEY.Css.guiScale()).toFixed(3));
+    // }
 
     /******************** MODE ********************/
 
@@ -289,6 +329,82 @@ class Editor extends MainWindow {
         Signals.dispatch('selectionChanged');
     }
 
+    /******************** GUI ********************/
+
+    /** Settings were changed, refresh app (color, font size, etc.), dispatch signals */
+    refreshSettings() {
+        // Font Size Update
+        this.fontSizeChange(Config.getKey('scheme/fontSize'));
+
+        // Color Scheme
+        this.setSchemeBackground(Config.getKey('scheme/background'));
+        const schemeColor = Config.getKey('scheme/iconColor');
+        const schemeTint = Config.getKey('scheme/backgroundTint');
+        const schemeSaturation = Config.getKey('scheme/backgroundSaturation');
+        this.setSchemeColor(schemeColor, schemeTint, schemeSaturation);
+
+        // Transparency
+        const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/panelTransparency')), 1.0), 0.0);
+        SUEY.Css.setVariable('--panel-transparency', panelAlpha);
+
+        // Refresh Docks
+        this.resetDockSizes();
+
+        // Dispatch Refreshed Signal
+        Signals.dispatch('settingsRefreshed');
+    }
+
+    resetDockSizes() {
+        //
+        // TODO
+        //
+        // self.changeWidth(parseFloat(Config.getKey(`resizeX/${self.name}`)) * SUEY.Css.guiScale());
+        // self.changeHeight(parseFloat(Config.getKey(`resizeY/${self.name}`)) * SUEY.Css.guiScale());
+    }
+
+    fontSizeChange(fontSize) {
+        if (fontSize === 'up' || fontSize === 'increase') {
+            let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
+            fontSize = Math.min(EDITOR.FONT_SIZE_MAX, SUEY.Css.fontSize() + addSize);
+        } else if (fontSize === 'down' || fontSize === 'decrease') {
+            let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
+            addSize = Math.floor((SUEY.Css.fontSize() - addSize + 10.0) / 10.0);
+            fontSize = Math.max(EDITOR.FONT_SIZE_MIN, SUEY.Css.fontSize() - addSize);
+        } else {
+            fontSize = parseInt(fontSize);
+        }
+        fontSize = SALT.Maths.clamp(fontSize, EDITOR.FONT_SIZE_MIN, EDITOR.FONT_SIZE_MAX);
+        Config.setKey('scheme/fontSize', SUEY.Css.toPx(fontSize));
+        SUEY.Css.setVariable('--font-size', SUEY.Css.toPx(fontSize));
+        Signals.dispatch('fontSizeChanged');
+    }
+
+    cycleSchemeBackground() {
+        let background = parseInt(Config.getKey('scheme/background'), 10);
+        if (background == SUEY.BACKGROUNDS.DARK) background = SUEY.BACKGROUNDS.MID;
+        else if (background == SUEY.BACKGROUNDS.MID) background = SUEY.BACKGROUNDS.LIGHT;
+        else background = SUEY.BACKGROUNDS.DARK;
+        this.setSchemeBackground(background);
+    }
+
+    setSchemeBackground(background = SUEY.BACKGROUNDS.DARK, updateSettings = true) {
+        if (updateSettings) {
+            Config.setKey('scheme/background', background);
+        }
+        SUEY.ColorScheme.changeBackground(background);
+        Signals.dispatch('schemeChanged');
+    }
+
+    setSchemeColor(color = SUEY.THEMES.CLASSIC, tint = 0.0, saturation = 0.0, updateSettings = true) {
+        if (updateSettings) {
+            Config.setKey('scheme/iconColor', color);
+            Config.setKey('scheme/backgroundTint', tint);
+            Config.setKey('scheme/backgroundSaturation', saturation);
+        }
+        SUEY.ColorScheme.changeColor(color, tint, saturation);
+        Signals.dispatch('schemeChanged');
+    }
+
     /******************** INTERACTIVE ********************/
 
     requestScreenshot() {
@@ -298,6 +414,46 @@ class Editor extends MainWindow {
         } else {
             this.wantsScreenshot = true;
         }
+    }
+
+    /******************** KEYBOARD ********************/
+
+    checkKeyState(/* any number of comma separated EDITOR.KEYS */) {
+        let keyDown = false;
+        for (const key of arguments) {
+            keyDown = keyDown || this.keyStates[key];
+        }
+        return keyDown;
+    }
+
+    isOnlyModifierKey(key) {
+        let keyCount = 0;
+        Object.keys(this.keyStates).forEach((modifier) => {
+            if (this.keyStates[modifier]) keyCount++;
+        });
+        return (keyCount === 1 && this.keyStates[key]);
+    }
+
+    noModifiers() {
+        return this.modifierKey === false;
+    }
+
+    updateModifiers(event) {
+        if (!event) return;
+        this.setKeyState(EDITOR.KEYS.ALT, event.altKey);
+        this.setKeyState(EDITOR.KEYS.CONTROL, event.ctrlKey);
+        this.setKeyState(EDITOR.KEYS.META, event.metaKey);
+        this.setKeyState(EDITOR.KEYS.SHIFT, event.shiftKey);
+    }
+
+    setKeyState(key, keyDown) {
+        this.keyStates[key] = keyDown;
+        this.modifierKey =
+            this.keyStates[EDITOR.KEYS.ALT] ||
+            this.keyStates[EDITOR.KEYS.CONTROL] ||
+            this.keyStates[EDITOR.KEYS.META] ||
+            this.keyStates[EDITOR.KEYS.SHIFT] ||
+            this.keyStates[EDITOR.KEYS.SPACE];
     }
 
     /******************** PANELS ********************/
@@ -323,6 +479,43 @@ class Editor extends MainWindow {
         }
         return panel;
     }
+
+    /** If tab (floater panel) is present in Editor, ensures tab is active */
+    selectPanel(tabID = '') {
+        if (tabID && tabID.isElement) tabID = tabID.id;
+        const panel = this.getPanelByID(tabID);
+        if (panel && panel.dock) panel.dock.selectTab(tabID);
+    }
+
+    /** Display temporary, centered tooltip */
+    showInfo(info) {
+        if (this.infoBox) this.infoBox.popupInfo(info);
+        return this;
+    }
+
+    // // TODO: Select Last Known Tab
+    // selectLastKnownTab() {
+    //     let tabArray = Config.getKey(`tabs/${this.name}`);
+    //     if (!Array.isArray(tabArray)) tabArray = [];
+    //     for (const tabName of tabArray) {
+    //         if (this.selectTab(tabName) === true) return;
+    //     }
+    //     if (this.selectTab(this.defaultTab) === true) return;
+    //     this.selectFirst();
+    // }
+
+    // TODO: Set Tab Prioriy
+    // setTabPriority(tabName) {
+    //     // Get existing tab array from settings
+    //     let tabArray = Config.getKey(`tabs/${this.name}`);
+    //     if (!Array.isArray(tabArray)) tabArray = [];
+    //     // Remove existing tab location if found, then set at front
+    //     const tabIndex = tabArray.indexOf(tabName);
+    //     if (tabIndex !== -1) tabArray.splice(tabIndex, 1);
+    //     tabArray.unshift(tabName);
+    //     // Update settings
+    //     Config.setKey(`tabs/${this.name}`, tabArray);
+    // }
 
 }
 

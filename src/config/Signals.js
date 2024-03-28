@@ -14,7 +14,6 @@ const SIGNAL_NAMES = [
     // Gui
     'fontSizeChanged',          // -                    ALERT       Font size was changed
     'promodeChanged',           // -                    ALERT       Pro (advanced) mode was toggled
-    'refreshWindows',           // -                    FUNCTION    Refresh SUEY Window/Docker sizes
     'schemeChanged',            // -                    ALERT       Color scheme was changed
     'settingsRefreshed',        // -                    ALERT       Settings were refreshed
     'windowResize',             // -                    ALERT       Window was resized

@@ -41,6 +41,13 @@ body {
     margin: auto;
 }
 
+.salt-editor .suey-docker-primary {
+    width: 100% !important;
+    height: calc(100% - (var(--button-size) + (var(--pad-small) * 2))) !important;
+    top: calc(var(--button-size) + (var(--pad-small) * 2)) !important;
+    z-index: 1; /* docker */
+}
+
 /********** FULLSCREEN */
 
 .salt-fullscreen {

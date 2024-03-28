@@ -37,16 +37,16 @@ export const PREVIEW_WIDTH = 1024;
 export const PREVIEW_HEIGHT = 512;
 
 // Assets
-export const FOLDER_ASSETS =    './files/assets/';
-export const FOLDER_CURSORS =   './files/cursors/';
-export const FOLDER_LOGO =      './files/logo/';
+export const FOLDER_ASSETS =        './files/assets/';
+export const FOLDER_CURSORS =       './files/cursors/';
+export const FOLDER_LOGO =          './files/logo/';
 
 // Editor Images
-export const FOLDER_COLLECTIONS =    './files/images/collections/';
-export const FOLDER_INSPECTOR = './files/images/inspector/';
-export const FOLDER_MENU =      './files/images/menu/';
-export const FOLDER_TOOLBAR =   './files/images/toolbar/';
-export const FOLDER_TYPES =     './files/images/types/';
+export const FOLDER_COLLECTIONS =   './files/images/collections/';
+export const FOLDER_INSPECTOR =     './files/images/inspector/';
+export const FOLDER_MENU =          './files/images/menu/';
+export const FOLDER_TOOLBAR =       './files/images/toolbar/';
+export const FOLDER_TYPES =         './files/images/types/';
 
 // Component Icons
 export const COMPONENT_ICONS = {

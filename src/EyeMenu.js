@@ -207,50 +207,18 @@ class EyeMenu extends SUEY.Menu {
         /******************** MENU: WINDOW ********************/
 
         let windowHide, windowShow;
-        let windowAdvisor, windowExplorer, windowInspector;
         let windowFullscreen;
 
         if (useWindow) {
             windowHide = new SUEY.MenuItem('Hide All Panels', `${EDITOR.FOLDER_MENU}main/window/hide-panels.svg`).keepOpen();
             windowShow = new SUEY.MenuItem('Show All Panels', `${EDITOR.FOLDER_MENU}main/window/show-panels.svg`).keepOpen();
 
-            windowAdvisor = new SUEY.MenuItem('Show Advisor').keepOpen();
-            windowExplorer = new SUEY.MenuItem('Show Explorer').keepOpen();
-            windowInspector = new SUEY.MenuItem('Show Inspector').keepOpen();
-
-            const fullscreenTxt = `${SALT.System.metaKeyOS()}↵`; // `${SALT.System.metaKeyOS()}Enter`;
+            const fullscreenTxt = `${SALT.System.metaKeyOS()}↵`; // i.e. "Enter" or "Return"
             windowFullscreen = new SUEY.MenuItem('Enter Fullscreen', `${EDITOR.FOLDER_MENU}main/window/fullscreen.svg`, fullscreenTxt);
 
-            windowHide.onSelect(() => {
-                //
-                // TODO
-                //
-            });
-            windowShow.onSelect(() => {
-                //
-                // TODO
-                //
-            });
-            windowAdvisor.onSelect(() => { toggleShowPanel('panels/showAdvisor'); });
-            windowExplorer.onSelect(() => { toggleShowPanel('panels/showExplorer'); });
-            windowInspector.onSelect(() => { toggleShowPanel('panels/showInspector'); });
+            windowHide.onSelect(() => editor.collapseTabs());
+            windowShow.onSelect(() => editor.expandTabs());
             windowFullscreen.onSelect(() => { SALT.System.fullscreen(); });
-
-            function toggleShowPanel(key) {
-                Config.setKey(key, !Config.getKey(key));
-                Signals.dispatch('refreshWindows');
-            }
-
-            Signals.connect(this, 'refreshWindows', function() {
-                // const showAdvisor = Config.getKey('panels/showAdvisor');
-                // const showExplorer = Config.getKey('panels/showExplorer');
-                // const showInspector = Config.getKey('panels/showInspector');
-                // windowAdvisor.setChecked(showAdvisor);
-                // windowExplorer.setChecked(showExplorer);
-                // windowInspector.setChecked(showInspector);
-                // windowHide.setDisabled(!showExplorer && !showInspector && !showAdvisor);
-                // windowShow.setDisabled(showExplorer && showInspector && showAdvisor);
-            });
         }
 
         /******************** MENU: HELP ********************/
@@ -297,7 +265,6 @@ class EyeMenu extends SUEY.Menu {
             if (useWindow) {
                 itemWindow.attachSubMenu(new SUEY.Menu().add(
                     windowHide, windowShow, new SUEY.MenuSeparator(),
-                    // windowAdvisor, windowExplorer, windowInspector, new SUEY.MenuSeparator(),
                     windowFullscreen
                 ));
                 this.add(itemWindow);

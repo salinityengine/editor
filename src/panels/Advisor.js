@@ -8,23 +8,14 @@ import { Signals } from '../config/Signals.js';
 let _title = '__NOT_SET__';
 
 /**
- * Popup Info
+ * Helpful Advice
  */
-class Advisor extends SUEY.Tabbed {
+class Advisor extends SUEY.Floater {
 
-    constructor({
-        style = SUEY.PANEL_STYLES.FANCY,
-        resizers = [ SUEY.RESIZERS.TOP, SUEY.RESIZERS.RIGHT ],
-        startWidth = null,
-        startHeight = null,
-        minWidth = 0,
-        maxWidth = Infinity,
-        minHeight = 0,
-        maxHeight = Infinity,
-    } = {}) {
-        super({ style, resizers, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
-        this.id = 'Advisor';
-        this.setTabSide(SUEY.TAB_SIDES.RIGHT);
+    constructor() {
+        const icon = `${EDITOR.FOLDER_TYPES}advisor.svg`;
+        super('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
+        this.addClass('salt-advisor-panel');
 
         /********** WELCOME */
 
@@ -77,13 +68,6 @@ class Advisor extends SUEY.Tabbed {
 
         /********** TAB PANEL */
 
-        const icon = `${EDITOR.FOLDER_TYPES}advisor.svg`;
-
-        const advisorPanel = new SUEY.Floater('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
-        advisorPanel.addClass('salt-advisor-panel');
-        this.addTab(advisorPanel);
-        this.selectFirst();
-
         // Title
         const titleDiv = new SUEY.Div().addClass('suey-tab-title').setStyle('user-select', 'all');
         const titleText = new SUEY.Text().addClass('suey-tab-title-text');
@@ -95,7 +79,7 @@ class Advisor extends SUEY.Tabbed {
         bodyScroller.add(welcomeContents, bodyContents);
 
         // Add to Panel
-        advisorPanel.add(titleDiv, bodyScroller);
+        this.add(titleDiv, bodyScroller);
 
         /********** HEADER BUTTONS */
 
@@ -141,9 +125,6 @@ class Advisor extends SUEY.Tabbed {
 
         /********** EVENTS */
 
-        // Close Button
-        SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.LEFT);
-
         // Events
         this.on('pointerenter', () => {
             active = false;
@@ -154,11 +135,6 @@ class Advisor extends SUEY.Tabbed {
             active = true;
             buttonRow.setStyle('display', 'none');
             setInfo();
-        });
-
-        this.on('hidden', () => {
-            Config.setKey('panels/showAdvisor', !Config.getKey('panels/showAdvisor'));
-            Signals.dispatch('refreshWindows');
         });
 
         /********** SET INFO */
