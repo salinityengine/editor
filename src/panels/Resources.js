@@ -2,13 +2,16 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { AddAssetCommand } from '../../commands/Commands.js';
-import { AssetPanel } from '../../gui/AssetPanel.js';
-import { Config } from '../../config/Config.js';
-import { Language } from '../../config/Language.js';
-import { Signals } from '../../config/Signals.js';
+import { AddAssetCommand } from '../commands/Commands.js';
+import { AssetPanel } from '../gui/AssetPanel.js';
+import { Config } from '../config/Config.js';
+import { Language } from '../config/Language.js';
+import { Signals } from '../config/Signals.js';
 
-class AssetsTab extends SUEY.Titled {
+/**
+ * Access to items in the AssetManager
+ */
+class Resources extends SUEY.Titled {
 
     constructor() {
         super({ title: 'Assets' });
@@ -135,4 +138,4 @@ class AssetsTab extends SUEY.Titled {
 
 }
 
-export { AssetsTab };
+export { Resources };

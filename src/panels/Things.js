@@ -2,12 +2,15 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { Config } from '../../config/Config.js';
-import { Language } from '../../config/Language.js';
+import { Config } from '../config/Config.js';
+import { Language } from '../config/Language.js';
 
-import { AssetPanel } from '../../gui/AssetPanel.js';
+import { AssetPanel } from '../gui/AssetPanel.js';
 
-class PrefabsTab extends SUEY.Titled {
+/**
+ * Objects / Items / Prefabs
+ */
+class Things extends SUEY.Titled {
 
     constructor() {
         super({ title: 'Prefabs' });
@@ -56,4 +59,4 @@ class PrefabsTab extends SUEY.Titled {
 
 }
 
-export { PrefabsTab };
+export { Things };

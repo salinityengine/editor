@@ -103,7 +103,10 @@ class EditorToolbar extends SUEY.Panel {
         const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setID('tb-play-arrow');
         play.add(playArrow);
 
-        play.onClick(() => editor.player.start());
+        play.onClick(() => {
+            const player = editor.getPanelByID('player', true /* build? */);
+            player.start();
+        });
 
         /** When Player starts / stops, handle graying Editor, hiding 'Play' */
         Signals.connect(this, 'playerStateChanged', function(state) {

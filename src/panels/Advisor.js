@@ -3,12 +3,14 @@ import * as SUEY from 'gui';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
-import { DockPanel } from '../gui/DockPanel.js';
 import { Signals } from '../config/Signals.js';
 
 let _title = '__NOT_SET__';
 
-class Advisor extends DockPanel {
+/**
+ * Popup Info
+ */
+class Advisor extends SUEY.Tabbed {
 
     constructor({
         style = SUEY.PANEL_STYLES.FANCY,
@@ -21,7 +23,7 @@ class Advisor extends DockPanel {
         maxHeight = Infinity,
     } = {}) {
         super({ style, resizers, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
-        this.setName('Advisor');
+        this.id = 'Advisor';
         this.setTabSide(SUEY.TAB_SIDES.RIGHT);
 
         /********** WELCOME */
@@ -76,8 +78,10 @@ class Advisor extends DockPanel {
         /********** TAB PANEL */
 
         const icon = `${EDITOR.FOLDER_TYPES}advisor.svg`;
-        const advisorPanel = this.addNewTab('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
+
+        const advisorPanel = new SUEY.Floater('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
         advisorPanel.addClass('salt-advisor-panel');
+        this.addTab(advisorPanel);
         this.selectFirst();
 
         // Title

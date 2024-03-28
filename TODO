@@ -2,8 +2,21 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Docker:
+    MainWindow:
+        - Way to save docker positions, load back again
+
 Editor Docks:
     - Replace 'addDockPanel' with 'addDock'
+        - Advisor
+        - Coder
+        - Inspector
+        - Library
+        - Outliner
+        - Player
+        - Resources
+        - Shaper
+        - Things
     - Don't clear docks (i.e. closing inspector clears all panels, yikes)
     - Mouse over tab shows TabID in Advisor
     - Save dock layout in Config
@@ -28,11 +41,9 @@ Panels:
         - Multi-Select
             - Only show shared properties in inspector?
             - Resizing a group of selected objects
-    !! Explorer: remove and move contents to their own tabs
-    Assets:
-        - Image / Atlas
+    Assets: Image / Atlas
     Outliner:
-    Prefabs:
+    Things:
     Scripts:
 
 View2D:
@@ -140,7 +151,7 @@ Scripting:
     Events:
         Default: Init, Update, Destroy
         Physics: Wake, Sleep, Collide / Seperate
-    Scripter:
+    Coder:
         Python (Brython): https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
         Visual Scripting:
 

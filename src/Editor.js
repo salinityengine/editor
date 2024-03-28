@@ -10,17 +10,20 @@ import { Language } from './config/Language.js';
 import { Loader } from './config/Loader.js';
 import { Signals } from './config/Signals.js';
 
-import { DockPanel } from './gui/DockPanel.js';
 import { editorKeyDown, editorKeyUp } from './EditorEvents.js';
 import { EditorToolbar } from './EditorToolbar.js';
-import { InfoBox } from './gui/InfoBox.js';
+import { MainWindow } from './gui/MainWindow.js';
 
 import { Advisor } from './panels/Advisor.js';
-import { Explorer } from './panels/Explorer.js';
+import { Coder } from './panels/Coder.js';
 import { Inspector } from './panels/Inspector.js';
+import { Library } from './panels/Library.js';
+import { Outliner } from './panels/Outliner.js';
 import { Player } from './panels/Player.js';
-import { Scripter } from './panels/Scripter.js';
+import { Resources } from './panels/Resources.js';
 import { Shaper } from './panels/Shaper.js';
+import { Things } from './panels/Things.js';
+
 import { View2D } from './view2d/View2D.js';
 import { View3D } from './view3d/View3D.js';
 import { ViewUI } from './viewui/ViewUI.js';
@@ -28,7 +31,7 @@ import { Worlds } from './worlds/Worlds.js';
 
 import { loadDemoProject } from './Demo.js';
 
-class Editor extends SUEY.Docker {
+class Editor extends MainWindow {
 
     constructor() {
         super();
@@ -60,37 +63,20 @@ class Editor extends SUEY.Docker {
         this.viewui = null;                                     // UI Editor
         this.worlds = null;                                     // World Graph
 
-        // Floating Panels
-        this.player = null;                                     // Game Player
-
         // Misc
         this.dragInfo = undefined;                              // Stores data for 'dragenter' events
         this.selected = [];                                     // Current Selection
         this.wantsScreenshot = false;                           // Creates Screenshot (without helpers in shot)
 
-        // Input
-        this.keyStates = {                                      // Track modifier keys
-            'alt': false,
-            'control': false,
-            'meta': false,
-            'shift': false,
-            'space': false,
-        };
-        this.modifierKey = false;                               // True when currently a modifier key pressed
-
         /********** EVENTS */
 
-        document.addEventListener('keydown', (event) => { editorKeyDown(self, event); });
-        document.addEventListener('keyup', (event) => { editorKeyUp(self, event); });
+        document.addEventListener('keydown', (event) => editorKeyDown(self, event));
+        document.addEventListener('keyup', (event) => editorKeyUp(self, event));
 
         /********** ELEMENTS */
 
         // Toolbar
         this.add(new EditorToolbar());
-
-        // InfoBox
-        this.infoBox = new InfoBox();
-        this.add(this.infoBox);
 
         /********** PANELS */
 
@@ -100,50 +86,13 @@ class Editor extends SUEY.Docker {
         this.add(this.viewui = new ViewUI());
         this.add(this.worlds = new Worlds());
 
-        // Floating Panels
-        this.add(new Scripter());
-        this.add(this.player = new Player());
-        this.add(new Shaper());
-
         /***** DOCKING PANELS */
 
-        // this.addDockPanel(new Advisor({ startWidth: 245, minWidth: 70, startHeight: 147 }), SUEY.DOCK_LOCATIONS.BOTTOM_LEFT);
-        // this.addDockPanel(new Explorer({ startWidth: 245, minWidth: 70 }), SUEY.DOCK_LOCATIONS.TOP_LEFT);
-        // this.addDockPanel(new Inspector({ startWidth: 300, minWidth: 190 }), SUEY.DOCK_LOCATIONS.TOP_RIGHT);
-
-        const dock4 = new DockPanel({ startWidth:300, minWidth: 190, startHeight: 147, resizers: [ SUEY.RESIZERS.TOP, SUEY.RESIZERS.LEFT ] });
-        dock4.setTabSide(SUEY.TAB_SIDES.LEFT);
-
-        // // Tabs
-        // this.outliner = new OutlinerTab();
-        // this.assets = new AssetsTab();
-        // this.prefabs = new PrefabsTab();
-        // this.scripts = new ScriptsTab();
-        // // Set Default Tab
-        // this.defaultTab = 'scene';
-        // // Add Panels
-        // this.addNewTab('outliner', this.outliner, { icon: `${EDITOR.FOLDER_TYPES}outliner.svg` });
-        // this.addNewTab('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
-        // this.addNewTab('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
-        // this.addNewTab('scripts', this.scripts, { icon: `${EDITOR.FOLDER_TYPES}script.svg`, color: '#090B11' });
-        // // Close Button
-        // SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.LEFT);
-
-        // this.addDockPanel(dock4, SUEY.DOCK_LOCATIONS.BOTTOM_RIGHT);
+        //
+        // TODO: Add Panels
+        //
 
         /********** SIGNALS */
-
-        // // Watch Bottom Left Size
-        // const botLeft = this.getCorner(SUEY.DOCK_LOCATIONS.BOTTOM_LEFT);
-        // const topLeft = this.getCorner(SUEY.DOCK_LOCATIONS.TOP_LEFT);
-        // function resizeTopLeftDocks() {
-        //     let totalHeight = 0;
-        //     for (const child of botLeft.children) totalHeight += child.getHeight();
-        //     topLeft.setStyle('bottom', `${parseFloat(SUEY.Css.toEm(totalHeight)) - 0.175}em`);
-        // }
-        // botLeft.dom.addEventListener('resized', resizeTopLeftDocks);
-        // Signals.connect(this, 'refreshWindows', resizeTopLeftDocks);
-        // Signals.connect(this, 'windowResize', resizeTopLeftDocks);
 
         // Project Loaded
         Signals.connect(this, 'projectLoaded', function() {
@@ -175,12 +124,8 @@ class Editor extends SUEY.Docker {
 
         /********** INIT */
 
-        // Setup Look / Mode
-        this.refreshSettings(); // also selects none
+        // Set Mode
         this.setMode(Config.getKey('settings/editorMode'));
-
-        // Enable Button Animations
-        setTimeout(() => document.body.classList.remove('preload'), 1000);
 
         /********** DEMO */
 
@@ -196,16 +141,8 @@ class Editor extends SUEY.Docker {
     /******************** MODE ********************/
 
     setMode(mode) {
-        // Close (Hide) Windows
-        const windows = document.querySelectorAll('.suey-window');
-        for (const window of windows) {
-            window.classList.remove('suey-active-window');
-            window.style.display = 'none';
-            window.dispatchEvent(new Event('hidden'));
-        }
-
         //
-        // TODO: Hide Panels
+        // TODO: Hide Docks (Floater / Docker / Tabbed / Window)
         //
 
         // Hide Editor Panels
@@ -326,7 +263,7 @@ class Editor extends SUEY.Docker {
      * Emits 'selectionChanged' signal upon new seleciton
      */
     selectEntities(/* entity, entity array, or any number of entites to select */) {
-        const entities = Array.isArray(arguments[0]) ? arguments[0] : [...arguments];
+        const entities = Array.isArray(arguments[0]) ? arguments[0] : [ ...arguments ];
 
         // Verify items are valid for selection
         const filtered = [];
@@ -344,7 +281,7 @@ class Editor extends SUEY.Docker {
         }
 
         // Update selection array
-        this.selected = [...filtered];
+        this.selected = [ ...filtered ];
 
         console.log('Editor.selectEntities', this.selected.length);
 
@@ -352,151 +289,39 @@ class Editor extends SUEY.Docker {
         Signals.dispatch('selectionChanged');
     }
 
-    /******************** GUI ********************/
-
-    /** Settings were changed, refresh app (color, font size, etc.), dispatch signals */
-    refreshSettings() {
-        // Font Size Update
-        this.fontSizeChange(Config.getKey('scheme/fontSize'));
-
-        // Color Scheme
-        this.setSchemeBackground(Config.getKey('scheme/background'));
-        const schemeColor = Config.getKey('scheme/iconColor');
-        const schemeTint = Config.getKey('scheme/backgroundTint');
-        const schemeSaturation = Config.getKey('scheme/backgroundSaturation');
-        this.setSchemeColor(schemeColor, schemeTint, schemeSaturation);
-
-        // Transparency
-        const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/panelTransparency')), 1.0), 0.0);
-        SUEY.Css.setVariable('--panel-transparency', panelAlpha);
-
-        // Grids
-        Signals.dispatch('gridChanged');
-
-        // Tabs
-        this.traverse((child) => {
-            if (child.isElement && child.hasClass('suey-tabbed')) {
-                child.selectLastKnownTab();
-            }
-        }, false /* applyToSelf */);
-
-        // Mouse Modes
-        Signals.dispatch('mouseModeChanged', Config.getKey('scene/viewport/mode'));
-        Signals.dispatch('transformModeChanged', Config.getKey('scene/controls/mode'));
-
-        // Rebuild Inspector / Preview from Existing Items
-        Signals.dispatch('inspectorBuild', 'rebuild');
-        Signals.dispatch('promodeChanged');
-
-        // Refresh Docks
-        Signals.dispatch('refreshWindows');
-        Signals.dispatch('settingsRefreshed');
-    }
-
-    fontSizeChange(fontSize) {
-        if (fontSize === 'up' || fontSize === 'increase') {
-            let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
-            fontSize = Math.min(EDITOR.FONT_SIZE_MAX, SUEY.Css.fontSize() + addSize);
-        } else if (fontSize === 'down' || fontSize === 'decrease') {
-            let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
-            addSize = Math.floor((SUEY.Css.fontSize() - addSize + 10.0) / 10.0);
-            fontSize = Math.max(EDITOR.FONT_SIZE_MIN, SUEY.Css.fontSize() - addSize);
-        } else {
-            fontSize = parseInt(fontSize);
-        }
-        fontSize = SALT.Maths.clamp(fontSize, EDITOR.FONT_SIZE_MIN, EDITOR.FONT_SIZE_MAX);
-        Config.setKey('scheme/fontSize', SUEY.Css.toPx(fontSize));
-        SUEY.Css.setVariable('--font-size', SUEY.Css.toPx(fontSize));
-        Signals.dispatch('fontSizeChanged');
-    }
-
-    cycleSchemeBackground() {
-        let background = parseInt(Config.getKey('scheme/background'), 10);
-        if (background == SUEY.BACKGROUNDS.DARK) background = SUEY.BACKGROUNDS.MID;
-        else if (background == SUEY.BACKGROUNDS.MID) background = SUEY.BACKGROUNDS.LIGHT;
-        else background = SUEY.BACKGROUNDS.DARK;
-        this.setSchemeBackground(background);
-    }
-
-    setSchemeBackground(background = SUEY.BACKGROUNDS.DARK, updateSettings = true) {
-        if (updateSettings) {
-            Config.setKey('scheme/background', background);
-        }
-        SUEY.ColorScheme.changeBackground(background);
-        Signals.dispatch('schemeChanged');
-    }
-
-    setSchemeColor(color = SUEY.THEMES.CLASSIC, tint = 0.0, saturation = 0.0, updateSettings = true) {
-        if (updateSettings) {
-            Config.setKey('scheme/iconColor', color);
-            Config.setKey('scheme/backgroundTint', tint);
-            Config.setKey('scheme/backgroundSaturation', saturation);
-        }
-        SUEY.ColorScheme.changeColor(color, tint, saturation);
-        Signals.dispatch('schemeChanged');
-    }
-
     /******************** INTERACTIVE ********************/
 
     requestScreenshot() {
-        if (this.player && (this.player.isPlaying && (this.player.isPaused != true))) {
-            this.player.requestScreenshot();
+        const player = this.getPanelByID('player', false /* build? */);
+        if (player && (player.isPlaying && !player.isPaused)) {
+            player.requestScreenshot();
         } else {
             this.wantsScreenshot = true;
         }
     }
 
-    checkKeyState(/* any number of comma separated EDITOR.KEYS */) {
-        let keyDown = false;
-        for (const key of arguments) {
-            keyDown = keyDown || this.keyStates[key];
-        }
-        return keyDown;
-    }
-
-    isOnlyModifierKey(key) {
-        let keyCount = 0;
-        Object.keys(this.keyStates).forEach((modifier) => {
-            if (this.keyStates[modifier]) keyCount++;
-        });
-        return (keyCount === 1 && this.keyStates[key]);
-    }
-
-    noModifiers() {
-        return this.modifierKey === false;
-    }
-
-    updateModifiers(event) {
-        if (!event) return;
-        this.setKeyState(EDITOR.KEYS.ALT, event.altKey);
-        this.setKeyState(EDITOR.KEYS.CONTROL, event.ctrlKey);
-        this.setKeyState(EDITOR.KEYS.META, event.metaKey);
-        this.setKeyState(EDITOR.KEYS.SHIFT, event.shiftKey);
-    }
-
-    setKeyState(key, keyDown) {
-        this.keyStates[key] = keyDown;
-        this.modifierKey =
-            this.keyStates[EDITOR.KEYS.ALT] ||
-            this.keyStates[EDITOR.KEYS.CONTROL] ||
-            this.keyStates[EDITOR.KEYS.META] ||
-            this.keyStates[EDITOR.KEYS.SHIFT] ||
-            this.keyStates[EDITOR.KEYS.SPACE];
-    }
-
     /******************** PANELS ********************/
 
-    /** If tab (floater panel) is present in Editor, ensures tab is active */
-    selectPanel(tabID = '') {
-        if (tabID && tabID.isElement) tabID = tabID.id;
-        const panel = this.getPanelByID(tabID);
-        if (panel && panel.dock) panel.dock.selectTab(tabID);
-    }
+    getPanelByID(tabID, build = false) {
+        let panel = super.getPanelByID(tabID);
+        if (!panel && build) {
+            //
+            // TODO: Build missing panel, then add & select
+            //
 
-    /** Display temporary, centered tooltip */
-    showInfo(info) {
-        if (this.infoBox) this.infoBox.popupInfo(info);
-        return this;
+            this.add(new Coder());
+            this.add(new Player());
+            this.add(new Shaper());
+            // new Advisor();
+            // new Inspector();
+            // new Library();       // new SUEY.Floater('scripts', this.scripts, { icon: `${EDITOR.FOLDER_TYPES}script.svg`, color: '#090B11' });
+            // new Outliner();      // new SUEY.Floater('outliner', this.outliner, { icon: `${EDITOR.FOLDER_TYPES}outliner.svg` });
+            // new Resources();     // new SUEY.Floater('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
+            // new Things();        // new SUEY.Floater('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
+            // this.addTab(...);
+
+        }
+        return panel;
     }
 
 }

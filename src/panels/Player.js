@@ -7,6 +7,9 @@ import { Signals } from '../config/Signals.js';
 
 const _size = { x: 0, y: 0 };
 
+/**
+ * Game Player
+ */
 class Player extends SUEY.Window {
 
     constructor() {
@@ -17,7 +20,7 @@ class Player extends SUEY.Window {
         });
         const self = this;
         this.addClass('salt-player');
-        this.setName('Player');
+        this.id = 'Player';
         this.setStyle('display', 'none');
 
         // App
@@ -114,9 +117,9 @@ class Player extends SUEY.Window {
         pause.add(playPause, playActive);
         stop.add(playStop);
 
-        camera.onClick(() => editor.requestScreenshot());
-        pause.onClick(() => editor.player.pause());
-        stop.onClick(() => editor.player.stop());
+        camera.onClick(() => self.requestScreenshot());
+        pause.onClick(() => self.pause());
+        stop.onClick(() => self.stop());
 
         const playButtons = new SUEY.FlexBox().addClass('salt-active-toolbar');
         playButtons.add(stop, pause, camera, screen);

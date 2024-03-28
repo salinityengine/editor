@@ -5,17 +5,20 @@ import * as SUEY from 'gui';
 // import { SetAssetValueCommand } from '../commands/Commands.js';
 // import { SetScriptSourceCommand } from '../commands/Commands.js';
 
-class Scripter extends SUEY.Window {
+/**
+ * Script Editor
+ */
+class Coder extends SUEY.Window {
 
     constructor() {
         super({
             height: '85%',
             width: '60%',
-            title: 'Scripter',
+            title: 'Coder',
             buttonSides: SUEY.CLOSE_SIDES.BOTH,
         });
         const self = this;
-        this.setName('Scripter');
+        this.id = 'Coder';
         this.setStyle('display', 'none');
 
         // Match inner panel background with CodeMirror
@@ -247,7 +250,7 @@ class Scripter extends SUEY.Window {
         //     title.setValue(script.name);
         //     currentMode = 'javascript';
         //     currentScript = script;
-        //     // Display Scripter
+        //     // Display Coder
         //     self.showWindow();
         //     // Update CodeMirror
         //     codemirror.setValue(script.source);
@@ -273,4 +276,4 @@ class Scripter extends SUEY.Window {
 
 }
 
-export { Scripter };
+export { Coder };

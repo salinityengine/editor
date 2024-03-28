@@ -2,19 +2,22 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { Config } from '../../config/Config.js';
-import { Language } from '../../config/Language.js';
+import { Config } from '../config/Config.js';
+import { Language } from '../config/Language.js';
 
-import { AddEntityCommand } from '../../commands/Commands.js';
-import { MoveEntityCommand } from '../../commands/Commands.js';
-import { MultiCmdsCommand } from '../../commands/Commands.js';
-import { SelectCommand } from '../../commands/Commands.js';
-import { SetStageCommand } from '../../commands/Commands.js';
-import { SetValueCommand } from '../../commands/Commands.js';
+import { AddEntityCommand } from '../commands/Commands.js';
+import { MoveEntityCommand } from '../commands/Commands.js';
+import { MultiCmdsCommand } from '../commands/Commands.js';
+import { SelectCommand } from '../commands/Commands.js';
+import { SetStageCommand } from '../commands/Commands.js';
+import { SetValueCommand } from '../commands/Commands.js';
 
 const _nodeStates = new WeakMap();
 
-class OutlinerTab extends SUEY.Titled {
+/**
+ * Project Scene Hierarchy
+ */
+class Outliner extends SUEY.Titled {
 
     constructor() {
         super({ title: 'Outliner' });
@@ -475,4 +478,4 @@ class OutlinerTab extends SUEY.Titled {
 
 }
 
-export { OutlinerTab };
+export { Outliner };

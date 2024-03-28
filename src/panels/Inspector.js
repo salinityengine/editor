@@ -3,7 +3,6 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { Config } from '../config/Config.js';
-import { DockPanel } from '../gui/DockPanel.js';
 import { Signals } from '../config/Signals.js';
 
 // import { ComponentTab } from './inspector/ComponentTab.js';
@@ -23,7 +22,10 @@ import { Scene3DGridTab } from './inspector/Scene3DGridTab.js';
 
 import { WorldGridTab } from './inspector/WorldGridTab.js';
 
-class Inspector extends DockPanel {
+/**
+ * Object Inspector
+ */
+class Inspector extends SUEY.Floater {
 
     constructor({
         style = SUEY.PANEL_STYLES.FANCY,
@@ -36,7 +38,7 @@ class Inspector extends DockPanel {
     } = {}) {
         super({ style, displayEmpty: false, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
         const self = this;
-        this.setName('Inspector');
+        this.id = 'Inspector';
         this.setTabSide(SUEY.TAB_SIDES.LEFT);
 
         // Flags
@@ -89,40 +91,45 @@ class Inspector extends DockPanel {
                 _item = buildFrom;
             }
 
-            // Delete existing tabs
-            self.clearTabs();
+            // // Delete existing Tabs
+            // //
+            // // TODO: clearBlocks()
+            //
+            // OLD: self.clearTabs();
+            //
             self.isEmpty = false;
 
+            const tabs = [];
             // SETTINGS
             if (_item === 'settings') {
-                self.addNewTab('settings', new SettingsGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/general.svg`, color: '#C04145', shrink: true });
+                tabs.push(new SUEY.Floater('settings', new SettingsGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/general.svg`, color: '#C04145', shrink: true }));
 
                 if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
-                    // self.addNewTab('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false });
-                    self.addNewTab('grid', new Scene3DGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
-                    // self.addNewTab('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true });
+                    tabs.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false }));
+                    tabs.push(new SUEY.Floater('grid', new Scene3DGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
+                    tabs.push(new SUEY.Floater('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true }));
                 } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
-                    self.addNewTab('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' });
+                    tabs.push(new SUEY.Floater('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
                 }
 
             // HISTORY
             } else if (_item === 'history') {
-                self.addNewTab('history', new SettingsHistoryTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/history.svg`, color: '#BF4044', shadow: false, shrink: 0.75 });
+                tabs.push(new SUEY.Floater('history', new SettingsHistoryTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/history.svg`, color: '#BF4044', shadow: false, shrink: 0.75 }));
 
             // PROJECT
             } else if (_item === 'project') {
-                self.addNewTab('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}project/general.svg`, color: '#773399' });
-                self.addNewTab('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_TYPES}project/info.svg`, color: '#66C7FF', shrink: true });
+                tabs.push(new SUEY.Floater('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}project/general.svg`, color: '#773399' }));
+                tabs.push(new SUEY.Floater('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_TYPES}project/info.svg`, color: '#66C7FF', shrink: true }));
 
             // PALETTE
             } else if (_item && _item.isPalette) {
-                self.addNewTab('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_TYPES}asset/palette.svg`, color: '#a0a0a0', shrink: true });
+                tabs.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_TYPES}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
 
             // TEXTURE
             } else if (_item && _item.isTexture) {
                 let icon = `${EDITOR.FOLDER_TYPES}asset/texture.svg`;
                 if (_item.isCubeTexture) icon = `${EDITOR.FOLDER_TYPES}asset/cube-texture.svg`;
-                self.addNewTab('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true });
+                tabs.push(new SUEY.Floater('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true }));
 
             // ENTITY
             } else if (_item && _item.isEntity) {
@@ -137,7 +144,7 @@ class Inspector extends DockPanel {
                 else { /* isEntity */ tabType = 'entity'; icon = `${EDITOR.FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
 
                 // Entity Tab
-                self.addNewTab(tabType, new EntityTab(entity), { icon, color, shrink, shadow });
+                tabs.push(new SUEY.Floater(tabType, new EntityTab(entity), { icon, color, shrink, shadow }));
 
                 // Component Tabs
                 const components = entity.components;
@@ -156,7 +163,7 @@ class Inspector extends DockPanel {
                         if (!ComponentClass) continue;
                         const icon = EDITOR.COMPSALTNT_ICONS[compType] ?? ComponentClass.config.icon ?? '';
                         const color = ComponentClass.config.color;
-                        self.addNewTab(compType, new ComponentTab(entity, compType), { icon, color, shrink: true });
+                        tabs.push(new SUEY.Floater(compType, new ComponentTab(entity, compType), { icon, color, shrink: true }));
                     }
                 }
 
@@ -168,16 +175,19 @@ class Inspector extends DockPanel {
                 emptyText.setStyle('justifyContent', 'center');
                 emptyText.setStyle('paddingTop', '1em').setStyle('paddingBottom', '1em');
                 empty.add(emptyTitle, emptyText);
-                self.addNewTab('inspector', empty, { icon: `${EDITOR.FOLDER_TYPES}inspector.svg` });
+                tabs.push(new SUEY.Floater('inspector', empty, { icon: `${EDITOR.FOLDER_TYPES}inspector.svg` }));
 
                 self.isEmpty = true;
             }
+
+            // Add Tabs
+            self.addTab(...tabs);
 
             // Show / Hide
             if (self.isEmpty) {
                 self.setStyle('display', 'none');
             } else {
-                self.setStyle('display', ''); // (!Config.getKey(`panels/show${self.getName()}`))? 'none' : '');
+                self.setStyle('display', ''); // (!Config.getKey(`panels/show${self.name}`))? 'none' : '');
             }
 
             // Select Last Known Tab (stored ranked in Config.js)

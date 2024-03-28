@@ -16,7 +16,7 @@
 
 /********** PRELOAD */
 
-body.preload *:not(.salt-instant-start) { /* used to stop inital page animations */
+.salt-disable-animations *:not(.salt-instant-start) { /* used to stop inital page animations */
     -webkit-animation-duration: 0s !important;
     animation-duration: 0s !important;
     transition: all 0s !important;

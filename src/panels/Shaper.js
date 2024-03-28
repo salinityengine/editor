@@ -1,6 +1,9 @@
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+/**
+ * Shaper Editor
+ */
 class Shaper extends SUEY.Floater {
 
     constructor() {
@@ -10,7 +13,7 @@ class Shaper extends SUEY.Floater {
             title: 'Shaper',
         });
         const self = this;
-        this.setName('Shaper');
+        this.id = 'Shaper';
         this.setStyle('display', 'none');
 
         // Background Color

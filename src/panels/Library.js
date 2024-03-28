@@ -2,14 +2,17 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { Config } from '../../config/Config.js';
-import { Language } from '../../config/Language.js';
-import { Signals } from '../../config/Signals.js';
+import { Config } from '../config/Config.js';
+import { Language } from '../config/Language.js';
+import { Signals } from '../config/Signals.js';
 
-import { AddAssetCommand } from '../../commands/Commands.js';
-import { AssetPanel } from '../../gui/AssetPanel.js';
+import { AddAssetCommand } from '../commands/Commands.js';
+import { AssetPanel } from '../gui/AssetPanel.js';
 
-class ScriptsTab extends SUEY.Titled {
+/**
+ * Scripts
+ */
+class Library extends SUEY.Titled {
 
     constructor() {
         super({ title: 'Scripts' });
@@ -170,4 +173,4 @@ class ScriptsTab extends SUEY.Titled {
 
 }
 
-export { ScriptsTab };
+export { Library };

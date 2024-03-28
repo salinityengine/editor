@@ -9,7 +9,8 @@ import { Signals } from './config/Signals.js';
 
 export function editorKeyDown(editor, event) {
     // Ignore Key Events While Playing
-    if (editor.player && editor.player.isPlaying) return;
+    const player = editor.getPanelByID('player', false /* build? */);
+    if (player && player.isPlaying) return;
 
     // Modifier Keys
     editor.updateModifiers(event);
@@ -123,7 +124,8 @@ export function editorKeyDown(editor, event) {
 
         // Play Game
         case Config.getKey('shortcuts/play'):
-            editor.player.start();
+            const player = editor.getPanelByID('player', true /* build? */);
+            player.start();
             break;
 
         // Increase / Decrease Font (Gui) Sizing
@@ -157,9 +159,9 @@ export function editorKeyDown(editor, event) {
 /******************** KEY UP */
 
 export function editorKeyUp(editor, event) {
-
     // Ignore Key Events While Playing
-    if (editor.player && editor.player.isPlaying) return;
+    const player = editor.getPanelByID('player', false /* build? */);
+    if (player && player.isPlaying) return;
 
     // Modifier Keys
     editor.updateModifiers(event);
