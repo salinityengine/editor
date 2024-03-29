@@ -7,21 +7,12 @@ import { Clipboard } from './config/Clipboard.js';
 import { Config } from './config/Config.js';
 import { History } from './config/History.js';
 import { Language } from './config/Language.js';
+import { Layout } from './config/Layout.js';
 import { Loader } from './config/Loader.js';
 import { Signals } from './config/Signals.js';
 
 import { EditorToolbar } from './toolbars/EditorToolbar.js';
 import { InfoBox } from './gui/InfoBox.js';
-
-import { Advisor } from './floaters/Advisor.js';
-import { Coder } from './floaters/Coder.js';
-import { Inspector } from './floaters/Inspector.js';
-import { Library } from './floaters/Library.js';
-import { Outliner } from './floaters/Outliner.js';
-import { Player } from './floaters/Player.js';
-import { Resources } from './floaters/Resources.js';
-import { Shaper } from './floaters/Shaper.js';
-import { Things } from './floaters/Things.js';
 
 import { View2D } from './viewports/View2D.js';
 import { View3D } from './viewports/View3D.js';
@@ -91,7 +82,6 @@ class Editor extends SUEY.Div {
         /********** ELEMENTS */
 
         this.add(this.toolbar = new EditorToolbar());
-        this.add(this.docker = new SUEY.Docker());
         this.add(this.infoBox = new InfoBox());
 
         this.add(this.view2d = new View2D());
@@ -99,23 +89,16 @@ class Editor extends SUEY.Div {
         this.add(this.viewui = new ViewUI());
         this.add(this.worlds = new Worlds());
 
-        ////////////////////
-        //
-        // TODO: Add Docks / Floaters
-        //
-        const dockLeft = this.docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
-        const dockRight = this.docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
+        /********** DOCKS */
 
-        const tabby1 = dockLeft.enableTabs();
-        tabby1.addTab(new Advisor());
+        this.add(this.docker = new SUEY.Docker());
 
-        const tabby2 = dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%').enableTabs();
-        tabby2.addTab(new Advisor());
+        Layout.load(this.docker);
+        Layout.save(self.docker);
 
-        const tabby3 = dockRight.enableTabs();
-        tabby3.addTab(new Library());
-
-        ////////////////////
+        window.addEventListener('beforeunload', (event) => {
+            // Layout.save(self.docker);
+        });
 
         /********** SIGNALS */
 
@@ -574,6 +557,18 @@ function editorKeyDown(editor, event) {
 
     // Keys
     switch (event.key) {
+        case 'l':
+            event.stopPropagation();
+            event.preventDefault();
+
+            console.log('Resetting Layout!');
+            localStorage.removeItem('dockerLayout');
+
+            Layout.load(editor.docker);
+            Layout.save(editor.docker);
+
+            break;
+
         case 'a':
         case 'w':
         case 's':

@@ -2,6 +2,9 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Toolbar:
+    - Move Viewport toolbar functionality to EditorToolbar (mouse z-index problem)
+
 Floaters:
     Coder:
     Inspector: Rename 'Tabs' to 'Block'
