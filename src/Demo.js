@@ -29,8 +29,8 @@ function loadDemoProject(project) {
 
     const palette16 = new SALT.Palette().default16();
     const purpleGold = new SALT.Palette().purpleGold();
-    SALT.AssetManager.addAsset(palette16);
-    SALT.AssetManager.addAsset(purpleGold);
+    SALT.AssetManager.add(palette16);
+    SALT.AssetManager.add(purpleGold);
 
     /********** SCRIPTS **********/
 

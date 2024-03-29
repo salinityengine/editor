@@ -58,9 +58,9 @@ class Editor extends SUEY.Div {
         /********** PROPERTIES */
 
         // Elements
-        this.toolbar = null;                                    // Toolbar
         this.docker = null;                                     // Docker
         this.infoBox = null;                                    // Popup Information
+        this.toolbar = null;                                    // Toolbar
 
         // Viewports
         this.view2d = null;                                     // Scene Editor 2D
@@ -99,6 +99,8 @@ class Editor extends SUEY.Div {
         this.add(this.viewui = new ViewUI());
         this.add(this.worlds = new Worlds());
 
+        ////////////////////
+        //
         // TODO: Add Docks / Floaters
         //
         const dockLeft = this.docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
@@ -112,6 +114,8 @@ class Editor extends SUEY.Div {
 
         const tabby3 = dockRight.enableTabs();
         tabby3.addTab(new Library());
+
+        ////////////////////
 
         /********** SIGNALS */
 
@@ -464,16 +468,16 @@ class Editor extends SUEY.Div {
     /******************** FLOATERS ********************/
 
     getFloaterByID(tabID, build = false) {
-        let floater = super.getFloaterByID(tabID);
+        let floater = this.docker.getFloaterByID(tabID);
         if (!floater && build) {
 
             //
             // TODO: Build missing floater, then add & select
             //
 
-            // this.addTab(new Coder());
-            // this.addTab(new Player());
-            // this.addTab(new Shaper());
+            // new Coder();
+            // new Player();
+            // new Shaper();
 
             // new Advisor();
             // new Inspector();
@@ -491,7 +495,7 @@ class Editor extends SUEY.Div {
     /** If Floater is present in Editor, ensures parent Dock Tab is active */
     selectFloater(tabID = '') {
         if (tabID && tabID.isElement) tabID = tabID.id;
-        const floater = this.getFloaterByID(tabID);
+        const floater = this.docker.getFloaterByID(tabID);
         if (floater && floater.dock) floater.dock.selectTab(tabID);
     }
 

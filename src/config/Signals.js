@@ -72,6 +72,9 @@ const SIGNAL_NAMES = [
     'assetChanged',             // (type, asset)        ALERT       Asset was changed
     'assetSelect',              // (type, asset)        FUNCTION    Select Asset in Explorer
 
+    // Scripts
+    'editScript',               // (script)             FUNCTION    Open Coder (script editor) with 'script'
+
 ];
 
 class Signals {

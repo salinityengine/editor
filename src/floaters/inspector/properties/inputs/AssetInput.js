@@ -7,7 +7,7 @@ class AssetInput {
     static build(propertyList, itemName = '', assetType = 'asset', initialUUID = '', onChange = (value) => {}) {
 
         // Asset / Prefab Type
-        let asset = SALT.AssetManager.getAsset(initialUUID);
+        let asset = SALT.AssetManager.get(initialUUID);
         const typeClassName = SUEY.Strings.capitalize(assetType);
 
         // Widget
@@ -32,7 +32,7 @@ class AssetInput {
             textBoxValue = textBox.getValue();
             textBox.setValue(`${typeClassName}`);
             const uuid = editor.dragInfo;
-            const checkAsset = SALT.AssetManager.getAsset(uuid);
+            const checkAsset = SALT.AssetManager.get(uuid);
             textBox.addClass(checkItemType(checkAsset) ? 'suey-yes-drop' : 'suey-no-drop');
         });
 
@@ -48,7 +48,7 @@ class AssetInput {
             event.stopPropagation();
             if (textBox.hasClass('suey-disabled')) return;
             const uuid = event.dataTransfer.getData('text/plain');
-            const checkAsset = SALT.AssetManager.getAsset(uuid);
+            const checkAsset = SALT.AssetManager.get(uuid);
             if (checkItemType(checkAsset)) {
                 asset = checkAsset;
                 onChange(uuid);

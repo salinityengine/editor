@@ -4,9 +4,7 @@
 
 Floaters:
     Coder:
-    Inspector:
-        - Rename 'Tabs' to 'Block'
-    Library:
+    Inspector: Rename 'Tabs' to 'Block'
     Outliner:
     Player:
     Resources:

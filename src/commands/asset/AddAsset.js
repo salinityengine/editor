@@ -34,12 +34,9 @@ class AddAssetCommand extends Command {
     }
 
     execute() {
-        if (!SALT.AssetManager.getAsset(this.asset.uuid)) {
-            SALT.AssetManager.addAsset(this.asset);
+        if (!SALT.AssetManager.get(this.asset.uuid)) {
+            SALT.AssetManager.add(this.asset);
             this.wasAdded = true;
-            if (SALT.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
-                this.editor.project.traverseWorlds((child) => child.rebuildComponents());
-            }
             Signals.dispatch('assetAdded', this.assetType, this.asset);
             Signals.dispatch('assetSelect', this.assetType, this.asset);
             Signals.dispatch('inspectorBuild');
@@ -48,11 +45,8 @@ class AddAssetCommand extends Command {
 
     undo() {
         if (this.wasAdded) {
-            SALT.AssetManager.removeAsset(this.asset, false /* dispose */);
+            SALT.AssetManager.remove(this.asset, false /* dispose */);
             this.wasAdded = false;
-            if (SALT.MESH_REBUILD_TYPES.indexOf(this.assetType) !== -1) {
-                this.editor.project.traverseWorlds((child) => child.rebuildComponents());
-            }
             Signals.dispatch('assetRemoved', this.assetType, this.asset);
             Signals.dispatch('inspectorBuild');
         }

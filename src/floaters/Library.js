@@ -17,6 +17,7 @@ class Library extends SUEY.Floater {
     constructor() {
         const icon = `${EDITOR.FOLDER_TYPES}script.svg`;
         super('library', null, { icon, color: '#090B11' });
+        const self = this;
 
         /******************** TITLED PANEL */
 
@@ -61,12 +62,12 @@ class Library extends SUEY.Floater {
 
         /******************** PANELS */
 
-        this.panels = {};
+        this.blocks = {};
 
         // No Category
         const unknown = 'unknown';
-        this.panels[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${EDITOR.FOLDER_COLLECTIONS}scripts/general.svg`, view: 'list' });
-        libPanel.add(this.panels[unknown]);
+        this.blocks[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${EDITOR.FOLDER_COLLECTIONS}scripts/general.svg`, view: 'list' });
+        libPanel.add(this.blocks[unknown]);
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
@@ -81,13 +82,15 @@ class Library extends SUEY.Floater {
         searchDiv.add(searchBox, searchIcon);
         libPanel.addToSelf(searchDiv);
 
+        this.add(libPanel);
+
         /***** SIGNALS */
 
         function focusAsset(type, asset) {
             if (!asset || !asset.uuid) return;
             if (type === 'script') {
                 const category = asset.category ?? unknown;
-                const panel = self.panels[category];
+                const panel = self.blocks[category];
                 if (panel) {
                     editor.selectFloater('scripts');
                     panel.setExpanded();
@@ -104,7 +107,7 @@ class Library extends SUEY.Floater {
                 const category = String(script.category).toLowerCase();
                 if (!category) continue;
 
-                if (!self.panels[category]) {
+                if (!self.blocks[category]) {
                     let icon = '';
                     switch (category) {
                         case 'camera': icon = `${EDITOR.FOLDER_COLLECTIONS}scripts/camera.svg`; break;
@@ -116,14 +119,14 @@ class Library extends SUEY.Floater {
                         //
                     }
                     const title = SUEY.Strings.capitalize(category);
-                    self.panels[category] = new AssetPanel({ type: 'script', category, title, icon, view: 'list' });
-                    self.add(self.panels[category]);
+                    self.blocks[category] = new AssetPanel({ type: 'script', category, title, icon, view: 'list' });
+                    self.add(self.blocks[category]);
                 }
             }
 
             // Add Icons
-            for (let category in self.panels) {
-                const panel = self.panels[category];
+            for (const category in self.blocks) {
+                const panel = self.blocks[category];
                 panel.buildPanel(false /* clear? */);
                 panel.applySearch(self.getSearchTerm());
             }
@@ -135,7 +138,7 @@ class Library extends SUEY.Floater {
                 processScripts(type);
             } else {
                 const category = script.category ?? unknown;
-                const panel = self.panels[category];
+                const panel = self.blocks[category];
                 if (panel) {
                     panel.updateItem(type, script);
                     panel.applySearch(self.getSearchTerm());
@@ -168,8 +171,8 @@ class Library extends SUEY.Floater {
     setSearchTerm(term) { Config.setKey('search/scripts', String(term)); }
 
     searchPanels() {
-        for (let category in this.panels) {
-            const panel = this.panels[category];
+        for (const category in this.blocks) {
+            const panel = this.blocks[category];
             panel.applySearch(this.getSearchTerm());
         }
     }

@@ -477,7 +477,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
     } else if (item.type === 'asset') {
 
         // Asset / Prefab Type
-        let asset = SALT.AssetManager.getAsset(value);
+        let asset = SALT.AssetManager.get(value);
         const className = item['class'] ?? item.type;
         const typeClassName = SUEY.Strings.capitalize(className);
 
@@ -557,7 +557,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             textBoxValue = textBox.getValue();
             textBox.setValue(`${typeClassName}`);
             const uuid = editor.dragInfo;
-            const checkAsset = SALT.AssetManager.getAsset(uuid);
+            const checkAsset = SALT.AssetManager.get(uuid);
             textBox.addClass(checkItemType(checkAsset) ? 'suey-yes-drop' : 'suey-no-drop');
         });
 
@@ -573,7 +573,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             event.stopPropagation();
             if (textBox.hasClass('suey-disabled')) return;
             const uuid = event.dataTransfer.getData('text/plain');
-            const checkAsset = SALT.AssetManager.getAsset(uuid);
+            const checkAsset = SALT.AssetManager.get(uuid);
             if (checkItemType(checkAsset)) {
                 asset = checkAsset;
                 value = uuid;
