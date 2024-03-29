@@ -22,7 +22,7 @@ class ComponentSettingsButton extends SUEY.Button {
         // Setup
         this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
-        this.dom.setAttribute('tooltip', 'Edit Component');
+        this.setAttribute('tooltip', 'Edit Component');
 
         const shadowBox = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`).addClass('suey-rotate-colorize');
         if (shadowBox.firstImage()) {

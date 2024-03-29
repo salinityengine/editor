@@ -31,13 +31,13 @@ class WorldsToolbar extends SUEY.Panel {
         /******************** TOOLTIPS */
 
         // Nodes
-        add.dom.setAttribute('tooltip', 'Add Node');
+        add.setAttribute('tooltip', 'Add Node');
 
         // Focus
-        reset.dom.setAttribute('tooltip', Config.tooltip('Reset View', Config.getKey('shortcuts/camera/reset')));
+        reset.setAttribute('tooltip', Config.tooltip('Reset View', Config.getKey('shortcuts/camera/reset')));
 
         // Grid
-        gridSnap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
+        gridSnap.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
 
         /******************** ADVISOR */
 

@@ -28,7 +28,7 @@ class Outliner extends SUEY.Titled {
 
         /***** 'Add' Entity *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
-        addButton.dom.setAttribute('tooltip', 'Add Entity');
+        addButton.setAttribute('tooltip', 'Add Entity');
         addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu

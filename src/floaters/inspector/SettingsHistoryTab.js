@@ -20,7 +20,7 @@ class SettingsHistoryTab extends SUEY.Titled {
         const historyClear = new SUEY.Button().addClass('suey-borderless-button').onClick(() => {
             editor.history.clear();
         });
-        historyClear.dom.setAttribute('tooltip', 'Clear History');
+        historyClear.setAttribute('tooltip', 'Clear History');
         historyClear.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_INSPECTOR}settings/history/clear.svg`));
 
         // Add Buttons

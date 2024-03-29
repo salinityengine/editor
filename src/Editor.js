@@ -102,12 +102,16 @@ class Editor extends SUEY.Div {
         // TODO: Add Docks / Floaters
         //
         const dockLeft = this.docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
+        const dockRight = this.docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
 
         const tabby1 = dockLeft.enableTabs();
         tabby1.addTab(new Advisor());
 
         const tabby2 = dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%').enableTabs();
         tabby2.addTab(new Advisor());
+
+        const tabby3 = dockRight.enableTabs();
+        tabby3.addTab(new Library());
 
         /********** SIGNALS */
 

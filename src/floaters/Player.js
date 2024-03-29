@@ -100,10 +100,10 @@ class Player extends SUEY.Window {
         const pause = new SUEY.ToolbarButton();
         const stop = new SUEY.ToolbarButton();
 
-        screen.dom.setAttribute('tooltip', 'Screen Size');
-        camera.dom.setAttribute('tooltip', Config.tooltip('Screenshot', 'P'));
-        pause.dom.setAttribute('tooltip', 'Pause Game');
-        stop.dom.setAttribute('tooltip', 'Stop Game');
+        screen.setAttribute('tooltip', 'Screen Size');
+        camera.setAttribute('tooltip', Config.tooltip('Screenshot', 'P'));
+        pause.setAttribute('tooltip', 'Pause Game');
+        stop.setAttribute('tooltip', 'Stop Game');
 
         const screenMonitor = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}screen-monitor.svg`).setID('tb-screen-monitor');
         const cameraBody = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-body.svg`).setID('tb-camera-body');

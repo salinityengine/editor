@@ -41,26 +41,26 @@ class View3DToolbar extends SUEY.Panel {
         /******************** TOOLTIPS */
 
         // Mouse Modes
-        select.dom.setAttribute('tooltip', Config.tooltip('Select Mode', Config.getKey('shortcuts/select')));
-        look.dom.setAttribute('tooltip', Config.tooltip('Look Mode', Config.getKey('shortcuts/look')));
-        move.dom.setAttribute('tooltip', Config.tooltip('Move Mode', Config.getKey('shortcuts/move')));
-        zoom.dom.setAttribute('tooltip', Config.tooltip('Zoom Mode', Config.getKey('shortcuts/zoom')));
+        select.setAttribute('tooltip', Config.tooltip('Select Mode', Config.getKey('shortcuts/select')));
+        look.setAttribute('tooltip', Config.tooltip('Look Mode', Config.getKey('shortcuts/look')));
+        move.setAttribute('tooltip', Config.tooltip('Move Mode', Config.getKey('shortcuts/move')));
+        zoom.setAttribute('tooltip', Config.tooltip('Zoom Mode', Config.getKey('shortcuts/zoom')));
 
         // Focus
-        focus.dom.setAttribute('tooltip', Config.tooltip('Focus On Entity', Config.getKey('shortcuts/focus')));
-        reset.dom.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
+        focus.setAttribute('tooltip', Config.tooltip('Focus On Entity', Config.getKey('shortcuts/focus')));
+        reset.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
 
         // Transform Tools
-        none.dom.setAttribute('tooltip', Config.tooltip('No Tool', Config.getKey('shortcuts/none')));
-        translate.dom.setAttribute('tooltip', Config.tooltip('Translate Tool', Config.getKey('shortcuts/translate')));
-        rotate.dom.setAttribute('tooltip', Config.tooltip('Rotate Tool', Config.getKey('shortcuts/rotate')));
-        scale.dom.setAttribute('tooltip', Config.tooltip('Scale Tool', Config.getKey('shortcuts/scale')));
-        rect.dom.setAttribute('tooltip', Config.tooltip('Rect Tool', Config.getKey('shortcuts/rect')));
-        snap.dom.setAttribute('tooltip', Config.tooltip('Snap Tool', Config.getKey('shortcuts/snap')));
-        paint.dom.setAttribute('tooltip', Config.tooltip('Paint Tool', Config.getKey('shortcuts/paint')));
+        none.setAttribute('tooltip', Config.tooltip('No Tool', Config.getKey('shortcuts/none')));
+        translate.setAttribute('tooltip', Config.tooltip('Translate Tool', Config.getKey('shortcuts/translate')));
+        rotate.setAttribute('tooltip', Config.tooltip('Rotate Tool', Config.getKey('shortcuts/rotate')));
+        scale.setAttribute('tooltip', Config.tooltip('Scale Tool', Config.getKey('shortcuts/scale')));
+        rect.setAttribute('tooltip', Config.tooltip('Rect Tool', Config.getKey('shortcuts/rect')));
+        snap.setAttribute('tooltip', Config.tooltip('Snap Tool', Config.getKey('shortcuts/snap')));
+        paint.setAttribute('tooltip', Config.tooltip('Paint Tool', Config.getKey('shortcuts/paint')));
 
         // Views
-        // views.dom.setAttribute('tooltip', 'Toggle Views');
+        // views.setAttribute('tooltip', 'Toggle Views');
 
         /******************** ADVISOR */
 
@@ -161,7 +161,7 @@ class View3DToolbar extends SUEY.Panel {
             // OPTION: Tooltip
             const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
             if (_lastTooltip !== focusOn) {
-                focus.dom.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
+                focus.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
             }
             _lastTooltip = focusOn;
         });

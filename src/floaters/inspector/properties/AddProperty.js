@@ -222,7 +222,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         function setAspectIconState() {
             lockIcon.setStyle('opacity', (aspectLocked) ? '1' : '0');
             unlockIcon.setStyle('opacity', (aspectLocked) ? '0' : '1');
-            lockAspect.dom.setAttribute('tooltip', (aspectLocked) ? 'Unlock Aspect Ratio' : 'Lock Aspect Ratio');
+            lockAspect.setAttribute('tooltip', (aspectLocked) ? 'Unlock Aspect Ratio' : 'Lock Aspect Ratio');
         }
         // Show Button?
         if (item['aspect']) {
@@ -488,12 +488,12 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const clearButton = new SUEY.Button();
         clearButton.addClass('suey-property-button');
         clearButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
-        clearButton.dom.setAttribute('tooltip', 'Clear');
+        clearButton.setAttribute('tooltip', 'Clear');
 
         // REFRESH ASSET //
         const refreshButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
         const refreshAsset = new SUEY.Button().addClass('suey-borderless-button');
-        refreshAsset.dom.setAttribute('tooltip', `Refresh ${typeClassName}`);
+        refreshAsset.setAttribute('tooltip', `Refresh ${typeClassName}`);
         refreshAsset.setStyle('font-size', '90%');
         const refreshIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}reset.svg`);
 

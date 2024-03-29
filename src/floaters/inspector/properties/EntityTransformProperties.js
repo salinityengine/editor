@@ -42,7 +42,7 @@ class EntityTransformProperties extends SUEY.Div {
         // 'Edit Transform' Button
         const editTransform = new SUEY.Button().addClass('suey-borderless-button');
         editTransform.overflowMenu = SUEY.OVERFLOW.LEFT;
-        editTransform.dom.setAttribute('tooltip', 'Edit Transform');
+        editTransform.setAttribute('tooltip', 'Edit Transform');
         editTransform.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}more.svg`).addClass('suey-rotate-colorize'));
 
         // Transform Menu
@@ -150,7 +150,7 @@ class EntityTransformProperties extends SUEY.Div {
             const locked = Config.getKey('scene/transform/aspectLock');
             lockIcon.setStyle('opacity', (locked) ? '1' : '0');
             unlockIcon.setStyle('opacity', (locked) ? '0' : '1');
-            lockScale.dom.setAttribute('tooltip', (locked) ? 'Unlock Aspect Ratio' : 'Lock Aspect Ratio');
+            lockScale.setAttribute('tooltip', (locked) ? 'Unlock Aspect Ratio' : 'Lock Aspect Ratio');
         }
         function setIconColors() {
             const filterLock = ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));

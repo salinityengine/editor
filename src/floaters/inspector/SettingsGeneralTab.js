@@ -148,7 +148,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         const smallShortcutText = new SUEY.Div(smallerShortcut).setClass('suey-menu-shortcut');
         smallShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         smallerButton.add(smallShortcutText);
-        smallerButton.dom.setAttribute('tooltip', Config.tooltip(smallerLabel, smallerShortcut));
+        smallerButton.setAttribute('tooltip', Config.tooltip(smallerLabel, smallerShortcut));
 
         // Larger
         const largerButton = new SUEY.Button().addClass('suey-property-button-flex').onClick(() => {
@@ -160,7 +160,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         const largeShortcutText = new SUEY.Div(largerShortcut).setClass('suey-menu-shortcut');
         largeShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         largerButton.add(largeShortcutText);
-        largerButton.dom.setAttribute('tooltip', Config.tooltip(largerLabel, largerShortcut));
+        largerButton.setAttribute('tooltip', Config.tooltip(largerLabel, largerShortcut));
 
         // Font Button Row
         const textSizeRow = props.addRow('Text Size', smallerButton, largerButton);
@@ -193,7 +193,7 @@ class SettingsGeneralTab extends SUEY.Titled {
         const resetLabel = Language.getKey('inspector/settings/reset');
         const resetShortcut = Config.getKey('shortcuts/reset');
         resetButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/reset.svg`));
-        resetButton.dom.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
+        resetButton.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
         const resetRow = props.addRow(resetLabel, resetButton);
         Advice.attach(resetRow, 'settings/reset');
 
@@ -205,16 +205,16 @@ class SettingsGeneralTab extends SUEY.Titled {
 
             themeBackground.setStyle('backgroundColor', 'rgb(var(--background-dark))');
             switch (parseInt(Config.getKey('scheme/background'))) {
-                case SUEY.BACKGROUNDS.DARK:  themeButton.dom.setAttribute('tooltip', 'Dark'); break;
-                case SUEY.BACKGROUNDS.MID:   themeButton.dom.setAttribute('tooltip', 'Mid'); break;
-                case SUEY.BACKGROUNDS.LIGHT: themeButton.dom.setAttribute('tooltip', 'Light'); break;
+                case SUEY.BACKGROUNDS.DARK:  themeButton.setAttribute('tooltip', 'Dark'); break;
+                case SUEY.BACKGROUNDS.MID:   themeButton.setAttribute('tooltip', 'Mid'); break;
+                case SUEY.BACKGROUNDS.LIGHT: themeButton.setAttribute('tooltip', 'Light'); break;
             }
 
             let color = parseInt(Config.getKey('scheme/iconColor'));
             let saturation = parseFloat(Config.getKey('scheme/backgroundSaturation'));
             let hexColor = _color.set(color).hslOffset(0, saturation, 0).hexString();
             colorBackground.setStyle('backgroundColor', hexColor);
-            colorButton.dom.setAttribute('tooltip', hexColor); // _color.cssString());
+            colorButton.setAttribute('tooltip', hexColor); // _color.cssString());
 
             let panelAlpha = Config.getKey('scheme/panelTransparency');
             if (panelAlpha === undefined || panelAlpha === null) {

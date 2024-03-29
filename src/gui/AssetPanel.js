@@ -54,7 +54,7 @@ class AssetPanel extends OSUI.Shrinkable {
         // 'View Options' Button
         const viewOptions = new OSUI.Button().addClass('suey-borderless-button');
         viewOptions.overflowMenu = OSUI.OVERFLOW.LEFT;
-        viewOptions.dom.setAttribute('tooltip', 'View Options');
+        viewOptions.setAttribute('tooltip', 'View Options');
 
         const shadowBox = new OSUI.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`);
         if (shadowBox.firstImage()) {
@@ -87,7 +87,7 @@ class AssetPanel extends OSUI.Shrinkable {
             let selected = undefined;
 
             // Get children, remove 'EmptyBox'
-            const children = [...self.bodyDiv.children];
+            const children = [ ...self.bodyDiv.children ];
             for (let i = children.length - 1; i >= 0; i--) {
                 const child = children[i];
                 if (child.isTemporary) children.splice(i, 1);
@@ -197,7 +197,7 @@ class AssetPanel extends OSUI.Shrinkable {
         // Empty Item
         if (clearPanel || !this.#emptyItem) {
             const empty = new OSUI.Row().addClass('suey-property-full');
-            empty.dom.setAttribute('tooltip', Language.getKey('assets/empty'));
+            empty.setAttribute('tooltip', Language.getKey('assets/empty'));
             empty.isTemporary = true;
             empty.dom.draggable = false;
 
@@ -276,27 +276,27 @@ class AssetPanel extends OSUI.Shrinkable {
             canvas.height = ASSET_HEIGHT;
             innerBox.dom.appendChild(canvas);
             if (this.type === 'geometry') {
-                SALT.RenderUtils.renderGeometryToCanvas(canvas, asset /* geometry */, null /* material */, 0xb0b0b0);
+                // SALT.RenderUtils.renderGeometryToCanvas(canvas, asset /* geometry */, null /* material */, 0xb0b0b0);
             } else if (this.type === 'material') {
-                SALT.RenderUtils.renderGeometryToCanvas(canvas, null /* geometry */, asset /* material */);
+                // SALT.RenderUtils.renderGeometryToCanvas(canvas, null /* geometry */, asset /* material */);
             } else if (this.type === 'palette') {
-                item.on('dblclick', () => { Signals.dispatch('inspectorBuild', asset); });
-                canvas.style['border-radius'] = 'var(--radius-small)';
-                CanvasUtils.drawPalette(canvas, asset /* palette */);
+                // item.on('dblclick', () => { Signals.dispatch('inspectorBuild', asset); });
+                // canvas.style['border-radius'] = 'var(--radius-small)';
+                // CanvasUtils.drawPalette(canvas, asset /* palette */);
             } else if (this.type === 'shape') {
-                item.on('dblclick', () => {
-                    const shaper = editor.getFloaterByID('shaper') ?? new Shaper();
-                    editor.shaper.showWindow(asset);
-                });
-                const renderHexColor = 0xff00ff; // OSUI.ColorScheme.color(OSUI.TRAIT.TRIADIC1);
-                const shapeGeometry = new THREE.ShapeGeometry(asset /* shape */);
-                SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
-                shapeGeometry.dispose();
+                // item.on('dblclick', () => {
+                //     const shaper = editor.getFloaterByID('shaper') ?? new Shaper();
+                //     editor.shaper.showWindow(asset);
+                // });
+                // const renderHexColor = 0xff00ff; // OSUI.ColorScheme.color(OSUI.TRAIT.TRIADIC1);
+                // const shapeGeometry = new THREE.ShapeGeometry(asset /* shape */);
+                // SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
+                // shapeGeometry.dispose();
             } else if (this.type === 'texture') {
-                item.on('dblclick', () => { Signals.dispatch('inspectorBuild', asset); });
-                const texture = asset;
-                if (texture.image && texture.image.complete) texture.needsUpdate = true;
-                SALT.RenderUtils.renderTextureToCanvas(canvas, texture);
+                // item.on('dblclick', () => Signals.dispatch('inspectorBuild', asset));
+                // const texture = asset;
+                // if (texture.image && texture.image.complete) texture.needsUpdate = true;
+                // SALT.RenderUtils.renderTextureToCanvas(canvas, texture);
             }
 
         // OLD: 'texture' (used 'img' element only)
@@ -312,12 +312,12 @@ class AssetPanel extends OSUI.Shrinkable {
             let sourceIcon = '';
             if (script.format === SALT.SCRIPT_FORMAT.JAVASCRIPT) sourceIcon = `${EDITOR.FOLDER_MENU}outliner/js.svg`;
             innerBox = new OSUI.VectorBox(sourceIcon).enableDragging();
-            item.on('dblclick', () => { signals.editScript.dispatch(script); });
+            item.on('dblclick', () => Signals.dispatch('editScript', script));
             item.on('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
                     event.stopPropagation();
-                    signals.editScript.dispatch(script);
+                    Signals.dispatch('editScript', script);
                 }
             });
 
@@ -377,7 +377,7 @@ class AssetPanel extends OSUI.Shrinkable {
         });
 
         item.on('dragend', (event) => {
-            signals.dropEnded.dispatch();
+            Signals.dispatch('dropEnded');
         });
 
         // RETURN

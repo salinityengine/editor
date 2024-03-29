@@ -19,7 +19,7 @@ class AddComponentButton extends SUEY.Button {
         // Setup
         this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
-        this.dom.setAttribute('tooltip', 'Add Component');
+        this.setAttribute('tooltip', 'Add Component');
         this.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // Properties

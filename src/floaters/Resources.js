@@ -23,7 +23,7 @@ class Resources extends SUEY.Titled {
 
         /***** 'Add' Asset *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
-        addButton.dom.setAttribute('tooltip', 'Add Asset');
+        addButton.setAttribute('tooltip', 'Add Asset');
         addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu

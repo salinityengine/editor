@@ -28,15 +28,15 @@ class EditorToolbar extends SUEY.Panel {
         const history = new SUEY.ToolbarButton().addClass('suey-gray-button');
         const settings = new SUEY.ToolbarButton().addClass('suey-gray-button');
 
-        eye.dom.setAttribute('tooltip', 'Menu');
-        scene2d.dom.setAttribute('tooltip', Config.tooltip('Scene Editor 2D'));
-        scene3d.dom.setAttribute('tooltip', Config.tooltip('Scene Editor 3D'));
-        world.dom.setAttribute('tooltip', Config.tooltip('World Graph'));
-        ui.dom.setAttribute('tooltip', Config.tooltip('UI Editor'));
-        play.dom.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
-        proj.dom.setAttribute('tooltip', 'Project');
-        history.dom.setAttribute('tooltip', 'History');
-        settings.dom.setAttribute('tooltip', 'Settings');
+        eye.setAttribute('tooltip', 'Menu');
+        scene2d.setAttribute('tooltip', Config.tooltip('Scene Editor 2D'));
+        scene3d.setAttribute('tooltip', Config.tooltip('Scene Editor 3D'));
+        world.setAttribute('tooltip', Config.tooltip('World Graph'));
+        ui.setAttribute('tooltip', Config.tooltip('UI Editor'));
+        play.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
+        proj.setAttribute('tooltip', 'Project');
+        history.setAttribute('tooltip', 'History');
+        settings.setAttribute('tooltip', 'Settings');
 
         Advice.attach(eye, 'toolbar/eye');
         Advice.attach(scene2d, 'toolbar/mode/scene2d');

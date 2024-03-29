@@ -20,7 +20,7 @@ class Library extends SUEY.Floater {
 
         /******************** TITLED PANEL */
 
-        const panel = new SUEY.Titled({ title: 'Scripts' });
+        const libPanel = new SUEY.Titled({ title: 'Scripts' });
 
         /******************** HEADER BUTTONS */
 
@@ -28,7 +28,7 @@ class Library extends SUEY.Floater {
 
         /***** 'Add' Asset *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
-        addButton.dom.setAttribute('tooltip', 'Add Asset');
+        addButton.setAttribute('tooltip', 'Add Asset');
         addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu
@@ -57,7 +57,7 @@ class Library extends SUEY.Floater {
         // Append Children
         addButton.attachMenu(assetMenu);
         buttonRow.add(addButton, new SUEY.FlexSpacer());
-        this.tabTitle.add(buttonRow);
+        libPanel.tabTitle.add(buttonRow);
 
         /******************** PANELS */
 
@@ -66,7 +66,7 @@ class Library extends SUEY.Floater {
         // No Category
         const unknown = 'unknown';
         this.panels[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${EDITOR.FOLDER_COLLECTIONS}scripts/general.svg`, view: 'list' });
-        this.add(this.panels[unknown]);
+        libPanel.add(this.panels[unknown]);
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
@@ -79,7 +79,7 @@ class Library extends SUEY.Floater {
             self.searchPanels();
         });
         searchDiv.add(searchBox, searchIcon);
-        this.addToSelf(searchDiv);
+        libPanel.addToSelf(searchDiv);
 
         /***** SIGNALS */
 
@@ -99,9 +99,8 @@ class Library extends SUEY.Floater {
 
         function processScripts(type) {
             if (type !== 'script') return;
-            const scripts = SALT.AssetManager.library('script'); /* returns all scripts */
-            for (let i = 0; i < scripts.length; i++) {
-                const script = scripts[i];
+            const scripts = SALT.AssetManager.library('script');
+            for (const script of scripts) {
                 const category = String(script.category).toLowerCase();
                 if (!category) continue;
 

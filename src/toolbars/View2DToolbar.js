@@ -39,25 +39,25 @@ class View2DToolbar extends SUEY.Panel {
         /******************** TOOLTIPS */
 
         // Mouse Modes
-        select.dom.setAttribute('tooltip', Config.tooltip('Select Mode', Config.getKey('shortcuts/select')));
-        move.dom.setAttribute('tooltip', Config.tooltip('Move Mode', Config.getKey('shortcuts/move')));
-        zoom.dom.setAttribute('tooltip', Config.tooltip('Zoom Mode', Config.getKey('shortcuts/zoom')));
+        select.setAttribute('tooltip', Config.tooltip('Select Mode', Config.getKey('shortcuts/select')));
+        move.setAttribute('tooltip', Config.tooltip('Move Mode', Config.getKey('shortcuts/move')));
+        zoom.setAttribute('tooltip', Config.tooltip('Zoom Mode', Config.getKey('shortcuts/zoom')));
 
         // Focus
-        focus.dom.setAttribute('tooltip', Config.tooltip('Focus On Entity', Config.getKey('shortcuts/focus')));
-        reset.dom.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
+        focus.setAttribute('tooltip', Config.tooltip('Focus On Entity', Config.getKey('shortcuts/focus')));
+        reset.setAttribute('tooltip', Config.tooltip('Reset Camera', Config.getKey('shortcuts/camera/reset')));
 
         // Layer
-        // arrange.dom.setAttribute('tooltip', Config.tooltip('Arrange', null));
-        // transform.dom.setAttribute('tooltip', Config.tooltip('Transform', null));
+        // arrange.setAttribute('tooltip', Config.tooltip('Arrange', null));
+        // transform.setAttribute('tooltip', Config.tooltip('Transform', null));
 
         // Views
-        // views.dom.setAttribute('tooltip', 'Toggle Views');
+        // views.setAttribute('tooltip', 'Toggle Views');
 
         // Grid
-        gridTop.dom.setAttribute('tooltip', Config.tooltip('Grid on Top?'));
-        gridResize.dom.setAttribute('tooltip', Config.tooltip('Resize to Grid?'));
-        gridSnap.dom.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
+        gridTop.setAttribute('tooltip', Config.tooltip('Grid on Top?'));
+        gridResize.setAttribute('tooltip', Config.tooltip('Resize to Grid?'));
+        gridSnap.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
 
         /******************** ADVISOR */
 
@@ -151,7 +151,7 @@ class View2DToolbar extends SUEY.Panel {
             // OPTION: Tooltip
             const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
             if (_lastTooltip !== focusOn) {
-                focus.dom.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
+                focus.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
             }
             _lastTooltip = focusOn;
         });
@@ -185,10 +185,10 @@ class View2DToolbar extends SUEY.Panel {
         const frontIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-front-2.svg`);
         const frontItem = new SUEY.ToolbarButton().add(frontIcon1, frontIcon2);
 
-        backItem.dom.setAttribute('tooltip', Config.tooltip('Send to Back', null));
-        backwardItem.dom.setAttribute('tooltip', Config.tooltip('Send Backward', null));
-        forwardItem.dom.setAttribute('tooltip', Config.tooltip('Send Forward', null));
-        frontItem.dom.setAttribute('tooltip', Config.tooltip('Send to Front', null));
+        backItem.setAttribute('tooltip', Config.tooltip('Send to Back', null));
+        backwardItem.setAttribute('tooltip', Config.tooltip('Send Backward', null));
+        forwardItem.setAttribute('tooltip', Config.tooltip('Send Forward', null));
+        frontItem.setAttribute('tooltip', Config.tooltip('Send to Front', null));
 
         Advice.attach(backItem, 'Send to Back', 'Send selected object(s) to back.');
         Advice.attach(backwardItem, 'Send Backward', 'Send selected object(s) back one.');
@@ -245,11 +245,11 @@ class View2DToolbar extends SUEY.Panel {
         const rightIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-right-2.svg`);
         const rightItem = new SUEY.ToolbarButton().add(rightIcon2, rightIcon1);
 
-        resetItem.dom.setAttribute('tooltip', Config.tooltip('Reset Transform', null));
-        horizontalItem.dom.setAttribute('tooltip', Config.tooltip('Flip Horizontal', null));
-        verticalItem.dom.setAttribute('tooltip', Config.tooltip('Flip Vertical', null));
-        leftItem.dom.setAttribute('tooltip', Config.tooltip('Rotate Left', null));
-        rightItem.dom.setAttribute('tooltip', Config.tooltip('Rotate Right', null));
+        resetItem.setAttribute('tooltip', Config.tooltip('Reset Transform', null));
+        horizontalItem.setAttribute('tooltip', Config.tooltip('Flip Horizontal', null));
+        verticalItem.setAttribute('tooltip', Config.tooltip('Flip Vertical', null));
+        leftItem.setAttribute('tooltip', Config.tooltip('Rotate Left', null));
+        rightItem.setAttribute('tooltip', Config.tooltip('Rotate Right', null));
 
         Advice.attach(resetItem, 'Reset Transform', 'Resets selected object(s) transform to a Scale of X:1, Y:1 and a Rotation of 0 degrees.');
         Advice.attach(horizontalItem, 'Flip Horizontal', 'Flips the selected object(s) horizontally.');
