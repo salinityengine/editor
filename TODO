@@ -2,6 +2,14 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Docks:
+    - Layout
+        - Save positions/sizes to Config
+            - Save collapsed
+        - Load positions/sizes from Config
+        - Reset positions/sizes
+    - Mouse over tab shows TabID in Advisor
+
 Toolbar:
     - Move Viewport toolbar functionality to EditorToolbar (mouse z-index problem)
 
@@ -13,13 +21,6 @@ Floaters:
     Resources:
     Shaper:
     Things:
-
-Docks:
-    - Dock Positions
-        - Save positions/sizes to Config
-        - Load positions/sizes from Config
-        - Reset positions/sizes
-    - Mouse over tab shows TabID in Advisor
 
 Toolbar:
     - View2D Toolbar 'Grid' images
@@ -147,6 +148,9 @@ Scripting:
     Coder:
         Python (Brython): https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
         Visual Scripting:
+
+Publish:
+    - Reaplce unpkg w/jsdelivr?
 
 /******************** FUTURE ********************/
 

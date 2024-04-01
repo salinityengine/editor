@@ -12,6 +12,14 @@ import { Things } from '../floaters/Things.js';
 
 class Layout {
 
+    static default(docker) {
+        const dockLeft = docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
+        const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
+        dockLeft.enableTabs().addTab(new Advisor());
+        dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%').enableTabs().addTab(new Advisor());
+        dockRight.enableTabs().addTab(new Library());
+    }
+
     static save(docker) {
         if (!docker.isPrimary()) {
             console.warn('Layout.save: The provided Docker is not the Primary Docker');
@@ -20,34 +28,47 @@ class Layout {
 
         const layout = {
             type: 'docker',
+            side: 'center',
             children: [],
         };
 
         function traverse(currentDocker, parentLayout) {
             const reverseChildren = currentDocker.children.reverse();
             reverseChildren.forEach(child => {
-                if (child.children.length === 0) return;
 
-                if (child instanceof SUEY.Docker) {
+                if (child.hasClass('suey-docker')) {
                     const dockerLayout = {
                         type: 'docker',
+                        initialSide: child.initialSide,
                         side: child.dockSide,
                         size: (child.dockSide === 'left' || child.dockSide === 'right') ? child.dom.style.width : child.dom.style.height,
-                        initialSide: child.initialSide,
                         children: [],
                     };
                     parentLayout.children.push(dockerLayout);
                     traverse(child, dockerLayout);
 
-                } else if (child instanceof SUEY.Tabbed) {
+                } else if (child.hasClass('suey-tabbed')) {
+                    const spacers = SUEY.Dom.childrenWithClass(currentDocker, 'suey-flex-spacer', false /* recursive? */);
                     const tabbedLayout = {
                         type: 'tabbed',
-                        floaters: child.panels.children.map(floater => ({ id: floater.id })),
+                        hasSpacer: (spacers.length > 0),
+                        floaters: SUEY.Dom.childrenWithClass(child, 'suey-floater', true /* recursive? */).map(floater => floater.id),
                     };
                     parentLayout.children.push(tabbedLayout);
-                }
 
-                console.log(child);
+                } else if (child.hasClass('suey-window')) {
+                    const windowLayout = {
+                        type: 'window',
+                        left: child.dom.style.left,
+                        top: child.dom.style.top,
+                        width: child.dom.style.width,
+                        height: child.dom.style.height,
+                        initialWidth: child.initialWidth,
+                        initialHeight: child.initialHeight,
+                        floaters: SUEY.Dom.childrenWithClass(child, 'suey-floater', true /* recursive? */).map(floater => floater.id),
+                    };
+                    parentLayout.children.push(windowLayout);
+                }
             });
         }
         traverse(docker, layout);
@@ -60,7 +81,7 @@ class Layout {
     static load(docker) {
         if (!docker.isPrimary()) {
             console.warn('Layout.load: The provided Docker is not the Primary Docker');
-            return;
+            return undefined;
         }
 
         // Clear Docker
@@ -70,19 +91,10 @@ class Layout {
         const layoutData = localStorage.getItem('dockerLayout');
         if (!layoutData) {
             console.warn('Layout.load: No layout data found');
-            const dockLeft = docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
-            const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
-            dockLeft.enableTabs().addTab(new Advisor());
-            dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%').enableTabs().addTab(new Advisor());
-            dockRight.enableTabs().addTab(new Library());
-            return;
+            return undefined;
         }
 
         function createFloater(id) {
-            // Implement this function based on how you create Floaters in your program
-            // You can use the 'id' to determine the type of Floater to create
-            // Return the created Floater or null if the Floater type is unknown
-            // Example:
             switch (id) {
                 case 'advisor': return new Advisor();
                 case 'library': return new Library();
@@ -93,26 +105,44 @@ class Layout {
         }
 
         function createDocker(layoutNode, parentDocker) {
-
+            let addedDock = false;
+            let twinDocker = undefined;
             layoutNode.children.forEach(childNode => {
-                if (childNode.type === 'tabbed') {
-                    const tabbed = parentDocker.enableTabs();
-                    childNode.floaters.forEach(floaterData => {
-                        const floater = createFloater(floaterData.id);
-                        if (floater) tabbed.addTab(floater);
-                    });
 
-                } else if (childNode.type === 'docker') {
-                    const dockInfo = layoutNode.children.find(child => child.initialSide !== 'center');
-
-                    console.log(dockInfo);
-
-                    if (dockInfo) {
-                        const newDocker = parentDocker.addDock(dockInfo.side, layoutNode.size);
-
+                if (childNode.type === 'docker') {
+                    if (!addedDock) {
+                        const newDocker = parentDocker.addDock(childNode.side, childNode.size);
+                        twinDocker = newDocker.getTwin();
                         createDocker(childNode, newDocker);
+                        addedDock = true;
+                    } else if (twinDocker) {
+                        createDocker(childNode, twinDocker.contents());
                     }
 
+                } else if (childNode.type === 'tabbed') {
+                    const tabbed = parentDocker.enableTabs(childNode.hasSpacer /* flexBefore? */);
+                    childNode.floaters.forEach(floaterID => tabbed.addTab(createFloater(floaterID)));
+
+                } else if (childNode.type === 'window') {
+                    childNode.floaters.forEach(floaterID => {
+                        const floater = createFloater(floaterID);
+                        if (floater) {
+                            const window = new SUEY.Window({
+                                title: floaterID,
+                                width: childNode.width,
+                                height: childNode.height,
+                                initialWidth: childNode.initialWidth,
+                                initialHeight: childNode.initialHeight,
+                                startCentered: false,
+                                left: childNode.left,
+                                top: childNode.top,
+                            });
+                            parentDocker.addToSelf(window);
+                            window.display();
+                            window.addTab(floater);
+                            window.selectTab(floaterID);
+                        }
+                    });
                 }
             });
         }

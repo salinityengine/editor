@@ -93,8 +93,7 @@ class Editor extends SUEY.Div {
 
         this.add(this.docker = new SUEY.Docker());
 
-        Layout.load(this.docker);
-        Layout.save(self.docker);
+        Layout.default(this.docker);
 
         window.addEventListener('beforeunload', (event) => {
             // Layout.save(self.docker);
@@ -557,16 +556,15 @@ function editorKeyDown(editor, event) {
 
     // Keys
     switch (event.key) {
+        case 's':
+            event.stopPropagation();
+            event.preventDefault();
+            Layout.save(editor.docker);
+            break;
         case 'l':
             event.stopPropagation();
             event.preventDefault();
-
-            console.log('Resetting Layout!');
-            localStorage.removeItem('dockerLayout');
-
             Layout.load(editor.docker);
-            Layout.save(editor.docker);
-
             break;
 
         case 'a':
