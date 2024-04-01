@@ -2,13 +2,8 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Docks:
-    - Layout
-        - Save positions/sizes to Config
-            - Save collapsed
-        - Load positions/sizes from Config
-        - Reset positions/sizes
-    - Mouse over tab shows TabID in Advisor
+Dock Layout:
+    - Default layout for each Viewport type
 
 Toolbar:
     - Move Viewport toolbar functionality to EditorToolbar (mouse z-index problem)
@@ -90,7 +85,6 @@ Modes:
 
 Floaters:
     Advisor:
-        - Add info for all exisiting buttons, etc
         - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
     Player:
         - Debug Console, override console.log to capture?
@@ -150,7 +144,7 @@ Scripting:
         Visual Scripting:
 
 Publish:
-    - Reaplce unpkg w/jsdelivr?
+    - Reaplce unpkg w/jsDelivr?
 
 /******************** FUTURE ********************/
 

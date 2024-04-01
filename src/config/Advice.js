@@ -7,8 +7,12 @@ const _values = {
 
     en: {
 
-        // Advisor
+        // Default
         'advisor':                          { title: 'Advisor', html: `` },
+
+        // Floaters
+        'floater/advisor':                  { title: 'Advisor', html: `Shows helpful tips and information.` },
+        'floater/library':                  { title: 'Library', html: `Collection of scripts for use in your project.` },
 
         // Project
         'project':                          { title: 'Project Settings', html: `` },

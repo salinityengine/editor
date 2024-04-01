@@ -17,6 +17,7 @@ class Advisor extends SUEY.Floater {
         super('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
         const self = this;
         this.addClass('salt-advisor');
+        Advice.attach(this.button, 'floater/advisor');
 
         /********** WELCOME */
 

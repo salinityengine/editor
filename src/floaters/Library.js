@@ -2,6 +2,7 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 import { Signals } from '../config/Signals.js';
@@ -18,10 +19,11 @@ class Library extends SUEY.Floater {
         const icon = `${EDITOR.FOLDER_TYPES}script.svg`;
         super('library', null, { icon, color: '#090B11' });
         const self = this;
+        Advice.attach(this.button, 'floater/library');
 
         /******************** TITLED PANEL */
 
-        const libPanel = new SUEY.Titled({ title: 'Scripts' });
+        const libPanel = new SUEY.Titled({ title: 'Library' });
 
         /******************** HEADER BUTTONS */
 

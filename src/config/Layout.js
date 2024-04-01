@@ -12,12 +12,17 @@ import { Things } from '../floaters/Things.js';
 
 class Layout {
 
-    static default(docker) {
+    static default(docker, mode) {
+        // Clear Docker
+        docker.clearDocks();
+
+        // Build Default Layout
         const dockLeft = docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
         const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
-        dockLeft.enableTabs().addTab(new Advisor());
+        dockLeft.enableTabs().addTab(new Library());
         dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%').enableTabs().addTab(new Advisor());
-        dockRight.enableTabs().addTab(new Library());
+
+        // dockRight.enableTabs().addTab(new Library());
     }
 
     static save(docker) {
@@ -40,10 +45,12 @@ class Layout {
                     const dockerLayout = {
                         type: 'docker',
                         initialSide: child.initialSide,
+                        collapsed: child.hasClass('suey-collapsed'),
                         side: child.dockSide,
                         size: (child.dockSide === 'left' || child.dockSide === 'right') ? child.dom.style.width : child.dom.style.height,
                         children: [],
                     };
+                    if (dockerLayout.collapsed) dockerLayout.size = child.expandSize;
                     parentLayout.children.push(dockerLayout);
                     traverse(child, dockerLayout);
 
@@ -51,6 +58,7 @@ class Layout {
                     const spacers = SUEY.Dom.childrenWithClass(currentDocker, 'suey-flex-spacer', false /* recursive? */);
                     const tabbedLayout = {
                         type: 'tabbed',
+                        selectedID: child.selectedID,
                         hasSpacer: (spacers.length > 0),
                         floaters: SUEY.Dom.childrenWithClass(child, 'suey-floater', true /* recursive? */).map(floater => floater.id),
                     };
@@ -112,6 +120,7 @@ class Layout {
                 if (childNode.type === 'docker') {
                     if (!addedDock) {
                         const newDocker = parentDocker.addDock(childNode.side, childNode.size);
+                        if (childNode.collapsed) newDocker.collapseTabs();
                         twinDocker = newDocker.getTwin();
                         createDocker(childNode, newDocker);
                         addedDock = true;
@@ -122,6 +131,7 @@ class Layout {
                 } else if (childNode.type === 'tabbed') {
                     const tabbed = parentDocker.enableTabs(childNode.hasSpacer /* flexBefore? */);
                     childNode.floaters.forEach(floaterID => tabbed.addTab(createFloater(floaterID)));
+                    tabbed.selectTab(childNode.selectedID);
 
                 } else if (childNode.type === 'window') {
                     childNode.floaters.forEach(floaterID => {

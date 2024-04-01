@@ -32,7 +32,7 @@ class Editor extends SUEY.Div {
 
         /********** GLOBAL */
 
-        // Adds 'editor' to global before children are loaded
+        // Add 'editor' to global before children are loaded
         window.editor = this;
 
         /********** ACTIVE PROJECT */
@@ -92,20 +92,10 @@ class Editor extends SUEY.Div {
         /********** DOCKS */
 
         this.add(this.docker = new SUEY.Docker());
-
-        Layout.default(this.docker);
-
-        window.addEventListener('beforeunload', (event) => {
-            // Layout.save(self.docker);
-        });
+        Layout.load(this.docker);
+        window.addEventListener('beforeunload', (event) => Layout.save(self.docker));
 
         /********** SIGNALS */
-
-        // // TODO: Tab Priority
-        // this.on('tab-changed', (event) => {
-        //     const tabName = event.value;
-        //     if (tabName) self.setTabPriority(tabName);
-        // });
 
         // Project Loaded
         Signals.connect(this, 'projectLoaded', function() {
@@ -153,21 +143,11 @@ class Editor extends SUEY.Div {
 
     } // end ctor
 
-    // // TODO: Save Dock Sizes
-    // changeWidth(width) {
-    //     width = super.changeWidth(width);
-    //     if (width != null) Config.setKey(`resizeX/${this.name}`, (width / SUEY.Css.guiScale()).toFixed(3));
-    // }
-    // changeHeight(height) {
-    //     height = super.changeHeight(height);
-    //     if (height != null) Config.setKey(`resizeY/${this.name}`, (height / SUEY.Css.guiScale()).toFixed(3));
-    // }
-
     /******************** MODE ********************/
 
     setMode(mode) {
         //
-        // TODO: Hide Docks (Floaters / Docker / Tabbed / Window)
+        // TODO: Hide Docks (Floaters / Docker / Tabbed / Window) based on Viewport floaterFamily()
         //
 
         // Hide Viewports
@@ -332,19 +312,8 @@ class Editor extends SUEY.Div {
         const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/panelTransparency')), 1.0), 0.0);
         SUEY.Css.setVariable('--panel-transparency', panelAlpha);
 
-        // Refresh Docks
-        this.resetDockSizes();
-
         // Dispatch Refreshed Signal
         Signals.dispatch('settingsRefreshed');
-    }
-
-    resetDockSizes() {
-        //
-        // TODO
-        //
-        // self.changeWidth(parseFloat(Config.getKey(`resizeX/${self.name}`)) * SUEY.Css.guiScale());
-        // self.changeHeight(parseFloat(Config.getKey(`resizeY/${self.name}`)) * SUEY.Css.guiScale());
     }
 
     fontSizeChange(fontSize) {
@@ -452,7 +421,6 @@ class Editor extends SUEY.Div {
     getFloaterByID(tabID, build = false) {
         let floater = this.docker.getFloaterByID(tabID);
         if (!floater && build) {
-
             //
             // TODO: Build missing floater, then add & select
             //
@@ -480,30 +448,6 @@ class Editor extends SUEY.Div {
         const floater = this.docker.getFloaterByID(tabID);
         if (floater && floater.dock) floater.dock.selectTab(tabID);
     }
-
-    // // TODO: Select Last Known Tab
-    // selectLastKnownTab() {
-    //     let tabArray = Config.getKey(`tabs/${this.name}`);
-    //     if (!Array.isArray(tabArray)) tabArray = [];
-    //     for (const tabName of tabArray) {
-    //         if (this.selectTab(tabName) === true) return;
-    //     }
-    //     if (this.selectTab(this.defaultTab) === true) return;
-    //     this.selectFirst();
-    // }
-
-    // TODO: Set Tab Prioriy
-    // setTabPriority(tabName) {
-    //     // Get existing tab array from settings
-    //     let tabArray = Config.getKey(`tabs/${this.name}`);
-    //     if (!Array.isArray(tabArray)) tabArray = [];
-    //     // Remove existing tab location if found, then set at front
-    //     const tabIndex = tabArray.indexOf(tabName);
-    //     if (tabIndex !== -1) tabArray.splice(tabIndex, 1);
-    //     tabArray.unshift(tabName);
-    //     // Update settings
-    //     Config.setKey(`tabs/${this.name}`, tabArray);
-    // }
 
 }
 
@@ -556,16 +500,16 @@ function editorKeyDown(editor, event) {
 
     // Keys
     switch (event.key) {
-        case 's':
-            event.stopPropagation();
-            event.preventDefault();
-            Layout.save(editor.docker);
-            break;
-        case 'l':
-            event.stopPropagation();
-            event.preventDefault();
-            Layout.load(editor.docker);
-            break;
+        // case 's': // save layout
+        //     event.stopPropagation();
+        //     event.preventDefault();
+        //     Layout.save(editor.docker);
+        //     break;
+        // case 'l': // load layout
+        //     event.stopPropagation();
+        //     event.preventDefault();
+        //     Layout.load(editor.docker);
+        //     break;
 
         case 'a':
         case 'w':
@@ -654,21 +598,11 @@ function editorKeyDown(editor, event) {
 
         // Reset all settings
         case Config.getKey('shortcuts/reset'): /* F9 */
-            //
-            // TODO: Persistent Tabs / Docks, Save Tabs
-            //
-            // Example:
-            //      const tabs = {};
-            //      tabs['inspector'] = inspector.selectedID;
-
             // Clear Config
             Config.clear();
 
-            //
-            // TODO: Persistent Tabs / Docks, Restore
-            //
-            // Example:
-            //      Config.setKey(`tabs/Inspector`, [ tabs['inspector'] ]);
+            // Defauly Docks
+            Layout.default(editor.docker);
 
             // Refresh GUI
             editor.refreshSettings();
