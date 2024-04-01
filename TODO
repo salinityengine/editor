@@ -5,9 +5,6 @@
 Dock Layout:
     - Default layout for each Viewport type
 
-Toolbar:
-    - Move Viewport toolbar functionality to EditorToolbar (mouse z-index problem)
-
 Floaters:
     Coder:
     Inspector: Rename 'Tabs' to 'Block'

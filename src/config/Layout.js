@@ -18,10 +18,10 @@ class Layout {
 
         // Build Default Layout
         const dockLeft = docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
-        const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
         dockLeft.enableTabs().addTab(new Library());
         dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%').enableTabs().addTab(new Advisor());
 
+        // const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
         // dockRight.enableTabs().addTab(new Library());
     }
 
