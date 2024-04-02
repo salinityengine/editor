@@ -13,6 +13,8 @@ const _values = {
         // Floaters
         'floater/advisor':                  { title: 'Advisor', html: `Shows helpful tips and information.` },
         'floater/library':                  { title: 'Library', html: `Collection of scripts for use in your project.` },
+        'floater/outliner':                 { title: 'Outliner', html: `Displays interactive scene hierarchy.` },
+        'floater/player':                   { title: 'Player', html: `Game play preview.` },
 
         // Project
         'project':                          { title: 'Project Settings', html: `` },

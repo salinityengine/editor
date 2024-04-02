@@ -2,6 +2,7 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 
@@ -17,10 +18,18 @@ const _nodeStates = new WeakMap();
 /**
  * Project Scene Hierarchy
  */
-class Outliner extends SUEY.Titled {
+class Outliner extends SUEY.Floater {
 
     constructor() {
-        super({ title: 'Outliner' });
+        const icon = `${EDITOR.FOLDER_TYPES}outliner.svg`;
+        super('outliner', null, { icon });
+        const self = this;
+        Advice.attach(this.button, 'floater/outliner');
+
+        /******************** TITLED PANEL */
+
+        const outPanel = new SUEY.Titled({ title: 'Outliner' });
+        this.add(outPanel);
 
         /******************** HEADER BUTTONS */
 
@@ -72,12 +81,12 @@ class Outliner extends SUEY.Titled {
         // Append Children
         addButton.attachMenu(entityMenu);
         buttonRow.add(addButton, new SUEY.FlexSpacer());
-        this.tabTitle.add(buttonRow);
+        outPanel.tabTitle.add(buttonRow);
 
         /******************** TREELIST */
 
         const treeList = new SUEY.TreeList(true /* multiSelect */).addClass('salt-outliner');
-        this.add(treeList);
+        outPanel.add(treeList);
 
         // Change Event (fired on Key Down & Pointer Click)
         let ignoreSelectionChangedSignal = false;

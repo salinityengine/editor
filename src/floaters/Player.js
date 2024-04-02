@@ -18,6 +18,7 @@ class Player extends SUEY.Floater {
         super('player', null, { icon, color: 'var(--button-dark)', color: 'rgb(223, 32, 32)', shadow: false, shrink: 0.75 });
         const self = this;
         this.addClass('salt-player');
+        Advice.attach(this.button, 'floater/player');
 
         // App
         const app = new SALT.App();

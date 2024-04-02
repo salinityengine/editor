@@ -24,6 +24,7 @@ class Library extends SUEY.Floater {
         /******************** TITLED PANEL */
 
         const libPanel = new SUEY.Titled({ title: 'Library' });
+        this.add(libPanel);
 
         /******************** HEADER BUTTONS */
 
@@ -83,8 +84,6 @@ class Library extends SUEY.Floater {
         });
         searchDiv.add(searchBox, searchIcon);
         libPanel.addToSelf(searchDiv);
-
-        this.add(libPanel);
 
         /***** SIGNALS */
 

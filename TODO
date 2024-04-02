@@ -3,9 +3,8 @@
 /**********************************************/
 
 Floaters:
-    Coder:
     Inspector: Rename 'Tabs' to 'Block'
-    Outliner:
+    Coder:
     Resources:
     Shaper:
     Things:
@@ -37,6 +36,10 @@ View2D:
     Scenes:
         - Stage List
         - Arrange / Connections
+
+Floaters:
+    Outliner:
+        - Entity2D, etc.
 
 Project:
     - World
