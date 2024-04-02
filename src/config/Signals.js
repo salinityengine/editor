@@ -72,7 +72,7 @@ const SIGNAL_NAMES = [
     'assetSelect',              // (type, asset)        FUNCTION    Select Asset in Explorer
 
     // Scripts
-    'editScript',               // (script)             FUNCTION    Open Coder (script editor) with 'script'
+    'editScript',               // (script)             FUNCTION    Open script editor (Scripter) with 'script'
 
 ];
 

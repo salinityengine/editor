@@ -5,7 +5,7 @@ import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
-class Scene3DGridBlock extends SUEY.Shrinkable {
+class View3DGridBlock extends SUEY.Shrinkable {
 
     constructor() {
         const icon = `${EDITOR.FOLDER_INSPECTOR}settings/grid.svg`; // color: '#333333'
@@ -107,4 +107,4 @@ class Scene3DGridBlock extends SUEY.Shrinkable {
 
 }
 
-export { Scene3DGridBlock };
+export { View3DGridBlock };

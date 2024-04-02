@@ -11,7 +11,7 @@ import { SelectCommand } from '../commands/Commands.js';
 class View2D extends SUEY.Panel {
 
     floaterFamily() {
-        return [ 'advisor', 'inspector', 'library' ];
+        return [ 'advisor', 'codex', 'inspector' ];
     }
 
     constructor() {

@@ -30,7 +30,7 @@ class Resources extends SUEY.Titled {
         const assetMenu = new SUEY.Menu();
 
         // 'Cube Texture'
-        const cubeIcon = `${EDITOR.FOLDER_TYPES}asset/cube-texture.svg`;
+        const cubeIcon = `${EDITOR.FOLDER_FLOATERS}asset/cube-texture.svg`;
         const addCubeMenuItem = new SUEY.MenuItem('Cube Texture', cubeIcon);
         addCubeMenuItem.onSelect(() => {
             const texture = new THREE.CubeTexture();
@@ -40,7 +40,7 @@ class Resources extends SUEY.Titled {
         assetMenu.add(addCubeMenuItem);
 
         // 'Palette'
-        const paletteIcon = `${EDITOR.FOLDER_TYPES}asset/palette.svg`;
+        const paletteIcon = `${EDITOR.FOLDER_FLOATERS}asset/palette.svg`;
         const addPaletteMenuItem = new SUEY.MenuItem(Language.getKey('assets/types/palette'), paletteIcon);
         addPaletteMenuItem.onSelect(() => {
             const palette = new SALT.Palette();
@@ -58,11 +58,11 @@ class Resources extends SUEY.Titled {
 
         this.panels = {};
 
-        this.panels['geometry'] = new AssetPanel({ type: 'geometry', title: Language.getKey('assets/types/geometry'), icon: `${EDITOR.FOLDER_TYPES}asset/geometry.svg` });
-        this.panels['material'] = new AssetPanel({ type: 'material', title: Language.getKey('assets/types/material'), icon: `${EDITOR.FOLDER_TYPES}asset/material.svg` });
-        this.panels['palette'] = new AssetPanel({ type: 'palette', title: Language.getKey('assets/types/palette'), icon: `${EDITOR.FOLDER_TYPES}asset/palette.svg` });
-        this.panels['shape'] = new AssetPanel({ type: 'shape', title: Language.getKey('assets/types/shape'), icon: `${EDITOR.FOLDER_TYPES}asset/shape.svg` });
-        this.panels['texture'] = new AssetPanel({ type: 'texture', title: Language.getKey('assets/types/texture'), icon: `${EDITOR.FOLDER_TYPES}asset/texture.svg` });
+        this.panels['geometry'] = new AssetPanel({ type: 'geometry', title: Language.getKey('assets/types/geometry'), icon: `${EDITOR.FOLDER_FLOATERS}asset/geometry.svg` });
+        this.panels['material'] = new AssetPanel({ type: 'material', title: Language.getKey('assets/types/material'), icon: `${EDITOR.FOLDER_FLOATERS}asset/material.svg` });
+        this.panels['palette'] = new AssetPanel({ type: 'palette', title: Language.getKey('assets/types/palette'), icon: `${EDITOR.FOLDER_FLOATERS}asset/palette.svg` });
+        this.panels['shape'] = new AssetPanel({ type: 'shape', title: Language.getKey('assets/types/shape'), icon: `${EDITOR.FOLDER_FLOATERS}asset/shape.svg` });
+        this.panels['texture'] = new AssetPanel({ type: 'texture', title: Language.getKey('assets/types/texture'), icon: `${EDITOR.FOLDER_FLOATERS}asset/texture.svg` });
 
         // Add Panels
         for (let type in this.panels) {

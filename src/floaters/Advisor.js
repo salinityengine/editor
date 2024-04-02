@@ -13,7 +13,7 @@ class Advisor extends SUEY.Floater {
     #title = '__NOT_SET__';
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_TYPES}advisor.svg`;
+        const icon = `${EDITOR.FOLDER_FLOATERS}advisor.svg`;
         super('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
         const self = this;
         this.addClass('salt-advisor');

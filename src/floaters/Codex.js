@@ -11,19 +11,19 @@ import { AddAssetCommand } from '../commands/Commands.js';
 import { AssetPanel } from '../gui/AssetPanel.js';
 
 /**
- * Scripts
+ * Script Library
  */
-class Library extends SUEY.Floater {
+class Codex extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_TYPES}script.svg`;
-        super('library', null, { icon, color: '#090B11' });
+        const icon = `${EDITOR.FOLDER_FLOATERS}codex.svg`;
+        super('codex', null, { icon, color: '#090B11' });
         const self = this;
-        Advice.attach(this.button, 'floater/library');
+        Advice.attach(this.button, 'floater/codex');
 
         /******************** TITLED PANEL */
 
-        const libPanel = new SUEY.Titled({ title: 'Library' });
+        const libPanel = new SUEY.Titled({ title: 'Codex' });
         this.add(libPanel);
 
         /******************** HEADER BUTTONS */
@@ -69,7 +69,7 @@ class Library extends SUEY.Floater {
 
         // No Category
         const unknown = 'unknown';
-        this.blocks[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${EDITOR.FOLDER_COLLECTIONS}scripts/general.svg`, view: 'list' });
+        this.blocks[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${EDITOR.FOLDER_TYPES}script/general.svg`, view: 'list' });
         libPanel.add(this.blocks[unknown]);
 
         // Add Search Bar
@@ -111,9 +111,9 @@ class Library extends SUEY.Floater {
                 if (!self.blocks[category]) {
                     let icon = '';
                     switch (category) {
-                        case 'camera': icon = `${EDITOR.FOLDER_COLLECTIONS}scripts/camera.svg`; break;
-                        case 'control': icon = `${EDITOR.FOLDER_COLLECTIONS}scripts/control.svg`; break;
-                        case 'entity': icon = `${EDITOR.FOLDER_COLLECTIONS}scripts/entity.svg`; break;
+                        case 'camera': icon = `${EDITOR.FOLDER_TYPES}scripts/camera.svg`; break;
+                        case 'control': icon = `${EDITOR.FOLDER_TYPES}scripts/control.svg`; break;
+                        case 'entity': icon = `${EDITOR.FOLDER_TYPES}scripts/entity.svg`; break;
 
                         //
                         // ADDITIONAL CUSTOM CATEGORY ICONS HERE
@@ -180,4 +180,4 @@ class Library extends SUEY.Floater {
 
 }
 
-export { Library };
+export { Codex };

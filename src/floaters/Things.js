@@ -22,7 +22,7 @@ class Things extends SUEY.Titled {
 
         // 'Entity' Category (user defined)
         const general = 'unknown';
-        this.panels[general] = new AssetPanel({ type: 'prefab', category: general, title: 'General', icon: `${EDITOR.FOLDER_COLLECTIONS}prefabs/general.svg` });
+        this.panels[general] = new AssetPanel({ type: 'prefab', category: general, title: 'General', icon: `${EDITOR.FOLDER_TYPES}prefabs/general.svg` });
         this.add(this.panels[general]);
 
         // Add Search Bar

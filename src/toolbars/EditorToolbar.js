@@ -136,7 +136,7 @@ class EditorToolbar extends SUEY.Panel {
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
         proj.onClick(() => Signals.dispatch('inspectorBuild', 'project'));
-        history.onClick(() => Signals.dispatch('inspectorBuild', 'history'));
+        history.onClick(() => editor.getFloaterByID('history'));
         settings.onClick(() => editor.getFloaterByID('settings'));
 
         /******************** ADD TO TOOLBAR */

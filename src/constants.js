@@ -42,8 +42,8 @@ export const FOLDER_CURSORS =       './files/cursors/';
 export const FOLDER_LOGO =          './files/logo/';
 
 // Editor Images
-export const FOLDER_COLLECTIONS =   './files/images/collections/';
-export const FOLDER_INSPECTOR =     './files/images/inspector/';
+export const FOLDER_FLOATERS =      './files/images/floaters/'
+export const FOLDER_INSPECTOR =     './files/images/floaters/inspector/';
 export const FOLDER_MENU =          './files/images/menu/';
 export const FOLDER_TOOLBAR =       './files/images/toolbar/';
 export const FOLDER_TYPES =         './files/images/types/';

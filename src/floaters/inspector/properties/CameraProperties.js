@@ -15,7 +15,7 @@ class CameraProperties extends SUEY.Div {
 
         /******************** CAMERA */
 
-        const displayGroup = new PropertyGroup({ title: 'Camera', icon: `${EDITOR.FOLDER_TYPES}entity/camera.svg` });
+        const displayGroup = new PropertyGroup({ title: 'Camera', icon: `${EDITOR.FOLDER_FLOATERS}entity/camera.svg` });
         displayGroup.setLeftPropertyWidth('50%');
         this.add(displayGroup);
 

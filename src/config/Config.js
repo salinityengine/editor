@@ -32,9 +32,11 @@ const DEFAULT_SETTINGS = {
     /***** FLOATERS */
 
     'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '10em' },
+    'floater/initial/codex':                    { init: 'left',     side: 'left',       size: '18em' },
+    'floater/initial/history':                  { init: 'right',    side: 'right',      size: '22em' },
     'floater/initial/inspector':                { init: 'right',    side: 'right',      size: '22em' },
-    'floater/initial/library':                  { init: 'left',     side: 'left',       size: '18em' },
     'floater/initial/outliner':                 { init: 'left',     side: 'left',       size: '18em' },
+    'floater/initial/player':                   { init: 'center' },
     'floater/initial/settings':                 { init: 'right',    side: 'right',      size: '22em' },
 
     /***** COMMON EDITOR */

@@ -21,7 +21,7 @@ const _nodeStates = new WeakMap();
 class Outliner extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_TYPES}outliner.svg`;
+        const icon = `${EDITOR.FOLDER_FLOATERS}outliner.svg`;
         super('outliner', null, { icon });
         const self = this;
         Advice.attach(this.button, 'floater/outliner');

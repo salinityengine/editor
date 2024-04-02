@@ -3,13 +3,15 @@
 /**********************************************/
 
 Floaters:
+    Historian:
+    Project:
     Inspector:
         - Go through Blocks
-    Coder:      !! Doesnt work
-        - Open from Library
     Resources:  !! Doesnt work
     Shaper:     !! Doesnt work
     Things:     !! Doesnt work
+    Scripter:   !! Doesnt work
+        - Open from Codex
     Outliner:
         - Entity2D, etc.
 
@@ -138,7 +140,7 @@ Scripting:
     Events:
         Default: Init, Update, Destroy
         Physics: Wake, Sleep, Collide / Seperate
-    Coder:
+    Scripter:
         Python (Brython): https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
         Visual Scripting:
 

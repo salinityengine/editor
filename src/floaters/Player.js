@@ -14,7 +14,7 @@ const _size = { x: 0, y: 0 };
 class Player extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_TYPES}player.svg`;
+        const icon = `${EDITOR.FOLDER_FLOATERS}player.svg`;
         super('player', null, { icon, color: 'var(--button-dark)', color: 'rgb(223, 32, 32)', shadow: false, shrink: 0.75 });
         const self = this;
         this.addClass('salt-player');

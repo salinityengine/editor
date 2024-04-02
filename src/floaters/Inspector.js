@@ -11,19 +11,8 @@ import { Signals } from '../config/Signals.js';
 // import { PaletteTab } from './inspector/PaletteTab.js';
 // import { TextureTab } from './inspector/TextureTab.js';
 
-import { SettingsGeneralBlock } from './inspector/SettingsGeneralBlock.js';
-import { SettingsHistoryTab } from './inspectorOLD/SettingsHistoryTab.js';
-
-import { ProjectGeneralTab } from './inspectorOLD/ProjectGeneralTab.js';
-import { ProjectInfoTab } from './inspectorOLD/ProjectInfoTab.js';
-
-import { View2DGridBlock } from './inspector/View2DGridBlock.js';
-
-import { Scene3DGridBlock } from './inspectorOLD/Scene3DGridBlock.js';
-// import { SceneViewTab } from './inspector/SceneViewTab.js';
-// import { SceneThreeTab } from './inspector/SceneThreeTab.js';
-
-import { WorldGridTab } from './inspectorOLD/WorldGridTab.js';
+import { ProjectGeneralTab } from './inspector/ProjectGeneralTab.js';
+import { ProjectInfoTab } from './inspector/ProjectInfoTab.js';
 
 /**
  * Object Inspector
@@ -31,7 +20,7 @@ import { WorldGridTab } from './inspectorOLD/WorldGridTab.js';
 class Inspector extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_TYPES}inspector.svg`;
+        const icon = `${EDITOR.FOLDER_FLOATERS}inspector.svg`;
         super('inspector', null, { icon, color: '#0055CC' });
         const self = this;
         Advice.attach(this.button, 'floater/inspector');
@@ -47,32 +36,6 @@ class Inspector extends SUEY.Floater {
 
             // Process new 'buildFrom' item
             if (buildFrom !== 'rebuild') {
-
-                // Check for toolbar button second click (for buttons 'Settings', 'Project', etc.)
-                if (buildFrom) {
-                    let doubleSelect = false;
-                    doubleSelect = doubleSelect || (buildFrom === 'settings' && _item === 'settings');
-                    doubleSelect = doubleSelect || (buildFrom === 'history' && _item === 'history');
-                    doubleSelect = doubleSelect || (buildFrom === 'project' && _item === 'project');
-                    if (doubleSelect) {
-                        _item = undefined;
-                        setTimeout(() => Signals.dispatch('selectionChanged'), 0);
-                        return;
-                    }
-                }
-
-                // Some items (settings, history, project) are slightly persistent on Entity selection
-                if (!buildFrom || buildFrom.isEntity) {
-                    if (_item === 'settings') {
-                        if (self.selectedID === 'three') return;
-                    }
-                    if (_item === 'history') {
-                        return;
-                    }
-                    if (_item === 'project') {
-                        if (self.selectedID === 'info') return;
-                    }
-                }
 
                 // Don't rebuild an entity that is already displayed
                 if (buildFrom && _item && _item.isEntity && buildFrom.isEntity && _item.uuid === buildFrom.uuid) {
@@ -93,38 +56,19 @@ class Inspector extends SUEY.Floater {
             const blocks = [];
             let titleName = _item;
 
-            // SETTINGS
-            if (_item === 'settings') {
-                blocks.push(new SettingsGeneralBlock());
-
-                if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_2D) {
-                    blocks.push(new View2DGridBlock());
-
-                } else if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
-                    blocks.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false }));
-                    blocks.push(new Scene3DGridBlock());
-                    blocks.push(new SUEY.Floater('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true }));
-                } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
-                    blocks.push(new SUEY.Floater('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
-                }
-
-            // HISTORY
-            } else if (_item === 'history') {
-                blocks.push(new SUEY.Floater('history', new SettingsHistoryTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/history.svg`, color: '#BF4044', shadow: false, shrink: 0.75 }));
-
             // PROJECT
-            } else if (_item === 'project') {
-                blocks.push(new SUEY.Floater('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}project/general.svg`, color: '#773399' }));
-                blocks.push(new SUEY.Floater('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_TYPES}project/info.svg`, color: '#66C7FF', shrink: true }));
+            if (_item === 'project') {
+                blocks.push(new SUEY.Floater('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_FLOATERS}project/general.svg`, color: '#773399' }));
+                blocks.push(new SUEY.Floater('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_FLOATERS}project/info.svg`, color: '#66C7FF', shrink: true }));
 
             // PALETTE
             } else if (_item && _item.isPalette) {
-                blocks.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_TYPES}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
+                blocks.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
 
             // TEXTURE
             } else if (_item && _item.isTexture) {
-                let icon = `${EDITOR.FOLDER_TYPES}asset/texture.svg`;
-                if (_item.isCubeTexture) icon = `${EDITOR.FOLDER_TYPES}asset/cube-texture.svg`;
+                let icon = `${EDITOR.FOLDER_FLOATERS}asset/texture.svg`;
+                if (_item.isCubeTexture) icon = `${EDITOR.FOLDER_FLOATERS}asset/cube-texture.svg`;
                 blocks.push(new SUEY.Floater('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true }));
 
             // ENTITY
@@ -201,18 +145,10 @@ class Inspector extends SUEY.Floater {
             Signals.dispatch('inspectorBuild', entity);
         }
 
-        /***** EVENTS *****/
-
-        this.on('hidden', () => {
-            _item = undefined;
-            setTimeout(() => Signals.dispatch('inspectorBuild'), 0);
-
-            console.log('Hide the inspector');
-        });
-
         /***** SIGNALS *****/
 
         Signals.connect(this, 'inspectorBuild', function(from) {
+            if (self.dock) self.dock.selectTab(self.id);
             build(from);
         });
 

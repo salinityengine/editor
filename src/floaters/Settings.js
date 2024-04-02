@@ -6,19 +6,20 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-import { SettingsGeneralBlock } from './inspector/SettingsGeneralBlock.js';
-
-import { View2DGridBlock } from './inspector/View2DGridBlock.js';
-
-import { WorldGridTab } from './inspectorOLD/WorldGridTab.js';
+import { SettingsGeneralBlock } from './settings/SettingsGeneralBlock.js';
+import { View2DGridBlock } from './settings/View2DGridBlock.js';
+import { View3DGridBlock } from './settings/View3DGridBlock.js';
+// import { SceneViewTab } from './settings/SceneViewTab.js';
+// import { SceneThreeTab } from './settings/SceneThreeTab.js';
+import { WorldGridTab } from './settings/WorldGridTab.js';
 
 /**
- * Settings Viewer
+ * Settings Inspector
  */
 class Settings extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_TYPES}settings.svg`;
+        const icon = `${EDITOR.FOLDER_FLOATERS}settings.svg`;
         super('settings', null, { icon, color: '#C04145', shrink: true });
         const self = this;
         Advice.attach(this.button, 'floater/settings');
@@ -32,19 +33,23 @@ class Settings extends SUEY.Floater {
             if (self.dock && self.dock.hasClass('suey-window')) inspectorTitle.addClass('suey-hidden');
             self.add(inspectorTitle);
 
-            // Blocks
+            // Create Blocks
             const blocks = [];
             blocks.push(new SettingsGeneralBlock());
             if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_2D) {
                 blocks.push(new View2DGridBlock());
 
             } else if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
-                blocks.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false }));
-                blocks.push(new Scene3DGridBlock());
-                blocks.push(new SUEY.Floater('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true }));
+                blocks.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_FLOATERS}setting/view.svg`, color: '#ffffff', shadow: false }));
+                blocks.push(new View3DGridBlock());
+                blocks.push(new SUEY.Floater('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_FLOATERS}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true }));
+
             } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
-                blocks.push(new SUEY.Floater('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
+                blocks.push(new SUEY.Floater('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_FLOATERS}setting/grid.svg`, color: '#333333' }));
+
             }
+
+            // Add Blocks
             self.add(...blocks);
         }
 

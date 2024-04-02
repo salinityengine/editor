@@ -12,8 +12,9 @@ const _values = {
 
         // Floaters
         'floater/advisor':                  { title: 'Advisor', html: `Shows helpful tips and information.` },
+        'floater/codex':                    { title: 'Codex', html: `Collection of scripts for use in your project.` },
+        'floater/history':                  { title: 'History', html: `Undo / redo history log.`},
         'floater/inspector':                { title: 'Inspector', html: `View and edit properties and settings.`},
-        'floater/library':                  { title: 'Library', html: `Collection of scripts for use in your project.` },
         'floater/outliner':                 { title: 'Outliner', html: `Displays interactive scene hierarchy.` },
         'floater/player':                   { title: 'Player', html: `Game play preview.` },
         'floater/settings':                 { title: 'Settings', html: `Settings viewer.`},

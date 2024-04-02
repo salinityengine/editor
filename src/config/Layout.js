@@ -2,12 +2,13 @@ import * as SUEY from 'gui';
 import { Config } from './Config.js';
 
 import { Advisor } from '../floaters/Advisor.js';
-import { Coder } from '../floaters/Coder.js';
+import { Codex } from '../floaters/Codex.js';
+import { Historian } from '../floaters/Historian.js';
 import { Inspector } from '../floaters/Inspector.js';
-import { Library } from '../floaters/Library.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
 import { Resources } from '../floaters/Resources.js';
+import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
 import { Things } from '../floaters/Things.js';
@@ -17,16 +18,17 @@ class Layout {
     static createFloater(id) {
         switch (id) {
             case 'advisor': return new Advisor();
+            case 'codex': return new Codex();
+            case 'history': return new Historian();
             case 'inspector': return new Inspector();
-            case 'library': return new Library();
             case 'outliner': return new Outliner();
             case 'player': return new Player();
             case 'settings': return new Settings();
 
-            // new Coder();
-            // new Resources();     // new SUEY.Floater('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
+            // new Scripter();
+            // new Resources();     // icon: `${EDITOR.FOLDER_FLOATERS}asset.svg`
             // new Shaper();
-            // new Things();        // new SUEY.Floater('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
+            // new Things();        // icon: `${EDITOR.FOLDER_FLOATERS}prefab.svg`
         }
         console.warn(`Layout.createFloater: Unknown Floater type: ${id}`);
         return null;
@@ -38,7 +40,7 @@ class Layout {
 
         // Build Default Layout
         Layout.installFloater(docker, Layout.createFloater('outliner'));
-        Layout.installFloater(docker, Layout.createFloater('library'));
+        Layout.installFloater(docker, Layout.createFloater('codex'));
         Layout.installFloater(docker, Layout.createFloater('advisor'));
         Layout.installFloater(docker, Layout.createFloater('inspector'));
     }

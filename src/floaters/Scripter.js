@@ -8,17 +8,16 @@ import * as SUEY from 'gui';
 /**
  * Script Editor
  */
-class Coder extends SUEY.Window {
+class Scripter extends SUEY.Window {
 
     constructor() {
         super({
             height: '85%',
             width: '60%',
-            title: 'Coder',
+            title: 'Scripter',
             buttonSides: SUEY.CLOSE_SIDES.BOTH,
         });
         const self = this;
-        this.id = 'Coder';
         this.setStyle('display', 'none');
 
         // Match inner panel background with CodeMirror
@@ -250,7 +249,7 @@ class Coder extends SUEY.Window {
         //     title.setValue(script.name);
         //     currentMode = 'javascript';
         //     currentScript = script;
-        //     // Display Coder
+        //     // Display Scripter
         //     self.showWindow();
         //     // Update CodeMirror
         //     codemirror.setValue(script.source);
@@ -276,4 +275,4 @@ class Coder extends SUEY.Window {
 
 }
 
-export { Coder };
+export { Scripter };

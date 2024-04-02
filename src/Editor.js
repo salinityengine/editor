@@ -588,11 +588,11 @@ function editorKeyDown(editor, event) {
             // Clear Config
             Config.clear();
 
-            // Defauly Docks
-            Layout.default(editor.docker);
-
             // Refresh GUI
             editor.refreshSettings();
+
+            // Default Docks
+            setTimeout(() => Layout.default(editor.docker), 0);
             break;
     }
 }
