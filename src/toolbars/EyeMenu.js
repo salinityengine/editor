@@ -207,18 +207,39 @@ class EyeMenu extends SUEY.Menu {
         /******************** MENU: WINDOW ********************/
 
         let windowHide, windowShow;
+        let windowAdvisor, windowInspector;
         let windowFullscreen;
 
         if (useWindow) {
-            windowHide = new SUEY.MenuItem('Hide All Panels', `${EDITOR.FOLDER_MENU}main/window/hide-panels.svg`).keepOpen();
-            windowShow = new SUEY.MenuItem('Show All Panels', `${EDITOR.FOLDER_MENU}main/window/show-panels.svg`).keepOpen();
+            windowHide = new SUEY.MenuItem('Collapse All Tabs', `${EDITOR.FOLDER_MENU}main/window/hide-panels.svg`).keepOpen();
+            windowShow = new SUEY.MenuItem('Expand All Tabs', `${EDITOR.FOLDER_MENU}main/window/show-panels.svg`).keepOpen();
+
+            windowAdvisor = new SUEY.MenuItem('Show Advisor');
+            windowInspector = new SUEY.MenuItem('Show Inspector');
 
             const fullscreenTxt = `${SALT.System.metaKeyOS()}↵`; // i.e. "Enter" or "Return"
             windowFullscreen = new SUEY.MenuItem('Enter Fullscreen', `${EDITOR.FOLDER_MENU}main/window/fullscreen.svg`, fullscreenTxt);
 
-            windowHide.onSelect(() => editor.collapseTabs());
-            windowShow.onSelect(() => editor.expandTabs());
+            windowHide.onSelect(() => editor.docker.collapseTabs());
+            windowShow.onSelect(() => editor.docker.expandTabs());
+
+            function toggleWindow(windowMenuItem, windowName) {
+                if (windowMenuItem.checked) {
+                    const floater = editor.getFloaterByID(windowName, false /* build? */, false /* select? */);
+                    if (floater && floater.dock) floater.dock.removeTab(floater);
+                } else {
+                    editor.getFloaterByID(windowName, true /* build? */, true /* select? */);
+                }
+            }
+            windowAdvisor.onSelect(() => toggleWindow(windowAdvisor, 'advisor'));
+            windowInspector.onSelect(() => toggleWindow(windowInspector, 'inspector'));
+            document.body.addEventListener('tab-changed', () => {
+                windowAdvisor.setChecked(editor.getFloaterByID('advisor', false, false));
+                windowInspector.setChecked(editor.getFloaterByID('inspector', false, false));
+            });
+
             windowFullscreen.onSelect(() => { SALT.System.fullscreen(); });
+
         }
 
         /******************** MENU: HELP ********************/
@@ -264,8 +285,9 @@ class EyeMenu extends SUEY.Menu {
 
             if (useWindow) {
                 itemWindow.attachSubMenu(new SUEY.Menu().add(
-                    windowHide, windowShow, new SUEY.MenuSeparator(),
-                    windowFullscreen
+                    windowHide, windowShow,
+                    new SUEY.MenuSeparator(), windowAdvisor, windowInspector,
+                    new SUEY.MenuSeparator(), windowFullscreen
                 ));
                 this.add(itemWindow);
             }

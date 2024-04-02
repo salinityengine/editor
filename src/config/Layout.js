@@ -15,12 +15,12 @@ class Layout {
     static createFloater(id) {
         switch (id) {
             case 'advisor': return new Advisor();
+            case 'inspector': return new Inspector();
             case 'library': return new Library();
             case 'outliner': return new Outliner();
             case 'player': return new Player();
 
             // new Coder();
-            // new Inspector();     // new SUEY.Floater('inspector', this.inspector, { icon: `${EDITOR.FOLDER_TYPES}inspector.svg`, color: '#0055CC' });
             // new Resources();     // new SUEY.Floater('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
             // new Shaper();
             // new Things();        // new SUEY.Floater('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
@@ -36,15 +36,16 @@ class Layout {
         // Build Default Layout
         const dockLeft = docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
         const tabbedLeft = dockLeft.enableTabs();
-        tabbedLeft.addTab(new Outliner());
-        tabbedLeft.addTab(new Library());
+        tabbedLeft.addTab(Layout.createFloater('outliner'));
+        tabbedLeft.addTab(Layout.createFloater('library'));
 
         const dockBottomLeft = dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%');
         const tabbedBottomLeft = dockBottomLeft.enableTabs();
-        tabbedBottomLeft.addTab(new Advisor());
+        tabbedBottomLeft.addTab(Layout.createFloater('advisor'));
 
-        // const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
-        // dockRight.enableTabs().addTab(new Library());
+        const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
+        const tabbedRight = dockRight.enableTabs();
+        tabbedRight.addTab(Layout.createFloater('inspector'));
     }
 
     static installFloater(docker, floater) {

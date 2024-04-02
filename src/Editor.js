@@ -418,21 +418,22 @@ class Editor extends SUEY.Div {
 
     /******************** FLOATERS ********************/
 
-    /** If Floater is present in Editor, ensures parent Dock Tab is active */
-    getFloaterByID(tabID, build = true) {
+    /** Returns Floater if present in Editor. Option to build if not present, and make sure active.  */
+    getFloaterByID(tabID, build = true, select = true) {
         let floater = this.docker.getFloaterByID(tabID);
         if (!floater && build) {
             floater = Layout.createFloater(tabID);
             if (floater) Layout.installFloater(this.docker, floater);
         }
-        if (floater && floater.dock) floater.dock.selectTab(floater.id);
+        if (select && floater && floater.dock) floater.dock.selectTab(floater.id);
         return floater;
     }
 
     /** If Floater is present in Editor, ensures parent Dock Tab is active */
     selectFloater(tabID = '') {
         if (tabID && tabID.isElement) tabID = tabID.id;
-        return this.getFloaterByID(tabID, false /* build? */);
+        const floater = this.docker.getFloaterByID(tabID);
+        if (floater && floater.dock) floater.dock.selectTab(floater.id);
     }
 
 }

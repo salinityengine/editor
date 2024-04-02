@@ -3,11 +3,15 @@
 /**********************************************/
 
 Floaters:
-    Inspector: Rename 'Tabs' to 'Block'
-    Coder:
-    Resources:
-    Shaper:
-    Things:
+    Inspector:
+        - Go through Blocks
+    Coder:      !! Doesnt work
+        - Open from Library
+    Resources:  !! Doesnt work
+    Shaper:     !! Doesnt work
+    Things:     !! Doesnt work
+    Outliner:
+        - Entity2D, etc.
 
 Dock Layout:
     - Default layout for each Viewport type
@@ -36,10 +40,6 @@ View2D:
     Scenes:
         - Stage List
         - Arrange / Connections
-
-Floaters:
-    Outliner:
-        - Entity2D, etc.
 
 Project:
     - World

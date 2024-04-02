@@ -2,6 +2,7 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
@@ -27,19 +28,11 @@ import { WorldGridTab } from './inspector/WorldGridTab.js';
  */
 class Inspector extends SUEY.Floater {
 
-    constructor({
-        style = SUEY.PANEL_STYLES.FANCY,
-        startWidth = null,
-        startHeight = null,
-        minWidth = 0,
-        maxWidth = Infinity,
-        minHeight = 0,
-        maxHeight = Infinity,
-    } = {}) {
-        super({ style, displayEmpty: false, startWidth, startHeight, minWidth, maxWidth, minHeight, maxHeight });
+    constructor() {
+        const icon = `${EDITOR.FOLDER_TYPES}inspector.svg`;
+        super('inspector', null, { icon, color: '#0055CC' });
         const self = this;
-        this.id = 'Inspector';
-        this.setTabSide(SUEY.TAB_SIDES.LEFT);
+        Advice.attach(this.button, 'floater/inspector');
 
         // Flags
         this.isEmpty = true;
@@ -91,45 +84,41 @@ class Inspector extends SUEY.Floater {
                 _item = buildFrom;
             }
 
-            // // Delete existing Tabs
-            // //
-            // // TODO: clearBlocks()
-            //
-            // OLD: self.clearTabs();
-            //
+            // Delete existing Blocks
+            self.clearContents();
             self.isEmpty = false;
 
-            const tabs = [];
+            const blocks = [];
             // SETTINGS
             if (_item === 'settings') {
-                tabs.push(new SUEY.Floater('settings', new SettingsGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/general.svg`, color: '#C04145', shrink: true }));
+                blocks.push(new SUEY.Floater('settings', new SettingsGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/general.svg`, color: '#C04145', shrink: true }));
 
                 if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
-                    tabs.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false }));
-                    tabs.push(new SUEY.Floater('grid', new Scene3DGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
-                    tabs.push(new SUEY.Floater('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true }));
+                    blocks.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false }));
+                    blocks.push(new SUEY.Floater('grid', new Scene3DGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
+                    blocks.push(new SUEY.Floater('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true }));
                 } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
-                    tabs.push(new SUEY.Floater('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
+                    blocks.push(new SUEY.Floater('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
                 }
 
             // HISTORY
             } else if (_item === 'history') {
-                tabs.push(new SUEY.Floater('history', new SettingsHistoryTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/history.svg`, color: '#BF4044', shadow: false, shrink: 0.75 }));
+                blocks.push(new SUEY.Floater('history', new SettingsHistoryTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/history.svg`, color: '#BF4044', shadow: false, shrink: 0.75 }));
 
             // PROJECT
             } else if (_item === 'project') {
-                tabs.push(new SUEY.Floater('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}project/general.svg`, color: '#773399' }));
-                tabs.push(new SUEY.Floater('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_TYPES}project/info.svg`, color: '#66C7FF', shrink: true }));
+                blocks.push(new SUEY.Floater('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}project/general.svg`, color: '#773399' }));
+                blocks.push(new SUEY.Floater('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_TYPES}project/info.svg`, color: '#66C7FF', shrink: true }));
 
             // PALETTE
             } else if (_item && _item.isPalette) {
-                tabs.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_TYPES}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
+                blocks.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_TYPES}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
 
             // TEXTURE
             } else if (_item && _item.isTexture) {
                 let icon = `${EDITOR.FOLDER_TYPES}asset/texture.svg`;
                 if (_item.isCubeTexture) icon = `${EDITOR.FOLDER_TYPES}asset/cube-texture.svg`;
-                tabs.push(new SUEY.Floater('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true }));
+                blocks.push(new SUEY.Floater('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true }));
 
             // ENTITY
             } else if (_item && _item.isEntity) {
@@ -144,7 +133,7 @@ class Inspector extends SUEY.Floater {
                 else { /* isEntity */ tabType = 'entity'; icon = `${EDITOR.FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
 
                 // Entity Tab
-                tabs.push(new SUEY.Floater(tabType, new EntityTab(entity), { icon, color, shrink, shadow }));
+                blocks.push(new SUEY.Floater(tabType, new EntityTab(entity), { icon, color, shrink, shadow }));
 
                 // Component Tabs
                 const components = entity.components;
@@ -163,7 +152,7 @@ class Inspector extends SUEY.Floater {
                         if (!ComponentClass) continue;
                         const icon = EDITOR.COMPSALTNT_ICONS[compType] ?? ComponentClass.config.icon ?? '';
                         const color = ComponentClass.config.color;
-                        tabs.push(new SUEY.Floater(compType, new ComponentTab(entity, compType), { icon, color, shrink: true }));
+                        blocks.push(new SUEY.Floater(compType, new ComponentTab(entity, compType), { icon, color, shrink: true }));
                     }
                 }
 
@@ -175,16 +164,13 @@ class Inspector extends SUEY.Floater {
                 emptyText.setStyle('justifyContent', 'center');
                 emptyText.setStyle('paddingTop', '1em').setStyle('paddingBottom', '1em');
                 empty.add(emptyTitle, emptyText);
-                tabs.push(new SUEY.Floater('inspector', empty, { icon: `${EDITOR.FOLDER_TYPES}inspector.svg` }));
+                blocks.push(empty);
 
                 self.isEmpty = true;
             }
 
             // Add Tabs
-            self.addTab(...tabs);
-
-            // Select Last Known Tab (stored ranked in Config.js)
-            self.selectLastKnownTab();
+            self.add(...blocks);
 
             // Dispatch Signals
             Signals.dispatch('inspectorChanged');
@@ -206,14 +192,13 @@ class Inspector extends SUEY.Floater {
             Signals.dispatch('inspectorBuild', entity);
         }
 
-        // Close Button
-        SUEY.Interaction.addCloseButton(this, SUEY.CLOSE_SIDES.RIGHT);
-
         /***** EVENTS *****/
 
         this.on('hidden', () => {
             _item = undefined;
             setTimeout(() => Signals.dispatch('inspectorBuild'), 0);
+
+            console.log('Hide the inspector');
         });
 
         /***** SIGNALS *****/
@@ -231,6 +216,10 @@ class Inspector extends SUEY.Floater {
         /***** GETTERS *****/
 
         this.currentItem = function() { return _item; };
+
+        /***** INIT *****/
+
+        build();
 
     } // end ctor
 
