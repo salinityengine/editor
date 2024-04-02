@@ -1,5 +1,9 @@
 /********** GAME PLAYER */
 
+.salt-player {
+    min-height: 200px !important;;
+}
+
 .salt-gray-out * {
     /* filter: grayscale(1) contrast(0.5) brightness(0.5) */ /* blur(1px) */ /* !important; */
 }

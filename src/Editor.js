@@ -418,35 +418,21 @@ class Editor extends SUEY.Div {
 
     /******************** FLOATERS ********************/
 
-    getFloaterByID(tabID, build = false) {
+    /** If Floater is present in Editor, ensures parent Dock Tab is active */
+    getFloaterByID(tabID, build = true) {
         let floater = this.docker.getFloaterByID(tabID);
         if (!floater && build) {
-            //
-            // TODO: Build missing floater, then add & select
-            //
-
-            // new Coder();
-            // new Player();
-            // new Shaper();
-
-            // new Advisor();
-            // new Inspector();
-            // new Library();
-            // new Outliner();      // new SUEY.Floater('outliner', this.outliner, { icon: `${EDITOR.FOLDER_TYPES}outliner.svg` });
-            // new Resources();     // new SUEY.Floater('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
-            // new Things();        // new SUEY.Floater('prefabs', this.prefabs, { icon: `${EDITOR.FOLDER_TYPES}prefab.svg` });
-
-            // this.addTab(...);
-
+            floater = Layout.createFloater(tabID);
+            if (floater) Layout.installFloater(this.docker, floater);
         }
+        if (floater && floater.dock) floater.dock.selectTab(floater.id);
         return floater;
     }
 
     /** If Floater is present in Editor, ensures parent Dock Tab is active */
     selectFloater(tabID = '') {
         if (tabID && tabID.isElement) tabID = tabID.id;
-        const floater = this.docker.getFloaterByID(tabID);
-        if (floater && floater.dock) floater.dock.selectTab(tabID);
+        return this.getFloaterByID(tabID, false /* build? */);
     }
 
 }

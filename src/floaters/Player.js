@@ -2,6 +2,7 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
@@ -10,30 +11,22 @@ const _size = { x: 0, y: 0 };
 /**
  * Game Player
  */
-class Player extends SUEY.Window {
+class Player extends SUEY.Floater {
 
     constructor() {
-        super({
-            height: '85%',
-            width: '60%',
-            title: 'Player',
-        });
+        const icon = `${EDITOR.FOLDER_TYPES}player.svg`;
+        super('player', null, { icon, color: 'var(--button-dark)', color: 'rgb(223, 32, 32)', shadow: false, shrink: 0.75 });
         const self = this;
         this.addClass('salt-player');
-        this.id = 'Player';
-        this.setStyle('display', 'none');
 
         // App
         const app = new SALT.App();
 
         // DOM
-        this.contents().dom.appendChild(app.dom);
-        this.contents().setStyle('background', 'rgba(0, 0, 0, 1.0)');
-        this.contents().setStyle('position', 'relative');
-        this.contents().setStyle('padding', '0');
-
-        // Don't want Player transparent
-        this.setStyle('opacity', '1.0');
+        this.dom.appendChild(app.dom);
+        this.setStyle('background', 'rgba(0, 0, 0, 1.0)');
+        this.setStyle('position', 'relative');
+        this.setStyle('padding', '0');
 
         // App State
         Object.defineProperties(this, {
@@ -118,7 +111,13 @@ class Player extends SUEY.Window {
         stop.add(playStop);
 
         camera.onClick(() => self.requestScreenshot());
-        pause.onClick(() => self.pause());
+        pause.onClick(() => {
+            if (app.isPlaying) {
+                self.pause();
+            } else {
+                self.start();
+            }
+        });
         stop.onClick(() => self.stop());
 
         const playButtons = new SUEY.FlexBox().addClass('salt-active-toolbar');
@@ -145,14 +144,25 @@ class Player extends SUEY.Window {
             }
         }
 
+        function playButtonAdjust(state) {
+            if (state === 'start') {
+                playActive.setStyle('display', 'none', 'pointer-events', 'none');
+                playPause.setStyle('display', '', 'pointer-events', 'all');
+            } else if (state === 'pause' || state === 'stop') {
+                playActive.setStyle('display', '', 'pointer-events', 'all');
+                playPause.setStyle('display', 'none', 'pointer-events', 'none');
+            }
+        }
+
+        Signals.connect(this, 'playerStateChanged', playButtonAdjust);
+
+        adjustPlayButtons();
+        playButtonAdjust('stop');
+
         /******************** START / STOP */
 
         this.start = function() {
             if (app.isPlaying) return;
-
-            // Show Player (focus forces Inspector to blur, and edited Inspector variables to auto update)
-            self.setStyle('opacity', '0');
-            self.showWindow();
             adjustPlayButtons();
 
             // Save Project to JSON
@@ -167,12 +177,6 @@ class Player extends SUEY.Window {
             // Play!
             app.start();
             Signals.dispatch('playerStateChanged', 'start');
-
-            // Update Size
-            setTimeout(() => {
-                updateSize();
-                self.setStyle('opacity', '1');
-            }, 50);
         };
 
         this.pause = function() {
@@ -181,22 +185,11 @@ class Player extends SUEY.Window {
         };
 
         this.stop = function() {
-            self.setStyle('display', 'none');
             if (app.isPlaying) {
                 app.stop();
                 Signals.dispatch('playerStateChanged', 'stop');
             }
         };
-
-        Signals.connect(this, 'playerStateChanged', function(state) {
-            if (state === 'start') {
-                playActive.setStyle('display', 'none', 'pointer-events', 'none');
-                playPause.setStyle('display', '', 'pointer-events', 'all');
-            } else if (state === 'pause') {
-                playActive.setStyle('display', '', 'pointer-events', 'all');
-                playPause.setStyle('display', 'none', 'pointer-events', 'none');
-            }
-        });
 
         /******************** SCREEN TYPE */
 

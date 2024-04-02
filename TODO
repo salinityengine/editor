@@ -2,17 +2,16 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Dock Layout:
-    - Default layout for each Viewport type
-
 Floaters:
     Coder:
     Inspector: Rename 'Tabs' to 'Block'
     Outliner:
-    Player:
     Resources:
     Shaper:
     Things:
+
+Dock Layout:
+    - Default layout for each Viewport type
 
 Toolbar:
     - View2D Toolbar 'Grid' images
