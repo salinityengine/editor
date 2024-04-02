@@ -12,16 +12,18 @@ import { Signals } from '../config/Signals.js';
 // import { TextureTab } from './inspector/TextureTab.js';
 
 import { SettingsGeneralBlock } from './inspector/SettingsGeneralBlock.js';
-import { SettingsHistoryTab } from './inspector/SettingsHistoryTab.js';
+import { SettingsHistoryTab } from './inspectorOLD/SettingsHistoryTab.js';
 
-import { ProjectGeneralTab } from './inspector/ProjectGeneralTab.js';
-import { ProjectInfoTab } from './inspector/ProjectInfoTab.js';
+import { ProjectGeneralTab } from './inspectorOLD/ProjectGeneralTab.js';
+import { ProjectInfoTab } from './inspectorOLD/ProjectInfoTab.js';
 
-import { Scene3DGridBlock } from './inspector/Scene3DGridBlock.js';
+import { View2DGridBlock } from './inspector/View2DGridBlock.js';
+
+import { Scene3DGridBlock } from './inspectorOLD/Scene3DGridBlock.js';
 // import { SceneViewTab } from './inspector/SceneViewTab.js';
 // import { SceneThreeTab } from './inspector/SceneThreeTab.js';
 
-import { WorldGridTab } from './inspector/WorldGridTab.js';
+import { WorldGridTab } from './inspectorOLD/WorldGridTab.js';
 
 /**
  * Object Inspector
@@ -96,9 +98,7 @@ class Inspector extends SUEY.Floater {
                 blocks.push(new SettingsGeneralBlock());
 
                 if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_2D) {
-                    // blocks.push(new SceneViewTab());
-                    blocks.push(new Scene3DGridBlock());
-                    // blocks.push(new SceneThreeTab());
+                    blocks.push(new View2DGridBlock());
 
                 } else if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
                     blocks.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false }));

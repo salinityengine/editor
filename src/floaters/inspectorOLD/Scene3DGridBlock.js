@@ -9,7 +9,7 @@ class Scene3DGridBlock extends SUEY.Shrinkable {
 
     constructor() {
         const icon = `${EDITOR.FOLDER_INSPECTOR}settings/grid.svg`; // color: '#333333'
-        super({ text: Language.getKey('inspector/grid/title'), icon, arrow: 'right', border: false });
+        super({ text: Language.getKey('inspector/grid/title'), icon, arrow: 'right', border: true });
 
         // Property Box
         const props = new SUEY.PropertyList();
@@ -33,10 +33,10 @@ class Scene3DGridBlock extends SUEY.Shrinkable {
         const gridSizeBox = new SUEY.NumberBox();
         gridSizeBox.setPrecision(3).setRange(0.00, 100).setStep(0.01);
         gridSizeBox.on('change', () => {
-            Config.setKey('scene/grid/translateSize', gridSizeBox.getValue());
+            Config.setKey('scene3d/grid/translateSize', gridSizeBox.getValue());
             Signals.dispatch('gridChanged');
         });
-        props.addRow(Language.getKey('inspector/grid/size'), gridSizeBox);
+        props.addRow(Language.getKey('inspector/grid/minisize'), gridSizeBox);
 
         // Grid Multiplier
         const gridMultiSlider = new SUEY.Slider();
@@ -46,7 +46,7 @@ class Scene3DGridBlock extends SUEY.Shrinkable {
             clearTimeout(gridTimeout);
             gridTimeout = setTimeout(() => {
                 if (gridMultiSlider && gridMultiSlider.dom && gridMultiBox && gridMultiBox.dom) {
-                    Config.setKey('scene/grid/canvasMultiplier', gridMultiSlider.getValue());
+                    Config.setKey('scene3d/grid/canvasMultiplier', gridMultiSlider.getValue());
                     Signals.dispatch('gridChanged');
                 }
             }, 5);
@@ -54,7 +54,7 @@ class Scene3DGridBlock extends SUEY.Shrinkable {
 
         const gridMultiBox = new SUEY.NumberBox().addClass('suey-property-tiny-row');
         gridMultiBox.on('change', () => {
-            Config.setKey('scene/grid/canvasMultiplier', gridMultiBox.getValue());
+            Config.setKey('scene3d/grid/canvasMultiplier', gridMultiBox.getValue());
             Signals.dispatch('gridChanged');
         });
 
@@ -70,7 +70,7 @@ class Scene3DGridBlock extends SUEY.Shrinkable {
 
         // Show Grid
         const showGrid = new SUEY.Checkbox().on('change', () => {
-            Config.setKey('scene/grid/showCanvas', (!Config.getKey('scene/grid/showCanvas')));
+            Config.setKey('scene3d/grid/showCanvas', (!Config.getKey('scene3d/grid/showCanvas')));
             Signals.dispatch('gridChanged');
         });
         const showGridShortcut = new SUEY.MenuShortcut(`N`);
@@ -78,7 +78,7 @@ class Scene3DGridBlock extends SUEY.Shrinkable {
 
         // Mini Grid
         const miniGrid = new SUEY.Checkbox().on('change', () => {
-            Config.setKey('scene/grid/showInfinite', (!Config.getKey('scene/grid/showInfinite')));
+            Config.setKey('scene3d/grid/showInfinite', (!Config.getKey('scene3d/grid/showInfinite')));
             Signals.dispatch('gridChanged');
         });
         const showMiniShortcut = new SUEY.MenuShortcut(`M`);
@@ -88,11 +88,11 @@ class Scene3DGridBlock extends SUEY.Shrinkable {
 
         function updateUI() {
             snapGrid.setValue(Config.getKey('scene/grid/snap'));
-            gridSizeBox.setValue(Config.getKey('scene/grid/translateSize'));
-            showGrid.setValue(Config.getKey('scene/grid/showCanvas'));
-            miniGrid.setValue(Config.getKey('scene/grid/showInfinite'));
-            gridMultiSlider.setValue(Config.getKey('scene/grid/canvasMultiplier'));
-            gridMultiBox.setValue(Config.getKey('scene/grid/canvasMultiplier'));
+            gridSizeBox.setValue(Config.getKey('scene3d/grid/translateSize'));
+            showGrid.setValue(Config.getKey('scene3d/grid/showCanvas'));
+            miniGrid.setValue(Config.getKey('scene3d/grid/showInfinite'));
+            gridMultiSlider.setValue(Config.getKey('scene3d/grid/canvasMultiplier'));
+            gridMultiBox.setValue(Config.getKey('scene3d/grid/canvasMultiplier'));
         }
 
         /***** SIGNALS *****/

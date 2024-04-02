@@ -98,7 +98,7 @@ class EntityTransformProperties extends SUEY.Div {
         const showShadow = hasMesh && !isSpecial;
 
         // Position
-        const gridSize = parseFloat(Config.getKey('scene/grid/translateSize'));
+        const gridSize = parseFloat(Config.getKey('scene3d/grid/translateSize'));
         const moveSize = gridSize; // (Config.getKey('scene/grid/snap')) ? gridSize : EDITOR.BASE_MOVE;
         const entityPositionX = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
         const entityPositionY = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);

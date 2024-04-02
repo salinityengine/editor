@@ -93,7 +93,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         let unit = item['unit'] ?? ((item.type === 'angle') ? '°' : '');
         let label = item['label'] ?? '';
         let precision = (item.type === 'int') ? 0 : (item['precision'] ?? 3);
-        if (step === 'grid') step = parseFloat(Config.getKey('scene/grid/translateSize'));
+        if (step === 'grid') step = parseFloat(Config.getKey('scene3d/grid/translateSize'));
         numberBox.setRange(min, max).setStep(step).setUnit(unit).setPrecision(precision);
         numberBox.setValue(value);
         if (String(label) !== '') {
@@ -187,7 +187,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             let step = (Array.isArray(item['step']) ? item['step'][i] : item['step']) ?? 1;
             let unit = (Array.isArray(item['unit']) ? item['unit'][i] : item['unit']) ?? '';
             let precision = (Array.isArray(item['precision']) ? item['precision'][i] : item['precision']) ?? 3;
-            if (step === 'grid') step = parseFloat(Config.getKey('scene/grid/translateSize'));
+            if (step === 'grid') step = parseFloat(Config.getKey('scene3d/grid/translateSize'));
             box.setRange(min, max).setStep(step).setUnit(unit).setPrecision(precision);
             box.setValue(value[i]);
         }
@@ -294,7 +294,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             let unit = (Array.isArray(item['unit']) ? item['unit'][i] : item['unit']) ?? '';
             let label = (Array.isArray(item['label']) ? item['label'][i] : item['label']) ?? '';
             let precision = (Array.isArray(item['precision']) ? item['precision'][i] : item['precision']) ?? 3;
-            if (step === 'grid') step = parseFloat(Config.getKey('scene/grid/translateSize'));
+            if (step === 'grid') step = parseFloat(Config.getKey('scene3d/grid/translateSize'));
             arrayBoxes[i].setRange(min, max).setStep(step).setUnit(unit).setPrecision(precision);
             arrayBoxes[i].setValue(value[i]);
 

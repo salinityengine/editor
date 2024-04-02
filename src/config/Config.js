@@ -29,15 +29,32 @@ const DEFAULT_SETTINGS = {
     'search/prefabs':                           '',                 // Prefabs search term
     'search/scripts':                           '',                 // Script search term
 
+    /***** FLOATERS */
+
+    'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '10em' },
+    'floater/initial/inspector':                { init: 'right',    side: 'right',      size: '22em' },
+    'floater/initial/library':                  { init: 'left',     side: 'left',       size: '18em' },
+    'floater/initial/outliner':                 { init: 'left',     side: 'left',       size: '18em' },
+    'floater/initial/settings':                 { init: 'right',    side: 'right',      size: '22em' },
+
     /***** COMMON EDITOR */
 
     'scene/grid/snap':                          true,               // Use grid ON / OFF
 
     /***** SCENE 2D EDITOR *****/
 
-
+    'scene2d/grid/show':                        true,               // Show grid in Scene Editor 2D?
+    'scene2d/grid/sizeX':                       10,                 // Grid size X
+    'scene2d/grid/sizeY':                       10,                 // Grid size Y
 
     /***** SCENE 3D EDITOR *****/
+
+    'scene3d/grid/showCanvas':                  true,               // Show main canvas grid?
+    'scene3d/grid/showInfinite':                true,               // Show momentary infinite grid when dragging?
+    'scene3d/grid/canvasMultiplier':            10,                 // Major size multiplier for checkerboard grid
+    'scene3d/grid/translateSize':               0.10,               // Grid size for translate, rect tools
+    'scene3d/grid/rotateSize':                  15.0,               // Rotation snap in angle degrees
+    'scene3d/grid/scaleSize':                   0.1,                // Scale snap in percentange (i.e. 0.1 = 10%)
 
     'paint/color':                              0xff0000,           // Brush color
     'paint/size':                               0.1,                // Brush size
@@ -66,13 +83,6 @@ const DEFAULT_SETTINGS = {
     'scene/camera/locked':                      false,              // Viewport camera locked?
 
     'scene/gizmo':                              'SPHERE',           // Gizmo type to display
-
-    'scene/grid/showCanvas':                    true,               // Show main canvas grid?
-    'scene/grid/showInfinite':                  true,               // Show momentary infinite grid when dragging?
-    'scene/grid/canvasMultiplier':              10,                 // Major size multiplier for checkerboard grid
-    'scene/grid/translateSize':                 0.10,               // Grid size for translate, rect tools
-    'scene/grid/rotateSize':                    15.0,               // Rotation snap in angle degrees
-    'scene/grid/scaleSize':                     0.1,                // Scale snap in percentange (i.e. 0.1 = 10%)
 
     'scene/render/mode':                        'standard',         // Render mode
     'scene/render/bounds':                      false,              // Show scene boundaries?

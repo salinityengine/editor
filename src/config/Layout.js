@@ -1,4 +1,5 @@
 import * as SUEY from 'gui';
+import { Config } from './Config.js';
 
 import { Advisor } from '../floaters/Advisor.js';
 import { Coder } from '../floaters/Coder.js';
@@ -7,6 +8,7 @@ import { Library } from '../floaters/Library.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
 import { Resources } from '../floaters/Resources.js';
+import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
 import { Things } from '../floaters/Things.js';
 
@@ -19,6 +21,7 @@ class Layout {
             case 'library': return new Library();
             case 'outliner': return new Outliner();
             case 'player': return new Player();
+            case 'settings': return new Settings();
 
             // new Coder();
             // new Resources();     // new SUEY.Floater('assets', this.assets, { icon: `${EDITOR.FOLDER_TYPES}asset.svg` });
@@ -34,25 +37,52 @@ class Layout {
         docker.clearDocks();
 
         // Build Default Layout
-        const dockLeft = docker.addDock(SUEY.DOCK_SIDES.LEFT, '20%');
-        const tabbedLeft = dockLeft.enableTabs();
-        tabbedLeft.addTab(Layout.createFloater('outliner'));
-        tabbedLeft.addTab(Layout.createFloater('library'));
-
-        const dockBottomLeft = dockLeft.addDock(SUEY.DOCK_SIDES.BOTTOM, '20%');
-        const tabbedBottomLeft = dockBottomLeft.enableTabs();
-        tabbedBottomLeft.addTab(Layout.createFloater('advisor'));
-
-        const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '22em');
-        const tabbedRight = dockRight.enableTabs();
-        tabbedRight.addTab(Layout.createFloater('inspector'));
+        Layout.installFloater(docker, Layout.createFloater('outliner'));
+        Layout.installFloater(docker, Layout.createFloater('library'));
+        Layout.installFloater(docker, Layout.createFloater('advisor'));
+        Layout.installFloater(docker, Layout.createFloater('inspector'));
     }
 
     static installFloater(docker, floater) {
-        const window = new SUEY.Window({ title: floater.id, width: '50%', height: '70%' });
-        docker.addToSelf(window);
-        window.display();
-        window.addTab(floater);
+        const installInfo = Config.getKey(`floater/initial/${floater?.id}`) ?? { init: 'center', side: null, size: '20%' };
+        const installInit = installInfo?.init ?? 'center';
+        const installSide = installInfo?.side ?? installInit;
+        const installSize = installInfo?.size ?? '20%';
+
+        let dock = undefined;
+        switch (installInit) {
+            case 'left': case 'right': case 'top': case 'bottom':
+                // Docker Traversal Function
+                function findDocker(parentDocker, property, value, recursive = true) {
+                    const queue = [ parentDocker ];
+                    while (queue.length > 0) {
+                        const currentElement = queue.shift();
+                        for (const child of currentElement.children) {
+                            if (child[property] === value) return child;
+                            if (recursive) queue.push(child);
+                        }
+                    }
+                    return null;
+                }
+                // Find / Create initial Docker and sub Docker
+                let initialDocker = findDocker(docker, 'initialSide', installInit, true);
+                initialDocker = initialDocker ?? docker.addDock(installInit, installSize);
+                if (installInit === installSide) {
+                    dock = initialDocker.enableTabs();
+                } else {
+                    let subDocker = findDocker(initialDocker, 'dockSide', installSide, true);
+                    subDocker = subDocker ?? initialDocker.addDock(installSide, installSize);
+                    dock = subDocker.enableTabs();
+                }
+                break;
+            case 'center':
+            default:
+                // Create New Window
+                dock = new SUEY.Window({ title: floater.id, width: '50%', height: '70%' });
+                docker.addToSelf(dock);
+                dock.display();
+        }
+        dock.addTab(floater);
     }
 
     static save(docker) {
