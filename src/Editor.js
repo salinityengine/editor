@@ -418,7 +418,7 @@ class Editor extends SUEY.Div {
 
     /******************** FLOATERS ********************/
 
-    /** Returns Floater if present in Editor. Option to build if not present, and make sure active.  */
+    /** Returns Floater if present in Editor. Options to build if not present and ensure active.  */
     getFloaterByID(tabID, build = true, select = true) {
         let floater = this.docker.getFloaterByID(tabID);
         if (!floater && build) {

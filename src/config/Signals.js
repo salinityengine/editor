@@ -53,7 +53,6 @@ const SIGNAL_NAMES = [
     // Inspector
     'inspectorBuild',           // (item)               FUNCTION    Build with object, string, 'rebuild'
     'inspectorChanged',         // -                    ALERT       Inspector was just built / rebuilt
-    'inspectorUpdate',          // -                    ALERT       Request update UI for current item
 
     // Player
     'playerStateChanged',       // (state)              ALERT       Player state changed ('start', 'pause', 'stop')

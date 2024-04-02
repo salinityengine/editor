@@ -74,7 +74,7 @@ class ProjectGeneralTab extends SUEY.Titled {
 
         /***** SIGNALS *****/
 
-        Signals.connect(this, 'inspectorUpdate', updateUI);
+        // Signals.connect(this, 'projectChanged' or similar ???, updateUI);
 
         /***** INIT *****/
 

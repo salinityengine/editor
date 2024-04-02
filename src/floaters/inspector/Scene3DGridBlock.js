@@ -5,18 +5,17 @@ import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
-class Scene3DGridTab extends SUEY.Titled {
+class Scene3DGridBlock extends SUEY.Shrinkable {
 
     constructor() {
-        super({ title: Language.getKey('inspector/grid/title') });
+        const icon = `${EDITOR.FOLDER_INSPECTOR}settings/grid.svg`; // color: '#333333'
+        super({ text: Language.getKey('inspector/grid/title'), icon, arrow: 'right', border: false });
 
         // Property Box
         const props = new SUEY.PropertyList();
         this.add(props);
 
         /***** SNAP *****/
-
-        props.addHeader(Language.getKey('inspector/grid/magnet'), `${EDITOR.FOLDER_INSPECTOR}settings/grid/snap.svg`);
 
         // Snap to Grid
         const snapGrid = new SUEY.Checkbox().on('change', () => {
@@ -63,7 +62,6 @@ class Scene3DGridTab extends SUEY.Titled {
         gridMultiBox.setRange(1, 10).setStep(1).setPrecision(0);
         gridMultiBox.setStyle('marginLeft', EDITOR.WIDGET_SPACING)
         gridMultiBox.dom.style.setProperty('--min-width', `${2 /* digits */ + 1.5}ch`);
-
         props.addRow(Language.getKey('inspector/grid/multiplier'), gridMultiSlider, gridMultiBox);
 
         /***** VISIBILITY *****/
@@ -76,7 +74,6 @@ class Scene3DGridTab extends SUEY.Titled {
             Signals.dispatch('gridChanged');
         });
         const showGridShortcut = new SUEY.MenuShortcut(`N`);
-
         props.addRow(Language.getKey('inspector/grid/showCanvas'), showGrid, new SUEY.FlexSpacer(), showGridShortcut);
 
         // Mini Grid
@@ -110,4 +107,4 @@ class Scene3DGridTab extends SUEY.Titled {
 
 }
 
-export { Scene3DGridTab };
+export { Scene3DGridBlock };

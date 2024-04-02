@@ -20,7 +20,6 @@ const _values = {
         'menubar/edit/redo':                'Redo',
 
         // Settings
-        'inspector/settings/title':         'Settings',
         'inspector/settings/general':       'General',
         'inspector/settings/language':      'Language',
         'inspector/settings/style':         'Style',
@@ -37,7 +36,6 @@ const _values = {
         'inspector/view/drawMode':          'Draw Mode',
 
         'inspector/grid/title':             'Grid',
-        'inspector/grid/magnet':            'Snap',
         'inspector/grid/snap':              'Snap to Grid',
         'inspector/grid/style':             'Style',
         'inspector/grid/size':              'Mini Grid Size',

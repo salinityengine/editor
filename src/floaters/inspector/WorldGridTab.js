@@ -17,8 +17,6 @@ class WorldGridTab extends SUEY.Titled {
 
         /***** SNAP *****/
 
-        props.addHeader(Language.getKey('inspector/grid/magnet'), `${EDITOR.FOLDER_INSPECTOR}settings/grid/snap.svg`);
-
         // Snap to Grid
         const snapGrid = new SUEY.Checkbox().on('change', () => {
             Config.setKey('scene/grid/snap', (!Config.getKey('scene/grid/snap')));

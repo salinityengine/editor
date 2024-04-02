@@ -11,13 +11,13 @@ import { Signals } from '../config/Signals.js';
 // import { PaletteTab } from './inspector/PaletteTab.js';
 // import { TextureTab } from './inspector/TextureTab.js';
 
-import { SettingsGeneralTab } from './inspector/SettingsGeneralTab.js';
+import { SettingsGeneralBlock } from './inspector/SettingsGeneralBlock.js';
 import { SettingsHistoryTab } from './inspector/SettingsHistoryTab.js';
 
 import { ProjectGeneralTab } from './inspector/ProjectGeneralTab.js';
 import { ProjectInfoTab } from './inspector/ProjectInfoTab.js';
 
-import { Scene3DGridTab } from './inspector/Scene3DGridTab.js';
+import { Scene3DGridBlock } from './inspector/Scene3DGridBlock.js';
 // import { SceneViewTab } from './inspector/SceneViewTab.js';
 // import { SceneThreeTab } from './inspector/SceneThreeTab.js';
 
@@ -89,13 +89,20 @@ class Inspector extends SUEY.Floater {
             self.isEmpty = false;
 
             const blocks = [];
+            let titleName = _item;
+
             // SETTINGS
             if (_item === 'settings') {
-                blocks.push(new SUEY.Floater('settings', new SettingsGeneralTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/general.svg`, color: '#C04145', shrink: true }));
+                blocks.push(new SettingsGeneralBlock());
 
-                if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
+                if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_2D) {
+                    // blocks.push(new SceneViewTab());
+                    blocks.push(new Scene3DGridBlock());
+                    // blocks.push(new SceneThreeTab());
+
+                } else if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
                     blocks.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/view.svg`, color: '#ffffff', shadow: false }));
-                    blocks.push(new SUEY.Floater('grid', new Scene3DGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
+                    blocks.push(new Scene3DGridBlock());
                     blocks.push(new SUEY.Floater('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true }));
                 } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
                     blocks.push(new SUEY.Floater('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_TYPES}setting/grid.svg`, color: '#333333' }));
@@ -158,18 +165,20 @@ class Inspector extends SUEY.Floater {
 
             // NO SELECTION (buildFrom === undefined)
             } else {
-                const empty = new SUEY.Div();
-                const emptyTitle = new SUEY.Div('Inspector').addClass('suey-tab-title');
+                titleName = 'Inspector';
                 const emptyText = new SUEY.Row().add(new SUEY.Text('No Selection'));
                 emptyText.setStyle('justifyContent', 'center');
                 emptyText.setStyle('paddingTop', '1em').setStyle('paddingBottom', '1em');
-                empty.add(emptyTitle, emptyText);
-                blocks.push(empty);
-
+                blocks.push(emptyText);
                 self.isEmpty = true;
             }
 
-            // Add Tabs
+            // Title
+            const inspectorTitle = new SUEY.Div(SUEY.Strings.capitalize(titleName)).addClass('suey-tab-title');
+            if (self.dock && self.dock.hasClass('suey-window')) inspectorTitle.addClass('suey-hidden');
+            self.add(inspectorTitle);
+
+            // Add Blocks
             self.add(...blocks);
 
             // Dispatch Signals

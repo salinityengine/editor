@@ -9,20 +9,18 @@ import { Signals } from '../../config/Signals.js';
 
 const _color = new SUEY.Iris();
 
-class SettingsGeneralTab extends SUEY.Titled {
+class SettingsGeneralBlock extends SUEY.Shrinkable {
 
     constructor() {
-        super({ title: Language.getKey('inspector/settings/title') });
-        Advice.attach(this.tabTitle, 'settings');
+        const icon = `${EDITOR.FOLDER_INSPECTOR}settings/general.svg`; // color: '#C04145'
+        super({ text: Language.getKey('inspector/settings/general'), icon, arrow: 'right', border: true });
+        Advice.attach(this.titleDiv, 'settings');
 
         // Property Box
         const props = new SUEY.PropertyList();
         this.add(props);
 
         /***** GENERAL *****/
-
-        const generalHeader = props.addHeader(Language.getKey('inspector/settings/general'), `${EDITOR.FOLDER_INSPECTOR}settings/general/general.svg`);
-        Advice.attach(generalHeader, 'settings/general');
 
         // Language
         const languageOptions = {
@@ -55,6 +53,20 @@ class SettingsGeneralTab extends SUEY.Titled {
         });
         const promodeRow = props.addRow('Pro Mode', promodeBox);
         Advice.attach(promodeRow, 'settings/general/promode');
+
+        // Reset All Settings
+        const resetButton = new SUEY.Button().addClass('suey-property-button').onClick(() => {
+            if (confirm('Reset all editor settings to default values?')) {
+                Config.clear();
+                editor.refreshSettings();
+            }
+        });
+        const resetLabel = Language.getKey('inspector/settings/reset');
+        const resetShortcut = Config.getKey('shortcuts/reset');
+        resetButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/reset.svg`));
+        resetButton.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
+        const resetRow = props.addRow(resetLabel, resetButton);
+        Advice.attach(resetRow, 'settings/reset');
 
         /***** STYLE *****/
 
@@ -144,7 +156,9 @@ class SettingsGeneralTab extends SUEY.Titled {
         });
         const smallerLabel = 'Smaller'
         const smallerShortcut = '-';
-        smallerButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/style/smaller.svg`));
+        const smallLetter = new SUEY.VectorBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/style/smaller.svg`);
+        smallLetter.firstImage().addClass('suey-icon-colorize');
+        smallerButton.add(new SUEY.ShadowBox(smallLetter));
         const smallShortcutText = new SUEY.Div(smallerShortcut).setClass('suey-menu-shortcut');
         smallShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         smallerButton.add(smallShortcutText);
@@ -156,7 +170,9 @@ class SettingsGeneralTab extends SUEY.Titled {
         });
         const largerLabel = 'Larger'
         const largerShortcut = '+';
-        largerButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/style/larger.svg`));
+        const largeLetter = new SUEY.VectorBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/style/larger.svg`);
+        largeLetter.firstImage().addClass('suey-icon-colorize');
+        largerButton.add(new SUEY.ShadowBox(largeLetter));
         const largeShortcutText = new SUEY.Div(largerShortcut).setClass('suey-menu-shortcut');
         largeShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         largerButton.add(largeShortcutText);
@@ -177,25 +193,6 @@ class SettingsGeneralTab extends SUEY.Titled {
         alphaSlider.setRange(0, 1.0).setStep('any').setPrecision(2);
         const opacityRow = props.addRow('Opacity', alphaSlider);
         Advice.attach(opacityRow, 'settings/style/opacity');
-
-        /***** RESET *****/
-
-        const resetHeader = props.addHeader('Reset', `${EDITOR.FOLDER_INSPECTOR}settings/general/reset.svg`);
-        Advice.attach(resetHeader, 'settings/reset');
-
-        // Reset All Settings
-        const resetButton = new SUEY.Button().addClass('suey-property-button').onClick(() => {
-            if (confirm('Reset all editor settings to default values?')) {
-                Config.clear();
-                editor.refreshSettings();
-            }
-        });
-        const resetLabel = Language.getKey('inspector/settings/reset');
-        const resetShortcut = Config.getKey('shortcuts/reset');
-        resetButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_INSPECTOR}settings/general/reset.svg`));
-        resetButton.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
-        const resetRow = props.addRow(resetLabel, resetButton);
-        Advice.attach(resetRow, 'settings/reset');
 
         /***** UPDATE *****/
 
@@ -226,7 +223,7 @@ class SettingsGeneralTab extends SUEY.Titled {
 
         /***** SIGNALS *****/
 
-        Signals.connect(this, 'inspectorUpdate', updateUI);
+        Signals.connect(this, 'schemeChanged', updateUI);
 
         /***** INIT *****/
 
@@ -236,4 +233,4 @@ class SettingsGeneralTab extends SUEY.Titled {
 
 }
 
-export { SettingsGeneralTab };
+export { SettingsGeneralBlock };

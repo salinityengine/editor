@@ -43,7 +43,7 @@ class Layout {
         const tabbedBottomLeft = dockBottomLeft.enableTabs();
         tabbedBottomLeft.addTab(Layout.createFloater('advisor'));
 
-        const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '20%');
+        const dockRight = docker.addDock(SUEY.DOCK_SIDES.RIGHT, '22em');
         const tabbedRight = dockRight.enableTabs();
         tabbedRight.addTab(Layout.createFloater('inspector'));
     }
@@ -97,6 +97,7 @@ class Layout {
                 } else if (child.hasClass('suey-window')) {
                     const windowLayout = {
                         type: 'window',
+                        active: child.hasClass('suey-active-window'),
                         left: child.dom.style.left,
                         top: child.dom.style.top,
                         width: child.dom.style.width,
@@ -133,6 +134,7 @@ class Layout {
         }
 
         function createDocker(layoutNode, parentDocker) {
+            let activeWindow = undefined;
             let addedDock = false;
             let twinDocker = undefined;
             layoutNode.children.forEach(childNode => {
@@ -171,10 +173,12 @@ class Layout {
                             window.display();
                             window.addTab(floater);
                             window.selectTab(floaterID);
+                            if (childNode.active) activeWindow = window;
                         }
                     });
                 }
             });
+            if (activeWindow) activeWindow.focus();
         }
 
         // Build Docker
