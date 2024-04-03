@@ -48,19 +48,6 @@ body {
     z-index: 1; /* docker */
 }
 
-/********** FULLSCREEN */
-
-.salt-fullscreen {
-    position: absolute;
-    margin: auto;
-    padding: 0;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    z-index: 0; /* Fullscreen */
-}
-
 /********** INPUT */
 
 /* Keyboard Key Input */

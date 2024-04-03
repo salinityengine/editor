@@ -22,11 +22,14 @@ class Worlds extends SUEY.Graph {
             curveType: Config.getKey('world/curve')
         });
         const self = this;
-        this.setClass('salt-worlds');
-        this.addClass('salt-fullscreen');
+        this.setClass('salt-viewport');
+        this.addClass('suey-unselectable');
 
         // Toolbar
         this.add(new WorldsToolbar(this));
+
+        // Type
+        this.viewportType
 
         /********** NODES */
 
@@ -171,6 +174,10 @@ class Worlds extends SUEY.Graph {
                 const event = new PointerEvent('pointermove', { bubbles: true });
                 active.dispatchEvent(event);
             }
+            // Grid / Curves
+            self.curveType = Config.getKey('world/curve');
+            self.drawLines();
+            self.changeGridType(Config.getKey('world/grid/style'));
         });
 
         // Project Loaded
@@ -196,7 +203,7 @@ class Worlds extends SUEY.Graph {
         Signals.connect(this, 'selectionChanged', function() {
             refreshNodes();
 
-            const viewWorld = editor.view2d.world;
+            const viewWorld = editor.world;
             for (const node of self.getNodes()) {
                 if (!node.world || !node.world.isWorld) continue;
                 const selected = EntityUtils.containsEntity(editor.selected, node.world);

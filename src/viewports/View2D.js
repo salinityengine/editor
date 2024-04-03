@@ -18,8 +18,9 @@ class View2D extends SUEY.Panel {
         super();
         const self = this;
         this.setClass('salt-viewport');
-        this.addClass('salt-fullscreen');
-        this.selectable(false);
+        this.addClass('suey-unselectable');
+
+        this.viewport
 
         /******************** TOOLBAR */
 

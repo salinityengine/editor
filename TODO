@@ -2,8 +2,8 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Tabbed:
-    - Close button closes Tab/Floater
+Button Menus:
+    - Menus are not removed from document when buttons are destroyed
 
 Dock Layout:
     - Default layout for each Viewport type

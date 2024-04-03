@@ -46,7 +46,7 @@ class Layout {
         const installInfo = Config.getKey(`floater/initial/${floater?.id}`) ?? { init: 'center', side: null, size: '20%' };
         const installInit = installInfo?.init ?? 'center';
         const installSide = installInfo?.side ?? installInit;
-        const installSize = installInfo?.size ?? '20%';
+        const installSize = (installInfo && installInfo.size && installInfo.size !== '') ? installInfo.size : '20%';
 
         let dock = undefined;
         switch (installInit) {
@@ -97,7 +97,7 @@ class Layout {
         };
 
         function traverse(currentDocker, parentLayout) {
-            const reverseChildren = currentDocker.children.reverse();
+            const reverseChildren = currentDocker.children.toReversed();
             reverseChildren.forEach(child => {
 
                 if (child.hasClass('suey-docker')) {

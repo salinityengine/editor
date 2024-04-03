@@ -1,0 +1,21 @@
+/********** VIEWPORT */
+
+.salt-viewport {
+    position: absolute;
+    margin: auto;
+    padding: 0;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 0; /* viewport */
+}
+
+/********** RUBBERBAND BOX */
+
+.salt-rubberband-box {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgba(var(--icon), 0.2);
+    border: solid var(--border-small) rgba(var(--icon), 0.75);
+}

@@ -305,7 +305,7 @@
 
 .suey-toolbar-button:hover #tb-arrange-bottom, .suey-toolbar-button.suey-selected #tb-arrange-bottom {
     transform: translate(0%, -38%);
-    z-index: 5;
+    z-index: 5; /* arrange button */
 }
 
 #tb-arrange-back,

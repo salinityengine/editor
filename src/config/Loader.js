@@ -140,8 +140,6 @@ class Loader {
                 {
                     editor.selectEntities(/* none */);
                     editor.project.fromJSON(data, true /* loadAssets? */, /* onLoad */ () => {
-                        editor.view2d.world = editor.project.activeWorld();
-                        editor.view2d.stage = editor.view2d.world.activeStage();
                         Signals.dispatch('projectLoaded');
                     });
                     break;

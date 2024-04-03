@@ -39,10 +39,7 @@ class WorldGridTab extends SUEY.Titled {
         });
         lineDrop.on('change', () => {
             Config.setKey('world/curve', lineDrop.getValue());
-            if (editor && editor.worlds) {
-                editor.worlds.curveType = Config.getKey('world/curve');
-                editor.worlds.drawLines();
-            }
+            Signals.dispatch('gridChanged');
         });
         props.addRow(Language.getKey('inspector/graph/line'), lineDrop);
 
@@ -55,7 +52,7 @@ class WorldGridTab extends SUEY.Titled {
         });
         gridDrop.on('change', () => {
             Config.setKey('world/grid/style', gridDrop.getValue());
-            if (editor && editor.worlds) editor.worlds.changeGridType(Config.getKey('world/grid/style'));
+            Signals.dispatch('gridChanged');
         });
         props.addRow(Language.getKey('inspector/graph/grid'), gridDrop);
 

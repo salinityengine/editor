@@ -74,11 +74,6 @@ class Editor extends SUEY.Div {
         this.selected = [];                                     // Current Selection
         this.wantsScreenshot = false;                           // Creates Screenshot (without helpers in shot)
 
-        /********** EVENTS */
-
-        document.addEventListener('keydown', (event) => editorKeyDown(self, event));
-        document.addEventListener('keyup', (event) => editorKeyUp(self, event));
-
         /********** ELEMENTS */
 
         this.add(this.toolbar = new EditorToolbar());
@@ -93,12 +88,35 @@ class Editor extends SUEY.Div {
 
         this.add(this.docker = new SUEY.Docker());
         Layout.load(this.docker);
-        window.addEventListener('beforeunload', (event) => Layout.save(self.docker));
+
+        /********** EVENTS */
+
+        function onKeyDown(event) { editorKeyDown(self, event); }
+        function onKeyUp(event) { editorKeyUp(self, event); }
+        function onVisibilityChange(event) {
+            if (document.visibilityState === 'hidden' /* or 'visible' */) Layout.save(self.docker);
+        }
+
+        document.addEventListener('keydown', onKeyDown);
+        document.addEventListener('keyup', onKeyUp);
+        document.addEventListener('visibilitychange', onVisibilityChange);
+
+        this.on('destroy', () => {
+            document.removeEventListener('keydown');
+            document.removeEventListener('keyup', onKeyUp);
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+        });
 
         /********** SIGNALS */
 
         // Project Loaded
         Signals.connect(this, 'projectLoaded', function() {
+            //
+            // TODO: Editor World / Stage
+            //
+            // editor.world = editor.project.activeWorld();
+            // editor.stage = editor.world.activeStage();
+
             if (self.history) self.history.clear();     // clear history
             Signals.dispatch('inspectorBuild');         // clear inspector
             Signals.dispatch('sceneGraphChanged');      // rebuild outliner
@@ -492,11 +510,11 @@ function editorKeyDown(editor, event) {
         //     event.preventDefault();
         //     Layout.save(editor.docker);
         //     break;
-        // case 'l': // load layout
-        //     event.stopPropagation();
-        //     event.preventDefault();
-        //     Layout.load(editor.docker);
-        //     break;
+        case 'l': // load layout
+            event.stopPropagation();
+            event.preventDefault();
+            Layout.load(editor.docker);
+            break;
 
         case 'a':
         case 'w':
