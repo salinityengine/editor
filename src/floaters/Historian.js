@@ -13,7 +13,7 @@ class Historian extends SUEY.Floater {
 
     constructor() {
         const icon = `${EDITOR.FOLDER_FLOATERS}history.svg`;
-        super('history', null, { icon, color: '#BF4044', shadow: false, shrink: 0.75 });
+        super('history', null, { icon, color: '#BF4044', shadow: false, shrink: 0.68 });
         const self = this;
         Advice.attach(this.button, 'floater/history');
 

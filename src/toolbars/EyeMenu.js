@@ -233,6 +233,7 @@ class EyeMenu extends SUEY.Menu {
             }
             windowAdvisor.onSelect(() => toggleWindow(windowAdvisor, 'advisor'));
             windowInspector.onSelect(() => toggleWindow(windowInspector, 'inspector'));
+
             document.body.addEventListener('tab-changed', () => {
                 windowAdvisor.setChecked(editor.getFloaterByID('advisor', false, false));
                 windowInspector.setChecked(editor.getFloaterByID('inspector', false, false));

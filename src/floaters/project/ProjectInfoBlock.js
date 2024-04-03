@@ -45,6 +45,7 @@ class ProjectInfoBlock extends SUEY.Shrinkable {
             'justify-content', 'center',
             'min-height', '1.7em',
             'width', '50%',
+            'margin-bottom', 'var(--pad-small)',
         );
         logButton.onClick(() => console.log(editor.project));
         props.add(debugRow.add(logButton));
