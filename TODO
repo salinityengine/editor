@@ -2,24 +2,38 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Floaters:
-    Historian:
-    Project:
-    Inspector:
-        - Go through Blocks
-    Resources:  !! Doesnt work
-    Shaper:     !! Doesnt work
-    Things:     !! Doesnt work
-    Scripter:   !! Doesnt work
-        - Open from Codex
-    Outliner:
-        - Entity2D, etc.
+Tabbed:
+    - Close button closes Tab/Floater
 
 Dock Layout:
     - Default layout for each Viewport type
 
 Toolbar:
     - View2D Toolbar 'Grid' images
+
+Floaters:
+    Advisor:
+        - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
+    Codex:
+        - Add scripts
+    Historian:
+        - Verify working
+    Inspector:
+        - Go through Blocks
+    !! Library:
+    Outliner:
+        - Entity2D, etc.
+    Player:
+        - Debug Console, override console.log to capture?
+        - QR Code to load on phone
+    Project:
+        - Info work with new View2D
+    !! Resources (Assets):
+    !! Scripter:
+        - Open from Codex
+    Settings:
+        - Get working with View2D grid
+    !! Shaper:
 
 Editor Skeleton:
     - Go through Config
@@ -83,13 +97,6 @@ Modes:
         - Nodes:
             - Auto resizing
             - Save connections
-
-Floaters:
-    Advisor:
-        - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
-    Player:
-        - Debug Console, override console.log to capture?
-        - QR Code to load on phone
 
 Project:
     Entity:

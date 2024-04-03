@@ -27,7 +27,7 @@ class WorldGridTab extends SUEY.Titled {
 
         /***** STYLE *****/
 
-        props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_INSPECTOR}settings/grid/style.svg`);
+        props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_FLOATERS}settings/grid/style.svg`);
 
         // Line Style
         const lineDrop = new SUEY.Dropdown();

@@ -14,7 +14,7 @@ import { View3DGridBlock } from './settings/View3DGridBlock.js';
 import { WorldGridTab } from './settings/WorldGridTab.js';
 
 /**
- * Settings Inspector
+ * Editor Settings
  */
 class Settings extends SUEY.Floater {
 

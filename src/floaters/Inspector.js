@@ -11,9 +11,6 @@ import { Signals } from '../config/Signals.js';
 // import { PaletteTab } from './inspector/PaletteTab.js';
 // import { TextureTab } from './inspector/TextureTab.js';
 
-import { ProjectGeneralTab } from './inspector/ProjectGeneralTab.js';
-import { ProjectInfoTab } from './inspector/ProjectInfoTab.js';
-
 /**
  * Object Inspector
  */
@@ -56,13 +53,8 @@ class Inspector extends SUEY.Floater {
             const blocks = [];
             let titleName = _item;
 
-            // PROJECT
-            if (_item === 'project') {
-                blocks.push(new SUEY.Floater('project', new ProjectGeneralTab(), { icon: `${EDITOR.FOLDER_FLOATERS}project/general.svg`, color: '#773399' }));
-                blocks.push(new SUEY.Floater('info', new ProjectInfoTab(), { icon: `${EDITOR.FOLDER_FLOATERS}project/info.svg`, color: '#66C7FF', shrink: true }));
-
             // PALETTE
-            } else if (_item && _item.isPalette) {
+            if (_item && _item.isPalette) {
                 blocks.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
 
             // TEXTURE

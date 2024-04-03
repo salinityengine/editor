@@ -6,27 +6,25 @@ import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
-class ProjectGeneralTab extends SUEY.Titled {
+class ProjectAppBlock extends SUEY.Shrinkable {
 
     constructor() {
-        super({ title: Language.getKey('inspector/project/title') });
-        Advice.attach(this.tabTitle, 'project');
+        const icon = `${EDITOR.FOLDER_FLOATERS}project/app.svg`; // color: '#773399'
+        super({ text: Language.getKey('inspector/project/app'), icon, arrow: 'right', border: true });
+        Advice.attach(this.titleDiv, 'project/app');
 
         // Property Box
         const props = new SUEY.PropertyList();
         this.add(props);
+
+        /***** APP *****/
 
         // Name
         const projectName = new SUEY.TextBox().on('change', () => {
             editor.project.name = projectName.getValue();
         });
         const nameRow = props.addRow(Language.getKey('inspector/project/name'), projectName);
-        Advice.attach(nameRow, 'project/name');
-
-        /***** APP *****/
-
-        const appHeader = props.addHeader('App', `${EDITOR.FOLDER_INSPECTOR}project/app.svg`);
-        Advice.attach(appHeader, 'project/app');
+        Advice.attach(nameRow, 'project/app/name');
 
         // Orientation
         const orientOptions = {
@@ -44,7 +42,7 @@ class ProjectGeneralTab extends SUEY.Titled {
 
         /***** THRESHOLD *****/
 
-        const thresholdHeader = props.addHeader('Threshold', `${EDITOR.FOLDER_INSPECTOR}project/threshold.svg`);
+        const thresholdHeader = props.addHeader('Threshold', `${EDITOR.FOLDER_FLOATERS}project/threshold.svg`);
         Advice.attach(thresholdHeader, 'project/threshold');
 
         // Preload
@@ -84,4 +82,4 @@ class ProjectGeneralTab extends SUEY.Titled {
 
 }
 
-export { ProjectGeneralTab };
+export { ProjectAppBlock };

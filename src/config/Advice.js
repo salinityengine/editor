@@ -17,12 +17,12 @@ const _values = {
         'floater/inspector':                { title: 'Inspector', html: `View and edit properties and settings.`},
         'floater/outliner':                 { title: 'Outliner', html: `Displays interactive scene hierarchy.` },
         'floater/player':                   { title: 'Player', html: `Game play preview.` },
-        'floater/settings':                 { title: 'Settings', html: `Settings viewer.`},
+        'floater/project':                  { title: 'Project', html: `Project settings viewer.` },
+        'floater/settings':                 { title: 'Settings', html: `Editor settings viewer.`},
 
         // Project
-        'project':                          { title: 'Project Settings', html: `` },
-        'project/name':                     { title: 'Project Name', html: `` },
         'project/app':                      { title: 'App Settings', html: `` },
+        'project/app/name':                 { title: 'Project Name', html: `` },
         'project/app/orientation':          { title: 'Orientation', html: `App is to be displayed in 'Portrait' or 'Landscape' mode?` },
         'project/threshold':                { title: 'Threshold', html: `Distance thresholds are used for loading additional Entities (via Stages) and removing Entities that are out of view.` },
         'project/threshold/preload':        { title: 'Preload', html: `Stages will be loaded this far ahead of camera target. Value in world units, -1 to disable.` },

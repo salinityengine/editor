@@ -8,7 +8,7 @@ import { Signals } from '../../config/Signals.js';
 class View3DGridBlock extends SUEY.Shrinkable {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_INSPECTOR}settings/grid.svg`; // color: '#333333'
+        const icon = `${EDITOR.FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'
         super({ text: Language.getKey('inspector/grid/title'), icon, arrow: 'right', border: true });
 
         // Property Box
@@ -27,7 +27,7 @@ class View3DGridBlock extends SUEY.Shrinkable {
 
         /***** STYLE *****/
 
-        props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_INSPECTOR}settings/grid/style.svg`);
+        props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_FLOATERS}settings/grid/style.svg`);
 
         // Grid Size
         const gridSizeBox = new SUEY.NumberBox();
@@ -66,7 +66,7 @@ class View3DGridBlock extends SUEY.Shrinkable {
 
         /***** VISIBILITY *****/
 
-        props.addHeader(Language.getKey('inspector/grid/visibility'), `${EDITOR.FOLDER_INSPECTOR}settings/grid/visibility.svg`);
+        props.addHeader(Language.getKey('inspector/grid/visibility'), `${EDITOR.FOLDER_FLOATERS}settings/grid/visibility.svg`);
 
         // Show Grid
         const showGrid = new SUEY.Checkbox().on('change', () => {

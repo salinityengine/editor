@@ -5,13 +5,14 @@ import { Advisor } from '../floaters/Advisor.js';
 import { Codex } from '../floaters/Codex.js';
 import { Historian } from '../floaters/Historian.js';
 import { Inspector } from '../floaters/Inspector.js';
+import { Library } from '../floaters/Library.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
+import { Projecter } from '../floaters/Projecter.js';
 import { Resources } from '../floaters/Resources.js';
 import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
-import { Things } from '../floaters/Things.js';
 
 class Layout {
 
@@ -23,12 +24,8 @@ class Layout {
             case 'inspector': return new Inspector();
             case 'outliner': return new Outliner();
             case 'player': return new Player();
+            case 'project': return new Projecter();
             case 'settings': return new Settings();
-
-            // new Scripter();
-            // new Resources();     // icon: `${EDITOR.FOLDER_FLOATERS}asset.svg`
-            // new Shaper();
-            // new Things();        // icon: `${EDITOR.FOLDER_FLOATERS}prefab.svg`
         }
         console.warn(`Layout.createFloater: Unknown Floater type: ${id}`);
         return null;

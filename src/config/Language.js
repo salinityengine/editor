@@ -45,7 +45,7 @@ const _values = {
         'inspector/grid/showCanvas':        'Show Grid',
         'inspector/grid/showInfinite':      'Show Mini Grid',
 
-        'inspector/project/title':          'Project',
+        'inspector/project/app':            'App',
         'inspector/project/name':           'Name',
 
         'inspector/graph/line':             'Line Type',

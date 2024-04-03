@@ -10,10 +10,10 @@ import { AssetPanel } from '../gui/AssetPanel.js';
 /**
  * Objects / Items / Prefabs
  */
-class Things extends SUEY.Titled {
+class Library extends SUEY.Titled {
 
     constructor() {
-        super({ title: 'Prefabs' });
+        super({ title: 'Library' });
         const self = this;
 
         /******************** PANELS */
@@ -59,4 +59,4 @@ class Things extends SUEY.Titled {
 
 }
 
-export { Things };
+export { Library };

@@ -14,7 +14,7 @@ import { Signals } from '../config/Signals.js';
 class WorldsToolbar extends SUEY.Panel {
 
     constructor(worldsGraph) {
-        super({ style: SUEY.PANEL_STYLES.NSALT });
+        super({ style: SUEY.PANEL_STYLES.NONE });
         this.setClass('salt-toolbar');
 
         /******************** BUTTONS */

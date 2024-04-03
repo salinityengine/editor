@@ -4,10 +4,11 @@ import * as SUEY from 'gui';
 
 import { Signals } from '../../config/Signals.js';
 
-class ProjectInfoTab extends SUEY.Titled {
+class ProjectInfoBlock extends SUEY.Shrinkable {
 
     constructor() {
-        super({ title: 'Info' });
+        const icon = `${EDITOR.FOLDER_FLOATERS}project/info.svg`; // color: '#66C7FF', shrink: true
+        super({ text: 'Info', icon, arrow: 'right', border: true });
 
         // Property Box
         const props = new SUEY.PropertyList();
@@ -15,7 +16,7 @@ class ProjectInfoTab extends SUEY.Titled {
 
         /***** SCENE *****/
 
-        // props.addHeader('Scene', `${EDITOR.FOLDER_INSPECTOR}settings/info/scene.svg`);
+        // props.addHeader('Scene', `${EDITOR.FOLDER_FLOATERS}settings/info/scene.svg`);
 
         // Scenes
         const scenesInfo = new SUEY.Text('0').selectable(false);
@@ -46,7 +47,7 @@ class ProjectInfoTab extends SUEY.Titled {
             'width', '50%',
         );
         logButton.onClick(() => console.log(editor.project));
-        this.add(debugRow.add(logButton));
+        props.add(debugRow.add(logButton));
 
         /***** UPDATE *****/
 
@@ -85,4 +86,4 @@ class ProjectInfoTab extends SUEY.Titled {
 
 }
 
-export { ProjectInfoTab };
+export { ProjectInfoBlock };

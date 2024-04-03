@@ -37,6 +37,7 @@ const DEFAULT_SETTINGS = {
     'floater/initial/inspector':                { init: 'right',    side: 'right',      size: '22em' },
     'floater/initial/outliner':                 { init: 'left',     side: 'left',       size: '18em' },
     'floater/initial/player':                   { init: 'center' },
+    'floater/initial/project':                  { init: 'right',    side: 'right',      size: '22em' },
     'floater/initial/settings':                 { init: 'right',    side: 'right',      size: '22em' },
 
     /***** COMMON EDITOR */

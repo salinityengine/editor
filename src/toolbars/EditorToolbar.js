@@ -135,7 +135,7 @@ class EditorToolbar extends SUEY.Panel {
         const settingsShadow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-shadow.svg`).setID('tb-settings-shadow');
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
-        proj.onClick(() => Signals.dispatch('inspectorBuild', 'project'));
+        proj.onClick(() => editor.getFloaterByID('project'));
         history.onClick(() => editor.getFloaterByID('history'));
         settings.onClick(() => editor.getFloaterByID('settings'));
 
