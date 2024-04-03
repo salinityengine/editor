@@ -1,6 +1,7 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
@@ -15,6 +16,10 @@ import { SelectCommand } from '../commands/Commands.js';
 // import { EntityUtils } from '../../../engine/src/utils/three/EntityUtils.js';
 
 class Worlds extends SUEY.Graph {
+
+    viewportType() {
+        return EDITOR.MODES.WORLD_GRAPH;
+    }
 
     constructor() {
         super({

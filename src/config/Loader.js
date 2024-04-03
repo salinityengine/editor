@@ -2,6 +2,7 @@
 
 import * as SALT from 'engine';
 import * as SUEY from 'gui'
+import { editor } from 'editor';
 import { Signals } from './Signals.js';
 
 import { AddAssetCommand } from '../commands/Commands.js';

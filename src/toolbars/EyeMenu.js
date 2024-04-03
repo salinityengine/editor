@@ -13,7 +13,7 @@ import { zipSync, strToU8 } from '../libs/fflate.module.js';
 
 class EyeMenu extends SUEY.Menu {
 
-    constructor() {
+    constructor(editor) {
         super();
 
         // Properties

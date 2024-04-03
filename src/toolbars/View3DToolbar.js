@@ -147,11 +147,11 @@ class View3DToolbar extends SUEY.Panel {
         Signals.connect(this, 'selectionChanged', function() {
             // Focus on Scene or Selection?
             let sceneFocus = false;
-            sceneFocus ||= (editor.selected.length === 0);
-            sceneFocus ||= (editor.selected.length === 1);
+            sceneFocus ||= (view3d.selected.length === 0);
+            sceneFocus ||= (view3d.selected.length === 1);
 
             // OPTION: Disable Button
-            focus.setDisabled(editor.selected.length === 0);
+            focus.setDisabled(view3d.selected.length === 0);
 
             // // OPTION: Scene Icon
             // focusScene.setStyle('display', (sceneFocus) ? '' : 'none');
@@ -159,7 +159,7 @@ class View3DToolbar extends SUEY.Panel {
             // focusPupil.setStyle('display', (sceneFocus) ? 'none' : '');
 
             // OPTION: Tooltip
-            const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
+            const focusOn = (view3d.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
             if (_lastTooltip !== focusOn) {
                 focus.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
             }
@@ -260,7 +260,6 @@ class View3DToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarLeftLength));
         this.add(new SUEY.ToolbarSpacer(1.0));
         this.add(select, look, move, zoom, new SUEY.ToolbarSeparator(), focus, /* INCLUDE?: reset, */);
         this.add(new SUEY.FlexSpacer());
@@ -268,7 +267,6 @@ class View3DToolbar extends SUEY.Panel {
         this.add(new SUEY.FlexSpacer());
         this.add(views);
         this.add(new SUEY.FlexSpacer());
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarRightLength));
 
     } // end ctor
 

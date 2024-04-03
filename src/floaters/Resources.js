@@ -1,6 +1,7 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 import { AddAssetCommand } from '../commands/Commands.js';
 import { AssetPanel } from '../gui/AssetPanel.js';

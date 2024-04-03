@@ -1,6 +1,7 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 import { ViewUIToolbar } from '../toolbars/ViewUIToolbar.js';
 
@@ -8,13 +9,16 @@ import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { SelectCommand } from '../commands/Commands.js';
 
-class ViewUI extends SUEY.Panel {
+class ViewUI extends SUEY.Div {
+
+    viewportType() {
+        return EDITOR.MODES.UI_EDITOR;
+    }
 
     constructor() {
         super();
         const self = this;
-        this.setClass('salt-viewport');
-        this.addClass('suey-unselectable');
+        this.addClass('salt-viewport', 'suey-unselectable');
 
         /******************** TOOLBAR */
 

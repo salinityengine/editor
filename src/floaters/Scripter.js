@@ -1,6 +1,7 @@
 // https://github.com/mrdoob/three.js/blob/dev/editor/js/Script.js
 
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 // import { SetAssetValueCommand } from '../commands/Commands.js';
 // import { SetScriptSourceCommand } from '../commands/Commands.js';

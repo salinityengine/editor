@@ -1,10 +1,6 @@
-import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 
 function loadDemoProject(project) {
-
-    // Deselect
-    editor.selectEntities(/* none */);
 
     // Clear Assets
     SALT.AssetManager.clear();

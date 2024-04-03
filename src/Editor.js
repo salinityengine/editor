@@ -1,4 +1,3 @@
-import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
@@ -26,14 +25,9 @@ class Editor extends SUEY.Div {
     constructor() {
         super();
         const self = this;
-        this.addClass('salt-editor').selectable(false);
+        this.setClass('salt-editor', 'suey-unselectable');
         this.addClass('salt-disable-animations');
         document.body.appendChild(this.dom);
-
-        /********** GLOBAL */
-
-        // Add 'editor' to global before children are loaded
-        window.editor = this;
 
         /********** ACTIVE PROJECT */
 
@@ -54,10 +48,7 @@ class Editor extends SUEY.Div {
         this.toolbar = null;                                    // Toolbar
 
         // Viewports
-        this.view2d = null;                                     // Scene Editor 2D
-        this.view3d = null;                                     // Scene Editor 3D
-        this.viewui = null;                                     // UI Editor
-        this.worlds = null;                                     // World Graph
+        this.viewports = [];                                    // Viewports
 
         // Input
         this.keyStates = {                                      // Track modifier keys
@@ -76,13 +67,16 @@ class Editor extends SUEY.Div {
 
         /********** ELEMENTS */
 
-        this.add(this.toolbar = new EditorToolbar());
+        this.add(this.toolbar = new EditorToolbar(this));
         this.add(this.infoBox = new InfoBox());
 
-        this.add(this.view2d = new View2D());
-        this.add(this.view3d = new View3D());
-        this.add(this.viewui = new ViewUI());
-        this.add(this.worlds = new Worlds());
+        this.viewports.push(new View2D());
+        // this.viewports.push(new View3D());
+        // this.viewports.push(new ViewUI());
+        // this.viewports.push(new Worlds());
+        for (const viewport of this.viewports) {
+            this.add(viewport);
+        }
 
         /********** DOCKS */
 
@@ -153,6 +147,7 @@ class Editor extends SUEY.Div {
         /********** DEMO */
 
         setTimeout(() => {
+            // self.selectEntities(/* none */);
             // loadDemoProject(self.project);
             // self.view2d.world = self.project.activeWorld();
             // self.view2d.stage = self.view2d.world.activeStage();
@@ -169,38 +164,25 @@ class Editor extends SUEY.Div {
         //
 
         // Hide Viewports
-        this.view2d.hide();
-        this.view3d.hide();
-        this.viewui.hide();
-        this.worlds.hide();
+        for (const viewport of this.viewports) {
+            if (viewport.viewportType() === mode) {
 
-        // Switch Mode
-        switch (mode) {
-            case EDITOR.MODES.UI_EDITOR:
-                this.viewui.display();
-                break;
-            case EDITOR.MODES.SCENE_EDITOR_2D:
-                this.view2d.display();
-                break;
-            case EDITOR.MODES.SCENE_EDITOR_3D:
-                this.view3d.display()
-                break;
-            case EDITOR.MODES.SOUND_EDITOR:
-                break;
-            case EDITOR.MODES.WORLD_GRAPH:
-            default:
-                this.worlds.display();
-                this.worlds.zoomTo();
-                mode = EDITOR.MODES.WORLD_GRAPH;
+            } else {
+                viewport.hide();
+                //
+                // TODO: Init?
+                //
+                // Example of something that needs to happen:
+                // this.worlds.zoomTo();
+            }
         }
         Config.setKey('settings/editorMode', mode);
 
         //
-        // TODO: Rebuild Inspector if on 'settings'
+        // TODO: Rebuild Floaters ('settings', 'inspector', etc)
         //
 
         // Dispatch Signals
-        Signals.dispatch('windowResize'); // refresh sizes
         Signals.dispatch('editorModeChanged', mode);
     }
 

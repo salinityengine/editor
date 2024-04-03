@@ -1,6 +1,7 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
-import * as OSUI from 'gui';
+import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 import { CanvasUtils } from './CanvasUtils.js';
 import { ColorizeFilter } from './ColorizeFilter.js';
@@ -13,7 +14,7 @@ import { Signals } from '../config/Signals.js';
 const ASSET_WIDTH = 128;
 const ASSET_HEIGHT = 128;
 
-class AssetPanel extends OSUI.Shrinkable {
+class AssetPanel extends SUEY.Shrinkable {
 
     #expandStart = true;
     #expandString = '';
@@ -49,14 +50,14 @@ class AssetPanel extends OSUI.Shrinkable {
         /***** MENU *****/
 
         // Button Row
-        const buttonRow = new OSUI.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
+        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
 
         // 'View Options' Button
-        const viewOptions = new OSUI.Button().addClass('suey-borderless-button');
-        viewOptions.overflowMenu = OSUI.OVERFLOW.LEFT;
+        const viewOptions = new SUEY.Button().addClass('suey-borderless-button');
+        viewOptions.overflowMenu = SUEY.OVERFLOW.LEFT;
         viewOptions.setAttribute('tooltip', 'View Options');
 
-        const shadowBox = new OSUI.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`);
+        const shadowBox = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`);
         if (shadowBox.firstImage()) {
             if (shadowBox.firstImage().firstImage()) {
                 shadowBox.firstImage().firstImage().addClass('suey-black-or-white');
@@ -65,15 +66,15 @@ class AssetPanel extends OSUI.Shrinkable {
         viewOptions.add(shadowBox);
 
         // Menu
-        const viewMenu = new OSUI.Menu();
-        const itemIcon = new OSUI.MenuItem('Icon View').onSelect(() => { self.setViewKey('icon'); refreshPanel(); });
-        const itemText = new OSUI.MenuItem('Text View').onSelect(() => { self.setViewKey('text'); refreshPanel(); });
-        const itemList = new OSUI.MenuItem('List View').onSelect(() => { self.setViewKey('list'); refreshPanel(); });
+        const viewMenu = new SUEY.Menu();
+        const itemIcon = new SUEY.MenuItem('Icon View').onSelect(() => { self.setViewKey('icon'); refreshPanel(); });
+        const itemText = new SUEY.MenuItem('Text View').onSelect(() => { self.setViewKey('text'); refreshPanel(); });
+        const itemList = new SUEY.MenuItem('List View').onSelect(() => { self.setViewKey('list'); refreshPanel(); });
         viewMenu.add(itemIcon, /* itemText, */ itemList);
 
         // Add Menus/Buttons
         viewOptions.attachMenu(viewMenu);
-        buttonRow.add(new OSUI.FlexSpacer(), viewOptions);
+        buttonRow.add(new SUEY.FlexSpacer(), viewOptions);
         this.titleDiv.add(buttonRow);
 
         /***** EVENTS*****/
@@ -196,12 +197,12 @@ class AssetPanel extends OSUI.Shrinkable {
 
         // Empty Item
         if (clearPanel || !this.#emptyItem) {
-            const empty = new OSUI.Row().addClass('suey-property-full');
+            const empty = new SUEY.Row().addClass('suey-property-full');
             empty.setAttribute('tooltip', Language.getKey('assets/empty'));
             empty.isTemporary = true;
             empty.dom.draggable = false;
 
-            const noneBox = new OSUI.VectorBox(`${EDITOR.FOLDER_MENU}line.svg`);
+            const noneBox = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}line.svg`);
             noneBox.setStyle('height', '150%', 'opacity', '0', 'padding', '0em', 'filter', 'brightness(0)');
             this.add(empty.add(noneBox));
 
@@ -254,7 +255,7 @@ class AssetPanel extends OSUI.Shrinkable {
         if (!asset) return;
 
         // ASSET BOX
-        const item = new OSUI.AssetBox(asset.name, this.getViewKey());
+        const item = new SUEY.AssetBox(asset.name, this.getViewKey());
         item.dom.draggable = true;
         item.uuid = asset.uuid;
         item.setID(asset.uuid);
@@ -268,7 +269,7 @@ class AssetPanel extends OSUI.Shrinkable {
             this.type === 'shape' ||
             this.type === 'texture')
         {
-            innerBox = new OSUI.AbsoluteBox();
+            innerBox = new SUEY.AbsoluteBox();
             const canvas = document.createElement('canvas');
             canvas.style.height = '100%';
             canvas.style.width = '100%';
@@ -288,7 +289,7 @@ class AssetPanel extends OSUI.Shrinkable {
                 //     const shaper = editor.getFloaterByID('shaper') ?? new Shaper();
                 //     editor.shaper.showWindow(asset);
                 // });
-                // const renderHexColor = 0xff00ff; // OSUI.ColorScheme.color(OSUI.TRAIT.TRIADIC1);
+                // const renderHexColor = 0xff00ff; // SUEY.ColorScheme.color(SUEY.TRAIT.TRIADIC1);
                 // const shapeGeometry = new THREE.ShapeGeometry(asset /* shape */);
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
                 // shapeGeometry.dispose();
@@ -304,14 +305,14 @@ class AssetPanel extends OSUI.Shrinkable {
         //     const texture = asset;
         //     if (!texture) return;
         //     if (!texture.image) return;
-        //     innerBox = new OSUI.VectorBox(texture.image.src).enableDragging();
+        //     innerBox = new SUEY.VectorBox(texture.image.src).enableDragging();
 
         // 'script'
         } else if (this.type === 'script') {
             const script = asset;
             let sourceIcon = '';
             if (script.format === SALT.SCRIPT_FORMAT.JAVASCRIPT) sourceIcon = `${EDITOR.FOLDER_MENU}outliner/js.svg`;
-            innerBox = new OSUI.VectorBox(sourceIcon).enableDragging();
+            innerBox = new SUEY.VectorBox(sourceIcon).enableDragging();
             item.on('dblclick', () => Signals.dispatch('editScript', script));
             item.on('keydown', (event) => {
                 if (event.key === 'Enter') {
@@ -325,9 +326,9 @@ class AssetPanel extends OSUI.Shrinkable {
         } else if (this.type === 'prefab' && (this.category && this.category === asset.category)) {
             const prefab = asset;
             if (prefab.icon) {
-                innerBox = new OSUI.VectorBox(prefab.icon).enableDragging();
+                innerBox = new SUEY.VectorBox(prefab.icon).enableDragging();
             } else {
-                innerBox = new OSUI.AbsoluteBox();
+                innerBox = new SUEY.AbsoluteBox();
                 const canvas = document.createElement('canvas');
                 canvas.style.height = '100%';
                 canvas.style.width = '100%';
@@ -347,7 +348,7 @@ class AssetPanel extends OSUI.Shrinkable {
 
         // Unknown Type
         } else {
-            innerBox = new OSUI.VectorBox().enableDragging();
+            innerBox = new SUEY.VectorBox().enableDragging();
         }
 
         // INNER BOX

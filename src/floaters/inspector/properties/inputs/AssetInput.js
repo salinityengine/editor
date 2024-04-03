@@ -1,6 +1,7 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 class AssetInput {
 

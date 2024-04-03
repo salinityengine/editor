@@ -1,5 +1,6 @@
 import * as EDITOR from 'editor';
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';

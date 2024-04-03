@@ -1,6 +1,7 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { ColorizeFilter } from '../gui/ColorizeFilter.js';
@@ -135,7 +136,6 @@ class WorldsToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarLeftLength));
         this.add(new SUEY.FlexSpacer());
         this.add(add);
         this.add(new SUEY.FlexSpacer());
@@ -143,7 +143,6 @@ class WorldsToolbar extends SUEY.Panel {
         this.add(new SUEY.FlexSpacer());
         this.add(gridSnap);
         this.add(new SUEY.FlexSpacer());
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarRightLength));
 
     } // end ctor
 

@@ -7,11 +7,10 @@ import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { ToggleButton } from '../gui/ToggleButton.js';
 
-class View2DToolbar extends SUEY.Panel {
+class View2DToolbar extends SUEY.Div {
 
     constructor(view2d) {
-        super({ style: SUEY.PANEL_STYLES.NONE });
-        this.setClass('salt-toolbar');
+        super();
 
         /******************** BUTTONS */
 
@@ -137,11 +136,11 @@ class View2DToolbar extends SUEY.Panel {
         Signals.connect(this, 'selectionChanged', function() {
             // Focus on Scene or Selection?
             let sceneFocus = false;
-            sceneFocus ||= (editor.selected.length === 0);
-            sceneFocus ||= (editor.selected.length === 1);
+            sceneFocus ||= (view2d.selected.length === 0);
+            sceneFocus ||= (view2d.selected.length === 1);
 
             // // OPTION: Disable Button
-            // focus.setDisabled(editor.selected.length === 0);
+            // focus.setDisabled(view2d.selected.length === 0);
 
             // // OPTION: Scene Icon
             // focusScene.setStyle('display', (sceneFocus) ? '' : 'none');
@@ -149,7 +148,7 @@ class View2DToolbar extends SUEY.Panel {
             // focusPupil.setStyle('display', (sceneFocus) ? 'none' : '');
 
             // OPTION: Tooltip
-            const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
+            const focusOn = (view2d.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
             if (_lastTooltip !== focusOn) {
                 focus.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
             }
@@ -288,7 +287,7 @@ class View2DToolbar extends SUEY.Panel {
         const boundaryIcon = `${EDITOR.FOLDER_MENU}toggle/boundary.svg`;
         const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
             const bounds = Config.getKey('scene/render/bounds');
-            // SceneUtils.toggleBoundaryObjects(bounds, editor.view2d.world.activeStage());
+            // SceneUtils.toggleBoundaryObjects(bounds, view2d.world.activeStage());
         });
 
         // Colliders Toggle
@@ -341,7 +340,6 @@ class View2DToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarLeftLength));
         this.add(new SUEY.ToolbarSpacer(1.0));
         this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
         this.add(new SUEY.FlexSpacer());
@@ -349,7 +347,6 @@ class View2DToolbar extends SUEY.Panel {
         this.add(new SUEY.FlexSpacer());
         this.add(gridTop, gridResize, gridSnap);
         this.add(new SUEY.FlexSpacer());
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarRightLength));
 
     } // end ctor
 

@@ -42,7 +42,9 @@
 
     <!-- -------------------- EDITOR -------------------- -->
 
-    <script src='../engine/src/libs/matter.min.js' type='text/javascript'></script>
+    <script src='../engine/src/libs/matter.min.js' type='text/javascript'>
+        window.Matter = Matter;
+    </script>
 
     <script type='module'>
 
@@ -50,15 +52,9 @@
 
         import * as SALT from 'engine';
         import * as SUEY from 'gui';
-        import * as EDITOR from 'editor';
-        import { Signals } from './src/config/Signals.js';
+        import { editor } from 'editor';
 
         console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
-
-        /***** GLOBALS *****/
-
-        window.Matter = Matter;
-        window.editor = EDITOR.editor;
 
         /***** TEXT SELECTION *****/
 
@@ -79,10 +75,6 @@
             document.downOnElement = undefined;
             document.focusedElement = undefined;
         });
-
-        /***** RESIZE EVENT *****/
-
-        window.addEventListener('resize', () => Signals.dispatch('windowResize'));
 
         /***** PREVENT DEFAULTS *****/
 

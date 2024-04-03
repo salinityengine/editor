@@ -100,11 +100,11 @@ class ViewUIToolbar extends SUEY.Panel {
         Signals.connect(this, 'selectionChanged', function() {
             // Focus on Scene or Selection?
             let sceneFocus = false;
-            sceneFocus ||= (editor.selected.length === 0);
-            sceneFocus ||= (editor.selected.length === 1);
+            sceneFocus ||= (viewui.selected.length === 0);
+            sceneFocus ||= (viewui.selected.length === 1);
 
             // // OPTION: Disable Button
-            // focus.setDisabled(editor.selected.length === 0);
+            // focus.setDisabled(viewui.selected.length === 0);
 
             // // OPTION: Scene Icon
             // focusScene.setStyle('display', (sceneFocus) ? '' : 'none');
@@ -112,7 +112,7 @@ class ViewUIToolbar extends SUEY.Panel {
             // focusPupil.setStyle('display', (sceneFocus) ? 'none' : '');
 
             // OPTION: Tooltip
-            const focusOn = (editor.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
+            const focusOn = (viewui.selected.length > 1)? 'Entities' : ((sceneFocus) ? 'Scene' : 'Entity');
             if (_lastTooltip !== focusOn) {
                 focus.setAttribute('tooltip', Config.tooltip(`Focus On ${focusOn}`, Config.getKey('shortcuts/focus')));
             }
@@ -121,11 +121,9 @@ class ViewUIToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarLeftLength));
         this.add(new SUEY.ToolbarSpacer(1.0));
         this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
         this.add(new SUEY.FlexSpacer());
-        this.add(new SUEY.ToolbarSpacer(editor.toolbarRightLength));
 
     } // end ctor
 

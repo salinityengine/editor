@@ -11,7 +11,7 @@ import { EyeMenu } from './EyeMenu.js';
 
 class EditorToolbar extends SUEY.Panel {
 
-    constructor() {
+    constructor(editor) {
         super({ style: SUEY.PANEL_STYLES.NONE });
         this.setClass('salt-toolbar');
         this.addClass('editor-toolbar');
@@ -55,7 +55,7 @@ class EditorToolbar extends SUEY.Panel {
         const eyeLidTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}eye-lid-top.svg`).setID('tb-eye-lid-top');
         const eyeLidBot = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}eye-lid-bottom.svg`).setID('tb-eye-lid-bottom');
         eye.add(eyeClosed, eyeOpen, eyeLidTop, eyeLidBot);
-        eye.attachMenu(new EyeMenu());
+        eye.attachMenu(new EyeMenu(editor));
 
         /******************** EDITOR MODES */
 
@@ -141,23 +141,14 @@ class EditorToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        // // OPTION: Middle Centered
-        // const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
-        // const middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
-        // const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
-        // this.add(left, middle, right);
-
-        // // OPTION: Spacer, SUEY.ToolbarSpacer(0.5) / SUEY.ToolbarSeparator()
+        // Spacers: SUEY.ToolbarSpacer(0.5), SUEY.ToolbarSeparator()
 
         const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
+        this.middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
         const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
         left.add(eye, new SUEY.ToolbarSeparator(), scene2d, scene3d, world, ui, new SUEY.FlexSpacer());
         right.add(new SUEY.FlexSpacer(), play, new SUEY.ToolbarSeparator(), proj, history, settings);
-        this.add(left, right);
-
-        editor.toolbarLeftLength = left.children.length - 1;
-        editor.toolbarRightLength = right.children.length - 1;
-
+        this.add(left, this.middle, right);
     }
 
 }

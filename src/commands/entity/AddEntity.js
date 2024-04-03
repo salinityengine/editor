@@ -1,3 +1,4 @@
+import { editor } from 'editor';
 import { Command } from '../Command.js';
 import { Signals } from '../../config/Signals.js';
 

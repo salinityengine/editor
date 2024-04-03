@@ -1,6 +1,7 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 import { AddAssetCommand, ChangeComponentCommand } from '../../../commands/Commands.js';
 import { AddComponentCommand } from '../../../commands/Commands.js';

@@ -1,6 +1,7 @@
 import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { editor } from 'editor';
 
 import { View2DToolbar } from '../toolbars/View2DToolbar.js';
 
@@ -8,23 +9,24 @@ import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { SelectCommand } from '../commands/Commands.js';
 
-class View2D extends SUEY.Panel {
+class View2D extends SUEY.Div {
 
     floaterFamily() {
         return [ 'advisor', 'codex', 'inspector' ];
     }
 
+    viewportType() {
+        return EDITOR.MODES.SCENE_EDITOR_2D;
+    }
+
     constructor() {
         super();
         const self = this;
-        this.setClass('salt-viewport');
-        this.addClass('suey-unselectable');
-
-        this.viewport
+        this.addClass('salt-viewport', 'suey-unselectable');
 
         /******************** TOOLBAR */
 
-        this.add(new View2DToolbar(this));
+        // this.add(new View2DToolbar(this));
 
         /******************** PROPERTIES */
 
