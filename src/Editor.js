@@ -1,3 +1,4 @@
+import * as EDITOR from './constants.js';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
@@ -7,7 +8,6 @@ import { Config } from './config/Config.js';
 import { History } from './config/History.js';
 import { Language } from './config/Language.js';
 import { Layout } from './config/Layout.js';
-import { Loader } from './config/Loader.js';
 import { Signals } from './config/Signals.js';
 
 import { EditorToolbar } from './toolbars/EditorToolbar.js';
@@ -24,10 +24,12 @@ class Editor extends SUEY.Div {
 
     constructor() {
         super();
-        const self = this;
-        this.setClass('salt-editor', 'suey-unselectable');
-        this.addClass('salt-disable-animations');
+        this.setClass('salt-editor', 'suey-unselectable', 'salt-disable-animations');
         document.body.appendChild(this.dom);
+    }
+
+    init() {
+        const self = this;
 
         /********** ACTIVE PROJECT */
 
@@ -37,7 +39,6 @@ class Editor extends SUEY.Div {
 
         this.clipboard = new Clipboard();                       // Copy / Paste Clipboard
         this.history = new History();                           // Undo / Redo History
-        this.loader = new Loader();                             // File Loader
         // this.storage = new Storage();                        // TODO: Storage / Autosave
 
         /********** PROPERTIES */
@@ -71,12 +72,10 @@ class Editor extends SUEY.Div {
         this.add(this.infoBox = new InfoBox());
 
         this.viewports.push(new View2D());
-        // this.viewports.push(new View3D());
-        // this.viewports.push(new ViewUI());
-        // this.viewports.push(new Worlds());
-        for (const viewport of this.viewports) {
-            this.add(viewport);
-        }
+        this.viewports.push(new View3D());
+        this.viewports.push(new ViewUI());
+        this.viewports.push(new Worlds());
+        this.add(...this.viewports);
 
         /********** DOCKS */
 
@@ -163,10 +162,14 @@ class Editor extends SUEY.Div {
         // TODO: Hide Docks (Floaters / Docker / Tabbed / Window) based on Viewport floaterFamily()
         //
 
+        // Remove Mode Toolbar
+        this.toolbar.middle.detachChildren();
+
         // Hide Viewports
         for (const viewport of this.viewports) {
             if (viewport.viewportType() === mode) {
-
+                this.toolbar.middle.add(...viewport.toolbar.buttons);
+                viewport.display();
             } else {
                 viewport.hide();
                 //

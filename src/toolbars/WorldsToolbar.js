@@ -12,11 +12,9 @@ import { Signals } from '../config/Signals.js';
 // import { MultiCmdsCommand } from '../commands/Commands.js';
 // import { SetStageCommand } from '../commands/Commands.js';
 
-class WorldsToolbar extends SUEY.Panel {
+class WorldsToolbar {
 
     constructor(worldsGraph) {
-        super({ style: SUEY.PANEL_STYLES.NONE });
-        this.setClass('salt-toolbar');
 
         /******************** BUTTONS */
 
@@ -104,7 +102,7 @@ class WorldsToolbar extends SUEY.Panel {
         const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
-        Signals.connect(this, 'schemeChanged', function() {
+        Signals.connect(worldsGraph, 'schemeChanged', function() {
             const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
             const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
@@ -128,7 +126,7 @@ class WorldsToolbar extends SUEY.Panel {
             Signals.dispatch('gridChanged');
         });
 
-        Signals.connect(this, 'gridChanged', function() {
+        Signals.connect(worldsGraph, 'gridChanged', function() {
             const snapping = Config.getKey('scene/grid/snap');
             if (snapping) gridSnap.addClass('suey-selected');
             else gridSnap.removeClass('suey-selected');
@@ -136,13 +134,15 @@ class WorldsToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(new SUEY.FlexSpacer());
-        this.add(add);
-        this.add(new SUEY.FlexSpacer());
-        this.add(reset);
-        this.add(new SUEY.FlexSpacer());
-        this.add(gridSnap);
-        this.add(new SUEY.FlexSpacer());
+        const buttons = [];
+        buttons.push(new SUEY.FlexSpacer());
+        buttons.push(add);
+        buttons.push(new SUEY.FlexSpacer());
+        buttons.push(reset);
+        buttons.push(new SUEY.FlexSpacer());
+        buttons.push(gridSnap);
+        buttons.push(new SUEY.FlexSpacer());
+        this.buttons = buttons;
 
     } // end ctor
 

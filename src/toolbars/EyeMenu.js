@@ -7,6 +7,7 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { Config } from '../config/Config.js';
+import { Loader } from '../config/Loader.js';
 import { Signals } from '../config/Signals.js';
 
 import { zipSync, strToU8 } from '../libs/fflate.module.js';
@@ -57,9 +58,7 @@ class EyeMenu extends SUEY.Menu {
             const fileDialog = document.createElement('input');
             fileDialog.type = 'file';
             fileDialog.addEventListener('change', function() {
-
-                editor.loader.loadFiles(fileDialog.files);
-
+                Loader.loadFiles(fileDialog.files);
                 formOpen.reset();
             });
             formOpen.appendChild(fileDialog);

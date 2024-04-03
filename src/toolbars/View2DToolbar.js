@@ -7,10 +7,9 @@ import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { ToggleButton } from '../gui/ToggleButton.js';
 
-class View2DToolbar extends SUEY.Div {
+class View2DToolbar {
 
     constructor(view2d) {
-        super();
 
         /******************** BUTTONS */
 
@@ -97,7 +96,7 @@ class View2DToolbar extends SUEY.Div {
         move.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.MOVE));
         zoom.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.ZOOM));
 
-        Signals.connect(this, 'mouseModeChanged', function(mouseMode) {
+        Signals.connect(view2d, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
             move.removeClass('suey-selected');
             zoom.removeClass('suey-selected');
@@ -121,7 +120,7 @@ class View2DToolbar extends SUEY.Div {
         const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
-        Signals.connect(this, 'schemeChanged', function() {
+        Signals.connect(view2d, 'schemeChanged', function() {
             const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
             const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
@@ -133,7 +132,7 @@ class View2DToolbar extends SUEY.Div {
 
         let _lastTooltip = '';
 
-        Signals.connect(this, 'selectionChanged', function() {
+        Signals.connect(view2d, 'selectionChanged', function() {
             // Focus on Scene or Selection?
             let sceneFocus = false;
             sceneFocus ||= (view2d.selected.length === 0);
@@ -332,7 +331,7 @@ class View2DToolbar extends SUEY.Div {
             Signals.dispatch('gridChanged');
         });
 
-        Signals.connect(this, 'gridChanged', function() {
+        Signals.connect(view2d, 'gridChanged', function() {
             const snapping = Config.getKey('scene/grid/snap');
             if (snapping) gridSnap.addClass('suey-selected');
             else gridSnap.removeClass('suey-selected');
@@ -340,13 +339,15 @@ class View2DToolbar extends SUEY.Div {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(new SUEY.ToolbarSpacer(1.0));
-        this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
-        this.add(new SUEY.FlexSpacer());
-        this.add(arrange, transform, new SUEY.ToolbarSeparator(), views);
-        this.add(new SUEY.FlexSpacer());
-        this.add(gridTop, gridResize, gridSnap);
-        this.add(new SUEY.FlexSpacer());
+        const buttons = [];
+        buttons.push(new SUEY.ToolbarSpacer(1.0));
+        buttons.push(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
+        buttons.push(new SUEY.FlexSpacer());
+        buttons.push(arrange, transform, new SUEY.ToolbarSeparator(), views);
+        buttons.push(new SUEY.FlexSpacer());
+        buttons.push(gridTop, gridResize, gridSnap);
+        buttons.push(new SUEY.FlexSpacer());
+        this.buttons = buttons;
 
     } // end ctor
 

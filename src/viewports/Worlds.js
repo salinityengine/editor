@@ -17,6 +17,10 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class Worlds extends SUEY.Graph {
 
+    floaterFamily() {
+        return [ 'advisor', 'codex', 'inspector' ];
+    }
+
     viewportType() {
         return EDITOR.MODES.WORLD_GRAPH;
     }
@@ -27,14 +31,10 @@ class Worlds extends SUEY.Graph {
             curveType: Config.getKey('world/curve')
         });
         const self = this;
-        this.setClass('salt-viewport');
-        this.addClass('suey-unselectable');
+        this.setClass('salt-viewport', 'suey-unselectable');
 
         // Toolbar
-        this.add(new WorldsToolbar(this));
-
-        // Type
-        this.viewportType
+        this.toolbar = new WorldsToolbar(this);
 
         /********** NODES */
 

@@ -8,11 +8,9 @@ import { Signals } from '../config/Signals.js';
 // import { SceneUtils } from './SceneUtils.js';
 import { ToggleButton } from '../gui/ToggleButton.js';
 
-class View3DToolbar extends SUEY.Panel {
+class View3DToolbar {
 
     constructor(view3d) {
-        super({ style: SUEY.PANEL_STYLES.NONE });
-        this.setClass('salt-toolbar');
 
         /******************** BUTTONS */
 
@@ -106,7 +104,7 @@ class View3DToolbar extends SUEY.Panel {
         move.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.MOVE));
         zoom.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.ZOOM));
 
-        Signals.connect(this, 'mouseModeChanged', function(mouseMode) {
+        Signals.connect(view3d, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
             look.removeClass('suey-selected');
             move.removeClass('suey-selected');
@@ -132,7 +130,7 @@ class View3DToolbar extends SUEY.Panel {
         const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
-        Signals.connect(this, 'schemeChanged', function() {
+        Signals.connect(view3d, 'schemeChanged', function() {
             const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
             const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
@@ -144,7 +142,7 @@ class View3DToolbar extends SUEY.Panel {
 
         let _lastTooltip = '';
 
-        Signals.connect(this, 'selectionChanged', function() {
+        Signals.connect(view3d, 'selectionChanged', function() {
             // Focus on Scene or Selection?
             let sceneFocus = false;
             sceneFocus ||= (view3d.selected.length === 0);
@@ -196,7 +194,7 @@ class View3DToolbar extends SUEY.Panel {
         snap.onClick(() => Signals.dispatch('transformModeChanged', 'snap'));
         paint.onClick(() => Signals.dispatch('transformModeChanged', 'paint'));
 
-        Signals.connect(this, 'transformModeChanged', function(mode) {
+        Signals.connect(view3d, 'transformModeChanged', function(mode) {
             none.removeClass('suey-selected');
             translate.removeClass('suey-selected');
             rotate.removeClass('suey-selected');
@@ -260,13 +258,15 @@ class View3DToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(new SUEY.ToolbarSpacer(1.0));
-        this.add(select, look, move, zoom, new SUEY.ToolbarSeparator(), focus, /* INCLUDE?: reset, */);
-        this.add(new SUEY.FlexSpacer());
-        this.add(none, translate, rotate, scale, rect, snap, paint);
-        this.add(new SUEY.FlexSpacer());
-        this.add(views);
-        this.add(new SUEY.FlexSpacer());
+        const buttons = [];
+        buttons.push(new SUEY.ToolbarSpacer(1.0));
+        buttons.push(select, look, move, zoom, new SUEY.ToolbarSeparator(), focus, /* INCLUDE?: reset, */);
+        buttons.push(new SUEY.FlexSpacer());
+        buttons.push(none, translate, rotate, scale, rect, snap, paint);
+        buttons.push(new SUEY.FlexSpacer());
+        buttons.push(views);
+        buttons.push(new SUEY.FlexSpacer());
+        this.buttons = buttons;
 
     } // end ctor
 

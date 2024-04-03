@@ -11,6 +11,10 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class View3D extends SUEY.Div {
 
+    floaterFamily() {
+        return [ 'advisor', 'codex', 'inspector' ];
+    }
+
     viewportType() {
         return EDITOR.MODES.SCENE_EDITOR_3D;
     }
@@ -18,13 +22,12 @@ class View3D extends SUEY.Div {
     constructor() {
         super();
         const self = this;
-        this.addClass('salt-viewport', 'suey-unselectable');
+        this.setClass('salt-viewport', 'suey-unselectable');
 
-        /******************** TOOLBAR */
+        // Toolbar
+        this.toolbar = new View3DToolbar(this);
 
-        this.add(new View3DToolbar(this));
-
-        /******************** PROPERTIES */
+        /********** PROPERTIES */
 
         // Forward Function Declarations
         this.addSprites = function() {};                        // Adds sprites to empty entities

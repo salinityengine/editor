@@ -22,13 +22,12 @@ class View2D extends SUEY.Div {
     constructor() {
         super();
         const self = this;
-        this.addClass('salt-viewport', 'suey-unselectable');
+        this.setClass('salt-viewport', 'suey-unselectable');
 
-        /******************** TOOLBAR */
+        // Toolbar
+        this.toolbar = new View2DToolbar(this);
 
-        // this.add(new View2DToolbar(this));
-
-        /******************** PROPERTIES */
+        /********** PROPERTIES */
 
         // Forward Function Declarations
         this.addSprites = function() {};                        // Adds sprites to empty entities

@@ -6,11 +6,9 @@ import { ColorizeFilter } from '../gui/ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-class ViewUIToolbar extends SUEY.Panel {
+class ViewUIToolbar {
 
     constructor(viewui) {
-        super({ style: SUEY.PANEL_STYLES.NONE });
-        this.setClass('salt-toolbar');
 
         /******************** BUTTONS */
 
@@ -61,7 +59,7 @@ class ViewUIToolbar extends SUEY.Panel {
         move.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.MOVE));
         zoom.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.ZOOM));
 
-        Signals.connect(this, 'mouseModeChanged', function(mouseMode) {
+        Signals.connect(viewui, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
             move.removeClass('suey-selected');
             zoom.removeClass('suey-selected');
@@ -85,7 +83,7 @@ class ViewUIToolbar extends SUEY.Panel {
         const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
-        Signals.connect(this, 'schemeChanged', function() {
+        Signals.connect(viewui, 'schemeChanged', function() {
             const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
             const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
@@ -97,7 +95,7 @@ class ViewUIToolbar extends SUEY.Panel {
 
         let _lastTooltip = '';
 
-        Signals.connect(this, 'selectionChanged', function() {
+        Signals.connect(viewui, 'selectionChanged', function() {
             // Focus on Scene or Selection?
             let sceneFocus = false;
             sceneFocus ||= (viewui.selected.length === 0);
@@ -121,9 +119,11 @@ class ViewUIToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        this.add(new SUEY.ToolbarSpacer(1.0));
-        this.add(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
-        this.add(new SUEY.FlexSpacer());
+        const buttons = [];
+        buttons.push(new SUEY.ToolbarSpacer(1.0));
+        buttons.push(select, move, zoom, new SUEY.ToolbarSeparator(), focus, reset);
+        buttons.push(new SUEY.FlexSpacer());
+        this.buttons = buttons;
 
     } // end ctor
 

@@ -141,14 +141,18 @@ class EditorToolbar extends SUEY.Panel {
 
         /******************** ADD TO TOOLBAR */
 
-        // Spacers: SUEY.ToolbarSpacer(0.5), SUEY.ToolbarSeparator()
-
-        const left = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
-        this.middle = new SUEY.FlexBox().setStyle('flex', '0 1 auto', 'pointerEvents', 'none');
-        const right = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none', 'width', '50%');
+        // Spacers:
+        // - SUEY.ToolbarSpacer(0.5)
+        // - SUEY.ToolbarSeparator()
+        const left = new SUEY.FlexBox().setStyle('flex', '0 0 auto', 'pointerEvents', 'none');
+        const middle = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none');
+        const right = new SUEY.FlexBox().setStyle('flex', '0 0 auto', 'pointerEvents', 'none');
         left.add(eye, new SUEY.ToolbarSeparator(), scene2d, scene3d, world, ui, new SUEY.FlexSpacer());
         right.add(new SUEY.FlexSpacer(), play, new SUEY.ToolbarSeparator(), proj, history, settings);
-        this.add(left, this.middle, right);
+        this.add(left, middle, right);
+
+        // Reference to Middle
+        this.middle = middle;
     }
 
 }

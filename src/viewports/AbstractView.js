@@ -13,21 +13,18 @@ class AbstractView extends SUEY.Panel {
     }
 
     viewportType() {
-        // return EDITOR.MODES...
         return 'abstract';
     }
 
     constructor() {
         super();
         const self = this;
-        this.setClass('salt-viewport');
-        this.addClass('suey-unselectable');
+        this.setClass('salt-viewport', 'suey-unselectable');
 
-        /******************** TOOLBAR */
+        // Toolbar
+        this.toolbar = null; // new Toolbar(this);
 
-        // this.add(new Toolbar(this));
-
-        /******************** PROPERTIES */
+        /********** PROPERTIES */
 
         // Containers
         this.selected = [];                                     // Objects selected (can differ slightly from editor)

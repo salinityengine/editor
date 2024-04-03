@@ -11,6 +11,10 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class ViewUI extends SUEY.Div {
 
+    floaterFamily() {
+        return [ 'advisor', 'codex', 'inspector' ];
+    }
+
     viewportType() {
         return EDITOR.MODES.UI_EDITOR;
     }
@@ -18,13 +22,12 @@ class ViewUI extends SUEY.Div {
     constructor() {
         super();
         const self = this;
-        this.addClass('salt-viewport', 'suey-unselectable');
+        this.setClass('salt-viewport', 'suey-unselectable');
 
-        /******************** TOOLBAR */
+        // Toolbar
+        this.toolbar = new ViewUIToolbar(this);
 
-        this.add(new ViewUIToolbar(this));
-
-        /******************** PROPERTIES */
+        /********** PROPERTIES */
 
         // Gui
         this.width = Math.max(2, this.getWidth());              // Width of dom element
