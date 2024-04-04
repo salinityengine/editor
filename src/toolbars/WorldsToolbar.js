@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    COLORS,
+    FOLDER_MENU,
+    FOLDER_TOOLBAR,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { ColorizeFilter } from '../gui/ColorizeFilter.js';
@@ -51,16 +55,16 @@ class WorldsToolbar {
 
         /******************** NODES */
 
-        const nodePlusSign = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}add.svg`).setID('tb-node-plus-sign');
+        const nodePlusSign = new SUEY.VectorBox(`${FOLDER_MENU}add.svg`).setID('tb-node-plus-sign');
         nodePlusSign.img.addClass('suey-complement-colorize')
         add.add(nodePlusSign);
 
         const nodeMenu = new SUEY.Menu();
         add.attachMenu(nodeMenu);
 
-        const addWorld2D = new SUEY.MenuItem('World 2D', `${EDITOR.FOLDER_MENU}node/world2d.svg`);
-        const addWorld3D = new SUEY.MenuItem('World 3D', `${EDITOR.FOLDER_MENU}node/world3d.svg`);
-        const addUI = new SUEY.MenuItem('UI Screen', `${EDITOR.FOLDER_MENU}node/ui.svg`);
+        const addWorld2D = new SUEY.MenuItem('World 2D', `${FOLDER_MENU}node/world2d.svg`);
+        const addWorld3D = new SUEY.MenuItem('World 3D', `${FOLDER_MENU}node/world3d.svg`);
+        const addUI = new SUEY.MenuItem('UI Screen', `${FOLDER_MENU}node/ui.svg`);
         nodeMenu.add(addWorld2D);
         // nodeMenu.add(addWorld3D);
         nodeMenu.add(addUI);
@@ -97,14 +101,14 @@ class WorldsToolbar {
 
         /******************** FOCUS */
 
-        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
-        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
-        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
+        const resetAxisX = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
+        const resetAxisY = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
+        const resetTarget = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
         Signals.connect(worldsGraph, 'schemeChanged', function() {
-            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
-            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
+            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
+            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
@@ -115,8 +119,8 @@ class WorldsToolbar {
 
         /******************** GRID */
 
-        const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
-        const snapAttract = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
+        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
+        const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         gridSnap.add(snapMagnet, snapAttract);
 
         gridSnap.onClick(() => {

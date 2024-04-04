@@ -1,4 +1,8 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+    FOLDER_LOGO,
+    FOLDER_MENU,
+} from 'constants';
 import * as SUEY from 'gui';
 
 import { Advice } from '../config/Advice.js';
@@ -13,7 +17,7 @@ class Advisor extends SUEY.Floater {
     #title = '__NOT_SET__';
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}advisor.svg`;
+        const icon = `${FOLDER_FLOATERS}advisor.svg`;
         super('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
         const self = this;
         this.addClass('salt-advisor');
@@ -51,7 +55,7 @@ class Advisor extends SUEY.Floater {
         `);
 
         // OPTION: Graphics
-        const irisLogo = new SUEY.VectorBox(`${EDITOR.FOLDER_LOGO}iris.svg`);
+        const irisLogo = new SUEY.VectorBox(`${FOLDER_LOGO}iris.svg`);
         irisLogo.setStyle(
             'z-index', '-1',
             'opacity', '0.25',
@@ -89,13 +93,13 @@ class Advisor extends SUEY.Floater {
         const buttonSpacer = new SUEY.FlexSpacer().setStyle('pointer-events', 'none');
 
         const backButton = new SUEY.Button().addClass('suey-borderless-button');
-        const backArrow = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}advisor/arrow.svg`);
+        const backArrow = new SUEY.ShadowBox(`${FOLDER_MENU}advisor/arrow.svg`);
         backArrow.firstImage().firstImage().setStyle('transform', 'scale(1.25)');
         backButton.setAttribute('tooltip', 'Back');
         backButton.add(backArrow);
 
         const forwardButton = new SUEY.Button().addClass('suey-borderless-button');
-        const forwardArrow = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}advisor/arrow.svg`);
+        const forwardArrow = new SUEY.ShadowBox(`${FOLDER_MENU}advisor/arrow.svg`);
         forwardArrow.firstImage().firstImage().setStyle('transform', 'translateX(10%) scaleX(-1.25) scaleY(1.25)');
         forwardButton.setAttribute('tooltip', 'Forward');
         forwardButton.add(forwardArrow);

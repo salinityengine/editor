@@ -1,3 +1,6 @@
+import {
+    EDITOR_MODES,
+} from 'constants';
 import * as SUEY from 'gui';
 import { Config } from './Config.js';
 
@@ -30,31 +33,24 @@ class Layout {
 
     /******************** FLOATERS */
 
-    static allFloaterTypes() {
-        return [
-            'advisor',
-            'codex',
-            'history',
-            'inspector',
-            'outliner',
-            'player',
-            'project',
-            'settings',
-        ];
+    static allFloaters() {
+        const floaters = {
+            'advisor':      Advisor,
+            'codex':        Codex,
+            'history':      Historian,
+            'inspector':    Inspector,
+            'outliner':     Outliner,
+            'player':       Player,
+            'project':      Projecter,
+            'settings':     Settings,
+        };
+        return floaters;
     }
 
     static createFloater(id) {
-        switch (id) {
-            case 'advisor': return new Advisor();
-            case 'codex': return new Codex();
-            case 'history': return new Historian();
-            case 'inspector': return new Inspector();
-            case 'outliner': return new Outliner();
-            case 'player': return new Player();
-            case 'project': return new Projecter();
-            case 'settings': return new Settings();
-        }
-        console.warn(`Layout.createFloater: Unknown Floater type: ${id}`);
+        const floaters = Layout.allFloaters();
+        if (id in floaters) return new floaters[id];
+        console.warn(`Layout.createFloater: Unknown type '${id}'`);
         return null;
     }
 
@@ -110,11 +106,15 @@ class Layout {
 
     /******************** SAVE / LOAD */
 
-    static save(docker) {
+    static save(docker, mode) {
         if (!docker.isPrimary()) {
             console.warn('Layout.save: The provided Docker is not the Primary Docker');
             return;
         }
+        // if (!mode in EDITOR_MODES.values()) {
+        //     console.warn('Layout.save: Editor mode not provided!');
+        //     return;
+        // }
 
         const layout = {
             type: 'docker',

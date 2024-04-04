@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    EDITOR_MODES,
+    MOUSE_MODES,
+    MOUSE_STATES,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { AbstractView } from './AbstractView.js';
 import { View2DToolbar } from '../toolbars/View2DToolbar.js';
@@ -25,8 +29,8 @@ class View2D extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
-    viewportType() {
-        return EDITOR.MODES.SCENE_EDITOR_2D;
+    viewportMode() {
+        return EDITOR_MODES.SCENE_EDITOR_2D;
     }
 
     constructor() {
@@ -42,8 +46,8 @@ class View2D extends AbstractView {
         this.rubberBandBox = null;
 
         // Input
-        this.mouseMode = EDITOR.MOUSE_MODES.SELECT;             // left mouse button mode
-        this.mouseState = EDITOR.MOUSE_STATES.NONE;             // current mouse state
+        this.mouseMode = MOUSE_MODES.SELECT;                    // left mouse button mode
+        this.mouseState = MOUSE_STATES.NONE;                    // current mouse state
         this.mouseIsDown = false;                               // true when mouse down
         this.mouseDownButton = -1;                              // tracks button on last mouse down
         this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl

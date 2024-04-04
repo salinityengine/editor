@@ -1,7 +1,10 @@
-import * as EDITOR from 'editor';
+import {
+    EDITOR_MODES,
+    FOLDER_FLOATERS,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -17,7 +20,7 @@ import { WorldGridBlock } from './settings/WorldGridBlock.js';
 class Settings extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}settings.svg`;
+        const icon = `${FOLDER_FLOATERS}settings.svg`;
         super('settings', null, { icon, color: '#C04145', shrink: true });
         const self = this;
         Advice.attach(this.button, 'floater/settings');
@@ -34,11 +37,11 @@ class Settings extends SUEY.Floater {
             // Create Blocks
             const blocks = [];
             blocks.push(new SettingsGeneralBlock());
-            if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_2D) {
+            if (editor.mode() === EDITOR_MODES.SCENE_EDITOR_2D) {
                 blocks.push(new View2DGridBlock());
-            } else if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
+            } else if (editor.mode() === EDITOR_MODES.SCENE_EDITOR_3D) {
                 // EMPTY
-            } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
+            } else if (editor.mode() === EDITOR_MODES.WORLD_GRAPH) {
                 blocks.push(new WorldGridBlock());
             }
 

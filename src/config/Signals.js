@@ -25,7 +25,7 @@ const SIGNAL_NAMES = [
     // Scene
     'sceneRendered',            // (timeToRenderMs)     ALERT       Scene was rendered
 
-    /***** VIEWPORTS **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
+    /***** VIEWPORT **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
     'mouseModeChanged',         // (mouse mode)         FUNCTION    Change mouse mode
     'mouseStateChanged',        // (state, cursor)      ALERT       Mouse state was changed
@@ -47,7 +47,7 @@ const SIGNAL_NAMES = [
 
     'dropEnded',                // -                    ALERT       Fired when 'viewport.dropInfo' was set and drag done
 
-    /***** FLOATERS **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
+    /***** FLOATER **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
     // Inspector
     'inspectorBuild',           // (item)               FUNCTION    Build with object, string, 'rebuild'

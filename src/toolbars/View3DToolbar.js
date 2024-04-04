@@ -1,4 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    COLORS,
+    FOLDER_MENU,
+    FOLDER_TOOLBAR,
+    MOUSE_MODES,
+} from 'constants';
 import * as SUEY from 'gui';
 
 import { Advice } from '../config/Advice.js';
@@ -86,23 +91,23 @@ class View3DToolbar {
 
         /******************** MOUSE MODES */
 
-        const selectIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-select.svg`).setID('tb-mode-select');
-        const selectCursor = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-select-cursor.svg`).setID('tb-mode-select-cursor');
-        const lookIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-look-eye.svg`).setID('tb-mode-look');
-        const lookPupil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-look-pupil.svg`).setID('tb-mode-look-pupil');
-        const moveIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-move.svg`).setID('tb-mode-move');
-        const moveGrab = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-move-grab.svg`).setID('tb-mode-move-grab');
-        const zoomIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-zoom.svg`).setID('tb-mode-zoom');
+        const selectIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-select.svg`).setID('tb-mode-select');
+        const selectCursor = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-select-cursor.svg`).setID('tb-mode-select-cursor');
+        const lookIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-look-eye.svg`).setID('tb-mode-look');
+        const lookPupil = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-look-pupil.svg`).setID('tb-mode-look-pupil');
+        const moveIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-move.svg`).setID('tb-mode-move');
+        const moveGrab = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-move-grab.svg`).setID('tb-mode-move-grab');
+        const zoomIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-zoom.svg`).setID('tb-mode-zoom');
 
         select.add(selectIcon, selectCursor);
         look.add(lookIcon, lookPupil);
         move.add(moveIcon, moveGrab);
         zoom.add(zoomIcon);
 
-        select.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.SELECT));
-        look.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.LOOK));
-        move.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.MOVE));
-        zoom.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.ZOOM));
+        select.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.SELECT));
+        look.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.LOOK));
+        move.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
+        zoom.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
 
         Signals.connect(view3d, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
@@ -110,29 +115,29 @@ class View3DToolbar {
             move.removeClass('suey-selected');
             zoom.removeClass('suey-selected');
             switch (mouseMode) {
-                case EDITOR.MOUSE_MODES.SELECT: select.addClass('suey-selected'); break;
-                case EDITOR.MOUSE_MODES.LOOK: look.addClass('suey-selected'); break;
-                case EDITOR.MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
-                case EDITOR.MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
+                case MOUSE_MODES.SELECT: select.addClass('suey-selected'); break;
+                case MOUSE_MODES.LOOK: look.addClass('suey-selected'); break;
+                case MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
+                case MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
             }
         });
 
         /******************** FOCUS */
 
-        const focusEye = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-eye.svg`).setID('tb-focus-eye');
-        const focusPupil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-pupil.svg`).setID('tb-focus-pupil');
-        // const focusScene = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-scene.svg`).setID('tb-focus-scene');
-        const focusTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-focus-target');
+        const focusEye = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-eye.svg`).setID('tb-focus-eye');
+        const focusPupil = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-pupil.svg`).setID('tb-focus-pupil');
+        // const focusScene = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-scene.svg`).setID('tb-focus-scene');
+        const focusTarget = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-target.svg`).setID('tb-focus-target');
         focus.add(focusEye, /* focusScene, */ focusPupil, focusTarget);
 
-        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
-        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
-        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
+        const resetAxisX = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
+        const resetAxisY = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
+        const resetTarget = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
         Signals.connect(view3d, 'schemeChanged', function() {
-            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
-            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
+            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
+            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
@@ -166,17 +171,17 @@ class View3DToolbar {
 
         /******************** TRANSFORM TOOLS */
 
-        const noneIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-none.svg`).setID('tb-tool-none');
-        const translateIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-translate.svg`).setID('tb-tool-translate');
-        const rotateIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rotate.svg`).setID('tb-tool-rotate');
-        const scaleIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-scale.svg`).setID('tb-tool-scale');
-        const rectLeftTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rect-left-top.svg`).setID('tb-tool-rect-left-top');
-        const rectLeftBot = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rect-left-bot.svg`).setID('tb-tool-rect-left-bot');
-        const rectRightTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rect-right-top.svg`).setID('tb-tool-rect-right-top');
-        const rectRightBot = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}tool-rect-right-bot.svg`).setID('tb-tool-rect-right-bot');
-        const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
-        const snapAttract = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
-        const paintBrush = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}paint-brush.svg`).setID('tb-paint-brush');
+        const noneIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-none.svg`).setID('tb-tool-none');
+        const translateIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-translate.svg`).setID('tb-tool-translate');
+        const rotateIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-rotate.svg`).setID('tb-tool-rotate');
+        const scaleIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-scale.svg`).setID('tb-tool-scale');
+        const rectLeftTop = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-rect-left-top.svg`).setID('tb-tool-rect-left-top');
+        const rectLeftBot = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-rect-left-bot.svg`).setID('tb-tool-rect-left-bot');
+        const rectRightTop = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-rect-right-top.svg`).setID('tb-tool-rect-right-top');
+        const rectRightBot = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-rect-right-bot.svg`).setID('tb-tool-rect-right-bot');
+        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
+        const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
+        const paintBrush = new SUEY.VectorBox(`${FOLDER_TOOLBAR}paint-brush.svg`).setID('tb-paint-brush');
 
         none.add(noneIcon);
         translate.add(translateIcon);
@@ -215,10 +220,10 @@ class View3DToolbar {
 
         /******************** VIEWS */
 
-        const toggleBack1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-1.svg`).setID('tb-toggle-back-1');
-        const toggleBack2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-2.svg`).setID('tb-toggle-back-2');
-        const toggleButton1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-1.svg`).setID('tb-toggle-button-1');
-        const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setID('tb-toggle-button-2');
+        const toggleBack1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}toggle-background-1.svg`).setID('tb-toggle-back-1');
+        const toggleBack2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}toggle-background-2.svg`).setID('tb-toggle-back-2');
+        const toggleButton1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}toggle-button-1.svg`).setID('tb-toggle-button-1');
+        const toggleButton2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}toggle-button-2.svg`).setID('tb-toggle-button-2');
         views.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
 
         // Toggle Menu
@@ -227,20 +232,20 @@ class View3DToolbar {
         toggleMenu.addClass('suey-menu-under');
         toggleMenu.addClass('salt-button-menu');
         // Boundary Toggle
-        const boundaryIcon = `${EDITOR.FOLDER_MENU}toggle/boundary.svg`;
+        const boundaryIcon = `${FOLDER_MENU}toggle/boundary.svg`;
         const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
             const bounds = Config.getKey('scene/render/bounds');
             // SceneUtils.toggleBoundaryObjects(bounds, view3d.world.activeStage());
         });
         toggleMenu.add(boundaryItem);
         // Colliders Toggle
-        const collidersIcon = `${EDITOR.FOLDER_MENU}toggle/colliders.svg`;
+        const collidersIcon = `${FOLDER_MENU}toggle/colliders.svg`;
         const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
             SceneUtils.toggleColliders();
         });
         toggleMenu.add(collidersItem);
         // Joints Toggle
-        const jointsIcon = `${EDITOR.FOLDER_MENU}toggle/joints.svg`;
+        const jointsIcon = `${FOLDER_MENU}toggle/joints.svg`;
         const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
         toggleMenu.add(jointsItem);
 

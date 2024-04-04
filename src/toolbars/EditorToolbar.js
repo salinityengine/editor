@@ -1,4 +1,7 @@
-import * as EDITOR from 'editor';
+import {
+    EDITOR_MODES,
+    FOLDER_TOOLBAR,
+} from 'constants';
 import * as SUEY from 'gui';
 
 import { Advice } from '../config/Advice.js';
@@ -50,40 +53,40 @@ class EditorToolbar extends SUEY.Panel {
 
         /******************** EYE MENU */
 
-        const eyeClosed = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}eye-closed.svg`).setID('tb-eye-closed');
-        const eyeOpen = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}eye-open.svg`).setID('tb-eye-open');
-        const eyeLidTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}eye-lid-top.svg`).setID('tb-eye-lid-top');
-        const eyeLidBot = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}eye-lid-bottom.svg`).setID('tb-eye-lid-bottom');
+        const eyeClosed = new SUEY.VectorBox(`${FOLDER_TOOLBAR}eye-closed.svg`).setID('tb-eye-closed');
+        const eyeOpen = new SUEY.VectorBox(`${FOLDER_TOOLBAR}eye-open.svg`).setID('tb-eye-open');
+        const eyeLidTop = new SUEY.VectorBox(`${FOLDER_TOOLBAR}eye-lid-top.svg`).setID('tb-eye-lid-top');
+        const eyeLidBot = new SUEY.VectorBox(`${FOLDER_TOOLBAR}eye-lid-bottom.svg`).setID('tb-eye-lid-bottom');
         eye.add(eyeClosed, eyeOpen, eyeLidTop, eyeLidBot);
         eye.attachMenu(new EyeMenu(editor));
 
         /******************** EDITOR MODES */
 
-        const editPencil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}edit-pencil.svg`).setID('tb-edit-pencil');
-        const editTip = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}edit-pencil-tip.svg`).setID('tb-edit-pencil-tip');
-        const scene2DFrame = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene2d-frame.svg`).setID('tb-scene2d-frame');
+        const editPencil = new SUEY.VectorBox(`${FOLDER_TOOLBAR}edit-pencil.svg`).setID('tb-edit-pencil');
+        const editTip = new SUEY.VectorBox(`${FOLDER_TOOLBAR}edit-pencil-tip.svg`).setID('tb-edit-pencil-tip');
+        const scene2DFrame = new SUEY.VectorBox(`${FOLDER_TOOLBAR}scene2d-frame.svg`).setID('tb-scene2d-frame');
         scene2d.add(/* editPencil, editTip */ scene2DFrame);
 
-        const scene3DCube = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-cube.svg`).setID('tb-scene3d-cube');
-        const scene3DMtn1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-mtn1.svg`).setID('tb-scene3d-mtn1');
-        const scene3DMtn2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-mtn2.svg`).setID('tb-scene3d-mtn2');
-        const scene3DSun = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-sun.svg`).setID('tb-scene3d-sun');
-        const scene3DFrame = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}scene3d-frame.svg`).setID('tb-scene3d-frame');
+        const scene3DCube = new SUEY.VectorBox(`${FOLDER_TOOLBAR}scene3d-cube.svg`).setID('tb-scene3d-cube');
+        const scene3DMtn1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}scene3d-mtn1.svg`).setID('tb-scene3d-mtn1');
+        const scene3DMtn2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}scene3d-mtn2.svg`).setID('tb-scene3d-mtn2');
+        const scene3DSun = new SUEY.VectorBox(`${FOLDER_TOOLBAR}scene3d-sun.svg`).setID('tb-scene3d-sun');
+        const scene3DFrame = new SUEY.VectorBox(`${FOLDER_TOOLBAR}scene3d-frame.svg`).setID('tb-scene3d-frame');
         scene3d.add(scene3DCube, scene3DMtn1, scene3DSun, scene3DMtn2, scene3DFrame);
 
         const worldBackground = new SUEY.VectorBox().setID('tb-world-background');
-        worldBackground.setStyle('backgroundImage', `url(${EDITOR.FOLDER_TOOLBAR}world.svg)`);
+        worldBackground.setStyle('backgroundImage', `url(${FOLDER_TOOLBAR}world.svg)`);
         world.add(worldBackground);
 
-        const uiButton = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}ui-button.svg`).setID('tb-ui-button');
-        const uiJoystick = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}ui-joystick.svg`).setID('tb-ui-joystick');
-        const uiBase = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}ui-base.svg`).setID('tb-ui-base');
+        const uiButton = new SUEY.VectorBox(`${FOLDER_TOOLBAR}ui-button.svg`).setID('tb-ui-button');
+        const uiJoystick = new SUEY.VectorBox(`${FOLDER_TOOLBAR}ui-joystick.svg`).setID('tb-ui-joystick');
+        const uiBase = new SUEY.VectorBox(`${FOLDER_TOOLBAR}ui-base.svg`).setID('tb-ui-base');
         ui.add(uiButton, uiJoystick, uiBase);
 
-        scene2d.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.SCENE_EDITOR_2D)));
-        scene3d.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.SCENE_EDITOR_3D)));
-        world.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.WORLD_GRAPH)));
-        ui.onClick(() => editor.execute(new EditorModeCommand(EDITOR.MODES.UI_EDITOR)));
+        scene2d.onClick(() => editor.execute(new EditorModeCommand(EDITOR_MODES.SCENE_EDITOR_2D)));
+        scene3d.onClick(() => editor.execute(new EditorModeCommand(EDITOR_MODES.SCENE_EDITOR_3D)));
+        world.onClick(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_GRAPH)));
+        ui.onClick(() => editor.execute(new EditorModeCommand(EDITOR_MODES.UI_EDITOR)));
 
         Signals.connect(this, 'editorModeChanged', function(mode) {
             scene2d.removeClass('suey-selected');
@@ -91,16 +94,16 @@ class EditorToolbar extends SUEY.Panel {
             world.removeClass('suey-selected');
             ui.removeClass('suey-selected');
             switch (mode) {
-                case EDITOR.MODES.SCENE_EDITOR_2D: scene2d.addClass('suey-selected'); break;
-                case EDITOR.MODES.SCENE_EDITOR_3D: scene3d.addClass('suey-selected'); break;
-                case EDITOR.MODES.WORLD_GRAPH: world.addClass('suey-selected'); break;
-                case EDITOR.MODES.UI_EDITOR: ui.addClass('suey-selected'); break;
+                case EDITOR_MODES.SCENE_EDITOR_2D: scene2d.addClass('suey-selected'); break;
+                case EDITOR_MODES.SCENE_EDITOR_3D: scene3d.addClass('suey-selected'); break;
+                case EDITOR_MODES.WORLD_GRAPH: world.addClass('suey-selected'); break;
+                case EDITOR_MODES.UI_EDITOR: ui.addClass('suey-selected'); break;
             }
         });
 
         /******************** PLAY */
 
-        const playArrow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setID('tb-play-arrow');
+        const playArrow = new SUEY.VectorBox(`${FOLDER_TOOLBAR}play-active.svg`).setID('tb-play-arrow');
         play.add(playArrow);
 
         play.onClick(() => {
@@ -121,18 +124,18 @@ class EditorToolbar extends SUEY.Panel {
 
         /******************** SETTINGS */
 
-        const projectStars = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}project-stars.svg`).setID('tb-project-stars');
-        const projectShip = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}project-ship.svg`).setID('tb-project-ship');
+        const projectStars = new SUEY.VectorBox(`${FOLDER_TOOLBAR}project-stars.svg`).setID('tb-project-stars');
+        const projectShip = new SUEY.VectorBox(`${FOLDER_TOOLBAR}project-ship.svg`).setID('tb-project-ship');
         proj.add(projectStars, projectShip);
-        const historyClock = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-clock.svg`).setID('tb-history-clock');
-        const historySecond = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-second.svg`).setID('tb-history-second');
-        const historyMinute = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-minute.svg`).setID('tb-history-minute');
-        const historyHour = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-hour.svg`).setID('tb-history-hour');
-        const historyCenter = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}history-center.svg`).setID('tb-history-center');
+        const historyClock = new SUEY.VectorBox(`${FOLDER_TOOLBAR}history-clock.svg`).setID('tb-history-clock');
+        const historySecond = new SUEY.VectorBox(`${FOLDER_TOOLBAR}history-second.svg`).setID('tb-history-second');
+        const historyMinute = new SUEY.VectorBox(`${FOLDER_TOOLBAR}history-minute.svg`).setID('tb-history-minute');
+        const historyHour = new SUEY.VectorBox(`${FOLDER_TOOLBAR}history-hour.svg`).setID('tb-history-hour');
+        const historyCenter = new SUEY.VectorBox(`${FOLDER_TOOLBAR}history-center.svg`).setID('tb-history-center');
         history.add(historyClock, historySecond, historyMinute, historyHour, historyCenter);
-        const settingsCenter = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-center.svg`).setID('tb-settings-center');
-        const settingsGear = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-gear.svg`).setID('tb-settings-gear');
-        const settingsShadow = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}settings-shadow.svg`).setID('tb-settings-shadow');
+        const settingsCenter = new SUEY.VectorBox(`${FOLDER_TOOLBAR}settings-center.svg`).setID('tb-settings-center');
+        const settingsGear = new SUEY.VectorBox(`${FOLDER_TOOLBAR}settings-gear.svg`).setID('tb-settings-gear');
+        const settingsShadow = new SUEY.VectorBox(`${FOLDER_TOOLBAR}settings-shadow.svg`).setID('tb-settings-shadow');
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
         proj.onClick(() => editor.getFloaterByID('project'));

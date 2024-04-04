@@ -1,7 +1,10 @@
-import * as EDITOR from 'editor';
+import {
+    COMPONENT_ICONS,
+    FOLDER_MENU,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { AddComponentCommand } from '../../../commands/Commands.js';
 
@@ -21,7 +24,7 @@ class AddComponentButton extends SUEY.Button {
         this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.setAttribute('tooltip', 'Add Component');
-        this.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
+        this.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // Properties
         this.componentMenu = new SUEY.Menu();
@@ -46,7 +49,7 @@ class AddComponentButton extends SUEY.Button {
 
                 // Add Component
                 const compName = SUEY.Strings.capitalize(type);
-                const compIcon = EDITOR.COMPONENT_ICONS[type] ?? config.icon ?? ``;
+                const compIcon = COMPONENT_ICONS[type] ?? config.icon ?? ``;
                 const menuItem = new SUEY.MenuItem(compName, compIcon);
                 menuItem.onSelect(() => {
                     const data = {};

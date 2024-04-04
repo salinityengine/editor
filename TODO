@@ -3,7 +3,7 @@
 /**********************************************/
 
 Dock Layout:
-    - Default layout for each Viewport type
+    - Default / separate layout for each Viewport type
     - Rebuild some floater types (like 'settings')
     - Load back floaters that were removed when switching modes
 
@@ -44,7 +44,7 @@ Floaters:
     Codex:
         - Add scripts
     Historian:
-        - Verify working
+        - Separate undo/redo history for each Viewport?
     Inspector:
         - Go through Blocks
     !! Library:

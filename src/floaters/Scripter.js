@@ -1,7 +1,7 @@
 // https://github.com/mrdoob/three.js/blob/dev/editor/js/Script.js
 
+import editor from 'editor';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 // import { SetAssetValueCommand } from '../commands/Commands.js';
 // import { SetScriptSourceCommand } from '../commands/Commands.js';
@@ -170,9 +170,7 @@ class Scripter extends SUEY.Window {
                 }
 
                 // Add Errors
-                for (let i = 0; i < errors.length; i++) {
-                    const error = errors[i];
-
+                for (const error of errors) {
                     const message = document.createElement('div');
                     message.className = 'errorMessage';
                     message.textContent = error.message;

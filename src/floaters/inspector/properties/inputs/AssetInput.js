@@ -1,7 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_MENU,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 class AssetInput {
 
@@ -16,7 +18,7 @@ class AssetInput {
         textBox.dom.disabled = true;
 
         const clearButton = new SUEY.Button().addClass('suey-property-button');
-        clearButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
+        clearButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
         clearButton.setAttribute('tooltip', 'Clear');
 
         // Event

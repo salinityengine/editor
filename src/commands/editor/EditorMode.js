@@ -1,4 +1,4 @@
-import { editor } from 'editor';
+import editor from 'editor';
 import { Command } from '../Command.js';
 import { Config } from '../../config/Config.js';
 

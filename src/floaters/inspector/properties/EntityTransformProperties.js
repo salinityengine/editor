@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    BASE_MOVE,
+    FOLDER_FLOATERS,
+    FOLDER_MENU,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { ColorizeFilter } from '../../../gui/ColorizeFilter.js';
 import { Config } from '../../../config/Config.js';
@@ -32,7 +36,7 @@ class EntityTransformProperties extends SUEY.Div {
 
         /******************** TRANSFORM */
 
-        const transformGroup = new PropertyGroup({ title: 'Transform', icon: `${EDITOR.FOLDER_INSPECTOR}entity/transform.svg` });
+        const transformGroup = new PropertyGroup({ title: 'Transform', icon: `${FOLDER_FLOATERS}inspector/entity/transform.svg` });
         transformGroup.setLeftPropertyWidth('30%');
         this.add(transformGroup);
 
@@ -44,15 +48,15 @@ class EntityTransformProperties extends SUEY.Div {
         const editTransform = new SUEY.Button().addClass('suey-borderless-button');
         editTransform.overflowMenu = SUEY.OVERFLOW.LEFT;
         editTransform.setAttribute('tooltip', 'Edit Transform');
-        editTransform.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}more.svg`).addClass('suey-rotate-colorize'));
+        editTransform.add(new SUEY.ShadowBox(`${FOLDER_MENU}more.svg`).addClass('suey-rotate-colorize'));
 
         // Transform Menu
         const transformMenu = new SUEY.Menu();
-        const transformRotateLeft = new SUEY.MenuItem('Rotate Left', `${EDITOR.FOLDER_MENU}transform/rotate-left.svg`, '[').keepOpen();
-        const transformRotateRight = new SUEY.MenuItem('Rotate Right', `${EDITOR.FOLDER_MENU}transform/rotate-right.svg`, ']').keepOpen();
-        const transformFlipHorizontal = new SUEY.MenuItem('Flip Horizontal', `${EDITOR.FOLDER_MENU}transform/flip-h.svg`, '<').keepOpen();
-        const transformFlipVertical = new SUEY.MenuItem('Flip Vertical', `${EDITOR.FOLDER_MENU}transform/flip-v.svg`, '>').keepOpen();
-        const transformReset = new SUEY.MenuItem('Reset Transform', `${EDITOR.FOLDER_MENU}transform/reset.svg`, '');
+        const transformRotateLeft = new SUEY.MenuItem('Rotate Left', `${FOLDER_MENU}transform/rotate-left.svg`, '[').keepOpen();
+        const transformRotateRight = new SUEY.MenuItem('Rotate Right', `${FOLDER_MENU}transform/rotate-right.svg`, ']').keepOpen();
+        const transformFlipHorizontal = new SUEY.MenuItem('Flip Horizontal', `${FOLDER_MENU}transform/flip-h.svg`, '<').keepOpen();
+        const transformFlipVertical = new SUEY.MenuItem('Flip Vertical', `${FOLDER_MENU}transform/flip-v.svg`, '>').keepOpen();
+        const transformReset = new SUEY.MenuItem('Reset Transform', `${FOLDER_MENU}transform/reset.svg`, '');
 
         transformRotateLeft.onSelect(() => { SceneUtils.transformSelection2D('rotate', 90); });
         transformRotateRight.onSelect(() => { SceneUtils.transformSelection2D('rotate', -90); });
@@ -100,7 +104,7 @@ class EntityTransformProperties extends SUEY.Div {
 
         // Position
         const gridSize = parseFloat(Config.getKey('scene3d/grid/translateSize'));
-        const moveSize = gridSize; // (Config.getKey('scene/grid/snap')) ? gridSize : EDITOR.BASE_MOVE;
+        const moveSize = gridSize; // (Config.getKey('scene/grid/snap')) ? gridSize : BASE_MOVE;
         const entityPositionX = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
         const entityPositionY = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
         const entityPositionZ = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
@@ -136,8 +140,8 @@ class EntityTransformProperties extends SUEY.Div {
 
         const scaleButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
         const lockScale = new SUEY.Button().addClass('suey-borderless-button').setStyle('font-size', '90%');
-        const lockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}lock.svg`);
-        const unlockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}unlock.svg`);
+        const lockIcon = new SUEY.VectorBox(`${FOLDER_MENU}lock.svg`);
+        const unlockIcon = new SUEY.VectorBox(`${FOLDER_MENU}unlock.svg`);
         lockScale.add(new SUEY.ShadowBox(lockIcon, unlockIcon));
         lockScale.on('pointerdown', () => {
             Config.setKey('scene/transform/aspectLock', !Config.getKey('scene/transform/aspectLock'));
@@ -201,7 +205,7 @@ class EntityTransformProperties extends SUEY.Div {
 
         /***** SHADOWS *****/
 
-        const shadowGroup = new PropertyGroup({ title: 'Lighting', icon: `${EDITOR.FOLDER_INSPECTOR}entity/shadow.svg` });
+        const shadowGroup = new PropertyGroup({ title: 'Lighting', icon: `${FOLDER_FLOATERS}inspector/entity/shadow.svg` });
         if (showShadow) {
             this.add(shadowGroup);
         }

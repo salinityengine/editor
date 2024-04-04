@@ -1,7 +1,7 @@
 import * as SUEY from 'gui';
 
-// Modes
-export const MODES = {
+// Editor Modes
+export const EDITOR_MODES = {
     SCENE_EDITOR_2D:    'edit2d',
     SCENE_EDITOR_3D:    'edit3d',
     SOUND_EDITOR:       'sound',
@@ -9,6 +9,7 @@ export const MODES = {
     WORLD_GRAPH:        'world',
 }
 
+// Keyboard Keys
 export const KEYS = {
     ALT:                'alt',
     CONTROL:            'control',
@@ -39,11 +40,11 @@ export const PREVIEW_HEIGHT = 512;
 // Assets
 export const FOLDER_ASSETS =        './files/assets/';
 export const FOLDER_CURSORS =       './files/cursors/';
+export const FOLDER_IMAGES =        './files/images/';
 export const FOLDER_LOGO =          './files/logo/';
 
 // Editor Images
 export const FOLDER_FLOATERS =      './files/images/floaters/'
-export const FOLDER_INSPECTOR =     './files/images/floaters/inspector/';
 export const FOLDER_MENU =          './files/images/menu/';
 export const FOLDER_TOOLBAR =       './files/images/toolbar/';
 export const FOLDER_TYPES =         './files/images/types/';

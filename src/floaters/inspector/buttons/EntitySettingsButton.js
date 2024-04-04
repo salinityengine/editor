@@ -1,7 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_MENU,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { AddAssetCommand, ChangeComponentCommand } from '../../../commands/Commands.js';
 import { AddComponentCommand } from '../../../commands/Commands.js';
@@ -23,7 +25,7 @@ class EntitySettingsButton extends SUEY.Button {
         this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.setAttribute('tooltip', 'Edit Component');
-        this.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}edit.svg`).addClass('suey-rotate-colorize'));
+        this.add(new SUEY.ShadowBox(`${FOLDER_MENU}edit.svg`).addClass('suey-rotate-colorize'));
 
         // Properties
         this.componentMenu = new SUEY.Menu();
@@ -34,7 +36,7 @@ class EntitySettingsButton extends SUEY.Button {
         // 'Paste'
         let pasteItem;
         if (!entity.locked) {
-            const pasteIcon = `${EDITOR.FOLDER_MENU}main/edit/paste.svg`;
+            const pasteIcon = `${FOLDER_MENU}main/edit/paste.svg`;
             pasteItem = new SUEY.MenuItem('Paste Component', pasteIcon);
             pasteItem.onSelect(() => {
                 if (pasteItem.disabled === true) return;
@@ -61,7 +63,7 @@ class EntitySettingsButton extends SUEY.Button {
 
         // 'Save to Prefabs' (saves Entity as Prefab)
         if (!entity.isPrefab && !entity.isWorld) {
-            const saveIcon = `${EDITOR.FOLDER_MENU}component/copy.svg`;
+            const saveIcon = `${FOLDER_MENU}component/copy.svg`;
             const saveItem = new SUEY.MenuItem('Save Entity to Prefabs', saveIcon);
             saveItem.onSelect(() => {
                 const clone = entity.cloneEntity();

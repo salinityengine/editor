@@ -1,4 +1,7 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_MENU,
+    FOLDER_TYPES,
+} from 'constants';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
@@ -22,12 +25,12 @@ class Library extends SUEY.Titled {
 
         // 'Entity' Category (user defined)
         const general = 'unknown';
-        this.blocks[general] = new AssetPanel({ type: 'prefab', category: general, title: 'General', icon: `${EDITOR.FOLDER_TYPES}prefabs/general.svg` });
+        this.blocks[general] = new AssetPanel({ type: 'prefab', category: general, title: 'General', icon: `${FOLDER_TYPES}prefabs/general.svg` });
         this.add(this.blocks[general]);
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
-        const searchIcon = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}search.svg`).addClass('salt-search-icon');
+        const searchIcon = new SUEY.ShadowBox(`${FOLDER_MENU}search.svg`).addClass('salt-search-icon');
         const searchBox = new SUEY.TextBox('').addClass('salt-search-box');
         searchBox.dom.placeholder = Language.getKey('explorer/search');
         searchBox.setValue(this.getSearchTerm());

@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+    FOLDER_TOOLBAR,
+    SCREEN_RATIOS,
+ } from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -16,7 +20,7 @@ const _size = { x: 0, y: 0 };
 class Player extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}player.svg`;
+        const icon = `${FOLDER_FLOATERS}player.svg`;
         super('player', null, { icon, color: 'var(--button-dark)', color: 'rgb(223, 32, 32)', shadow: false, shrink: 0.75 });
         const self = this;
         this.addClass('salt-player');
@@ -101,13 +105,13 @@ class Player extends SUEY.Floater {
         pause.setAttribute('tooltip', 'Pause Game');
         stop.setAttribute('tooltip', 'Stop Game');
 
-        const screenMonitor = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}screen-monitor.svg`).setID('tb-screen-monitor');
-        const cameraBody = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-body.svg`).setID('tb-camera-body');
-        const cameraLens = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-lens.svg`).setID('tb-camera-lens');
-        const cameraFlash = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}camera-flash.svg`).setID('tb-camera-flash');
-        const playPause = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-pause.svg`).setID('tb-play-pause');
-        const playActive = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-active.svg`).setID('tb-play-active');
-        const playStop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}play-stop.svg`).setID('tb-play-stop');
+        const screenMonitor = new SUEY.VectorBox(`${FOLDER_TOOLBAR}screen-monitor.svg`).setID('tb-screen-monitor');
+        const cameraBody = new SUEY.VectorBox(`${FOLDER_TOOLBAR}camera-body.svg`).setID('tb-camera-body');
+        const cameraLens = new SUEY.VectorBox(`${FOLDER_TOOLBAR}camera-lens.svg`).setID('tb-camera-lens');
+        const cameraFlash = new SUEY.VectorBox(`${FOLDER_TOOLBAR}camera-flash.svg`).setID('tb-camera-flash');
+        const playPause = new SUEY.VectorBox(`${FOLDER_TOOLBAR}play-pause.svg`).setID('tb-play-pause');
+        const playActive = new SUEY.VectorBox(`${FOLDER_TOOLBAR}play-active.svg`).setID('tb-play-active');
+        const playStop = new SUEY.VectorBox(`${FOLDER_TOOLBAR}play-stop.svg`).setID('tb-play-stop');
         screen.add(screenMonitor);
         camera.add(cameraBody, cameraLens, cameraFlash);
         pause.add(playPause, playActive);
@@ -196,7 +200,7 @@ class Player extends SUEY.Floater {
         const screenMenu = new SUEY.Menu();
         const currentScreen = Config.getKey('renderer/screen/name');
         const screenItems = [];
-        EDITOR.SCREEN_RATIOS.forEach((screen) => {
+        SCREEN_RATIOS.forEach((screen) => {
             const screenItem = new SUEY.MenuItem(screen.name).keepOpen();
             screenItem.setChecked(currentScreen === screen.name);
             screenItem.onSelect(() => {

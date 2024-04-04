@@ -1,6 +1,8 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+} from 'constants';
+import editor from 'editor';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
 import { Advice } from '../../config/Advice.js';
@@ -11,7 +13,7 @@ import { Signals } from '../../config/Signals.js';
 class ProjectAppBlock extends ConfiguredShrinker {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}project/app.svg`; // color: '#773399'
+        const icon = `${FOLDER_FLOATERS}project/app.svg`; // color: '#773399'
         super({ text: Language.getKey('inspector/project/app'), icon, arrow: 'right', border: true });
         Advice.attach(this.titleDiv, 'project/app');
 
@@ -44,7 +46,7 @@ class ProjectAppBlock extends ConfiguredShrinker {
 
         /***** THRESHOLD *****/
 
-        const thresholdHeader = props.addHeader('Threshold', `${EDITOR.FOLDER_FLOATERS}project/threshold.svg`);
+        const thresholdHeader = props.addHeader('Threshold', `${FOLDER_FLOATERS}project/threshold.svg`);
         Advice.attach(thresholdHeader, 'project/threshold');
 
         // Preload

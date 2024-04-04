@@ -1,8 +1,8 @@
-/********** GOOGLE TRANSLATE */
+/********** Google Translate */
 
 #gtx-trans { display: none !important; }
 
-/********** FONTS */
+/********** Fonts */
 
 @font-face {
     font-family: 'Aileron';
@@ -14,7 +14,7 @@
     src: url('../fonts/Roboto-Regular.ttf');
 }
 
-/********** PRELOAD */
+/********** Disable Animations */
 
 .salt-disable-animations *:not(.salt-instant-start) { /* used to stop inital page animations */
     -webkit-animation-duration: 0s !important;
@@ -22,13 +22,13 @@
     transition: all 0s !important;
 }
 
-/********** HTML */
+/********** Html */
 
 body {
     overflow: hidden; /* important for SUEY.Window resizing */
 }
 
-/********** EDITOR */
+/********** Editor */
 
 .salt-editor {
     user-select: none;
@@ -48,7 +48,7 @@ body {
     z-index: 1; /* docker */
 }
 
-/********** INPUT */
+/********** Input */
 
 /* Keyboard Key Input */
 .salt-key-input {
@@ -86,7 +86,7 @@ body {
     outline: var(--border-micro) solid rgba(var(--shadow), 1.0) !important;
 }
 
-/********** POPUP TOGGLE MENU */
+/********** Popup Toggle Menu */
 
 .salt-toggle-menu.salt-button-menu {
     display: flex !important;

@@ -1,7 +1,10 @@
-import * as EDITOR from 'editor';
+import {
+    EDITOR_MODES,
+    FOLDER_MENU,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { AbstractView } from './AbstractView.js';
 import { Config } from '../config/Config.js';
@@ -25,8 +28,8 @@ class Worlds extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
-    viewportType() {
-        return EDITOR.MODES.WORLD_GRAPH;
+    viewportMode() {
+        return EDITOR_MODES.WORLD_GRAPH;
     }
 
     constructor() {
@@ -63,15 +66,15 @@ class Worlds extends AbstractView {
             node.world = world;
 
             if (world.isWorld2D) {
-                node.createHeader('World 2D', `${EDITOR.FOLDER_MENU}node/world2d.svg`);
+                node.createHeader('World 2D', `${FOLDER_MENU}node/world2d.svg`);
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.OUTPUT, title: 'Load UI' }));
             } else if (world.isWorld3D) {
-                node.createHeader(world.name, `${EDITOR.FOLDER_MENU}node/world3d.svg`);
+                node.createHeader(world.name, `${FOLDER_MENU}node/world3d.svg`);
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.OUTPUT, title: 'Load UI' }));
             } else if (world.isWorldUI) {
-                node.createHeader('UI Screen', `${EDITOR.FOLDER_MENU}node/ui.svg`);
+                node.createHeader('UI Screen', `${FOLDER_MENU}node/ui.svg`);
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
             }
 

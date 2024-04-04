@@ -1,4 +1,6 @@
-import * as EDITOR from 'editor';
+import {
+    COMPONENT_ICONS,
+} from 'constants';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
@@ -46,7 +48,7 @@ class ComponentTab extends SUEY.Titled {
         for (let i = 0; i < components.length; i++) {
             const component = components[i];
             const title = compName + ((component.constructor.config.multiple) ? ` ${i + 1}` : '');
-            const icon = EDITOR.COMPONENT_ICONS[compType] ?? component.constructor.config.icon ?? '';
+            const icon = COMPONENT_ICONS[compType] ?? component.constructor.config.icon ?? '';
 
             // PROPERTIES
             const compGroup = new PropertyGroup({ title, icon });

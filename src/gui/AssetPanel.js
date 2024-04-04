@@ -1,7 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_MENU,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { CanvasUtils } from './CanvasUtils.js';
 import { ColorizeFilter } from './ColorizeFilter.js';
@@ -57,7 +59,7 @@ class AssetPanel extends SUEY.Shrinkable {
         viewOptions.overflowMenu = SUEY.OVERFLOW.LEFT;
         viewOptions.setAttribute('tooltip', 'View Options');
 
-        const shadowBox = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`);
+        const shadowBox = new SUEY.ShadowBox(`${FOLDER_MENU}dots.svg`);
         if (shadowBox.firstImage()) {
             if (shadowBox.firstImage().firstImage()) {
                 shadowBox.firstImage().firstImage().addClass('suey-black-or-white');
@@ -202,7 +204,7 @@ class AssetPanel extends SUEY.Shrinkable {
             empty.isTemporary = true;
             empty.dom.draggable = false;
 
-            const noneBox = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}line.svg`);
+            const noneBox = new SUEY.VectorBox(`${FOLDER_MENU}line.svg`);
             noneBox.setStyle('height', '150%', 'opacity', '0', 'padding', '0em', 'filter', 'brightness(0)');
             this.add(empty.add(noneBox));
 
@@ -311,7 +313,7 @@ class AssetPanel extends SUEY.Shrinkable {
         } else if (this.type === 'script') {
             const script = asset;
             let sourceIcon = '';
-            if (script.format === SALT.SCRIPT_FORMAT.JAVASCRIPT) sourceIcon = `${EDITOR.FOLDER_MENU}outliner/js.svg`;
+            if (script.format === SALT.SCRIPT_FORMAT.JAVASCRIPT) sourceIcon = `${FOLDER_MENU}outliner/js.svg`;
             innerBox = new SUEY.VectorBox(sourceIcon).enableDragging();
             item.on('dblclick', () => Signals.dispatch('editScript', script));
             item.on('keydown', (event) => {

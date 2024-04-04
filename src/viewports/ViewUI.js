@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    EDITOR_MODES,
+    MOUSE_MODES,
+    MOUSE_STATES,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { AbstractView } from './AbstractView.js';
 import { ViewUIToolbar } from '../toolbars/ViewUIToolbar.js';
@@ -23,8 +27,8 @@ class ViewUI extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
-    viewportType() {
-        return EDITOR.MODES.UI_EDITOR;
+    viewportMode() {
+        return EDITOR_MODES.UI_EDITOR;
     }
 
     constructor() {
@@ -37,12 +41,12 @@ class ViewUI extends AbstractView {
         this.rubberBandBox = null;
 
         // Input
-        this.mouseMode = EDITOR.MOUSE_MODES.SELECT;             // Left mouse button mode
-        this.mouseState = EDITOR.MOUSE_STATES.NONE;             // Current mouse state
-        this.mouseIsDown = false;                               // True when mouse down
-        this.mouseDownButton = -1;                              // Tracks button on last mouse down
-        this.startSelection = [];                               // Stores starting selection when mouse down with shift/ctrl
-        this.dragStarted = false;                               // True when mouse has moved enough to start 'dragging'
+        this.mouseMode = MOUSE_MODES.SELECT;                    // left mouse button mode
+        this.mouseState = MOUSE_STATES.NONE;                    // current mouse state
+        this.mouseIsDown = false;                               // true when mouse down
+        this.mouseDownButton = -1;                              // tracks button on last mouse down
+        this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
+        this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
     }
 
     /******************** CLIPBOARD / EDIT ********************/

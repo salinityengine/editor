@@ -1,4 +1,4 @@
-/********** TOOLBAR */
+/********** Toolbar */
 
 .salt-toolbar {
     position: absolute !important;
@@ -15,7 +15,7 @@
     z-index: 1; /* Toolbar */
 }
 
-/********** EYE MENU */
+/********** Eye Menu */
 
 #tb-eye-closed {
     filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg)) var(--drop-shadow);
@@ -58,7 +58,7 @@
     opacity: 0.0;
 }
 
-/********** MODES */
+/********** Viewports */
 
 /* Scene Edior 2D */
 
@@ -131,7 +131,7 @@
     background-position: 100%;
 }
 
-/********** MOUSE MODES */
+/********** Mouse Modes */
 
 #tb-mode-select, #tb-mode-select-cursor,
 #tb-mode-look, #tb-mode-look-pupil,
@@ -184,7 +184,7 @@
     animation-iteration-count: 1;
 }
 
-/********** FOCUS */
+/********** Focus */
 
 #tb-focus-target, #tb-reset-target {
     transform: scale(0.0);
@@ -213,7 +213,7 @@
     transform: scale(1.0);
 }
 
-/********** TRANSFORM MODES */
+/********** Transform Modes */
 
 /* None */
 
@@ -282,7 +282,7 @@
     animation-iteration-count: 2;
 }
 
-/********** LAYER */
+/********** Layer */
 
 /* Arrange */
 
@@ -338,7 +338,7 @@
     filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
 }
 
-/********** VIEWS */
+/********** Views */
 
 #tb-toggle-back-1 { opacity: 1; }
 #tb-toggle-back-2 { opacity: 0; }
@@ -362,7 +362,7 @@
     transform: translate( 38%, 0%);
 }
 
-/********** PLAY */
+/********** Play */
 
 /* Play */
 
@@ -417,7 +417,7 @@
     transform: scaleX(0.5) scaleY(1.1);
 }
 
-/********** SETTINGS */
+/********** Settings */
 
 /* Project */
 

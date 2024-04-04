@@ -1,7 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    WIDGET_SPACING,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
@@ -30,7 +32,7 @@ class EntityProperties extends SUEY.PropertyList {
         // UUID
         const entityUUID = new SUEY.TextBox().setDisabled(true);
         // // 'New' UUID Button
-        // const entityUUIDNew = new SUEY.Button('NEW').setStyle('marginLeft', EDITOR.WIDGET_SPACING).onClick(() => {
+        // const entityUUIDNew = new SUEY.Button('NEW').setStyle('marginLeft', WIDGET_SPACING).onClick(() => {
         //     entityUUID.setValue(SALT.Maths.uuid());
         //     editor.execute(new SetUUIDCommand(entity, entityUUID.getValue()));
         // });
@@ -41,7 +43,7 @@ class EntityProperties extends SUEY.PropertyList {
                 function(err) { console.error('Async: Could not copy text: ', err);
             });
         });
-        entityUUIDCopy.setStyle('marginLeft', EDITOR.WIDGET_SPACING)
+        entityUUIDCopy.setStyle('marginLeft', WIDGET_SPACING)
         entityUUIDCopy.setStyle('minWidth', '3.5em');
         if (Config.getKey('promode') === true) {
             this.addRow('UUID', entityUUID, entityUUIDCopy);

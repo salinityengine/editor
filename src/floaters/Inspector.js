@@ -1,7 +1,13 @@
-import * as EDITOR from 'editor';
+import {
+    EDITOR_MODES,
+    COMPONENT_ICONS,
+    FOLDER_FLOATERS,
+    FOLDER_TYPES,
+    MOUSE_STATES,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -18,7 +24,7 @@ import { Signals } from '../config/Signals.js';
 class Inspector extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}inspector.svg`;
+        const icon = `${FOLDER_FLOATERS}inspector.svg`;
         super('inspector', null, { icon, color: '#0055CC' });
         const self = this;
         Advice.attach(this.button, 'floater/inspector');
@@ -56,12 +62,12 @@ class Inspector extends SUEY.Floater {
 
             // PALETTE
             if (_item && _item.isPalette) {
-                blocks.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${EDITOR.FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
+                blocks.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
 
             // TEXTURE
             } else if (_item && _item.isTexture) {
-                let icon = `${EDITOR.FOLDER_FLOATERS}asset/texture.svg`;
-                if (_item.isCubeTexture) icon = `${EDITOR.FOLDER_FLOATERS}asset/cube-texture.svg`;
+                let icon = `${FOLDER_FLOATERS}asset/texture.svg`;
+                if (_item.isCubeTexture) icon = `${FOLDER_FLOATERS}asset/cube-texture.svg`;
                 blocks.push(new SUEY.Floater('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true }));
 
             // ENTITY
@@ -69,12 +75,12 @@ class Inspector extends SUEY.Floater {
                 const entity = _item;
 
                 let icon, color, shrink, shadow, tabType;
-                if (entity.isPrefab) { tabType = 'prefab'; icon = `${EDITOR.FOLDER_TYPES}entity/prefab.svg`; shrink = true; }
-                else if (entity.isWorld) { tabType = 'world'; icon = `${EDITOR.FOLDER_TYPES}entity/world.svg`; }
-                else if (entity.isStage) { tabType = 'stage'; icon = `${EDITOR.FOLDER_TYPES}entity/stage.svg`; color = '#333355'; }
-                else if (entity.isCamera) { tabType = 'camera'; icon = `${EDITOR.FOLDER_TYPES}entity/camera.svg`; color = '#4B4886'; shrink = true; }
-                else if (entity.isLight) { tabType = 'light'; icon = `${EDITOR.FOLDER_TYPES}entity/light.svg`; color = '#222222'; shrink = true; }
-                else { /* isEntity */ tabType = 'entity'; icon = `${EDITOR.FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
+                if (entity.isPrefab) { tabType = 'prefab'; icon = `${FOLDER_TYPES}entity/prefab.svg`; shrink = true; }
+                else if (entity.isWorld) { tabType = 'world'; icon = `${FOLDER_TYPES}entity/world.svg`; }
+                else if (entity.isStage) { tabType = 'stage'; icon = `${FOLDER_TYPES}entity/stage.svg`; color = '#333355'; }
+                else if (entity.isCamera) { tabType = 'camera'; icon = `${FOLDER_TYPES}entity/camera.svg`; color = '#4B4886'; shrink = true; }
+                else if (entity.isLight) { tabType = 'light'; icon = `${FOLDER_TYPES}entity/light.svg`; color = '#222222'; shrink = true; }
+                else { /* isEntity */ tabType = 'entity'; icon = `${FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
 
                 // Entity Tab
                 blocks.push(new SUEY.Floater(tabType, new EntityTab(entity), { icon, color, shrink, shadow }));
@@ -94,7 +100,7 @@ class Inspector extends SUEY.Floater {
                     for (const compType of typesWanted) {
                         const ComponentClass = SALT.ComponentManager.registered(compType);
                         if (!ComponentClass) continue;
-                        const icon = EDITOR.COMPSALTNT_ICONS[compType] ?? ComponentClass.config.icon ?? '';
+                        const icon = COMPONENT_ICONS[compType] ?? ComponentClass.config.icon ?? '';
                         const color = ComponentClass.config.color;
                         blocks.push(new SUEY.Floater(compType, new ComponentTab(entity, compType), { icon, color, shrink: true }));
                     }
@@ -125,9 +131,9 @@ class Inspector extends SUEY.Floater {
         /** Rebuilds on 'new selection' */
         function rebuild() {
             // // 'viewport' Mode?
-            // if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
+            // if (editor.mode() === EDITOR_MODES.SCENE_EDITOR_3D) {
             //     // Don't rebuild inspector during rubberband mode
-            //     if (mouseState === EDITOR.MOUSE_STATES.SELECTING) return;
+            //     if (mouseState === MOUSE_STATES.SELECTING) return;
             // }
 
             // Don't rebuild while dragging new object into scene

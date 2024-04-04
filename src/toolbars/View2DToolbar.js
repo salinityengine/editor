@@ -1,4 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    COLORS,
+    FOLDER_MENU,
+    FOLDER_TOOLBAR,
+    MOUSE_MODES,
+} from 'constants';
 import * as SUEY from 'gui';
 
 import { Advice } from '../config/Advice.js';
@@ -82,47 +87,47 @@ class View2DToolbar {
 
         /******************** MOUSE MODES */
 
-        const selectIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-select.svg`).setID('tb-mode-select');
-        const selectCursor = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-select-cursor.svg`).setID('tb-mode-select-cursor');
-        const moveIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-move.svg`).setID('tb-mode-move');
-        const moveGrab = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-move-grab.svg`).setID('tb-mode-move-grab');
-        const zoomIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}mode-zoom.svg`).setID('tb-mode-zoom');
+        const selectIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-select.svg`).setID('tb-mode-select');
+        const selectCursor = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-select-cursor.svg`).setID('tb-mode-select-cursor');
+        const moveIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-move.svg`).setID('tb-mode-move');
+        const moveGrab = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-move-grab.svg`).setID('tb-mode-move-grab');
+        const zoomIcon = new SUEY.VectorBox(`${FOLDER_TOOLBAR}mode-zoom.svg`).setID('tb-mode-zoom');
 
         select.add(selectIcon, selectCursor);
         move.add(moveIcon, moveGrab);
         zoom.add(zoomIcon);
 
-        select.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.SELECT));
-        move.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.MOVE));
-        zoom.onClick(() => Signals.dispatch('mouseModeChanged', EDITOR.MOUSE_MODES.ZOOM));
+        select.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.SELECT));
+        move.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
+        zoom.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
 
         Signals.connect(view2d, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
             move.removeClass('suey-selected');
             zoom.removeClass('suey-selected');
             switch (mouseMode) {
-                case EDITOR.MOUSE_MODES.SELECT: select.addClass('suey-selected'); break;
-                case EDITOR.MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
-                case EDITOR.MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
+                case MOUSE_MODES.SELECT: select.addClass('suey-selected'); break;
+                case MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
+                case MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
             }
         });
 
         /******************** FOCUS */
 
-        const focusEye = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-eye.svg`).setID('tb-focus-eye');
-        const focusPupil = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-pupil.svg`).setID('tb-focus-pupil');
-        // const focusScene = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-scene.svg`).setID('tb-focus-scene');
-        const focusTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-focus-target');
+        const focusEye = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-eye.svg`).setID('tb-focus-eye');
+        const focusPupil = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-pupil.svg`).setID('tb-focus-pupil');
+        // const focusScene = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-scene.svg`).setID('tb-focus-scene');
+        const focusTarget = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-target.svg`).setID('tb-focus-target');
         focus.add(focusEye, /* focusScene, */ focusPupil, focusTarget);
 
-        const resetAxisX = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
-        const resetAxisY = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
-        const resetTarget = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
+        const resetAxisX = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
+        const resetAxisY = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
+        const resetTarget = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
         Signals.connect(view2d, 'schemeChanged', function() {
-            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.X_COLOR));
-            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(EDITOR.COLORS.Y_COLOR));
+            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
+            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
@@ -158,29 +163,29 @@ class View2DToolbar {
 
         /***** ARRANGE */
 
-        const arrangeTop = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-top.svg`).setID('tb-arrange-top');
-        const arrangeMiddle = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-middle.svg`).setID('tb-arrange-middle');
-        const arrangeBottom = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-bottom.svg`).setID('tb-arrange-bottom');
+        const arrangeTop = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-top.svg`).setID('tb-arrange-top');
+        const arrangeMiddle = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-middle.svg`).setID('tb-arrange-middle');
+        const arrangeBottom = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-bottom.svg`).setID('tb-arrange-bottom');
         arrange.add(arrangeBottom, arrangeMiddle, arrangeTop);
 
         // To Back
-        const backIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-back-1.svg`).setID('tb-arrange-back');
-        const backIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-back-2.svg`);
+        const backIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-back-1.svg`).setID('tb-arrange-back');
+        const backIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-back-2.svg`);
         const backItem = new SUEY.ToolbarButton().add(backIcon1, backIcon2);
 
         // Backward
-        const backwardIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-backward-1.svg`).setID('tb-arrange-backward');
-        const backwardIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-backward-2.svg`);
+        const backwardIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-backward-1.svg`).setID('tb-arrange-backward');
+        const backwardIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-backward-2.svg`);
         const backwardItem = new SUEY.ToolbarButton().add(backwardIcon1, backwardIcon2);
 
         // Forward
-        const forwardIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-forward-1.svg`).setID('tb-arrange-forward');
-        const forwardIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-forward-2.svg`);
+        const forwardIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-forward-1.svg`).setID('tb-arrange-forward');
+        const forwardIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-forward-2.svg`);
         const forwardItem = new SUEY.ToolbarButton().add(forwardIcon1, forwardIcon2);
 
         // To Front
-        const frontIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-front-1.svg`).setID('tb-arrange-front');
-        const frontIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}arrange-front-2.svg`);
+        const frontIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-front-1.svg`).setID('tb-arrange-front');
+        const frontIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}arrange-front-2.svg`);
         const frontItem = new SUEY.ToolbarButton().add(frontIcon1, frontIcon2);
 
         backItem.setAttribute('tooltip', Config.tooltip('Send to Back', null));
@@ -214,33 +219,33 @@ class View2DToolbar {
 
         /***** TRANSFORM */
 
-        const transformFront = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-front.svg`).setID('tb-transform-front');
-        const transformBack = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-back.svg`).setID('tb-transform-back');
+        const transformFront = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-front.svg`).setID('tb-transform-front');
+        const transformBack = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-back.svg`).setID('tb-transform-back');
         transform.add(transformBack, transformFront);
 
         // Reset
-        const resetIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-reset-1.svg`).setID('tb-transform-reset');
-        const resetIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-reset-2.svg`);
+        const resetIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-reset-1.svg`).setID('tb-transform-reset');
+        const resetIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-reset-2.svg`);
         const resetItem = new SUEY.ToolbarButton().add(resetIcon1, resetIcon2);
 
         // Flip Horizontal
-        const horizontalIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-horizontal-1.svg`).setID('tb-transform-horizontal');
-        const horizontalIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-horizontal-2.svg`);
+        const horizontalIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-horizontal-1.svg`).setID('tb-transform-horizontal');
+        const horizontalIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-horizontal-2.svg`);
         const horizontalItem = new SUEY.ToolbarButton().add(horizontalIcon2, horizontalIcon1);
 
         // Flip Vertical
-        const verticalIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-vertical-1.svg`).setID('tb-transform-vertical');
-        const verticalIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-vertical-2.svg`);
+        const verticalIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-vertical-1.svg`).setID('tb-transform-vertical');
+        const verticalIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-vertical-2.svg`);
         const verticalItem = new SUEY.ToolbarButton().add(verticalIcon2, verticalIcon1);
 
         // Rotate Left
-        const leftIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-left-1.svg`).setID('tb-transform-left');
-        const leftIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-left-2.svg`);
+        const leftIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-left-1.svg`).setID('tb-transform-left');
+        const leftIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-left-2.svg`);
         const leftItem = new SUEY.ToolbarButton().add(leftIcon2, leftIcon1);
 
         // Rotate Right
-        const rightIcon1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-right-1.svg`).setID('tb-transform-right');
-        const rightIcon2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}transform-right-2.svg`);
+        const rightIcon1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-right-1.svg`).setID('tb-transform-right');
+        const rightIcon2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}transform-right-2.svg`);
         const rightItem = new SUEY.ToolbarButton().add(rightIcon2, rightIcon1);
 
         resetItem.setAttribute('tooltip', Config.tooltip('Reset Transform', null));
@@ -276,27 +281,27 @@ class View2DToolbar {
 
         /******************** VIEWS */
 
-        const toggleBack1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-1.svg`).setID('tb-toggle-back-1');
-        const toggleBack2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-background-2.svg`).setID('tb-toggle-back-2');
-        const toggleButton1 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-1.svg`).setID('tb-toggle-button-1');
-        const toggleButton2 = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}toggle-button-2.svg`).setID('tb-toggle-button-2');
+        const toggleBack1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}toggle-background-1.svg`).setID('tb-toggle-back-1');
+        const toggleBack2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}toggle-background-2.svg`).setID('tb-toggle-back-2');
+        const toggleButton1 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}toggle-button-1.svg`).setID('tb-toggle-button-1');
+        const toggleButton2 = new SUEY.VectorBox(`${FOLDER_TOOLBAR}toggle-button-2.svg`).setID('tb-toggle-button-2');
         views.add(toggleBack1, toggleBack2, toggleButton1, toggleButton2);
 
         // Boundary Toggle
-        const boundaryIcon = `${EDITOR.FOLDER_MENU}toggle/boundary.svg`;
+        const boundaryIcon = `${FOLDER_MENU}toggle/boundary.svg`;
         const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
             const bounds = Config.getKey('scene/render/bounds');
             // SceneUtils.toggleBoundaryObjects(bounds, view2d.world.activeStage());
         });
 
         // Colliders Toggle
-        const collidersIcon = `${EDITOR.FOLDER_MENU}toggle/colliders.svg`;
+        const collidersIcon = `${FOLDER_MENU}toggle/colliders.svg`;
         const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
             // SceneUtils.toggleColliders();
         });
 
         // Joints Toggle
-        const jointsIcon = `${EDITOR.FOLDER_MENU}toggle/joints.svg`;
+        const jointsIcon = `${FOLDER_MENU}toggle/joints.svg`;
         const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
 
         // Views Menu
@@ -320,8 +325,8 @@ class View2DToolbar {
 
         /******************** GRID */
 
-        const snapMagnet = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
-        const snapAttract = new SUEY.VectorBox(`${EDITOR.FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
+        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
+        const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         gridSnap.add(snapMagnet, snapAttract);
 
         gridSnap.onClick(() => {

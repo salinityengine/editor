@@ -1,7 +1,10 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+    FOLDER_MENU,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { AddAssetCommand } from '../commands/Commands.js';
 import { AssetPanel } from '../gui/AssetPanel.js';
@@ -25,13 +28,13 @@ class Assets extends SUEY.Titled {
         /***** 'Add' Asset *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
         addButton.setAttribute('tooltip', 'Add Asset');
-        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
+        addButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu
         const assetMenu = new SUEY.Menu();
 
         // 'Cube Texture'
-        const cubeIcon = `${EDITOR.FOLDER_FLOATERS}asset/cube-texture.svg`;
+        const cubeIcon = `${FOLDER_FLOATERS}asset/cube-texture.svg`;
         const addCubeMenuItem = new SUEY.MenuItem('Cube Texture', cubeIcon);
         addCubeMenuItem.onSelect(() => {
             const texture = new THREE.CubeTexture();
@@ -41,7 +44,7 @@ class Assets extends SUEY.Titled {
         assetMenu.add(addCubeMenuItem);
 
         // 'Palette'
-        const paletteIcon = `${EDITOR.FOLDER_FLOATERS}asset/palette.svg`;
+        const paletteIcon = `${FOLDER_FLOATERS}asset/palette.svg`;
         const addPaletteMenuItem = new SUEY.MenuItem(Language.getKey('assets/types/palette'), paletteIcon);
         addPaletteMenuItem.onSelect(() => {
             const palette = new SALT.Palette();
@@ -59,11 +62,11 @@ class Assets extends SUEY.Titled {
 
         this.blocks = {};
 
-        this.blocks['geometry'] = new AssetPanel({ type: 'geometry', title: Language.getKey('assets/types/geometry'), icon: `${EDITOR.FOLDER_FLOATERS}asset/geometry.svg` });
-        this.blocks['material'] = new AssetPanel({ type: 'material', title: Language.getKey('assets/types/material'), icon: `${EDITOR.FOLDER_FLOATERS}asset/material.svg` });
-        this.blocks['palette'] = new AssetPanel({ type: 'palette', title: Language.getKey('assets/types/palette'), icon: `${EDITOR.FOLDER_FLOATERS}asset/palette.svg` });
-        this.blocks['shape'] = new AssetPanel({ type: 'shape', title: Language.getKey('assets/types/shape'), icon: `${EDITOR.FOLDER_FLOATERS}asset/shape.svg` });
-        this.blocks['texture'] = new AssetPanel({ type: 'texture', title: Language.getKey('assets/types/texture'), icon: `${EDITOR.FOLDER_FLOATERS}asset/texture.svg` });
+        this.blocks['geometry'] = new AssetPanel({ type: 'geometry', title: Language.getKey('assets/types/geometry'), icon: `${FOLDER_FLOATERS}asset/geometry.svg` });
+        this.blocks['material'] = new AssetPanel({ type: 'material', title: Language.getKey('assets/types/material'), icon: `${FOLDER_FLOATERS}asset/material.svg` });
+        this.blocks['palette'] = new AssetPanel({ type: 'palette', title: Language.getKey('assets/types/palette'), icon: `${FOLDER_FLOATERS}asset/palette.svg` });
+        this.blocks['shape'] = new AssetPanel({ type: 'shape', title: Language.getKey('assets/types/shape'), icon: `${FOLDER_FLOATERS}asset/shape.svg` });
+        this.blocks['texture'] = new AssetPanel({ type: 'texture', title: Language.getKey('assets/types/texture'), icon: `${FOLDER_FLOATERS}asset/texture.svg` });
 
         // Add Panels
         for (const type in this.blocks) {
@@ -73,7 +76,7 @@ class Assets extends SUEY.Titled {
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
-        const searchIcon = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}search.svg`).addClass('salt-search-icon');
+        const searchIcon = new SUEY.ShadowBox(`${FOLDER_MENU}search.svg`).addClass('salt-search-icon');
         const searchBox = new SUEY.TextBox('').addClass('salt-search-box');
         searchBox.dom.placeholder = Language.getKey('explorer/search');
         searchBox.setValue(this.getSearchTerm());

@@ -1,7 +1,10 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
+
 import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
 import { Advice } from '../../config/Advice.js';
@@ -14,7 +17,7 @@ const _color = new SUEY.Iris();
 class SettingsGeneralBlock extends ConfiguredShrinker {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}settings/general.svg`; // color: '#C04145'
+        const icon = `${FOLDER_FLOATERS}settings/general.svg`; // color: '#C04145'
         super({ text: Language.getKey('inspector/settings/general'), icon, arrow: 'right', border: true });
         Advice.attach(this.titleDiv, 'settings');
 
@@ -58,7 +61,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
 
         /***** STYLE *****/
 
-        // const styleHeader = props.addHeader(Language.getKey('inspector/settings/style'), `${EDITOR.FOLDER_FLOATERS}settings/general/style.svg`);
+        // const styleHeader = props.addHeader(Language.getKey('inspector/settings/style'), `${FOLDER_FLOATERS}settings/general/style.svg`);
         // Advice.attach(styleHeader, 'settings/style');
 
         // THEME //
@@ -71,9 +74,9 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
 
         // Theme Menu
         const themeMenu = new SUEY.Menu();
-        const schemeDark = new SUEY.MenuItem('Dark', `${EDITOR.FOLDER_FLOATERS}settings/general/style/dark.svg`).keepOpen();
-        const schemeMid = new SUEY.MenuItem('Mid', `${EDITOR.FOLDER_FLOATERS}settings/general/style/mid.svg`).keepOpen();
-        const schemeLight = new SUEY.MenuItem('Light', `${EDITOR.FOLDER_FLOATERS}settings/general/style/light.svg`).keepOpen();
+        const schemeDark = new SUEY.MenuItem('Dark', `${FOLDER_FLOATERS}settings/general/style/dark.svg`).keepOpen();
+        const schemeMid = new SUEY.MenuItem('Mid', `${FOLDER_FLOATERS}settings/general/style/mid.svg`).keepOpen();
+        const schemeLight = new SUEY.MenuItem('Light', `${FOLDER_FLOATERS}settings/general/style/light.svg`).keepOpen();
         themeMenu.add(schemeDark, schemeMid, schemeLight);
 
         // Theme Events
@@ -100,17 +103,17 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
 
         // Color Menu
         const colorMenu = new SUEY.Menu();
-        const schemeClassic = new SUEY.MenuItem('Classic', `${EDITOR.FOLDER_FLOATERS}settings/general/style/classic.svg`).keepOpen();
-        const schemeSteel = new SUEY.MenuItem('Steel', `${EDITOR.FOLDER_FLOATERS}settings/general/style/light.svg`).keepOpen();
-        const schemeNavy = new SUEY.MenuItem('Navy', `${EDITOR.FOLDER_FLOATERS}settings/general/style/navy.svg`).keepOpen();
-        const schemeGrape = new SUEY.MenuItem('Grape', `${EDITOR.FOLDER_FLOATERS}settings/general/style/grape.svg`).keepOpen();
-        const schemeFlamingo = new SUEY.MenuItem('Flamingo', `${EDITOR.FOLDER_FLOATERS}settings/general/style/flamingo.svg`).keepOpen();
-        const schemeRust = new SUEY.MenuItem('Rust', `${EDITOR.FOLDER_FLOATERS}settings/general/style/rust.svg`).keepOpen();
-        const schemeCarrot = new SUEY.MenuItem('Carrot', `${EDITOR.FOLDER_FLOATERS}settings/general/style/carrot.svg`).keepOpen();
-        const schemeCoffee = new SUEY.MenuItem('Coffee', `${EDITOR.FOLDER_FLOATERS}settings/general/style/coffee.svg`).keepOpen();
-        const schemeGolden = new SUEY.MenuItem('Golden', `${EDITOR.FOLDER_FLOATERS}settings/general/style/golden.svg`).keepOpen();
-        const schemeEmerald = new SUEY.MenuItem('Emerald', `${EDITOR.FOLDER_FLOATERS}settings/general/style/emerald.svg`).keepOpen();
-        const schemeRandom = new SUEY.MenuItem('Random', `${EDITOR.FOLDER_FLOATERS}settings/general/style/random.svg`).keepOpen();
+        const schemeClassic = new SUEY.MenuItem('Classic', `${FOLDER_FLOATERS}settings/general/style/classic.svg`).keepOpen();
+        const schemeSteel = new SUEY.MenuItem('Steel', `${FOLDER_FLOATERS}settings/general/style/light.svg`).keepOpen();
+        const schemeNavy = new SUEY.MenuItem('Navy', `${FOLDER_FLOATERS}settings/general/style/navy.svg`).keepOpen();
+        const schemeGrape = new SUEY.MenuItem('Grape', `${FOLDER_FLOATERS}settings/general/style/grape.svg`).keepOpen();
+        const schemeFlamingo = new SUEY.MenuItem('Flamingo', `${FOLDER_FLOATERS}settings/general/style/flamingo.svg`).keepOpen();
+        const schemeRust = new SUEY.MenuItem('Rust', `${FOLDER_FLOATERS}settings/general/style/rust.svg`).keepOpen();
+        const schemeCarrot = new SUEY.MenuItem('Carrot', `${FOLDER_FLOATERS}settings/general/style/carrot.svg`).keepOpen();
+        const schemeCoffee = new SUEY.MenuItem('Coffee', `${FOLDER_FLOATERS}settings/general/style/coffee.svg`).keepOpen();
+        const schemeGolden = new SUEY.MenuItem('Golden', `${FOLDER_FLOATERS}settings/general/style/golden.svg`).keepOpen();
+        const schemeEmerald = new SUEY.MenuItem('Emerald', `${FOLDER_FLOATERS}settings/general/style/emerald.svg`).keepOpen();
+        const schemeRandom = new SUEY.MenuItem('Random', `${FOLDER_FLOATERS}settings/general/style/random.svg`).keepOpen();
         colorMenu.add(schemeClassic, schemeSteel, schemeNavy, schemeGrape, schemeFlamingo, schemeRust,
             schemeCarrot, schemeCoffee, schemeGolden, schemeEmerald, schemeRandom);
 
@@ -144,7 +147,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         });
         const smallerLabel = 'Smaller'
         const smallerShortcut = '-';
-        const smallLetter = new SUEY.VectorBox(`${EDITOR.FOLDER_FLOATERS}settings/general/style/smaller.svg`);
+        const smallLetter = new SUEY.VectorBox(`${FOLDER_FLOATERS}settings/general/style/smaller.svg`);
         smallLetter.firstImage().addClass('suey-icon-colorize');
         smallerButton.add(new SUEY.ShadowBox(smallLetter));
         const smallShortcutText = new SUEY.Div(smallerShortcut).setClass('suey-menu-shortcut');
@@ -158,7 +161,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         });
         const largerLabel = 'Larger'
         const largerShortcut = '+';
-        const largeLetter = new SUEY.VectorBox(`${EDITOR.FOLDER_FLOATERS}settings/general/style/larger.svg`);
+        const largeLetter = new SUEY.VectorBox(`${FOLDER_FLOATERS}settings/general/style/larger.svg`);
         largeLetter.firstImage().addClass('suey-icon-colorize');
         largerButton.add(new SUEY.ShadowBox(largeLetter));
         const largeShortcutText = new SUEY.Div(largerShortcut).setClass('suey-menu-shortcut');
@@ -193,7 +196,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         });
         const resetLabel = Language.getKey('inspector/settings/reset');
         const resetShortcut = Config.getKey('shortcuts/reset');
-        resetButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_FLOATERS}settings/general/reset.svg`));
+        resetButton.add(new SUEY.ShadowBox(`${FOLDER_FLOATERS}settings/general/reset.svg`));
         resetButton.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
         const resetRow = props.addRow(resetLabel, resetButton);
         Advice.attach(resetRow, 'settings/reset');

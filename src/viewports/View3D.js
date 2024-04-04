@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    EDITOR_MODES,
+    MOUSE_MODES,
+    MOUSE_STATES,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { AbstractView } from './AbstractView.js';
 import { View3DToolbar } from '../toolbars/View3DToolbar.js';
@@ -25,8 +29,8 @@ class View3D extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
-    viewportType() {
-        return EDITOR.MODES.SCENE_EDITOR_3D;
+    viewportMode() {
+        return EDITOR_MODES.SCENE_EDITOR_3D;
     }
 
     constructor() {
@@ -38,14 +42,11 @@ class View3D extends AbstractView {
         /********** PROPERTIES */
 
         // Forward Function Declarations
-        this.addSprites = function() {};                        // Adds sprites to empty entities
+        this.addSprites = function() {};                        // adds sprites to empty entities
 
         // Gui
-        this.width = Math.max(2, this.getWidth());              // Width of dom element
-        this.height = Math.max(2, this.getHeight());            // Height of dom element
-
-        // Containers
-        this.selected = [];                                     // Objects selected (can differ slightly from editor)
+        this.width = Math.max(2, this.getWidth());              // width of dom element
+        this.height = Math.max(2, this.getHeight());            // height of dom element
 
         // Objects
         this.camera = null;
@@ -55,12 +56,12 @@ class View3D extends AbstractView {
         this.rubberBandBox = null;
 
         // Input
-        this.mouseMode = EDITOR.MOUSE_MODES.SELECT;             // Left mouse button mode
-        this.mouseState = EDITOR.MOUSE_STATES.NONE;             // Current mouse state
-        this.mouseIsDown = false;                               // True when mouse down
-        this.mouseDownButton = -1;                              // Tracks button on last mouse down
-        this.startSelection = [];                               // Stores starting selection when mouse down with shift/ctrl
-        this.dragStarted = false;                               // True when mouse has moved enough to start 'dragging'
+        this.mouseMode = MOUSE_MODES.SELECT;                    // left mouse button mode
+        this.mouseState = MOUSE_STATES.NONE;                    // current mouse state
+        this.mouseIsDown = false;                               // true when mouse down
+        this.mouseDownButton = -1;                              // tracks button on last mouse down
+        this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
+        this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
     }
 
     /******************** FRAME ********************/

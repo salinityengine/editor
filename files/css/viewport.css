@@ -1,4 +1,4 @@
-/********** VIEWPORT */
+/********** Viewport */
 
 .salt-viewport,
 .salt-world-graph {
@@ -13,7 +13,7 @@
     bottom: 0px;
 }
 
-/********** RUBBERBAND BOX */
+/********** Rubberband Box */
 
 .salt-rubberband-box {
     position: absolute;

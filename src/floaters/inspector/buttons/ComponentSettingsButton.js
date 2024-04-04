@@ -1,7 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_MENU,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Signals } from '../../../config/Signals.js';
 
@@ -25,7 +27,7 @@ class ComponentSettingsButton extends SUEY.Button {
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.setAttribute('tooltip', 'Edit Component');
 
-        const shadowBox = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}dots.svg`).addClass('suey-rotate-colorize');
+        const shadowBox = new SUEY.ShadowBox(`${FOLDER_MENU}dots.svg`).addClass('suey-rotate-colorize');
         if (shadowBox.firstImage()) {
             if (shadowBox.firstImage().firstImage()) {
                 shadowBox.firstImage().firstImage().setStyle('filter', 'brightness(1.25)');
@@ -41,7 +43,7 @@ class ComponentSettingsButton extends SUEY.Button {
 
         // 'Copy'
         if (component && !entity.locked) {
-            const copyIcon = `${EDITOR.FOLDER_MENU}main/edit/copy.svg`;
+            const copyIcon = `${FOLDER_MENU}main/edit/copy.svg`;
             const copyItem = new SUEY.MenuItem('Copy Component', copyIcon);
             copyItem.onSelect(() => {
                 editor.copy(component);
@@ -75,8 +77,8 @@ class ComponentSettingsButton extends SUEY.Button {
             }
         }
         if (component && !entity.locked) {
-            const moveUpIcon = `${EDITOR.FOLDER_MENU}component/move-up.svg`;
-            const moveDownIcon = `${EDITOR.FOLDER_MENU}component/move-down.svg`;
+            const moveUpIcon = `${FOLDER_MENU}component/move-up.svg`;
+            const moveDownIcon = `${FOLDER_MENU}component/move-down.svg`;
             const moveUpItem = new SUEY.MenuItem('Move Up', moveUpIcon);
             const moveDownItem = new SUEY.MenuItem('Move Down', moveDownIcon);
             moveUpItem.onSelect(() => { moveComponent(entity, component, 'up'); });
@@ -86,7 +88,7 @@ class ComponentSettingsButton extends SUEY.Button {
 
         // 'Save to Assets' (saves Component as Asset)
         if (component && _saveTypes.includes(component.type)) {
-            const saveIcon = `${EDITOR.FOLDER_MENU}component/copy.svg`;
+            const saveIcon = `${FOLDER_MENU}component/copy.svg`;
             const saveItem = new SUEY.MenuItem(`Save ${SUEY.Strings.capitalize(component.type)} to Assets`, saveIcon);
             saveItem.onSelect(() => {
                 switch (component.type) {
@@ -107,7 +109,7 @@ class ComponentSettingsButton extends SUEY.Button {
 
         // 'Delete Component'
         if (component && !entity.locked) {
-            const deleteIcon = `${EDITOR.FOLDER_MENU}component/delete.svg`;
+            const deleteIcon = `${FOLDER_MENU}component/delete.svg`;
             const deleteItem = new SUEY.MenuItem('Delete Component', deleteIcon);
             deleteItem.onSelect(() => {
                 const entity = component.entity;

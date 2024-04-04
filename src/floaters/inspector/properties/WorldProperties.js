@@ -1,7 +1,10 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+    FOLDER_TOOLBAR,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { AssetInput } from './inputs/AssetInput.js';
 import { Config } from '../../../config/Config.js';
@@ -17,7 +20,7 @@ class WorldProperties extends SUEY.Div {
 
         /******************** BACKGROUND */
 
-        const backgroundGroup = new PropertyGroup({ title: 'Background', icon: `${EDITOR.FOLDER_INSPECTOR}world/background.svg` });
+        const backgroundGroup = new PropertyGroup({ title: 'Background', icon: `${FOLDER_FLOATERS}inspector/world/background.svg` });
         backgroundGroup.setLeftPropertyWidth('50%');
         this.add(backgroundGroup);
 
@@ -52,7 +55,7 @@ class WorldProperties extends SUEY.Div {
 
         /******************** FOG */
 
-        const fogGroup = new PropertyGroup({ title: 'Fog', icon: `${EDITOR.FOLDER_INSPECTOR}world/fog.svg` });
+        const fogGroup = new PropertyGroup({ title: 'Fog', icon: `${FOLDER_FLOATERS}inspector/world/fog.svg` });
         fogGroup.setLeftPropertyWidth('50%');
         this.add(fogGroup);
 
@@ -102,7 +105,7 @@ class WorldProperties extends SUEY.Div {
 
         /******************** NODES */
 
-        const nodeGroup = new PropertyGroup({ title: 'Node', icon: `${EDITOR.FOLDER_TOOLBAR}graph-nodes.svg` });
+        const nodeGroup = new PropertyGroup({ title: 'Node', icon: `${FOLDER_TOOLBAR}graph-nodes.svg` });
         nodeGroup.setLeftPropertyWidth('50%');
         if (Config.getKey('promode') === true) {
             this.add(nodeGroup);

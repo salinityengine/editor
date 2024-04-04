@@ -33,6 +33,7 @@
     <script type='importmap'>
         {
             "imports": {
+                "constants":        "./src/constants.js",
                 "editor":           "./src/Editor.js",
                 "engine":           "../engine/src/Salinity.js",
                 "gui":              "../suey/build/suey.module.js"
@@ -50,11 +51,12 @@
 
         /***** IMPORTS *****/
 
+        import editor from 'editor';
         import * as SALT from 'engine';
         import * as SUEY from 'gui';
+
         console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
 
-        import { editor } from 'editor';
         editor.init();
 
         /***** TEXT SELECTION *****/

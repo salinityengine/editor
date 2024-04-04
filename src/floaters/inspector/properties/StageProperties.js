@@ -1,7 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
@@ -16,7 +18,7 @@ class StageProperties extends SUEY.Div {
 
         /******************** GENERAL */
 
-        const displayGroup = new PropertyGroup({ title: 'Display', icon: `${EDITOR.FOLDER_INSPECTOR}stage/flag.svg` });
+        const displayGroup = new PropertyGroup({ title: 'Display', icon: `${FOLDER_FLOATERS}inspector/stage/flag.svg` });
         displayGroup.setLeftPropertyWidth('30%');
         this.add(displayGroup);
 

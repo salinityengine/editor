@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+    FOLDER_MENU,
+    WIDGET_SPACING,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { ColorizeFilter } from '../../../gui/ColorizeFilter.js';
 import { Config } from '../../../config/Config.js';
@@ -144,7 +148,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             step = (Number.isFinite(max) && Number.isFinite(min)) ? (max - min) / 20 : 1;
         }
         slideBox.setRange(min, max).setStep(step).setPrecision(precision);
-        slideBox.setStyle('marginLeft', EDITOR.WIDGET_SPACING);
+        slideBox.setStyle('marginLeft', WIDGET_SPACING);
         slider.setValue(value);
         slideBox.setValue(value);
 
@@ -166,7 +170,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Widget
         const numberBox = new SUEY.NumberBox();
         const plusMinus = new SUEY.Span().addClass('salt-plus-minus', 'suey-black-or-white');
-        plusMinus.add(new SUEY.VectorBox(`${EDITOR.FOLDER_INSPECTOR}variable.svg`));
+        plusMinus.add(new SUEY.VectorBox(`${FOLDER_FLOATERS}inspector/variable.svg`));
         const variableBox = new SUEY.NumberBox();
         variableBox.setStyle('flex', '2 2 auto');
         variableBox.setStyle('min-width', '5ch');
@@ -213,8 +217,8 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         let aspectLocked = false;
         const aspectButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
         const lockAspect = new SUEY.Button().addClass('suey-borderless-button').setStyle('font-size', '90%');
-        const lockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}lock.svg`);
-        const unlockIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}unlock.svg`);
+        const lockIcon = new SUEY.VectorBox(`${FOLDER_MENU}lock.svg`);
+        const unlockIcon = new SUEY.VectorBox(`${FOLDER_MENU}unlock.svg`);
         function setAspectIconColors() {
             const filterLock = ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
             unlockIcon.setStyle('filter', `${filterLock}`);
@@ -488,7 +492,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         const clearButton = new SUEY.Button();
         clearButton.addClass('suey-property-button');
-        clearButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
+        clearButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
         clearButton.setAttribute('tooltip', 'Clear');
 
         // REFRESH ASSET //
@@ -496,7 +500,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const refreshAsset = new SUEY.Button().addClass('suey-borderless-button');
         refreshAsset.setAttribute('tooltip', `Refresh ${typeClassName}`);
         refreshAsset.setStyle('font-size', '90%');
-        const refreshIcon = new SUEY.VectorBox(`${EDITOR.FOLDER_MENU}reset.svg`);
+        const refreshIcon = new SUEY.VectorBox(`${FOLDER_MENU}reset.svg`);
 
         // Button: Coloring
         const setIconColors = function() {

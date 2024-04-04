@@ -1,7 +1,9 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -13,7 +15,7 @@ import { Signals } from '../config/Signals.js';
 class Historian extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}history.svg`;
+        const icon = `${FOLDER_FLOATERS}history.svg`;
         super('history', null, { icon, color: '#BF4044', shadow: false, shrink: 0.68 });
         Advice.attach(this.button, 'floater/history');
 
@@ -35,7 +37,7 @@ class Historian extends SUEY.Floater {
             editor.history.clear();
         });
         historyClear.setAttribute('tooltip', 'Clear History');
-        historyClear.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_FLOATERS}history/clear.svg`));
+        historyClear.add(new SUEY.ShadowBox(`${FOLDER_FLOATERS}history/clear.svg`));
 
         // Add Buttons
         buttonRow.add(new SUEY.FlexSpacer(), historyClear);

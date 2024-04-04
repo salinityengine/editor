@@ -1,4 +1,4 @@
-import * as EDITOR from './constants.js';
+import * as CONSTANTS from 'constants';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
@@ -164,7 +164,7 @@ class Editor extends SUEY.Div {
         // Hide Viewports
         let newViewport = undefined;
         for (const viewport of this.viewports) {
-            if (!newViewport && viewport.viewportType() === mode) {
+            if (!newViewport && viewport.viewportMode() === mode) {
                 newViewport = viewport;
                 this.toolbar.middle.add(...viewport.toolbar.buttons);
                 viewport.display();
@@ -197,7 +197,7 @@ class Editor extends SUEY.Div {
 
     viewport() {
         for (const viewport of this.viewports) {
-            if (viewport.viewportType() === this.mode() && viewport.isDisplayed()) return viewport;
+            if (viewport.viewportMode() === this.mode() && viewport.isDisplayed()) return viewport;
         }
     }
 
@@ -309,15 +309,15 @@ class Editor extends SUEY.Div {
     fontSizeChange(fontSize) {
         if (fontSize === 'up' || fontSize === 'increase') {
             let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
-            fontSize = Math.min(EDITOR.FONT_SIZE_MAX, SUEY.Css.fontSize() + addSize);
+            fontSize = Math.min(CONSTANTS.FONT_SIZE_MAX, SUEY.Css.fontSize() + addSize);
         } else if (fontSize === 'down' || fontSize === 'decrease') {
             let addSize = Math.floor((SUEY.Css.fontSize() + 10.0) / 10.0);
             addSize = Math.floor((SUEY.Css.fontSize() - addSize + 10.0) / 10.0);
-            fontSize = Math.max(EDITOR.FONT_SIZE_MIN, SUEY.Css.fontSize() - addSize);
+            fontSize = Math.max(CONSTANTS.FONT_SIZE_MIN, SUEY.Css.fontSize() - addSize);
         } else {
             fontSize = parseInt(fontSize);
         }
-        fontSize = SALT.Maths.clamp(fontSize, EDITOR.FONT_SIZE_MIN, EDITOR.FONT_SIZE_MAX);
+        fontSize = SALT.Maths.clamp(fontSize, CONSTANTS.FONT_SIZE_MIN, CONSTANTS.FONT_SIZE_MAX);
         Config.setKey('scheme/fontSize', SUEY.Css.toPx(fontSize));
         SUEY.Css.setVariable('--font-size', SUEY.Css.toPx(fontSize));
         Signals.dispatch('fontSizeChanged');
@@ -368,7 +368,7 @@ class Editor extends SUEY.Div {
 
     /******************** KEYBOARD ********************/
 
-    checkKeyState(/* any number of comma separated EDITOR.KEYS */) {
+    checkKeyState(/* any number of comma separated CONSTANTS.KEYS */) {
         let keyDown = false;
         for (const key of arguments) {
             keyDown = keyDown || this.keyStates[key];
@@ -390,20 +390,20 @@ class Editor extends SUEY.Div {
 
     updateModifiers(event) {
         if (!event) return;
-        this.setKeyState(EDITOR.KEYS.ALT, event.altKey);
-        this.setKeyState(EDITOR.KEYS.CONTROL, event.ctrlKey);
-        this.setKeyState(EDITOR.KEYS.META, event.metaKey);
-        this.setKeyState(EDITOR.KEYS.SHIFT, event.shiftKey);
+        this.setKeyState(CONSTANTS.KEYS.ALT, event.altKey);
+        this.setKeyState(CONSTANTS.KEYS.CONTROL, event.ctrlKey);
+        this.setKeyState(CONSTANTS.KEYS.META, event.metaKey);
+        this.setKeyState(CONSTANTS.KEYS.SHIFT, event.shiftKey);
     }
 
     setKeyState(key, keyDown) {
         this.keyStates[key] = keyDown;
         this.modifierKey =
-            this.keyStates[EDITOR.KEYS.ALT] ||
-            this.keyStates[EDITOR.KEYS.CONTROL] ||
-            this.keyStates[EDITOR.KEYS.META] ||
-            this.keyStates[EDITOR.KEYS.SHIFT] ||
-            this.keyStates[EDITOR.KEYS.SPACE];
+            this.keyStates[CONSTANTS.KEYS.ALT] ||
+            this.keyStates[CONSTANTS.KEYS.CONTROL] ||
+            this.keyStates[CONSTANTS.KEYS.META] ||
+            this.keyStates[CONSTANTS.KEYS.SHIFT] ||
+            this.keyStates[CONSTANTS.KEYS.SPACE];
     }
 
     /******************** FLOATERS ********************/
@@ -428,12 +428,9 @@ class Editor extends SUEY.Div {
 
 }
 
-// Export Constants
-export * from './constants.js';
-
 // Export as Singleton
 const editor = new Editor();
-export { editor };
+export default editor;
 
 /******************** INTERNAL ********************/
 
@@ -446,7 +443,7 @@ function editorKeyDown(editor, event) {
     editor.updateModifiers(event);
     switch (event.key) {
         case ' ': /* Space */
-            editor.setKeyState(EDITOR.KEYS.SPACE, true);
+            editor.setKeyState(CONSTANTS.KEYS.SPACE, true);
             break;
     }
 
@@ -535,7 +532,7 @@ function editorKeyDown(editor, event) {
         // Undo / Redo
         case 'z':
             if (event.ctrlKey || event.metaKey) {
-                if (editor.checkKeyState(EDITOR.KEYS.SHIFT)) {
+                if (editor.checkKeyState(CONSTANTS.KEYS.SHIFT)) {
                     event.stopPropagation();
                     event.preventDefault();
                     editor.redo();
@@ -596,7 +593,7 @@ function editorKeyUp(editor, event) {
     editor.updateModifiers(event);
     switch (event.key) {
         case ' ': /* Space */
-            editor.setKeyState(EDITOR.KEYS.SPACE, false);
+            editor.setKeyState(CONSTANTS.KEYS.SPACE, false);
             break;
     }
 

@@ -1,4 +1,6 @@
-import * as EDITOR from 'editor';
+import {
+    TIMEOUT_INFOBOX,
+} from 'constants';
 import * as SUEY from 'gui';
 
 let _displayTimer;
@@ -27,7 +29,7 @@ class InfoBox extends SUEY.Div {
 
         // Set Hide Timeout
         clearTimeout(_displayTimer);
-        _displayTimer = setTimeout(() => self.removeClass('suey-updated'), EDITOR.TIMEOUT_INFOBOX);
+        _displayTimer = setTimeout(() => self.removeClass('suey-updated'), TIMEOUT_INFOBOX);
     }
 
 }

@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    EDITOR_MODES,
+    MOUSE_MODES,
+    MOUSE_STATES,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
@@ -19,7 +23,7 @@ class AbstractView extends SUEY.Div {
         return floaters;
     }
 
-    viewportType() {
+    viewportMode() {
         return 'abstract';
     }
 

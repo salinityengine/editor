@@ -1,15 +1,17 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
-import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
+import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 import { Signals } from '../../config/Signals.js';
 
 class ProjectInfoBlock extends ConfiguredShrinker {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}project/info.svg`; // color: '#66C7FF', shrink: true
+        const icon = `${FOLDER_FLOATERS}project/info.svg`; // color: '#66C7FF', shrink: true
         super({ text: 'Info', icon, arrow: 'right', border: true });
 
         // Property Box
@@ -18,7 +20,7 @@ class ProjectInfoBlock extends ConfiguredShrinker {
 
         /***** SCENE *****/
 
-        // props.addHeader('Scene', `${EDITOR.FOLDER_FLOATERS}settings/info/scene.svg`);
+        // props.addHeader('Scene', `${FOLDER_FLOATERS}settings/info/scene.svg`);
 
         // Scenes
         const scenesInfo = new SUEY.Text('0').selectable(false);

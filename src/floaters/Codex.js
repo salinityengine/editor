@@ -1,7 +1,11 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+    FOLDER_MENU,
+    FOLDER_TYPES,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -17,7 +21,7 @@ import { AssetPanel } from '../gui/AssetPanel.js';
 class Codex extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}codex.svg`;
+        const icon = `${FOLDER_FLOATERS}codex.svg`;
         super('codex', null, { icon, color: '#090B11' });
         const self = this;
         Advice.attach(this.button, 'floater/codex');
@@ -34,13 +38,13 @@ class Codex extends SUEY.Floater {
         /***** 'Add' Asset *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
         addButton.setAttribute('tooltip', 'Add Asset');
-        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
+        addButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu
         const assetMenu = new SUEY.Menu();
 
         // 'Script'
-        const scriptIcon = `${EDITOR.FOLDER_TYPES}asset/script.svg`;
+        const scriptIcon = `${FOLDER_TYPES}asset/script.svg`;
         const addScriptMenuItem = new SUEY.MenuItem(Language.getKey('assets/types/script'), scriptIcon);
         addScriptMenuItem.onSelect(() => {
             const script = new SALT.Script();
@@ -50,7 +54,7 @@ class Codex extends SUEY.Floater {
         assetMenu.add(addScriptMenuItem);
 
         // 'Variables'
-        const variableIcon = `${EDITOR.FOLDER_TYPES}asset/script.svg`;
+        const variableIcon = `${FOLDER_TYPES}asset/script.svg`;
         const addVariableMenuItem = new SUEY.MenuItem(Language.getKey('assets/types/script/variables'), variableIcon);
         addVariableMenuItem.onSelect(() => {
             const script = new SALT.Script(SALT.SCRIPT_FORMAT.JAVASCRIPT, true /* variables? */);
@@ -70,12 +74,12 @@ class Codex extends SUEY.Floater {
 
         // No Category
         const unknown = 'unknown';
-        this.blocks[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${EDITOR.FOLDER_TYPES}script/general.svg`, view: 'list' });
+        this.blocks[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${FOLDER_TYPES}script/general.svg`, view: 'list' });
         libPanel.add(this.blocks[unknown]);
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
-        const searchIcon = new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}search.svg`).addClass('salt-search-icon');
+        const searchIcon = new SUEY.ShadowBox(`${FOLDER_MENU}search.svg`).addClass('salt-search-icon');
         const searchBox = new SUEY.TextBox('').addClass('salt-search-box');
         searchBox.dom.placeholder = Language.getKey('explorer/search');
         searchBox.setValue(this.getSearchTerm());
@@ -112,9 +116,9 @@ class Codex extends SUEY.Floater {
                 if (!self.blocks[category]) {
                     let icon = '';
                     switch (category) {
-                        case 'camera': icon = `${EDITOR.FOLDER_TYPES}scripts/camera.svg`; break;
-                        case 'control': icon = `${EDITOR.FOLDER_TYPES}scripts/control.svg`; break;
-                        case 'entity': icon = `${EDITOR.FOLDER_TYPES}scripts/entity.svg`; break;
+                        case 'camera': icon = `${FOLDER_TYPES}scripts/camera.svg`; break;
+                        case 'control': icon = `${FOLDER_TYPES}scripts/control.svg`; break;
+                        case 'entity': icon = `${FOLDER_TYPES}scripts/entity.svg`; break;
 
                         //
                         // ADDITIONAL CUSTOM CATEGORY ICONS HERE

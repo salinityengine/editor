@@ -1,5 +1,7 @@
 
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+} from 'constants';
 import * as SUEY from 'gui';
 import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
@@ -10,7 +12,7 @@ import { Signals } from '../../config/Signals.js';
 class WorldGridBlock extends ConfiguredShrinker {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'
+        const icon = `${FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'
         super({ text: Language.getKey('inspector/grid/title'), icon, arrow: 'right', border: true });
 
         // Property Box
@@ -29,7 +31,7 @@ class WorldGridBlock extends ConfiguredShrinker {
 
         /***** STYLE *****/
 
-        // props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_FLOATERS}settings/grid/style.svg`);
+        // props.addHeader(Language.getKey('inspector/grid/style'), `${FOLDER_FLOATERS}settings/grid/style.svg`);
 
         // Line Style
         const lineDrop = new SUEY.Dropdown();

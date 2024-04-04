@@ -1,4 +1,6 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+} from 'constants';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
@@ -15,7 +17,7 @@ import { ProjectInfoBlock } from './project/ProjectInfoBlock.js';
 class Projecter extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}project.svg`;
+        const icon = `${FOLDER_FLOATERS}project.svg`;
         super('project', null, { icon, color: '#773399' });
         const self = this;
         Advice.attach(this.button, 'floater/project');

@@ -1,7 +1,12 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+    FOLDER_IMAGES,
+    FOLDER_MENU,
+    FOLDER_TYPES,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -22,7 +27,7 @@ const _nodeStates = new WeakMap();
 class Outliner extends SUEY.Floater {
 
     constructor() {
-        const icon = `${EDITOR.FOLDER_FLOATERS}outliner.svg`;
+        const icon = `${FOLDER_FLOATERS}outliner.svg`;
         super('outliner', null, { icon });
         const self = this;
         Advice.attach(this.button, 'floater/outliner');
@@ -39,7 +44,7 @@ class Outliner extends SUEY.Floater {
         /***** 'Add' Entity *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
         addButton.setAttribute('tooltip', 'Add Entity');
-        addButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
+        addButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
 
         // 'Add' Menu
         const entityMenu = new SUEY.Menu();
@@ -60,11 +65,11 @@ class Outliner extends SUEY.Floater {
             });
             entityMenu.add(entityMenuItem);
         }
-        addEntityMenuItem('Entity', `${EDITOR.FOLDER_TYPES}entity/entity.svg`, () => { return new SALT.Entity3D(); });
-        addEntityMenuItem('Camera', `${EDITOR.FOLDER_TYPES}entity/camera.svg`, () => { return new SALT.Camera3D(); });
+        addEntityMenuItem('Entity', `${FOLDER_TYPES}entity/entity.svg`, () => { return new SALT.Entity3D(); });
+        addEntityMenuItem('Camera', `${FOLDER_TYPES}entity/camera.svg`, () => { return new SALT.Camera3D(); });
 
         // 'Stage'
-        const stageIcon = `${EDITOR.FOLDER_TYPES}entity/stage.svg`;
+        const stageIcon = `${FOLDER_TYPES}entity/stage.svg`;
         const addStageMenuItem = new SUEY.MenuItem('Stage', stageIcon).onSelect(() => {
             if (!editor.viewport.validWorld()) return;
             const stage = new SALT.Stage3D(`Stage ${editor.viewport.world.getStages().length + 1}`);
@@ -238,7 +243,7 @@ class Outliner extends SUEY.Floater {
                     const scriptImages = document.createElement('div');
                     const scriptJS = document.createElement('img');
                     scriptImages.classList.add('outliner-script-images');
-                    scriptJS.src = `${EDITOR.FOLDER_IMAGES}menu/outliner/js.svg`;
+                    scriptJS.src = `${FOLDER_IMAGES}menu/outliner/js.svg`;
                     scriptJS.classList.add('outliner-script-type');
                     scriptImages.appendChild(scriptJS);
                     columnName.appendChild(scriptImages);
@@ -284,7 +289,7 @@ class Outliner extends SUEY.Floater {
                         shown.classList.add('suey-black-or-white');
                         const eyeIcon = document.createElement('img');
                         eyeIcon.style['max-width'] = '1em';
-                        eyeIcon.src = `${EDITOR.FOLDER_MENU}eye.svg`;
+                        eyeIcon.src = `${FOLDER_MENU}eye.svg`;
                         shown.appendChild(eyeIcon);
                         shown.style['pointer-events'] = 'none';
                         columnCheck.appendChild(shown);
@@ -295,7 +300,7 @@ class Outliner extends SUEY.Floater {
                         lockCheck.classList.add('suey-black-or-white');
                         const lockIcon = document.createElement('img');
                         lockIcon.style['max-width'] = '1em';
-                        lockIcon.src = `${EDITOR.FOLDER_MENU}lock.svg`;
+                        lockIcon.src = `${FOLDER_MENU}lock.svg`;
                         lockCheck.appendChild(lockIcon);
                         lockCheck.style['pointer-events'] = 'none';
                         columnCheck.appendChild(lockCheck);
@@ -311,8 +316,8 @@ class Outliner extends SUEY.Floater {
                         eyeIcon.style['max-width'] = '1em';
                         function setVisibleIcon() {
                             if (!eyeIcon) return;
-                            if (!entity.visible) eyeIcon.src = `${EDITOR.FOLDER_MENU}hidden.svg`;
-                            else eyeIcon.src = `${EDITOR.FOLDER_MENU}dot.svg`;
+                            if (!entity.visible) eyeIcon.src = `${FOLDER_MENU}hidden.svg`;
+                            else eyeIcon.src = `${FOLDER_MENU}dot.svg`;
                         }
                         setVisibleIcon();
                         shown.appendChild(eyeIcon);
@@ -342,8 +347,8 @@ class Outliner extends SUEY.Floater {
                     lockIcon.style['max-width'] = '1em';
                     function setLockedIcon() {
                         if (!lockIcon) return;
-                        if (entity.locked) lockIcon.src = `${EDITOR.FOLDER_MENU}lock.svg`;
-                        else lockIcon.src = `${EDITOR.FOLDER_MENU}dot.svg`;
+                        if (entity.locked) lockIcon.src = `${FOLDER_MENU}lock.svg`;
+                        else lockIcon.src = `${FOLDER_MENU}dot.svg`;
                     }
                     setLockedIcon();
                     lockCheck.appendChild(lockIcon);

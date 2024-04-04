@@ -1,4 +1,6 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+} from 'constants';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 

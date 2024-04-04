@@ -1,7 +1,10 @@
-import * as EDITOR from 'editor';
+import {
+    FOLDER_FLOATERS,
+    PREVIEW_WIDTH,
+} from 'constants';
+import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { editor } from 'editor';
 
 import { CallbackEntityCommand } from '../../../commands/Commands.js';
 import { Config } from '../../../config/Config.js';
@@ -16,7 +19,7 @@ class CameraProperties extends SUEY.Div {
 
         /******************** CAMERA */
 
-        const displayGroup = new PropertyGroup({ title: 'Camera', icon: `${EDITOR.FOLDER_FLOATERS}entity/camera.svg` });
+        const displayGroup = new PropertyGroup({ title: 'Camera', icon: `${FOLDER_FLOATERS}entity/camera.svg` });
         displayGroup.setLeftPropertyWidth('50%');
         this.add(displayGroup);
 
@@ -47,12 +50,12 @@ class CameraProperties extends SUEY.Div {
         canvas.style.width = '100%';
         switch (orientation) {
             case (SALT.APP_ORIENTATION.LANDSCAPE):
-                canvas.width = EDITOR.PREVIEW_WIDTH;
+                canvas.width = PREVIEW_WIDTH;
                 canvas.height = canvas.width * 0.75;
                 break;
             case (SALT.APP_ORIENTATION.PORTRAIT):
             default:
-                canvas.height = EDITOR.PREVIEW_WIDTH;
+                canvas.height = PREVIEW_WIDTH;
                 canvas.width = canvas.height;
         }
         emptyBox.dom.appendChild(canvas);
