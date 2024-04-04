@@ -81,7 +81,7 @@ class Codex extends SUEY.Floater {
         searchBox.setValue(this.getSearchTerm());
         searchBox.on('input', () => {
             self.setSearchTerm(searchBox.getValue());
-            self.searchPanels();
+            self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
         libPanel.addToSelf(searchDiv);
@@ -162,17 +162,23 @@ class Codex extends SUEY.Floater {
 
         /***** INIT *****/
 
-        // Inititate panel's search term
-        this.searchPanels();
+        // Inititate search term
+        this.searchBlocks();
 
     } // end ctor
 
     /******************** SEARCH */
 
-    getSearchTerm() { return Config.getKey('search/scripts').toLowerCase(); }
-    setSearchTerm(term) { Config.setKey('search/scripts', String(term)); }
+    getSearchTerm() {
+        const searchTerm = Config.getKey(`search/${this.constructor.name}`) ?? '';
+        return String(searchTerm).toLowerCase();
+    }
 
-    searchPanels() {
+    setSearchTerm(term) {
+        Config.setKey(`search/${this.constructor.name}`, String(term));
+    }
+
+    searchBlocks() {
         for (const category in this.blocks) {
             const panel = this.blocks[category];
             panel.applySearch(this.getSearchTerm());

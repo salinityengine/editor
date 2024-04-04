@@ -1,11 +1,12 @@
 import * as EDITOR from 'editor';
 import * as SUEY from 'gui';
+import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
-class View2DGridBlock extends SUEY.Shrinkable {
+class View2DGridBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${EDITOR.FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'
@@ -27,7 +28,16 @@ class View2DGridBlock extends SUEY.Shrinkable {
 
         /***** STYLE *****/
 
-        props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_FLOATERS}settings/grid/style.svg`);
+        // props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_FLOATERS}settings/grid/style.svg`);
+        // props.addHeader(Language.getKey('inspector/grid/visibility'), `${EDITOR.FOLDER_FLOATERS}settings/grid/visibility.svg`);
+
+        // Show Grid
+        const showGrid = new SUEY.Checkbox().on('change', () => {
+            Config.setKey('scene2d/grid/show', (!Config.getKey('scene2d/grid/show')));
+            Signals.dispatch('gridChanged');
+        });
+        const showGridShortcut = new SUEY.MenuShortcut(); // `N`);
+        props.addRow(Language.getKey('inspector/grid/showCanvas'), showGrid, new SUEY.FlexSpacer(), showGridShortcut);
 
         // Grid Size
         const gridSizeBox = new SUEY.NumberBox();
@@ -37,18 +47,6 @@ class View2DGridBlock extends SUEY.Shrinkable {
             Signals.dispatch('gridChanged');
         });
         props.addRow(Language.getKey('inspector/grid/size'), gridSizeBox);
-
-        /***** VISIBILITY *****/
-
-        props.addHeader(Language.getKey('inspector/grid/visibility'), `${EDITOR.FOLDER_FLOATERS}settings/grid/visibility.svg`);
-
-        // Show Grid
-        const showGrid = new SUEY.Checkbox().on('change', () => {
-            Config.setKey('scene2d/grid/show', (!Config.getKey('scene2d/grid/show')));
-            Signals.dispatch('gridChanged');
-        });
-        const showGridShortcut = new SUEY.MenuShortcut(); // `N`);
-        props.addRow(Language.getKey('inspector/grid/showCanvas'), showGrid, new SUEY.FlexSpacer(), showGridShortcut);
 
         /***** UPDATE *****/
 

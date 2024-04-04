@@ -158,16 +158,14 @@ class Editor extends SUEY.Div {
     /******************** MODE ********************/
 
     setMode(mode) {
-        //
-        // TODO: Hide Docks (Floaters / Docker / Tabbed / Window) based on Viewport floaterFamily()
-        //
-
         // Remove Mode Toolbar
         this.toolbar.middle.detachChildren();
 
         // Hide Viewports
+        let newViewport = undefined;
         for (const viewport of this.viewports) {
-            if (viewport.viewportType() === mode) {
+            if (!newViewport && viewport.viewportType() === mode) {
+                newViewport = viewport;
                 this.toolbar.middle.add(...viewport.toolbar.buttons);
                 viewport.display();
             } else {
@@ -181,9 +179,13 @@ class Editor extends SUEY.Div {
         }
         Config.setKey('settings/editorMode', mode);
 
-        //
-        // TODO: Rebuild Floaters ('settings', 'inspector', etc)
-        //
+        // Adjust Floaters
+        const allowedTypes = newViewport?.floaterFamily() ?? [];
+        for (const floater of this.docker.floaters()) {
+            if (allowedTypes.includes(floater.id) === false) {
+                Layout.removeFloater(floater);
+            }
+        }
 
         // Dispatch Signals
         Signals.dispatch('editorModeChanged', mode);

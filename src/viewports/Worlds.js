@@ -147,7 +147,7 @@ class Worlds extends AbstractView {
         // Selected
         graph.on('selected', () => {
             // World(s) were selected
-            const selected = graph.selectedWorlds();
+            const selected = self.selectedWorlds();
             for (let i = selected.length - 1; i >= 0; i--) {
                 const world = selected[i];
                 if (world && world.isWorld) {
@@ -275,7 +275,7 @@ class Worlds extends AbstractView {
 
     selectedWorlds() {
         const worlds = [];
-        for (const node of this.graph.selectedNodes()) {
+        for (const node of this.selectedNodes()) {
             if (node.world && node.world.isWorld) worlds.push(node.world);
         }
         return worlds;

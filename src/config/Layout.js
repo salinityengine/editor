@@ -30,6 +30,19 @@ class Layout {
 
     /******************** FLOATERS */
 
+    static allFloaterTypes() {
+        return [
+            'advisor',
+            'codex',
+            'history',
+            'inspector',
+            'outliner',
+            'player',
+            'project',
+            'settings',
+        ];
+    }
+
     static createFloater(id) {
         switch (id) {
             case 'advisor': return new Advisor();
@@ -88,7 +101,7 @@ class Layout {
     }
 
     static removeFloater(floater) {
-        if (floater) {
+        if (floater && floater.isElement) {
             const dock = floater.dock;
             if (dock) dock.removeTab(floater);
             floater.destroy();

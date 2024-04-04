@@ -2,6 +2,7 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 import { editor } from 'editor';
+import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
@@ -10,7 +11,7 @@ import { Signals } from '../../config/Signals.js';
 
 const _color = new SUEY.Iris();
 
-class SettingsGeneralBlock extends SUEY.Shrinkable {
+class SettingsGeneralBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${EDITOR.FOLDER_FLOATERS}settings/general.svg`; // color: '#C04145'
@@ -55,24 +56,10 @@ class SettingsGeneralBlock extends SUEY.Shrinkable {
         const promodeRow = props.addRow('Pro Mode', promodeBox);
         Advice.attach(promodeRow, 'settings/general/promode');
 
-        // Reset All Settings
-        const resetButton = new SUEY.Button().addClass('suey-property-button').onClick(() => {
-            if (confirm('Reset all editor settings to default values?')) {
-                Config.clear();
-                editor.refreshSettings();
-            }
-        });
-        const resetLabel = Language.getKey('inspector/settings/reset');
-        const resetShortcut = Config.getKey('shortcuts/reset');
-        resetButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_FLOATERS}settings/general/reset.svg`));
-        resetButton.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
-        const resetRow = props.addRow(resetLabel, resetButton);
-        Advice.attach(resetRow, 'settings/reset');
-
         /***** STYLE *****/
 
-        const styleHeader = props.addHeader(Language.getKey('inspector/settings/style'), `${EDITOR.FOLDER_FLOATERS}settings/general/style.svg`);
-        Advice.attach(styleHeader, 'settings/style');
+        // const styleHeader = props.addHeader(Language.getKey('inspector/settings/style'), `${EDITOR.FOLDER_FLOATERS}settings/general/style.svg`);
+        // Advice.attach(styleHeader, 'settings/style');
 
         // THEME //
 
@@ -194,6 +181,22 @@ class SettingsGeneralBlock extends SUEY.Shrinkable {
         alphaSlider.setRange(0, 1.0).setStep('any').setPrecision(2);
         const opacityRow = props.addRow('Opacity', alphaSlider);
         Advice.attach(opacityRow, 'settings/style/opacity');
+
+        /***** RESET *****/
+
+        // Reset All Settings
+        const resetButton = new SUEY.Button().addClass('suey-property-button').onClick(() => {
+            if (confirm('Reset all editor settings to default values?')) {
+                Config.clear();
+                editor.refreshSettings();
+            }
+        });
+        const resetLabel = Language.getKey('inspector/settings/reset');
+        const resetShortcut = Config.getKey('shortcuts/reset');
+        resetButton.add(new SUEY.ShadowBox(`${EDITOR.FOLDER_FLOATERS}settings/general/reset.svg`));
+        resetButton.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
+        const resetRow = props.addRow(resetLabel, resetButton);
+        Advice.attach(resetRow, 'settings/reset');
 
         /***** UPDATE *****/
 

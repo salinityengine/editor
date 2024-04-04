@@ -57,17 +57,17 @@ class Assets extends SUEY.Titled {
 
         /******************** PANELS */
 
-        this.panels = {};
+        this.blocks = {};
 
-        this.panels['geometry'] = new AssetPanel({ type: 'geometry', title: Language.getKey('assets/types/geometry'), icon: `${EDITOR.FOLDER_FLOATERS}asset/geometry.svg` });
-        this.panels['material'] = new AssetPanel({ type: 'material', title: Language.getKey('assets/types/material'), icon: `${EDITOR.FOLDER_FLOATERS}asset/material.svg` });
-        this.panels['palette'] = new AssetPanel({ type: 'palette', title: Language.getKey('assets/types/palette'), icon: `${EDITOR.FOLDER_FLOATERS}asset/palette.svg` });
-        this.panels['shape'] = new AssetPanel({ type: 'shape', title: Language.getKey('assets/types/shape'), icon: `${EDITOR.FOLDER_FLOATERS}asset/shape.svg` });
-        this.panels['texture'] = new AssetPanel({ type: 'texture', title: Language.getKey('assets/types/texture'), icon: `${EDITOR.FOLDER_FLOATERS}asset/texture.svg` });
+        this.blocks['geometry'] = new AssetPanel({ type: 'geometry', title: Language.getKey('assets/types/geometry'), icon: `${EDITOR.FOLDER_FLOATERS}asset/geometry.svg` });
+        this.blocks['material'] = new AssetPanel({ type: 'material', title: Language.getKey('assets/types/material'), icon: `${EDITOR.FOLDER_FLOATERS}asset/material.svg` });
+        this.blocks['palette'] = new AssetPanel({ type: 'palette', title: Language.getKey('assets/types/palette'), icon: `${EDITOR.FOLDER_FLOATERS}asset/palette.svg` });
+        this.blocks['shape'] = new AssetPanel({ type: 'shape', title: Language.getKey('assets/types/shape'), icon: `${EDITOR.FOLDER_FLOATERS}asset/shape.svg` });
+        this.blocks['texture'] = new AssetPanel({ type: 'texture', title: Language.getKey('assets/types/texture'), icon: `${EDITOR.FOLDER_FLOATERS}asset/texture.svg` });
 
         // Add Panels
-        for (let type in this.panels) {
-            const panel = this.panels[type];
+        for (const type in this.blocks) {
+            const panel = this.blocks[type];
             this.add(panel);
         }
 
@@ -79,7 +79,7 @@ class Assets extends SUEY.Titled {
         searchBox.setValue(this.getSearchTerm());
         searchBox.on('input', () => {
             self.setSearchTerm(searchBox.getValue());
-            self.searchPanels();
+            self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
         this.addToSelf(searchDiv);
@@ -88,7 +88,7 @@ class Assets extends SUEY.Titled {
 
         function focusAsset(type, asset) {
             if (!asset || !asset.uuid) return;
-            const panel = self.panels[type];
+            const panel = self.blocks[type];
             if (panel) {
                 editor.selectFloater('assets');
                 panel.setExpanded();
@@ -98,7 +98,7 @@ class Assets extends SUEY.Titled {
         }
 
         function processAssets(type) {
-            const panel = self.panels[type];
+            const panel = self.blocks[type];
             if (panel) {
                 panel.buildPanel(false /* clear? */);
                 panel.applySearch(self.getSearchTerm());
@@ -106,7 +106,7 @@ class Assets extends SUEY.Titled {
         }
 
         function assetChanged(type, asset) {
-            const panel = self.panels[type];
+            const panel = self.blocks[type];
             if (panel) {
                 panel.updateItem(type, asset);
                 panel.applySearch(self.getSearchTerm());
@@ -120,19 +120,25 @@ class Assets extends SUEY.Titled {
 
         /***** INIT *****/
 
-        // Inititate panel's search term
-        this.searchPanels();
+        // Inititate search term
+        this.searchBlocks();
 
     } // end ctor
 
     /******************** SEARCH */
 
-    getSearchTerm() { return Config.getKey('search/assets').toLowerCase(); }
-    setSearchTerm(term) { Config.setKey('search/assets', String(term)); }
+    getSearchTerm() {
+        const searchTerm = Config.getKey(`search/${this.constructor.name}`) ?? '';
+        return String(searchTerm).toLowerCase();
+    }
 
-    searchPanels() {
-        for (let category in this.panels) {
-            const panel = this.panels[category];
+    setSearchTerm(term) {
+        Config.setKey(`search/${this.constructor.name}`, String(term));
+    }
+
+    searchBlocks() {
+        for (const category in this.blocks) {
+            const panel = this.blocks[category];
             panel.applySearch(this.getSearchTerm());
         }
     }

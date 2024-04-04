@@ -1,13 +1,14 @@
 import * as EDITOR from 'editor';
 import * as SUEY from 'gui';
 import { editor } from 'editor';
+import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
-class ProjectAppBlock extends SUEY.Shrinkable {
+class ProjectAppBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${EDITOR.FOLDER_FLOATERS}project/app.svg`; // color: '#773399'

@@ -9,10 +9,7 @@ import { Signals } from '../config/Signals.js';
 
 import { SettingsGeneralBlock } from './settings/SettingsGeneralBlock.js';
 import { View2DGridBlock } from './settings/View2DGridBlock.js';
-import { View3DGridBlock } from './settings/View3DGridBlock.js';
-// import { SceneViewTab } from './settings/SceneViewTab.js';
-// import { SceneThreeTab } from './settings/SceneThreeTab.js';
-import { WorldGridTab } from './settings/WorldGridTab.js';
+import { WorldGridBlock } from './settings/WorldGridBlock.js';
 
 /**
  * Editor Settings
@@ -39,15 +36,10 @@ class Settings extends SUEY.Floater {
             blocks.push(new SettingsGeneralBlock());
             if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_2D) {
                 blocks.push(new View2DGridBlock());
-
             } else if (editor.mode() === EDITOR.MODES.SCENE_EDITOR_3D) {
-                blocks.push(new SUEY.Floater('view', new SceneViewTab(), { icon: `${EDITOR.FOLDER_FLOATERS}setting/view.svg`, color: '#ffffff', shadow: false }));
-                blocks.push(new View3DGridBlock());
-                blocks.push(new SUEY.Floater('three', new SceneThreeTab(), { icon: `${EDITOR.FOLDER_FLOATERS}setting/three.svg`, color: '#019EF4', shadow: false, shrink: true }));
-
+                // EMPTY
             } else if (editor.mode() === EDITOR.MODES.WORLD_GRAPH) {
-                blocks.push(new SUEY.Floater('grid', new WorldGridTab(), { icon: `${EDITOR.FOLDER_FLOATERS}setting/grid.svg`, color: '#333333' }));
-
+                blocks.push(new WorldGridBlock());
             }
 
             // Add Blocks

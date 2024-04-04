@@ -18,12 +18,12 @@ class Library extends SUEY.Titled {
 
         /******************** PANELS */
 
-        this.panels = {};
+        this.blocks = {};
 
         // 'Entity' Category (user defined)
         const general = 'unknown';
-        this.panels[general] = new AssetPanel({ type: 'prefab', category: general, title: 'General', icon: `${EDITOR.FOLDER_TYPES}prefabs/general.svg` });
-        this.add(this.panels[general]);
+        this.blocks[general] = new AssetPanel({ type: 'prefab', category: general, title: 'General', icon: `${EDITOR.FOLDER_TYPES}prefabs/general.svg` });
+        this.add(this.blocks[general]);
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
@@ -33,26 +33,32 @@ class Library extends SUEY.Titled {
         searchBox.setValue(this.getSearchTerm());
         searchBox.on('input', () => {
             self.setSearchTerm(searchBox.getValue());
-            self.searchPanels();
+            self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
         this.addToSelf(searchDiv);
 
         /***** INIT *****/
 
-        // Inititate panel's search term
-        this.searchPanels();
+        // Inititate search term
+        this.searchBlocks();
 
     } // end ctor
 
     /******************** SEARCH */
 
-    getSearchTerm() { return Config.getKey('search/prefabs').toLowerCase(); }
-    setSearchTerm(term) { Config.setKey('search/prefabs', String(term)); }
+    getSearchTerm() {
+        const searchTerm = Config.getKey(`search/${this.constructor.name}`) ?? '';
+        return String(searchTerm).toLowerCase();
+    }
 
-    searchPanels() {
-        for (let category in this.panels) {
-            const panel = this.panels[category];
+    setSearchTerm(term) {
+        Config.setKey(`search/${this.constructor.name}`, String(term));
+    }
+
+    searchBlocks() {
+        for (const category in this.blocks) {
+            const panel = this.blocks[category];
             panel.applySearch(this.getSearchTerm());
         }
     }

@@ -7,6 +7,7 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { Config } from '../config/Config.js';
+import { Layout } from '../config/Layout.js';
 import { Loader } from '../config/Loader.js';
 import { Signals } from '../config/Signals.js';
 
@@ -206,40 +207,46 @@ class EyeMenu extends SUEY.Menu {
         /******************** MENU: WINDOW ********************/
 
         let windowHide, windowShow;
-        let windowAdvisor, windowInspector;
+        let windowItems = [];
         let windowFullscreen;
 
         if (useWindow) {
             windowHide = new SUEY.MenuItem('Collapse All Tabs', `${EDITOR.FOLDER_MENU}main/window/hide-panels.svg`).keepOpen();
             windowShow = new SUEY.MenuItem('Expand All Tabs', `${EDITOR.FOLDER_MENU}main/window/show-panels.svg`).keepOpen();
 
-            windowAdvisor = new SUEY.MenuItem('Show Advisor');
-            windowInspector = new SUEY.MenuItem('Show Inspector');
-
-            const fullscreenTxt = `${SALT.System.metaKeyOS()}↵`; // i.e. "Enter" or "Return"
+            const fullscreenTxt = `${SALT.System.metaKeyOS()}↵`; // i.e. Ctrl + "Enter" or "Return"
             windowFullscreen = new SUEY.MenuItem('Enter Fullscreen', `${EDITOR.FOLDER_MENU}main/window/fullscreen.svg`, fullscreenTxt);
 
             windowHide.onSelect(() => editor.docker.collapseTabs());
             windowShow.onSelect(() => editor.docker.expandTabs());
 
-            function toggleWindow(windowMenuItem, windowName) {
-                if (windowMenuItem.checked) {
-                    const floater = editor.getFloaterByID(windowName, false /* build? */, false /* select? */);
-                    if (floater && floater.dock) floater.dock.removeTab(floater);
-                } else {
-                    editor.getFloaterByID(windowName, true /* build? */, true /* select? */);
-                }
-            }
-            windowAdvisor.onSelect(() => toggleWindow(windowAdvisor, 'advisor'));
-            windowInspector.onSelect(() => toggleWindow(windowInspector, 'inspector'));
-
-            document.body.addEventListener('tab-changed', () => {
-                windowAdvisor.setChecked(editor.getFloaterByID('advisor', false, false));
-                windowInspector.setChecked(editor.getFloaterByID('inspector', false, false));
-            });
-
             windowFullscreen.onSelect(() => { SALT.System.fullscreen(); });
 
+            // Toggle Window Types
+            function toggleWindow(windowMenuItem, windowName) {
+                if (windowMenuItem.checked) Layout.removeFloater(editor.getFloaterByID(windowName, false, false));
+                else editor.getFloaterByID(windowName, true /* build? */, true /* select? */);
+            }
+
+            for (const type of Layout.allFloaterTypes()) {
+                const windowItem = new SUEY.MenuItem(`Show ${SUEY.Strings.capitalize(type)}`);
+                windowItem.onSelect(() => toggleWindow(windowItem, type));
+                windowItem.floaterType = type;
+                windowItems.push(windowItem);
+            }
+
+            editor.on('tab-changed', () => {
+                for (const windowItem of windowItems) {
+                    windowItem.setChecked(editor.getFloaterByID(windowItem.floaterType, false, false));
+                }
+            });
+
+            Signals.connect(editor, 'editorModeChanged', () => {
+                const allowed = editor.viewport().floaterFamily();
+                for (const windowItem of windowItems) {
+                    windowItem.setStyle('display', allowed.includes(windowItem.floaterType) ? '' : 'none');
+                }
+            });
         }
 
         /******************** MENU: HELP ********************/
@@ -286,7 +293,7 @@ class EyeMenu extends SUEY.Menu {
             if (useWindow) {
                 itemWindow.attachSubMenu(new SUEY.Menu().add(
                     windowHide, windowShow,
-                    new SUEY.MenuSeparator(), windowAdvisor, windowInspector,
+                    new SUEY.MenuSeparator(), ...windowItems,
                     new SUEY.MenuSeparator(), windowFullscreen
                 ));
                 this.add(itemWindow);

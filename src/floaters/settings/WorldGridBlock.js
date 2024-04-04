@@ -1,15 +1,17 @@
 
 import * as EDITOR from 'editor';
 import * as SUEY from 'gui';
+import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
-class WorldGridTab extends SUEY.Titled {
+class WorldGridBlock extends ConfiguredShrinker {
 
     constructor() {
-        super({ title: Language.getKey('inspector/grid/title') });
+        const icon = `${EDITOR.FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'
+        super({ text: Language.getKey('inspector/grid/title'), icon, arrow: 'right', border: true });
 
         // Property Box
         const props = new SUEY.PropertyList();
@@ -27,7 +29,7 @@ class WorldGridTab extends SUEY.Titled {
 
         /***** STYLE *****/
 
-        props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_FLOATERS}settings/grid/style.svg`);
+        // props.addHeader(Language.getKey('inspector/grid/style'), `${EDITOR.FOLDER_FLOATERS}settings/grid/style.svg`);
 
         // Line Style
         const lineDrop = new SUEY.Dropdown();
@@ -76,4 +78,4 @@ class WorldGridTab extends SUEY.Titled {
 
 }
 
-export { WorldGridTab };
+export { WorldGridBlock };

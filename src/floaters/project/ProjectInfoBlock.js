@@ -2,10 +2,11 @@ import * as EDITOR from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 import { editor } from 'editor';
+import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
 import { Signals } from '../../config/Signals.js';
 
-class ProjectInfoBlock extends SUEY.Shrinkable {
+class ProjectInfoBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${EDITOR.FOLDER_FLOATERS}project/info.svg`; // color: '#66C7FF', shrink: true

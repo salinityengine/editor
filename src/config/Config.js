@@ -26,11 +26,6 @@ const DEFAULT_SETTINGS = {
     'scheme/fontSize':                          '14px',             // Font / Gui size, originally 14px
     'scheme/panelTransparency':                 0.85,               // Panel transparency
 
-    'search/outliner':                          '',                 // Outliner search term
-    'search/assets':                            '',                 // Asset search term
-    'search/prefabs':                           '',                 // Prefabs search term
-    'search/scripts':                           '',                 // Script search term
-
     /***** RENDERER *****/
 
     'renderer/antialias':                       false,              // Anti aliasing on/off in the editor
