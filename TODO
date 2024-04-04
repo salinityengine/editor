@@ -2,11 +2,11 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Button Menus:
-    - Menus are not removed from document when buttons are destroyed
-
 Dock Layout:
     - Default layout for each Viewport type
+
+Button Menus:
+    - Menus are not removed from document when buttons are destroyed
 
 Toolbar:
     - View2D Toolbar 'Grid' images
@@ -14,6 +14,7 @@ Toolbar:
 Floaters:
     Advisor:
         - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
+    !! Assets:
     Codex:
         - Add scripts
     Historian:
@@ -28,7 +29,6 @@ Floaters:
         - QR Code to load on phone
     Project:
         - Info work with new View2D
-    !! Resources (Assets):
     !! Scripter:
         - Open from Codex
     Settings:

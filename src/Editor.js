@@ -193,13 +193,9 @@ class Editor extends SUEY.Div {
         return Config.getKey('settings/editorMode');
     }
 
-    modeElement() {
-        switch (this.mode()) {
-            case EDITOR.MODES.UI_EDITOR:        return undefined;
-            case EDITOR.MODES.SCENE_EDITOR_2D:  return this.view2d;
-            case EDITOR.MODES.SCENE_EDITOR_3D:  return this.view3d;
-            case EDITOR.MODES.SOUND_EDITOR:     return undefined;
-            case EDITOR.MODES.WORLD_GRAPH:      return this.worlds;
+    viewport() {
+        for (const viewport of this.viewports) {
+            if (viewport.viewportType() === this.mode() && viewport.isDisplayed()) return viewport;
         }
     }
 
@@ -211,64 +207,53 @@ class Editor extends SUEY.Div {
         Signals.dispatch('clipboardChanged');
     }
 
+    /**
+     * Following functions are meant to run through Undo/Redo History Commands
+     */
     cut() {
         this.copy();
-        const view = this.modeElement();
-        if (!view || view.isHidden()) return;
-        if (typeof view.cut === 'function') view.cut();
+        this.viewport()?.cut();
     }
 
     paste() {
-        const view = this.modeElement();
-        if (!view || view.isHidden()) return;
-        if (typeof view.paste === 'function') view.paste();
+        this.viewport()?.paste();
     }
 
     duplicate(key) {
-        const view = this.modeElement();
-        if (!view || view.isHidden()) return;
-        if (typeof view.duplicate === 'function') view.duplicate(key);
+        this.viewport()?.duplicate(key);
     }
 
     delete() {
-        const view = this.modeElement();
-        if (!view || view.isHidden()) return;
-        if (typeof view.delete === 'function') view.delete();
+        this.viewport()?.delete();
     }
 
-    /** NOTE: Runs through Undo/Redo History */
     selectAll() {
-        const view = this.modeElement();
-        if (!view || view.isHidden()) return;
-        if (typeof view.selectAll === 'function') view.selectAll();
+        this.viewport()?.selectAll();
     }
 
-    /** NOTE: Runs through Undo/Redo History */
     selectNone() {
-        const view = this.modeElement();
-        if (!view || view.isHidden()) return;
-        if (typeof view.selectNone === 'function') view.selectNone();
+        this.viewport()?.selectNone();
     }
 
     /******************** UNDO HISTORY ********************/
 
     execute(cmd) {
-        if (this.history) this.history.execute(cmd);
+        this.history?.execute(cmd);
     }
 
     undo() {
-        if (this.history) this.history.undo();
+        this.history?.undo();
     }
 
     redo() {
-        if (this.history) this.history.redo();
+        this.history?.redo();
     }
 
     /******************** SELECTION ********************/
 
     /**
-     * NOTE: Does NOT run through Undo/Redo History
-     * Emits 'selectionChanged' signal upon new seleciton
+     * This function is *** NOT *** meant to run through Undo/Redo History Commands
+     * Emits 'selectionChanged' signal upon new selection
      */
     selectEntities(/* entity, entity array, or any number of entites to select */) {
         const entities = Array.isArray(arguments[0]) ? arguments[0] : [ ...arguments ];

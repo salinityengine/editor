@@ -6,10 +6,17 @@ import { editor } from 'editor';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-class AbstractView extends SUEY.Panel {
+class AbstractView extends SUEY.Div {
 
     floaterFamily() {
-        return [ 'advisor', 'inspector' ];
+        const floaters = [
+            'advisor',
+            'player',
+            'project',
+            'history',
+            'settings',
+        ];
+        return floaters;
     }
 
     viewportType() {
@@ -18,16 +25,11 @@ class AbstractView extends SUEY.Panel {
 
     constructor() {
         super();
-        const self = this;
-        this.setClass('salt-viewport', 'suey-unselectable');
+        this.setClass('salt-viewport');
 
-        // Toolbar
-        this.toolbar = null; // new Toolbar(this);
-
-        /********** PROPERTIES */
-
-        // Containers
-        this.selected = [];                                     // Objects selected (can differ slightly from editor)
+        // Properties
+        this.toolbar = null;                            // to be added to editor.toolbar.middle
+        this.selected = [];                             // selection can differ from editor
     }
 
     /******************** CLIPBOARD / EDIT ********************/

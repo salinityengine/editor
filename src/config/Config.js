@@ -3,14 +3,16 @@ import { THEMES } from 'gui';
 const DEFAULT_SETTINGS = {
     'promode':                                  false,              // Enhanced menu and inspector
 
-    /***** RENDERER *****/
+    /***** FLOATERS */
 
-    'renderer/antialias':                       false,              // Anti aliasing on/off in the editor
-
-    'renderer/screen/name':                     'Default',          // Target output name
-    'renderer/screen/width':                    1000,               // Target output width
-    'renderer/screen/height':                   500,                // Target output height
-    'renderer/screen/pixelRatio':               1,                  // Target output pixel ratio
+    'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '10em' },
+    'floater/initial/codex':                    { init: 'left',     side: 'left',       size: '18em' },
+    'floater/initial/history':                  { init: 'right',    side: 'right',      size: '22em' },
+    'floater/initial/inspector':                { init: 'right',    side: 'right',      size: '22em' },
+    'floater/initial/outliner':                 { init: 'left',     side: 'left',       size: '18em' },
+    'floater/initial/player':                   { init: 'center' },
+    'floater/initial/project':                  { init: 'right',    side: 'right',      size: '22em' },
+    'floater/initial/settings':                 { init: 'right',    side: 'right',      size: '22em' },
 
     /***** EDITOR *****/
 
@@ -29,16 +31,14 @@ const DEFAULT_SETTINGS = {
     'search/prefabs':                           '',                 // Prefabs search term
     'search/scripts':                           '',                 // Script search term
 
-    /***** FLOATERS */
+    /***** RENDERER *****/
 
-    'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '10em' },
-    'floater/initial/codex':                    { init: 'left',     side: 'left',       size: '18em' },
-    'floater/initial/history':                  { init: 'right',    side: 'right',      size: '22em' },
-    'floater/initial/inspector':                { init: 'right',    side: 'right',      size: '22em' },
-    'floater/initial/outliner':                 { init: 'left',     side: 'left',       size: '18em' },
-    'floater/initial/player':                   { init: 'center' },
-    'floater/initial/project':                  { init: 'right',    side: 'right',      size: '22em' },
-    'floater/initial/settings':                 { init: 'right',    side: 'right',      size: '22em' },
+    'renderer/antialias':                       false,              // Anti aliasing on/off in the editor
+
+    'renderer/screen/name':                     'Default',          // Target output name
+    'renderer/screen/width':                    1000,               // Target output width
+    'renderer/screen/height':                   500,                // Target output height
+    'renderer/screen/pixelRatio':               1,                  // Target output pixel ratio
 
     /***** COMMON EDITOR */
 

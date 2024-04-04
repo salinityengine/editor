@@ -3,16 +3,24 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 import { editor } from 'editor';
 
+import { AbstractView } from './AbstractView.js';
 import { ViewUIToolbar } from '../toolbars/ViewUIToolbar.js';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { SelectCommand } from '../commands/Commands.js';
 
-class ViewUI extends SUEY.Div {
+class ViewUI extends AbstractView {
 
     floaterFamily() {
-        return [ 'advisor', 'codex', 'inspector' ];
+        const floaters = [
+            'assets',
+            'inspector',
+            'library',
+            'outliner',
+            'shaper',
+        ];
+        return [ ...super.floaterFamily(), ...floaters ];
     }
 
     viewportType() {
@@ -21,20 +29,9 @@ class ViewUI extends SUEY.Div {
 
     constructor() {
         super();
-        const self = this;
-        this.setClass('salt-viewport', 'suey-unselectable');
 
         // Toolbar
         this.toolbar = new ViewUIToolbar(this);
-
-        /********** PROPERTIES */
-
-        // Gui
-        this.width = Math.max(2, this.getWidth());              // Width of dom element
-        this.height = Math.max(2, this.getHeight());            // Height of dom element
-
-        // Containers
-        this.selected = [];                                     // Objects selected (can differ slightly from editor)
 
         // Controls
         this.rubberBandBox = null;
@@ -46,14 +43,6 @@ class ViewUI extends SUEY.Div {
         this.mouseDownButton = -1;                              // Tracks button on last mouse down
         this.startSelection = [];                               // Stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // True when mouse has moved enough to start 'dragging'
-    }
-
-    /******************** RESIZE ********************/
-
-    resize() {
-        // Store dimensions
-        this.width = Math.max(2, this.getWidth() * window.devicePixelRatio);
-        this.height = Math.max(2, this.getHeight() * window.devicePixelRatio);
     }
 
     /******************** CLIPBOARD / EDIT ********************/

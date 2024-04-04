@@ -2,6 +2,7 @@ import * as SUEY from 'gui';
 import { Config } from './Config.js';
 
 import { Advisor } from '../floaters/Advisor.js';
+import { Assets } from '../floaters/Assets.js';
 import { Codex } from '../floaters/Codex.js';
 import { Historian } from '../floaters/Historian.js';
 import { Inspector } from '../floaters/Inspector.js';
@@ -9,12 +10,25 @@ import { Library } from '../floaters/Library.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
 import { Projecter } from '../floaters/Projecter.js';
-import { Resources } from '../floaters/Resources.js';
 import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
 
 class Layout {
+
+    /******************** CONSTRUCT */
+
+    static default(docker, mode) {
+        docker.clearDocks();
+
+        // Default Layout
+        Layout.installFloater(docker, Layout.createFloater('outliner'));
+        Layout.installFloater(docker, Layout.createFloater('codex'));
+        Layout.installFloater(docker, Layout.createFloater('advisor'));
+        Layout.installFloater(docker, Layout.createFloater('inspector'));
+    }
+
+    /******************** FLOATERS */
 
     static createFloater(id) {
         switch (id) {
@@ -29,17 +43,6 @@ class Layout {
         }
         console.warn(`Layout.createFloater: Unknown Floater type: ${id}`);
         return null;
-    }
-
-    static default(docker, mode) {
-        // Clear Docker
-        docker.clearDocks();
-
-        // Build Default Layout
-        Layout.installFloater(docker, Layout.createFloater('outliner'));
-        Layout.installFloater(docker, Layout.createFloater('codex'));
-        Layout.installFloater(docker, Layout.createFloater('advisor'));
-        Layout.installFloater(docker, Layout.createFloater('inspector'));
     }
 
     static installFloater(docker, floater) {
@@ -83,6 +86,16 @@ class Layout {
         }
         dock.addTab(floater);
     }
+
+    static removeFloater(floater) {
+        if (floater) {
+            const dock = floater.dock;
+            if (dock) dock.removeTab(floater);
+            floater.destroy();
+        }
+    }
+
+    /******************** SAVE / LOAD */
 
     static save(docker) {
         if (!docker.isPrimary()) {

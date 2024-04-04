@@ -12,7 +12,7 @@ import { Signals } from '../config/Signals.js';
 /**
  * Access to items in the AssetManager
  */
-class Resources extends SUEY.Titled {
+class Assets extends SUEY.Titled {
 
     constructor() {
         super({ title: 'Assets' });
@@ -139,4 +139,4 @@ class Resources extends SUEY.Titled {
 
 }
 
-export { Resources };
+export { Assets };

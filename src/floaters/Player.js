@@ -5,6 +5,7 @@ import { editor } from 'editor';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
+import { Layout } from '../config/Layout.js';
 import { Signals } from '../config/Signals.js';
 
 const _size = { x: 0, y: 0 };
@@ -114,13 +115,10 @@ class Player extends SUEY.Floater {
 
         camera.onClick(() => self.requestScreenshot());
         pause.onClick(() => {
-            if (app.isPlaying) {
-                self.pause();
-            } else {
-                self.start();
-            }
+            if (app.isPlaying) self.pause();
+            else self.start();
         });
-        stop.onClick(() => self.stop());
+        stop.onClick(() => Layout.removeFloater(self));
 
         const playButtons = new SUEY.FlexBox().addClass('salt-active-toolbar');
         playButtons.add(stop, pause, camera, screen);

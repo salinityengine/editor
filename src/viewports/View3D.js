@@ -3,16 +3,26 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 import { editor } from 'editor';
 
+import { AbstractView } from './AbstractView.js';
 import { View3DToolbar } from '../toolbars/View3DToolbar.js';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { SelectCommand } from '../commands/Commands.js';
 
-class View3D extends SUEY.Div {
+class View3D extends AbstractView {
 
     floaterFamily() {
-        return [ 'advisor', 'codex', 'inspector' ];
+        const floaters = [
+            'assets',
+            'codex',
+            'inspector',
+            'library',
+            'outliner',
+            'scripter',
+            'shaper',
+        ];
+        return [ ...super.floaterFamily(), ...floaters ];
     }
 
     viewportType() {
@@ -21,8 +31,6 @@ class View3D extends SUEY.Div {
 
     constructor() {
         super();
-        const self = this;
-        this.setClass('salt-viewport', 'suey-unselectable');
 
         // Toolbar
         this.toolbar = new View3DToolbar(this);

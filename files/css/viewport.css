@@ -1,14 +1,16 @@
 /********** VIEWPORT */
 
-.salt-viewport {
-    position: absolute;
+.salt-viewport,
+.salt-world-graph {
+    user-select: none;
+    overflow: hidden !important;
+    position: absolute !important;
     margin: auto;
     padding: 0;
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
-    z-index: 0; /* viewport */
 }
 
 /********** RUBBERBAND BOX */
