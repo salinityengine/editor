@@ -49,8 +49,8 @@ class Player extends SUEY.Floater {
         this.add(outlineBox, leftBox, rightBox);
 
         function resizeOutLine() {
-            const screenWidth = parseFloat(Config.getKey('renderer/screen/width'));
-            const screenHeight = parseFloat(Config.getKey('renderer/screen/height'));
+            const screenWidth = parseFloat(Config.getKey('player/screen/width'));
+            const screenHeight = parseFloat(Config.getKey('player/screen/height'));
             const aspect = screenHeight / screenWidth;
 
             let x = 0, y = 0;
@@ -198,7 +198,7 @@ class Player extends SUEY.Floater {
         /******************** SCREEN TYPE */
 
         const screenMenu = new SUEY.Menu();
-        const currentScreen = Config.getKey('renderer/screen/name');
+        const currentScreen = Config.getKey('player/screen/name');
         const screenItems = [];
         SCREEN_RATIOS.forEach((screen) => {
             const screenItem = new SUEY.MenuItem(screen.name).keepOpen();
@@ -206,10 +206,10 @@ class Player extends SUEY.Floater {
             screenItem.onSelect(() => {
                 screenItems.forEach((item) => { item.setChecked(false); });
                 screenItem.setChecked(true);
-                Config.setKey('renderer/screen/name', screen.name);
-                Config.setKey('renderer/screen/width', screen.width);
-                Config.setKey('renderer/screen/height', screen.height);
-                Config.setKey('renderer/screen/pixelRatio', screen.pixelRatio);
+                Config.setKey('player/screen/name', screen.name);
+                Config.setKey('player/screen/width', screen.width);
+                Config.setKey('player/screen/height', screen.height);
+                Config.setKey('player/screen/pixelRatio', screen.pixelRatio);
                 resizeOutLine();
             });
             screenItems.push(screenItem);
@@ -238,9 +238,9 @@ class Player extends SUEY.Floater {
             app.renderer.getSize(_size);
 
             // Desired Size
-            const outWidth = parseInt(Config.getKey('renderer/screen/width'));
-            const outHeight = parseInt(Config.getKey('renderer/screen/height'));
-            const outRatio = parseInt(Config.getKey('renderer/screen/pixelRatio'));
+            const outWidth = parseInt(Config.getKey('player/screen/width'));
+            const outHeight = parseInt(Config.getKey('player/screen/height'));
+            const outRatio = parseInt(Config.getKey('player/screen/pixelRatio'));
             const w = ((app.project.settings.orientation === SALT.APP_ORIENTATION.LANDSCAPE) ? outWidth : outHeight) * outRatio;
             const h = ((app.project.settings.orientation === SALT.APP_ORIENTATION.LANDSCAPE) ? outHeight : outWidth) * outRatio;
             app.setSize(w, h);

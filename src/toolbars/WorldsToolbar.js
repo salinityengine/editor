@@ -124,14 +124,14 @@ class WorldsToolbar {
         gridSnap.add(snapMagnet, snapAttract);
 
         gridSnap.onClick(() => {
-            const snapping = !Config.getKey('scene/grid/snap');
-            Config.setKey('scene/grid/snap', snapping);
+            const snapping = !Config.getKey('viewport/grid/snap');
+            Config.setKey('viewport/grid/snap', snapping);
             worldsGraph.snapToGrid = snapping;
             Signals.dispatch('gridChanged');
         });
 
         Signals.connect(worldsGraph, 'gridChanged', function() {
-            const snapping = Config.getKey('scene/grid/snap');
+            const snapping = Config.getKey('viewport/grid/snap');
             if (snapping) gridSnap.addClass('suey-selected');
             else gridSnap.removeClass('suey-selected');
         })

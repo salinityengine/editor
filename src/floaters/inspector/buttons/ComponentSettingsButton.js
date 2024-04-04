@@ -66,12 +66,12 @@ class ComponentSettingsButton extends SUEY.Button {
                 if (direction === 'up') {
                     if (positionIndex > 0) {
                         SALT.System.swapArrayItems(entity.components, positions[positionIndex], positions[positionIndex - 1]);
-                        Signals.dispatch('inspectorBuild', 'rebuild');
+                        Signals.dispatch('inspectorRefresh');
                     }
                 } else { /* if (direction === 'down') { */
                     if (positionIndex < positions.length - 1) {
                         SALT.System.swapArrayItems(entity.components, positions[positionIndex], positions[positionIndex + 1]);
-                        Signals.dispatch('inspectorBuild', 'rebuild');
+                        Signals.dispatch('inspectorRefresh');
                     }
                 }
             }

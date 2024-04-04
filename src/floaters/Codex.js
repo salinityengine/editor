@@ -45,20 +45,20 @@ class Codex extends SUEY.Floater {
 
         // 'Script'
         const scriptIcon = `${FOLDER_TYPES}asset/script.svg`;
-        const addScriptMenuItem = new SUEY.MenuItem(Language.getKey('assets/types/script'), scriptIcon);
+        const addScriptMenuItem = new SUEY.MenuItem('Script', scriptIcon);
         addScriptMenuItem.onSelect(() => {
             const script = new SALT.Script();
-            script.name = `${Language.getKey('assets/types/script')}`;
+            script.name = 'Script';
             editor.execute(new AddAssetCommand(script));
         });
         assetMenu.add(addScriptMenuItem);
 
         // 'Variables'
         const variableIcon = `${FOLDER_TYPES}asset/script.svg`;
-        const addVariableMenuItem = new SUEY.MenuItem(Language.getKey('assets/types/script/variables'), variableIcon);
+        const addVariableMenuItem = new SUEY.MenuItem('Variables', variableIcon);
         addVariableMenuItem.onSelect(() => {
             const script = new SALT.Script(SALT.SCRIPT_FORMAT.JAVASCRIPT, true /* variables? */);
-            script.name = `${Language.getKey('assets/types/script/variables')}`;
+            script.name = 'Variables';
             editor.execute(new AddAssetCommand(script));
         });
         assetMenu.add(addVariableMenuItem);
@@ -81,7 +81,7 @@ class Codex extends SUEY.Floater {
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
         const searchIcon = new SUEY.ShadowBox(`${FOLDER_MENU}search.svg`).addClass('salt-search-icon');
         const searchBox = new SUEY.TextBox('').addClass('salt-search-box');
-        searchBox.dom.placeholder = Language.getKey('explorer/search');
+        searchBox.dom.placeholder = Language.getKey('gui/search/box');
         searchBox.setValue(this.getSearchTerm());
         searchBox.on('input', () => {
             self.setSearchTerm(searchBox.getValue());

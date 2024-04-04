@@ -65,8 +65,8 @@ class CameraProperties extends SUEY.Div {
         emptyBox.add(outlineBox);
 
         function resizeOutLine() {
-            const screenWidth = parseFloat(Config.getKey('renderer/screen/width'));
-            const screenHeight = parseFloat(Config.getKey('renderer/screen/height'));
+            const screenWidth = parseFloat(Config.getKey('player/screen/width'));
+            const screenHeight = parseFloat(Config.getKey('player/screen/height'));
             const aspect = screenHeight / screenWidth;
 
             let x = 0, y = 0;

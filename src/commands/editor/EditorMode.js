@@ -11,7 +11,7 @@ class EditorModeCommand extends Command {
         this.name = 'Change Editor Mode';
 
         this.newMode = mode;
-        this.oldMode = Config.getKey('settings/editorMode');
+        this.oldMode = Config.getKey('editor/mode');
     }
 
     execute() {

@@ -16,6 +16,8 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class ViewUI extends AbstractView {
 
+    viewportMode() { return EDITOR_MODES.UI_EDITOR; }
+
     floaterFamily() {
         const floaters = [
             'assets',
@@ -25,10 +27,6 @@ class ViewUI extends AbstractView {
             'shaper',
         ];
         return [ ...super.floaterFamily(), ...floaters ];
-    }
-
-    viewportMode() {
-        return EDITOR_MODES.UI_EDITOR;
     }
 
     constructor() {
@@ -47,33 +45,6 @@ class ViewUI extends AbstractView {
         this.mouseDownButton = -1;                              // tracks button on last mouse down
         this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
-    }
-
-    /******************** CLIPBOARD / EDIT ********************/
-
-    cut() {
-        // SceneUtils.deleteSelection('Cut' /* commandName */);
-    }
-
-    paste() {
-        // SceneUtils.duplicateSelection(null, editor.clipboard.items, true /* force copy */, 'Paste');
-    }
-
-    duplicate(key) {
-        // SceneUtils.duplicateSelection(key);
-    }
-
-    delete() {
-        // SceneUtils.deleteSelection();
-    }
-
-    selectAll() {
-        // const activeEntities = this.world.activeStage().getEntities(false /* includeStages */);
-        // editor.execute(new SelectCommand(activeEntities, editor.selected));
-    }
-
-    selectNone() {
-        editor.execute(new SelectCommand([], editor.selected));
     }
 
 }

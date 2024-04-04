@@ -32,7 +32,7 @@ class Library extends SUEY.Titled {
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
         const searchIcon = new SUEY.ShadowBox(`${FOLDER_MENU}search.svg`).addClass('salt-search-icon');
         const searchBox = new SUEY.TextBox('').addClass('salt-search-box');
-        searchBox.dom.placeholder = Language.getKey('explorer/search');
+        searchBox.dom.placeholder = Language.getKey('gui/search/box');
         searchBox.setValue(this.getSearchTerm());
         searchBox.on('input', () => {
             self.setSearchTerm(searchBox.getValue());

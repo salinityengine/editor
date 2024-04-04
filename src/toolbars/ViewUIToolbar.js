@@ -94,8 +94,8 @@ class ViewUIToolbar {
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
 
-        reset.onClick(() => Signals.dispatch('cameraReset'));
-        focus.onClick(() => Signals.dispatch('cameraFocus'));
+        reset.onClick(() => viewui.cameraReset());
+        focus.onClick(() => viewui.cameraFocus());
 
         let _lastTooltip = '';
 

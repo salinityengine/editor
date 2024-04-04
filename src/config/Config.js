@@ -1,9 +1,10 @@
 import { THEMES } from 'gui';
 
 const DEFAULT_SETTINGS = {
+
     'promode':                                  false,              // Enhanced menu and inspector
 
-    /***** FLOATERS */
+    /***** Floating Panels */
 
     'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '18em', size2: '10em' },
     'floater/initial/codex':                    { init: 'left',     side: 'left',       size: '18em' },
@@ -14,86 +15,68 @@ const DEFAULT_SETTINGS = {
     'floater/initial/project':                  { init: 'right',    side: 'right',      size: '22em' },
     'floater/initial/settings':                 { init: 'right',    side: 'right',      size: '22em' },
 
-    /***** EDITOR *****/
+    /***** Editor *****/
 
-    'settings/editorMode':                      'edit2d',           // Editor mode
-    'settings/language':                        'en',               // Current editor labeling language (Language.js)
+    'editor/mode':                              'edit2d',           // Editor mode
+    'editor/language':                          'en',               // Gui interface language (Language.js)
 
-    'scheme/iconColor':                         THEMES.CLASSIC,     // Color scheme icon color
+    'scheme/color':                             THEMES.CLASSIC,     // Color scheme icon color
     'scheme/background':                        0,                  // Color scheme background
-    'scheme/backgroundTint':                    0.0,                // Color scheme tint percentage
-    'scheme/backgroundSaturation':              0.0,                // Color scheme saturation
+    'scheme/tint':                              0.0,                // Color scheme tint percentage
+    'scheme/saturation':                        0.0,                // Color scheme saturation
     'scheme/fontSize':                          '14px',             // Font / Gui size, originally 14px
-    'scheme/panelTransparency':                 0.85,               // Panel transparency
+    'scheme/transparency':                      0.85,               // Panel transparency
 
-    /***** RENDERER *****/
+    /***** Game Player *****/
 
-    'renderer/antialias':                       false,              // Anti aliasing on/off in the editor
+    'player/screen/name':                       'Default',          // Target output name
+    'player/screen/width':                      1000,               // Target output width
+    'player/screen/height':                     500,                // Target output height
+    'player/screen/pixelRatio':                 1,                  // Target output pixel ratio
 
-    'renderer/screen/name':                     'Default',          // Target output name
-    'renderer/screen/width':                    1000,               // Target output width
-    'renderer/screen/height':                   500,                // Target output height
-    'renderer/screen/pixelRatio':               1,                  // Target output pixel ratio
+    /***** Viewport */
 
-    /***** COMMON EDITOR */
+    'viewport/mouse/mode':                      'select',           // Current state of Viewport mouse mode
+    'viewport/controls/mode':                   'none',             // Current state of TransformControls mode
+    'viewport/focus/zoom':                      true,               // Zoom to selection on focus?
+    'viewport/transform/aspectLock':            true,               // Aspect ratio locked in 'scale' row
 
-    'scene/grid/snap':                          true,               // Use grid ON / OFF
+    'viewport/render/origin':                   true,               // Show origin cross?
+    'viewport/render/bounds':                   false,              // Show scene boundaries?
+    'viewport/render/colliders':                false,              // Show physics colliders?
+    'viewport/render/joints':                   false,              // Show physics joints?
 
-    /***** SCENE 2D EDITOR *****/
+    'viewport/grid/snap':                       true,               // Use grid ON / OFF
 
-    'scene2d/grid/show':                        true,               // Show grid in Scene Editor 2D?
-    'scene2d/grid/sizeX':                       10,                 // Grid size X
-    'scene2d/grid/sizeY':                       10,                 // Grid size Y
+    /***** 2D Viewport *****/
 
-    /***** SCENE 3D EDITOR *****/
+    'view2d/grid/ontop':                        false,              // Show grid on top of objects?
+    'view2d/grid/show':                         true,               // Show grid in Scene Editor 2D?
+    'view2d/grid/sizeX':                        10,                 // Grid size X
+    'view2d/grid/sizeY':                        10,                 // Grid size Y
+    'view2d/grid/rotate':                       0,                  // Grid rotation, in degrees
 
-    'scene3d/grid/showCanvas':                  true,               // Show main canvas grid?
-    'scene3d/grid/showInfinite':                true,               // Show momentary infinite grid when dragging?
-    'scene3d/grid/canvasMultiplier':            10,                 // Major size multiplier for checkerboard grid
-    'scene3d/grid/translateSize':               0.10,               // Grid size for translate, rect tools
-    'scene3d/grid/rotateSize':                  15.0,               // Rotation snap in angle degrees
-    'scene3d/grid/scaleSize':                   0.1,                // Scale snap in percentange (i.e. 0.1 = 10%)
+    /***** 3D Viewport *****/
 
-    'paint/color':                              0xff0000,           // Brush color
-    'paint/size':                               0.1,                // Brush size
+    'view3d/render/mode':                       'standard',         // Render mode
 
-    'snap/tolerance':                           0.3,                // Snap if within distance
-    'snap/offset':                              0,                  // Offset object by this additional distance
-    'snap/upVector':                            'y',                // Up Vector
+    'view3d/camera/mode':                       'perspective',      // Viewport camera mode
+    'view3d/camera/locked':                     false,              // Viewport camera locked?
 
-    /***** SCENE UI EDITOR */
+    'view3d/select/allModes':                   true,               // Allow selection in all mouse modes?
+    'view3d/select/showHelpers':                true,               // Show wireframe helpers (lights, cam, etc)?
+    'view3d/select/showWireframe':              false,              // Show wireframe of selected objects?
+    'view3d/select/xrayDrag':                   true,               // Show object start position as xray during drag?
+
+    /***** Ui Editor */
 
 
-    /***** WORLD GRAPH *****/
+    /***** World Graph *****/
 
     'world/curve':                              'curve',            // Line type
     'world/grid/style':                         'lines',            // Grid type
 
-    /***** UNCATORIGIZED *****/
-
-    'scene/viewport/mode':                      'select',           // Current state of Viewport.mouseMode
-    'scene/controls/mode':                      'none',             // Current state of TransformControls.mode
-    'scene/focus/zoom':                         true,               // Zoom to selection on focus?
-
-    'scene/transform/aspectLock':               true,               // Aspect ratio locked in 'scale' row
-
-    'scene/camera/mode':                        'perspective',      // Viewport camera mode
-    'scene/camera/locked':                      false,              // Viewport camera locked?
-
-    'scene/gizmo':                              'SPHERE',           // Gizmo type to display
-
-    'scene/render/mode':                        'standard',         // Render mode
-    'scene/render/bounds':                      false,              // Show scene boundaries?
-    'scene/render/colliders':                   false,              // Show physics colliders?
-    'scene/render/joints':                      false,              // Show physics joints?
-    'scene/render/origin':                      true,               // Show origin cross?
-
-    'scene/select/allModes':                    true,               // Allow selection in all mouse modes?
-    'scene/select/showHelpers':                 true,               // Show wireframe helpers (lights, cam, etc)?
-    'scene/select/showWireframe':               false,              // Show wireframe of selected objects?
-    'scene/select/xrayDrag':                    true,               // Show object start position as xray during drag?
-
-    /***** SHORTCUT KEYS *****/
+    /***** Keyboard Shortcuts *****/
 
     'shortcuts/select':                         'F1',               // Shortcut Key: Mouse Mode - 'select'
     'shortcuts/look':                           'F2',               // Shortcut Key: Mouse Mode - 'look'
@@ -120,9 +103,9 @@ const DEFAULT_SETTINGS = {
 class Config {
 
     static clear() {
-        const mode = Config.getKey('settings/editorMode');
+        const mode = Config.getKey('editor/mode');
         localStorage.clear();
-        if (mode) Config.setKey('settings/editorMode', mode); /* preserve editor mode */
+        if (mode) Config.setKey('editor/mode', mode); /* preserve editor mode */
     }
 
     static getKey(key) {

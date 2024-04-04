@@ -62,11 +62,11 @@ class Assets extends SUEY.Titled {
 
         this.blocks = {};
 
-        this.blocks['geometry'] = new AssetPanel({ type: 'geometry', title: Language.getKey('assets/types/geometry'), icon: `${FOLDER_FLOATERS}asset/geometry.svg` });
-        this.blocks['material'] = new AssetPanel({ type: 'material', title: Language.getKey('assets/types/material'), icon: `${FOLDER_FLOATERS}asset/material.svg` });
-        this.blocks['palette'] = new AssetPanel({ type: 'palette', title: Language.getKey('assets/types/palette'), icon: `${FOLDER_FLOATERS}asset/palette.svg` });
-        this.blocks['shape'] = new AssetPanel({ type: 'shape', title: Language.getKey('assets/types/shape'), icon: `${FOLDER_FLOATERS}asset/shape.svg` });
-        this.blocks['texture'] = new AssetPanel({ type: 'texture', title: Language.getKey('assets/types/texture'), icon: `${FOLDER_FLOATERS}asset/texture.svg` });
+        this.blocks['geometry'] = new AssetPanel({ type: 'geometry', title: 'Geometry', icon: `${FOLDER_FLOATERS}asset/geometry.svg` });
+        this.blocks['material'] = new AssetPanel({ type: 'material', title: 'Material', icon: `${FOLDER_FLOATERS}asset/material.svg` });
+        this.blocks['palette'] = new AssetPanel({ type: 'palette', title: 'Palette', icon: `${FOLDER_FLOATERS}asset/palette.svg` });
+        this.blocks['shape'] = new AssetPanel({ type: 'shape', title: 'Shape', icon: `${FOLDER_FLOATERS}asset/shape.svg` });
+        this.blocks['texture'] = new AssetPanel({ type: 'texture', title: 'Texture', icon: `${FOLDER_FLOATERS}asset/texture.svg` });
 
         // Add Panels
         for (const type in this.blocks) {
@@ -78,7 +78,7 @@ class Assets extends SUEY.Titled {
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
         const searchIcon = new SUEY.ShadowBox(`${FOLDER_MENU}search.svg`).addClass('salt-search-icon');
         const searchBox = new SUEY.TextBox('').addClass('salt-search-box');
-        searchBox.dom.placeholder = Language.getKey('explorer/search');
+        searchBox.dom.placeholder = Language.getKey('gui/search/box');
         searchBox.setValue(this.getSearchTerm());
         searchBox.on('input', () => {
             self.setSearchTerm(searchBox.getValue());

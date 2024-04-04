@@ -21,15 +21,13 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class Worlds extends AbstractView {
 
+    viewportMode() { return EDITOR_MODES.WORLD_GRAPH; }
+
     floaterFamily() {
         const floaters = [
             // 'inspector',
         ];
         return [ ...super.floaterFamily(), ...floaters ];
-    }
-
-    viewportMode() {
-        return EDITOR_MODES.WORLD_GRAPH;
     }
 
     constructor() {
@@ -42,7 +40,7 @@ class Worlds extends AbstractView {
         /********** GRAPH */
 
         const graph = new SUEY.Graph({
-            snapToGrid: Config.getKey('scene/grid/snap'),
+            snapToGrid: Config.getKey('viewport/grid/snap'),
             curveType: Config.getKey('world/curve')
         }).addClass('salt-world-graph');
         this.graph = graph;
@@ -175,15 +173,9 @@ class Worlds extends AbstractView {
 
         /********** SIGNALS */
 
-        // Camera Reset
-        Signals.connect(this, 'cameraReset', function() {
-            if (self.isHidden()) return;
-            graph.centerView(true /* resetZoom */, true /* animate */);
-        });
-
         // Grid Changed
         Signals.connect(this, 'gridChanged', function() {
-            graph.snapToGrid = Config.getKey('scene/grid/snap');
+            graph.snapToGrid = Config.getKey('viewport/grid/snap');
             if (self.isHidden()) return;
             // Update while dragging
             const active = document.activeElement;
@@ -364,6 +356,16 @@ class Worlds extends AbstractView {
 
     selectNone() {
         editor.execute(new SelectCommand([], this.selectedWorlds()));
+    }
+
+    /******************** VIEW ********************/
+
+    cameraFocus() {
+        this.graph.zoomTo();
+    }
+
+    cameraReset() {
+        this.graph.centerView(true /* resetZoom */, true /* animate */);
     }
 
 }

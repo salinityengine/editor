@@ -16,6 +16,8 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class View3D extends AbstractView {
 
+    viewportMode() { return EDITOR_MODES.SCENE_EDITOR_3D; }
+
     floaterFamily() {
         const floaters = [
             'assets',
@@ -27,10 +29,6 @@ class View3D extends AbstractView {
             'shaper',
         ];
         return [ ...super.floaterFamily(), ...floaters ];
-    }
-
-    viewportMode() {
-        return EDITOR_MODES.SCENE_EDITOR_3D;
     }
 
     constructor() {
@@ -87,36 +85,8 @@ class View3D extends AbstractView {
     /******************** RESIZE ********************/
 
     resize() {
-        // Store dimensions
         this.width = Math.max(2, this.getWidth() * window.devicePixelRatio);
         this.height = Math.max(2, this.getHeight() * window.devicePixelRatio);
-    }
-
-    /******************** CLIPBOARD / EDIT ********************/
-
-    cut() {
-        // SceneUtils.deleteSelection('Cut' /* commandName */);
-    }
-
-    paste() {
-        // SceneUtils.duplicateSelection(null, editor.clipboard.items, true /* force copy */, 'Paste');
-    }
-
-    duplicate(key) {
-        // SceneUtils.duplicateSelection(key);
-    }
-
-    delete() {
-        // SceneUtils.deleteSelection();
-    }
-
-    selectAll() {
-        // const activeEntities = this.world.activeStage().getEntities(false /* includeStages */);
-        // editor.execute(new SelectCommand(activeEntities, editor.selected));
-    }
-
-    selectNone() {
-        editor.execute(new SelectCommand([], editor.selected));
     }
 
 }

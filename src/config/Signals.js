@@ -33,9 +33,6 @@ const SIGNAL_NAMES = [
     'transformModeChanged',     // (mode, temp?)        FUNCTION    Change transform mode
 
     'cameraChanged',            // -                    ALERT       Viewport camera was changed
-    'cameraFocus',              // -                    FUNCTION    Focus camera
-    'cameraReset',              // -                    FUNCTION    Reset camera
-
     'gridChanged',              // -                    ALERT       Change to grid settings (shown, snap, etc.)
 
     'preTransform',             // -                    ALERT       We're about to change some Entity transforms
@@ -50,7 +47,9 @@ const SIGNAL_NAMES = [
     /***** FLOATER **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
     // Inspector
-    'inspectorBuild',           // (item)               FUNCTION    Build with object, string, 'rebuild'
+    'inspectorBuild',           // (item)               FUNCTION    Build with object or array of objects
+    'inspectorClear',           // -                    FUNCTION    Clear the Inspector
+    'inspectorRefresh',         // -                    FUNCTION    Rebuild Inspector with current object(s)
     'inspectorChanged',         // -                    ALERT       Inspector was just built / rebuilt
 
     // Player

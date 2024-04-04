@@ -41,13 +41,15 @@ class Inspector extends SUEY.Floater {
             // Process new 'buildFrom' item
             if (buildFrom !== 'rebuild') {
 
+                // TEMP: Only process first item
+                if (Array.isArray(_item)) {
+                    _item = _item[0];
+                }
+
                 // Don't rebuild an entity that is already displayed
                 if (buildFrom && _item && _item.isEntity && buildFrom.isEntity && _item.uuid === buildFrom.uuid) {
                     return;
                 }
-
-                // Don't show "Built In" prefabs
-                if (buildFrom && buildFrom.isBuiltIn) buildFrom = undefined;
 
                 // Save Current Item
                 _item = buildFrom;
@@ -57,6 +59,7 @@ class Inspector extends SUEY.Floater {
             self.clearContents();
             self.isEmpty = false;
 
+            // Process Item
             const blocks = [];
             let titleName = _item;
 
@@ -128,8 +131,26 @@ class Inspector extends SUEY.Floater {
             Signals.dispatch('inspectorChanged');
         }
 
-        /** Rebuilds on 'new selection' */
-        function rebuild() {
+        /***** SIGNALS *****/
+
+        Signals.connect(this, 'inspectorBuild', function(from) {
+            if (self.dock) self.dock.selectTab(self.id);
+            build(from);
+        });
+
+        Signals.connect(this, 'inspectorClear', function() {
+            build(undefined);
+        });
+
+        Signals.connect(this, 'inspectorRefresh', function() {
+            build('rebuild');
+        });
+
+        Signals.connect(this, 'promodeChanged', function() {
+            build('rebuild');
+        });
+
+        Signals.connect(this, 'selectionChanged', function () {
             // // 'viewport' Mode?
             // if (editor.mode() === EDITOR_MODES.SCENE_EDITOR_3D) {
             //     // Don't rebuild inspector during rubberband mode
@@ -141,21 +162,8 @@ class Inspector extends SUEY.Floater {
 
             // Rebuild with selected entity
             const entity = (editor.selected.length === 0) ? undefined : editor.selected[0];
-            Signals.dispatch('inspectorBuild', entity);
-        }
-
-        /***** SIGNALS *****/
-
-        Signals.connect(this, 'inspectorBuild', function(from) {
-            if (self.dock) self.dock.selectTab(self.id);
-            build(from);
+            build(entity);
         });
-
-        Signals.connect(this, 'promodeChanged', function() {
-            build('rebuild');
-        });
-
-        Signals.connect(this, 'selectionChanged', rebuild);
 
         /***** GETTERS *****/
 

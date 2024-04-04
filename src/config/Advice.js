@@ -113,7 +113,7 @@ class Advice {
     }
 
     static getKey(key) {
-        let language = Config.getKey('settings/language');
+        let language = Config.getKey('editor/language');
         if (!(language in _values)) language = 'en';
         const advice = _values[language][key] ?? {};
         return (typeof advice === 'object') ? advice : {};

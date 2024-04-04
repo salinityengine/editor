@@ -113,17 +113,17 @@ class Editor extends SUEY.Div {
             // editor.stage = editor.world.activeStage();
 
             if (self.history) self.history.clear();     // clear history
-            Signals.dispatch('inspectorBuild');         // clear inspector
+            Signals.dispatch('inspectorClear');         // clear inspector
             Signals.dispatch('sceneGraphChanged');      // rebuild outliner
-            Signals.dispatch('cameraReset');            // reset camera
+            self.viewport()?.cameraReset();             // reset camera
         });
 
         // Settings Refreshed
         Signals.connect(this, 'settingsRefreshed', function() {
             Signals.dispatch('gridChanged');
-            Signals.dispatch('mouseModeChanged', Config.getKey('scene/viewport/mode'));
-            Signals.dispatch('transformModeChanged', Config.getKey('scene/controls/mode'));
-            Signals.dispatch('inspectorBuild', 'rebuild');
+            Signals.dispatch('mouseModeChanged', Config.getKey('viewport/mouse/mode'));
+            Signals.dispatch('transformModeChanged', Config.getKey('viewport/controls/mode'));
+            Signals.dispatch('inspectorRefresh');
         });
 
         // Entity Changed
@@ -141,7 +141,7 @@ class Editor extends SUEY.Div {
 
         /********** INIT */
 
-        this.setMode(Config.getKey('settings/editorMode'));                     // set editor mode
+        this.setMode(Config.getKey('editor/mode'));                             // set editor mode
         this.refreshSettings();                                                 // also selects none
         setTimeout(() => self.removeClass('salt-disable-animations'), 1000);    // allow button animations
 
@@ -180,7 +180,7 @@ class Editor extends SUEY.Div {
                 viewport.deactivate();
             }
         }
-        Config.setKey('settings/editorMode', mode);
+        Config.setKey('editor/mode', mode);
 
         // Load Floaters
         Layout.load(this.docker, newViewport);
@@ -190,7 +190,7 @@ class Editor extends SUEY.Div {
     }
 
     mode() {
-        return Config.getKey('settings/editorMode');
+        return Config.getKey('editor/mode');
     }
 
     viewport() {
@@ -269,15 +269,13 @@ class Editor extends SUEY.Div {
         // New selection same as current selection? Refresh Inspector (but don't refresh view transformGroup)
         if (SALT.EntityUtils.compareArrayOfEntities(this.selected, filtered)) {
             if (this.selected.length > 0) {
-                Signals.dispatch('inspectorBuild', this.selected[0]);
+                Signals.dispatch('inspectorBuild', this.selected);
                 return;
             }
         }
 
         // Update selection array
         this.selected = [ ...filtered ];
-
-        console.log('Editor.selectEntities', this.selected.length);
 
         // Selection change signal
         Signals.dispatch('selectionChanged');
@@ -292,13 +290,13 @@ class Editor extends SUEY.Div {
 
         // Color Scheme
         this.setSchemeBackground(Config.getKey('scheme/background'));
-        const schemeColor = Config.getKey('scheme/iconColor');
-        const schemeTint = Config.getKey('scheme/backgroundTint');
-        const schemeSaturation = Config.getKey('scheme/backgroundSaturation');
+        const schemeColor = Config.getKey('scheme/color');
+        const schemeTint = Config.getKey('scheme/tint');
+        const schemeSaturation = Config.getKey('scheme/saturation');
         this.setSchemeColor(schemeColor, schemeTint, schemeSaturation);
 
         // Transparency
-        const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/panelTransparency')), 1.0), 0.0);
+        const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/transparency')), 1.0), 0.0);
         SUEY.Css.setVariable('--panel-transparency', panelAlpha);
 
         // Dispatch Refreshed Signal
@@ -340,9 +338,9 @@ class Editor extends SUEY.Div {
 
     setSchemeColor(color = SUEY.THEMES.CLASSIC, tint = 0.0, saturation = 0.0, updateSettings = true) {
         if (updateSettings) {
-            Config.setKey('scheme/iconColor', color);
-            Config.setKey('scheme/backgroundTint', tint);
-            Config.setKey('scheme/backgroundSaturation', saturation);
+            Config.setKey('scheme/color', color);
+            Config.setKey('scheme/tint', tint);
+            Config.setKey('scheme/saturation', saturation);
         }
         SUEY.ColorScheme.changeColor(color, tint, saturation);
         Signals.dispatch('schemeChanged');
@@ -534,18 +532,18 @@ function editorKeyDown(editor, event) {
 
         // Snap to Grid
         case 'g':
-            Config.setKey('scene/grid/snap', (!Config.getKey('scene/grid/snap')));
+            Config.setKey('viewport/grid/snap', (!Config.getKey('viewport/grid/snap')));
             Signals.dispatch('gridChanged');
             break;
 
         // Camera Focus on Object
         case Config.getKey('shortcuts/focus'):
-            Signals.dispatch('cameraFocus');
+            editor.viewport()?.cameraFocus();
             break;
 
         // Reset camera
         case 'r':
-            Signals.dispatch('cameraReset');
+            editor.viewport()?.cameraReset();
             break;
 
         // Play Game

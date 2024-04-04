@@ -8,48 +8,50 @@ const _values = {
 
         // Main Menu
         'menubar/file':                     'File',
-        'menubar/file/new':                 'New',
-        'menubar/file/import':              'Import',
-        'menubar/file/export/geometry':     'Export Geometry',
-        'menubar/file/export/object':       'Export Object',
-        'menubar/file/export/scene':        'Export Scene',
-        'menubar/file/publish':             'Publish',
-
         'menubar/edit':                     'Edit',
+        'menubar/window':                   'Window',
+        'menubar/help':                     'Help',
+
+        'menubar/file/new':                 'New',
+        'menubar/file/open':                'Open',
+        'menubar/file/save':                'Save',
+        'menubar/file/import':              'Import',
+        'menubar/file/export':              'Export',
+        'menubar/file/publish':             'Publish',
+        'menubar/file/close':               'Exit',
+
         'menubar/edit/undo':                'Undo',
         'menubar/edit/redo':                'Redo',
+        'menubar/edit/cut':                 'Cut',
+        'menubar/edit/copy':                'Copy',
+        'menubar/edit/paste':               'Paste',
+        'menubar/edit/duplicate':           'Duplicate',
+        'menubar/edit/delete':              'Delete',
+        'menubar/edit/all':                 'Select All',
+        'menubar/edit/none':                'Select None',
+
+        'menubar/window/hide':              'Collapse All Tabs',
+        'menubar/window/show':              'Expand All Tabs',
+        'menubar/window/fullscreen':        'Toggle Fullscreen',
+
+        'menubar/help/samples':             'Sample Projects',
+        'menubar/help/manual':              'Manual',
+        'menubar/help/faq':                 'FAQ',
+        'menubar/help/tutorials':           'Tutorials',
+        'menubar/help/contact':             'Contact',
+        'menubar/help/bug':                 'Bug Report',
+        'menubar/help/github':              'GitHub',
+        'menubar/help/about':               'About',
 
         // Settings
-        'inspector/settings/general':       'General',
-        'inspector/settings/language':      'Language',
-        'inspector/settings/style':         'Style',
-        'inspector/settings/reset':         'Reset Settings',
-
-        'inspector/view/title':             'View',
-        'inspector/view/camera':            'Camera',
-        'inspector/view/editorCamera':      'Editor View',
-        'inspector/view/reset':             'Reset Camera',
-        'inspector/view/lock':              'Lock Rotation',
-        'inspector/view/zoom':              'Zoom on Focus',
-        'inspector/view/render':            'Render',
-        'inspector/view/origin':            'Draw Origin',
-        'inspector/view/drawMode':          'Draw Mode',
-
-        'inspector/grid/title':             'Grid',
-        'inspector/grid/snap':              'Snap to Grid',
-        'inspector/grid/style':             'Style',
-        'inspector/grid/size':              'Grid Size',
-        'inspector/grid/minisize':          'Mini Grid Size',
-        'inspector/grid/multiplier':        'Grid Multiplier',
-        'inspector/grid/visibility':        'Visibility',
-        'inspector/grid/showCanvas':        'Show Grid',
-        'inspector/grid/showInfinite':      'Show Mini Grid',
-
-        'inspector/project/app':            'App',
-        'inspector/project/name':           'Name',
-
-        'inspector/graph/line':             'Line Type',
-        'inspector/graph/grid':             'Grid Style',
+        'floater/settings/general':         'General',
+        'floater/settings/language':        'Language',
+        'floater/settings/promode':         'Pro Mode',
+        'floater/settings/theme':           'Theme',
+        'floater/settings/color':           'Color',
+        'floater/settings/textSize':        'Text Size',
+        'floater/settings/opacity':         'Opacity',
+        'floater/settings/reset':           'Reset',
 
         // Entity
         'inspector/entity/name':            'Name',
@@ -58,30 +60,15 @@ const _values = {
         'inspector/entity/scale':           'Scale',
         'inspector/entity/size':            'Size',
 
-        'inspector/material/color':         'Color',
-        'inspector/material/opacity':       'Opacity',
-
-        // Explorer
-        'explorer/search':                  'Search',
+        // Gui
+        'gui/search/box':                   'Search',
 
         // Assets
         'assets/delete':                    'Are you sure you want to delete the selected',
         'assets/empty':                     'Empty',
-        'assets/types/geometry':            'Geometry',
-        'assets/types/material':            'Material',
-        'assets/types/palette':             'Palette',
-        'assets/types/script':              'Script',
-        'assets/types/script/variables':    'Variables',
-        'assets/types/shape':               'Shape',
-        'assets/types/texture':             'Texture',
 
         // Advisor
         'advisor/noInfo':                   'No description provided.',
-    },
-
-    /********** FRENCH **********/
-
-    fr: {
 
     },
 
@@ -90,7 +77,7 @@ const _values = {
 class Language {
 
     static getKey(key) {
-        const language = Config.getKey('settings/language');
+        const language = Config.getKey('editor/language');
         if (_values[language] && _values[language][key]) return _values[language][key];
         if (_values['en'] && _values['en'][key]) return _values['en'][key];
         return '???';

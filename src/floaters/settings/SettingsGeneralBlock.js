@@ -18,7 +18,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings/general.svg`; // color: '#C04145'
-        super({ text: Language.getKey('inspector/settings/general'), icon, arrow: 'right', border: true });
+        super({ text: Language.getKey('floater/settings/general'), icon, arrow: 'right', border: true });
         Advice.attach(this.titleDiv, 'settings');
 
         // Property Box
@@ -37,10 +37,10 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         languageDropDown.overflowMenu = SUEY.OVERFLOW.LEFT;
         languageDropDown.setOptions(languageOptions);
         languageDropDown.on('change', () => {
-            Config.setKey('settings/language', languageDropDown.getValue());
+            Config.setKey('editor/language', languageDropDown.getValue());
             editor.refreshSettings();
         });
-        const languageRow = props.addRow(Language.getKey('inspector/settings/language'), languageDropDown);
+        const languageRow = props.addRow(Language.getKey('floater/settings/language'), languageDropDown);
         Advice.attach(languageRow, 'settings/general/language');
 
         // ProMode
@@ -56,13 +56,10 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
             Config.setKey('promode', (!Config.getKey('promode')));
             Signals.dispatch('promodeChanged');
         });
-        const promodeRow = props.addRow('Pro Mode', promodeBox);
+        const promodeRow = props.addRow(Language.getKey('floater/settings/promode'), promodeBox);
         Advice.attach(promodeRow, 'settings/general/promode');
 
         /***** STYLE *****/
-
-        // const styleHeader = props.addHeader(Language.getKey('inspector/settings/style'), `${FOLDER_FLOATERS}settings/general/style.svg`);
-        // Advice.attach(styleHeader, 'settings/style');
 
         // THEME //
 
@@ -90,7 +87,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
 
         // Add Theme Menu, Button
         themeButton.attachMenu(themeMenu, true /* popupStyle */);
-        const themeRow = props.addRow('Theme', themeButton);
+        const themeRow = props.addRow(Language.getKey('floater/settings/theme'), themeButton);
         Advice.attach(themeRow, 'settings/style/theme');
 
         // COLOR //
@@ -136,7 +133,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
 
         // Add Color Menu and Button
         colorButton.attachMenu(colorMenu, true /* popupStyle */);
-        const colorRow = props.addRow('Color', colorButton);
+        const colorRow = props.addRow(Language.getKey('floater/settings/color'), colorButton);
         Advice.attach(colorRow, 'settings/style/color');
 
         // TEXT SIZE //
@@ -170,7 +167,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         largerButton.setAttribute('tooltip', Config.tooltip(largerLabel, largerShortcut));
 
         // Font Button Row
-        const textSizeRow = props.addRow('Text Size', smallerButton, largerButton);
+        const textSizeRow = props.addRow(Language.getKey('floater/settings/textSize'), smallerButton, largerButton);
         Advice.attach(textSizeRow, 'settings/style/textsize');
 
         // OPACITY //
@@ -178,11 +175,11 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         const alphaSlider = new SUEY.Slider();
         alphaSlider.on('input', () => {
             const panelAlpha = SALT.Maths.clamp(parseFloat(alphaSlider.getValue()), 0.0, 1.0);
-            Config.setKey('scheme/panelTransparency', panelAlpha);
+            Config.setKey('scheme/transparency', panelAlpha);
             SUEY.Css.setVariable('--panel-transparency', panelAlpha);
         });
         alphaSlider.setRange(0, 1.0).setStep('any').setPrecision(2);
-        const opacityRow = props.addRow('Opacity', alphaSlider);
+        const opacityRow = props.addRow(Language.getKey('floater/settings/opacity'), alphaSlider);
         Advice.attach(opacityRow, 'settings/style/opacity');
 
         /***** RESET *****/
@@ -194,7 +191,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
                 editor.refreshSettings();
             }
         });
-        const resetLabel = Language.getKey('inspector/settings/reset');
+        const resetLabel = Language.getKey('floater/settings/reset');
         const resetShortcut = Config.getKey('shortcuts/reset');
         resetButton.add(new SUEY.ShadowBox(`${FOLDER_FLOATERS}settings/general/reset.svg`));
         resetButton.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
@@ -204,7 +201,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         /***** UPDATE *****/
 
         function updateUI() {
-            languageDropDown.setValue(Config.getKey('settings/language'));
+            languageDropDown.setValue(Config.getKey('editor/language'));
             promodeBox.setValue(Config.getKey('promode'));
 
             themeBackground.setStyle('backgroundColor', 'rgb(var(--background-dark))');
@@ -214,16 +211,16 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
                 case SUEY.BACKGROUNDS.LIGHT: themeButton.setAttribute('tooltip', 'Light'); break;
             }
 
-            let color = parseInt(Config.getKey('scheme/iconColor'));
-            let saturation = parseFloat(Config.getKey('scheme/backgroundSaturation'));
+            let color = parseInt(Config.getKey('scheme/color'));
+            let saturation = parseFloat(Config.getKey('scheme/saturation'));
             let hexColor = _color.set(color).hslOffset(0, saturation, 0).hexString();
             colorBackground.setStyle('backgroundColor', hexColor);
             colorButton.setAttribute('tooltip', hexColor); // _color.cssString());
 
-            let panelAlpha = Config.getKey('scheme/panelTransparency');
+            let panelAlpha = Config.getKey('scheme/transparency');
             if (panelAlpha === undefined || panelAlpha === null) {
                 panelAlpha = 1.0;
-                Config.setKey('scheme/panelTransparency', panelAlpha);
+                Config.setKey('scheme/transparency', panelAlpha);
             }
             alphaSlider.setValue(panelAlpha);
         }

@@ -142,8 +142,8 @@ class View3DToolbar {
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
 
-        reset.onClick(() => Signals.dispatch('cameraReset'));
-        focus.onClick(() => Signals.dispatch('cameraFocus'));
+        reset.onClick(() => view3d.cameraReset());
+        focus.onClick(() => view3d.cameraFocus());
 
         let _lastTooltip = '';
 
@@ -233,20 +233,20 @@ class View3DToolbar {
         toggleMenu.addClass('salt-button-menu');
         // Boundary Toggle
         const boundaryIcon = `${FOLDER_MENU}toggle/boundary.svg`;
-        const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
-            const bounds = Config.getKey('scene/render/bounds');
+        const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'viewport/render/bounds', () => {
+            const bounds = Config.getKey('viewport/render/bounds');
             // SceneUtils.toggleBoundaryObjects(bounds, view3d.world.activeStage());
         });
         toggleMenu.add(boundaryItem);
         // Colliders Toggle
         const collidersIcon = `${FOLDER_MENU}toggle/colliders.svg`;
-        const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
+        const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'viewport/render/colliders', () => {
             SceneUtils.toggleColliders();
         });
         toggleMenu.add(collidersItem);
         // Joints Toggle
         const jointsIcon = `${FOLDER_MENU}toggle/joints.svg`;
-        const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
+        const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'viewport/render/joints');
         toggleMenu.add(jointsItem);
 
         // Attach Menu

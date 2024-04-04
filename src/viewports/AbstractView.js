@@ -12,6 +12,9 @@ import { Signals } from '../config/Signals.js';
 
 class AbstractView extends SUEY.Div {
 
+    /** Set from EDITOR_MODES */
+    viewportMode() { return 'abstract'; }
+
     /** Allowed floaters */
     floaterFamily() {
         const floaters = [
@@ -24,11 +27,6 @@ class AbstractView extends SUEY.Div {
         return floaters;
     }
 
-    /** Viewport's EDITOR_MODES mode */
-    viewportMode() {
-        return 'abstract';
-    }
-
     constructor() {
         super();
         this.setClass('salt-viewport');
@@ -39,7 +37,7 @@ class AbstractView extends SUEY.Div {
         this.selected = [];                             // selection can differ from editor
     }
 
-    /******************** ACTIVATION********************/
+    /******************** ACTIVATION ********************/
 
     // These functions run when editor.setMode() is switched to/from a viewport
 
@@ -53,31 +51,43 @@ class AbstractView extends SUEY.Div {
 
     /******************** CLIPBOARD / EDIT ********************/
 
-    // These are menu/keyboard edit functions to be implemented in a viewport
-
     cut() {
-        // SceneUtils.deleteSelection('Cut' /* commandName */);
+        console.warn(`${this.constructor.name}.cut: Method must be reimplemented from AbstractView`);
     }
 
     paste() {
-        // SceneUtils.duplicateSelection(null, editor.clipboard.items, true /* force copy */, 'Paste');
+        console.warn(`${this.constructor.name}.paste: Method must be reimplemented from AbstractView`);
     }
 
     duplicate(key) {
-        // SceneUtils.duplicateSelection(key);
+        console.warn(`${this.constructor.name}.duplicate: Method must be reimplemented from AbstractView`);
     }
 
     delete() {
-        // SceneUtils.deleteSelection();
+        console.warn(`${this.constructor.name}.delete: Method must be reimplemented from AbstractView`);
     }
 
     selectAll() {
-        // const activeEntities = this.world.activeStage().getEntities(false /* includeStages */);
-        // editor.execute(new SelectCommand(activeEntities, editor.selected));
+        console.warn(`${this.constructor.name}.selectAll: Method must be reimplemented from AbstractView`);
     }
 
     selectNone() {
-        // editor.execute(new SelectCommand([], editor.selected));
+        console.warn(`${this.constructor.name}.selectNone: Method must be reimplemented from AbstractView`);
+    }
+
+    /******************** VIEW ********************/
+
+    cameraFocus() {
+        console.warn(`${this.constructor.name}.cameraFocus: Method must be reimplemented from AbstractView`);
+    }
+
+    cameraReset() {
+        console.warn(`${this.constructor.name}.cameraReset: Method must be reimplemented from AbstractView`);
+    }
+
+    gridSize() {
+        console.warn(`${this.constructor.name}.gridSize: Method must be reimplemented from AbstractView`);
+        return 0;
     }
 
 }

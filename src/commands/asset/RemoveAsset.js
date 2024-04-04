@@ -34,7 +34,7 @@ class RemoveAssetCommand extends Command {
             SALT.AssetManager.remove(this.asset, false /* dispose */);
             this.wasRemoved = true;
             Signals.dispatch('assetRemoved', this.assetType, this.asset);
-            Signals.dispatch('inspectorBuild');
+            Signals.dispatch('inspectorClear');
         }
     }
 
@@ -44,7 +44,7 @@ class RemoveAssetCommand extends Command {
             this.wasRemoved = false;
             Signals.dispatch('assetAdded', this.assetType, this.asset);
             Signals.dispatch('assetSelect', this.assetType, this.asset);
-            Signals.dispatch('inspectorBuild');
+            Signals.dispatch('inspectorClear');
         }
     }
 

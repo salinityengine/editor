@@ -39,7 +39,7 @@ class AddAssetCommand extends Command {
             this.wasAdded = true;
             Signals.dispatch('assetAdded', this.assetType, this.asset);
             Signals.dispatch('assetSelect', this.assetType, this.asset);
-            Signals.dispatch('inspectorBuild');
+            Signals.dispatch('inspectorClear');
         }
     }
 
@@ -48,7 +48,7 @@ class AddAssetCommand extends Command {
             SALT.AssetManager.remove(this.asset, false /* dispose */);
             this.wasAdded = false;
             Signals.dispatch('assetRemoved', this.assetType, this.asset);
-            Signals.dispatch('inspectorBuild');
+            Signals.dispatch('inspectorClear');
         }
     }
 

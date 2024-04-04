@@ -7,14 +7,13 @@ import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
 
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
-import { Language } from '../../config/Language.js';
 import { Signals } from '../../config/Signals.js';
 
 class ProjectAppBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/app.svg`; // color: '#773399'
-        super({ text: Language.getKey('inspector/project/app'), icon, arrow: 'right', border: true });
+        super({ text: 'App', icon, arrow: 'right', border: true });
         Advice.attach(this.titleDiv, 'project/app');
 
         // Property Box
@@ -27,7 +26,7 @@ class ProjectAppBlock extends ConfiguredShrinker {
         const projectName = new SUEY.TextBox().on('change', () => {
             editor.project.name = projectName.getValue();
         });
-        const nameRow = props.addRow(Language.getKey('inspector/project/name'), projectName);
+        const nameRow = props.addRow('Name', projectName);
         Advice.attach(nameRow, 'project/app/name');
 
         // Orientation

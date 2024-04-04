@@ -132,8 +132,8 @@ class View2DToolbar {
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
 
-        reset.onClick(() => Signals.dispatch('cameraReset'));
-        focus.onClick(() => Signals.dispatch('cameraFocus'));
+        reset.onClick(() => view2d.cameraReset());
+        focus.onClick(() => view2d.cameraFocus());
 
         let _lastTooltip = '';
 
@@ -289,20 +289,20 @@ class View2DToolbar {
 
         // Boundary Toggle
         const boundaryIcon = `${FOLDER_MENU}toggle/boundary.svg`;
-        const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'scene/render/bounds', () => {
-            const bounds = Config.getKey('scene/render/bounds');
+        const boundaryItem = new ToggleButton(boundaryIcon, 'Scene Bounds', 'viewport/render/bounds', () => {
+            const bounds = Config.getKey('viewport/render/bounds');
             // SceneUtils.toggleBoundaryObjects(bounds, view2d.world.activeStage());
         });
 
         // Colliders Toggle
         const collidersIcon = `${FOLDER_MENU}toggle/colliders.svg`;
-        const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'scene/render/colliders', () => {
+        const collidersItem = new ToggleButton(collidersIcon, 'Physics Colliders', 'viewport/render/colliders', () => {
             // SceneUtils.toggleColliders();
         });
 
         // Joints Toggle
         const jointsIcon = `${FOLDER_MENU}toggle/joints.svg`;
-        const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'scene/render/joints');
+        const jointsItem = new ToggleButton(jointsIcon, 'Physics Joints', 'viewport/render/joints');
 
         // Views Menu
         const viewsMenu = new SUEY.Menu();
@@ -330,14 +330,14 @@ class View2DToolbar {
         gridSnap.add(snapMagnet, snapAttract);
 
         gridSnap.onClick(() => {
-            const snapping = !Config.getKey('scene/grid/snap');
-            Config.setKey('scene/grid/snap', snapping);
+            const snapping = !Config.getKey('viewport/grid/snap');
+            Config.setKey('viewport/grid/snap', snapping);
             view2d.snapToGrid = snapping;
             Signals.dispatch('gridChanged');
         });
 
         Signals.connect(view2d, 'gridChanged', function() {
-            const snapping = Config.getKey('scene/grid/snap');
+            const snapping = Config.getKey('viewport/grid/snap');
             if (snapping) gridSnap.addClass('suey-selected');
             else gridSnap.removeClass('suey-selected');
         })

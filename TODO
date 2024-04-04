@@ -5,11 +5,6 @@
 Toolbar:
     - View2D Toolbar 'Grid' images
 
-Editor Skeleton:
-    - Go through Config
-    - Go through Language
-    - Turn 'functional' signals into editor methods
-
 View2D:
     Editor:
         - Build from Suey.Graph
@@ -33,6 +28,8 @@ Inspector:
         - Resizing a group of selected objects
 
 Floaters:
+    About:
+        - About box
     Advisor:
         - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
     !! Assets:
@@ -69,7 +66,8 @@ Editor:
         Import / Export:
     Help Menu:
         Tips: (show tips / hide tips)
-        Samples / Manual / FAQ / Tutorials / Contact / Bug Report:
+        Samples: Sample Projects floater?
+        Manual / FAQ / Tutorials / Contact / Bug Report:
         Keyboard Layout Map:
     Storage: Autosave / Browser Storage
         - https://github.com/mrdoob/three.js/blob/dev/editor/js/Storage.js

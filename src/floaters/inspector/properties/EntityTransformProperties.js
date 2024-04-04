@@ -69,10 +69,10 @@ class EntityTransformProperties extends SUEY.Div {
             entityScaleX.setValue(1);
             entityScaleY.setValue(1);
             entityScaleZ.setValue(1);
-            const beforeAspect = Config.getKey('scene/transform/aspectLock');
-            Config.setKey('scene/transform/aspectLock', false);
+            const beforeAspect = Config.getKey('viewport/transform/aspectLock');
+            Config.setKey('viewport/transform/aspectLock', false);
             update();
-            Config.setKey('scene/transform/aspectLock', beforeAspect);
+            Config.setKey('viewport/transform/aspectLock', beforeAspect);
         });
 
         transformMenu.add(
@@ -103,8 +103,8 @@ class EntityTransformProperties extends SUEY.Div {
         const showShadow = hasMesh && !isSpecial;
 
         // Position
-        const gridSize = parseFloat(Config.getKey('scene3d/grid/translateSize'));
-        const moveSize = gridSize; // (Config.getKey('scene/grid/snap')) ? gridSize : BASE_MOVE;
+        const gridSize = parseFloat(editor.viewport()?.gridSize() ?? 0);
+        const moveSize = gridSize; // (Config.getKey('viewport/grid/snap')) ? gridSize : BASE_MOVE;
         const entityPositionX = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
         const entityPositionY = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
         const entityPositionZ = new SUEY.NumberBox(0).setStep(moveSize).on('change', update);
@@ -144,7 +144,7 @@ class EntityTransformProperties extends SUEY.Div {
         const unlockIcon = new SUEY.VectorBox(`${FOLDER_MENU}unlock.svg`);
         lockScale.add(new SUEY.ShadowBox(lockIcon, unlockIcon));
         lockScale.on('pointerdown', () => {
-            Config.setKey('scene/transform/aspectLock', !Config.getKey('scene/transform/aspectLock'));
+            Config.setKey('viewport/transform/aspectLock', !Config.getKey('viewport/transform/aspectLock'));
             setScaleIconState();
         });
         scaleButtonRow.add(new SUEY.FlexSpacer(), lockScale);
@@ -152,7 +152,7 @@ class EntityTransformProperties extends SUEY.Div {
         scaleRow.leftWidget.add(scaleButtonRow);
 
         function setScaleIconState() {
-            const locked = Config.getKey('scene/transform/aspectLock');
+            const locked = Config.getKey('viewport/transform/aspectLock');
             lockIcon.setStyle('opacity', (locked) ? '1' : '0');
             unlockIcon.setStyle('opacity', (locked) ? '0' : '1');
             lockScale.setAttribute('tooltip', (locked) ? 'Unlock Aspect Ratio' : 'Lock Aspect Ratio');
@@ -263,7 +263,7 @@ class EntityTransformProperties extends SUEY.Div {
                 if (isNaN(newScale.z) || !isFinite(newScale.z)) newScale.z = 0;
             }
 
-            if (Config.getKey('scene/transform/aspectLock') && (changeScale || changeSize)) {
+            if (Config.getKey('viewport/transform/aspectLock') && (changeScale || changeSize)) {
                 let ratio = undefined;
                 switch (axis) {
                     case 'x': ratio = newScale.x / entity.scale.x; break;

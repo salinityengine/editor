@@ -166,7 +166,7 @@ class Outliner extends SUEY.Floater {
                 }
 
                 // Focus camera
-                signals.cameraFocus.dispatch();
+                editor.viewport()?.cameraFocus();
             }
         });
 

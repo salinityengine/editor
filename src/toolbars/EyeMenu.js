@@ -9,6 +9,7 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { Config } from '../config/Config.js';
+import { Language } from '../config/Language.js';
 import { Layout } from '../config/Layout.js';
 import { Loader } from '../config/Loader.js';
 import { Signals } from '../config/Signals.js';
@@ -19,10 +20,6 @@ class EyeMenu extends SUEY.Menu {
 
     constructor(editor) {
         super();
-
-        // Properties
-        this.menuType = 'extended';
-        // this.menuType = 'simple'; /* NOT IMPLEMENTED */
 
         // Enable / Disable Menu Items
         const useFile = true;
@@ -35,13 +32,13 @@ class EyeMenu extends SUEY.Menu {
         let fileNew, fileOpen, fileSave, fileImport, fileExport, filePublish, fileClose;
 
         if (useFile) {
-            fileNew = new SUEY.MenuItem('New !!', `${FOLDER_MENU}main/file/new.svg`);
-            fileOpen = new SUEY.MenuItem('Open', `${FOLDER_MENU}main/file/open.svg`);
-            fileSave = new SUEY.MenuItem('Save', `${FOLDER_MENU}main/file/save.svg`);
-            fileImport = new SUEY.MenuItem('Import', `${FOLDER_MENU}main/file/import.svg`);
-            fileExport = new SUEY.MenuItem('Export', `${FOLDER_MENU}main/file/export.svg`);
-            filePublish = new SUEY.MenuItem('Publish', `${FOLDER_MENU}main/file/publish.svg`);
-            fileClose = new SUEY.MenuItem('Exit !!', ``);
+            fileNew = new SUEY.MenuItem(Language.getKey('menubar/file/new'), `${FOLDER_MENU}main/file/new.svg`);
+            fileOpen = new SUEY.MenuItem(Language.getKey('menubar/file/open'), `${FOLDER_MENU}main/file/open.svg`);
+            fileSave = new SUEY.MenuItem(Language.getKey('menubar/file/save'), `${FOLDER_MENU}main/file/save.svg`);
+            fileImport = new SUEY.MenuItem(Language.getKey('menubar/file/import'), `${FOLDER_MENU}main/file/import.svg`);
+            fileExport = new SUEY.MenuItem(Language.getKey('menubar/file/export'), `${FOLDER_MENU}main/file/export.svg`);
+            filePublish = new SUEY.MenuItem(Language.getKey('menubar/file/publish'), `${FOLDER_MENU}main/file/publish.svg`);
+            fileClose = new SUEY.MenuItem(Language.getKey('menubar/file/close'), ``);
 
             // NEW
 
@@ -159,15 +156,15 @@ class EyeMenu extends SUEY.Menu {
         let editUndo, editRedo, editCopy, editCut, editPaste, editDuplicate, editDelete, editAll, editNone;
 
         if (useEdit) {
-            editUndo = new SUEY.MenuItem('Undo', `${FOLDER_MENU}main/edit/undo.svg`, `${SALT.System.metaKeyOS()}Z`).keepOpen();
-            editRedo = new SUEY.MenuItem('Redo', `${FOLDER_MENU}main/edit/redo.svg`, `⇧${SALT.System.metaKeyOS()}Z`).keepOpen();
-            editCut = new SUEY.MenuItem('Cut', `${FOLDER_MENU}main/edit/cut.svg`, `${SALT.System.metaKeyOS()}X`);
-            editCopy = new SUEY.MenuItem('Copy', `${FOLDER_MENU}main/edit/copy.svg`, `${SALT.System.metaKeyOS()}C`);
-            editPaste = new SUEY.MenuItem('Paste', `${FOLDER_MENU}main/edit/paste.svg`, `${SALT.System.metaKeyOS()}V`);
-            editDuplicate = new SUEY.MenuItem('Duplicate', `${FOLDER_MENU}main/edit/duplicate.svg`, 'D');
-            editDelete = new SUEY.MenuItem('Delete', `${FOLDER_MENU}main/edit/delete.svg`, '⌫');
-            editAll = new SUEY.MenuItem('Select All', `${FOLDER_MENU}main/edit/all.svg`, `${SALT.System.metaKeyOS()}A`);
-            editNone = new SUEY.MenuItem('Select None', `${FOLDER_MENU}main/edit/none.svg`, '⎋');
+            editUndo = new SUEY.MenuItem(Language.getKey('menubar/edit/undo'), `${FOLDER_MENU}main/edit/undo.svg`, `${SALT.System.metaKeyOS()}Z`).keepOpen();
+            editRedo = new SUEY.MenuItem(Language.getKey('menubar/edit/redo'), `${FOLDER_MENU}main/edit/redo.svg`, `⇧${SALT.System.metaKeyOS()}Z`).keepOpen();
+            editCut = new SUEY.MenuItem(Language.getKey('menubar/edit/cut'), `${FOLDER_MENU}main/edit/cut.svg`, `${SALT.System.metaKeyOS()}X`);
+            editCopy = new SUEY.MenuItem(Language.getKey('menubar/edit/copy'), `${FOLDER_MENU}main/edit/copy.svg`, `${SALT.System.metaKeyOS()}C`);
+            editPaste = new SUEY.MenuItem(Language.getKey('menubar/edit/paste'), `${FOLDER_MENU}main/edit/paste.svg`, `${SALT.System.metaKeyOS()}V`);
+            editDuplicate = new SUEY.MenuItem(Language.getKey('menubar/edit/duplicate'), `${FOLDER_MENU}main/edit/duplicate.svg`, 'D');
+            editDelete = new SUEY.MenuItem(Language.getKey('menubar/edit/delete'), `${FOLDER_MENU}main/edit/delete.svg`, '⌫');
+            editAll = new SUEY.MenuItem(Language.getKey('menubar/edit/all'), `${FOLDER_MENU}main/edit/all.svg`, `${SALT.System.metaKeyOS()}A`);
+            editNone = new SUEY.MenuItem(Language.getKey('menubar/edit/none'), `${FOLDER_MENU}main/edit/none.svg`, '⎋');
 
             editCut.setDisabled(true);
             editCopy.setDisabled(true);
@@ -213,15 +210,14 @@ class EyeMenu extends SUEY.Menu {
         let windowFullscreen;
 
         if (useWindow) {
-            windowHide = new SUEY.MenuItem('Collapse All Tabs', `${FOLDER_MENU}main/window/hide-panels.svg`).keepOpen();
-            windowShow = new SUEY.MenuItem('Expand All Tabs', `${FOLDER_MENU}main/window/show-panels.svg`).keepOpen();
-
             const fullscreenTxt = `${SALT.System.metaKeyOS()}↵`; // i.e. Ctrl + "Enter" or "Return"
-            windowFullscreen = new SUEY.MenuItem('Enter Fullscreen', `${FOLDER_MENU}main/window/fullscreen.svg`, fullscreenTxt);
+
+            windowHide = new SUEY.MenuItem(Language.getKey('menubar/window/hide'), `${FOLDER_MENU}main/window/hide-panels.svg`).keepOpen();
+            windowShow = new SUEY.MenuItem(Language.getKey('menubar/window/show'), `${FOLDER_MENU}main/window/show-panels.svg`).keepOpen();
+            windowFullscreen = new SUEY.MenuItem(Language.getKey('menubar/window/fullscreen'), `${FOLDER_MENU}main/window/fullscreen.svg`, fullscreenTxt);
 
             windowHide.onSelect(() => editor.docker.collapseTabs());
             windowShow.onSelect(() => editor.docker.expandTabs());
-
             windowFullscreen.onSelect(() => { SALT.System.fullscreen(); });
 
             // Toggle Window Types
@@ -253,62 +249,64 @@ class EyeMenu extends SUEY.Menu {
 
         /******************** MENU: HELP ********************/
 
-        let helpSamples, helpManual, helpFaq, helpTutorials, helpContact, helpBug, helpAbout;
+        let helpSamples, helpManual, helpFaq, helpTutorials, helpContact, helpBug, helpGithub, helpAbout;
 
         if (useHelp) {
-            helpSamples = new SUEY.MenuItem('Sample Projects !!', `${FOLDER_MENU}main/help/samples.svg`);
-            helpManual = new SUEY.MenuItem('Manual !!', `${FOLDER_MENU}main/help/manual.svg`);
-            helpFaq = new SUEY.MenuItem('FAQ !!', `${FOLDER_MENU}main/help/faq.svg`);
-            helpTutorials = new SUEY.MenuItem('Tutorials !!', `${FOLDER_MENU}main/help/tutorial.svg`);
-            helpContact = new SUEY.MenuItem('Contact !!', `${FOLDER_MENU}main/help/contact.svg`);
-            helpBug = new SUEY.MenuItem('Bug Report !!', `${FOLDER_MENU}main/help/bug.svg`);
-            helpAbout = new SUEY.MenuItem('About !!', `${FOLDER_MENU}main/help/about.svg`);
+            helpSamples = new SUEY.MenuItem(Language.getKey('menubar/help/samples'), `${FOLDER_MENU}main/help/samples.svg`);
+            helpManual = new SUEY.MenuItem(Language.getKey('menubar/help/manual'), `${FOLDER_MENU}main/help/manual.svg`);
+            helpFaq = new SUEY.MenuItem(Language.getKey('menubar/help/faq'), `${FOLDER_MENU}main/help/faq.svg`);
+            helpTutorials = new SUEY.MenuItem(Language.getKey('menubar/help/tutorials'), `${FOLDER_MENU}main/help/tutorial.svg`);
+            helpContact = new SUEY.MenuItem(Language.getKey('menubar/help/contact'), `${FOLDER_MENU}main/help/contact.svg`);
+            helpBug = new SUEY.MenuItem(Language.getKey('menubar/help/bug'), `${FOLDER_MENU}main/help/bug.svg`);
+            helpGithub = new SUEY.MenuItem(Language.getKey('menubar/help/github'), `${FOLDER_MENU}main/help/github.svg`);
+            helpAbout = new SUEY.MenuItem(Language.getKey('menubar/help/about'), `${FOLDER_MENU}main/help/about.svg`);
+
+            helpGithub.onSelect(() => window.open('https://github.com/salinityengine', '_blank').focus());
         }
 
-        /******************** MENU: EXTENDED ********************/
+        /******************** MENU: BUILD ********************/
 
-        if (this.menuType === 'extended') {
-            const itemFile =      new SUEY.MenuItem('File', `${FOLDER_MENU}main/file.svg`);
-            const itemEdit =      new SUEY.MenuItem('Edit', `${FOLDER_MENU}main/edit.svg`);
-            const itemWindow =    new SUEY.MenuItem('Window', `${FOLDER_MENU}main/window.svg`);
-            const itemHelp =      new SUEY.MenuItem('Help', `${FOLDER_MENU}main/help.svg`);
+        const itemFile =    new SUEY.MenuItem(Language.getKey('menubar/file'), `${FOLDER_MENU}main/file.svg`);
+        const itemEdit =    new SUEY.MenuItem(Language.getKey('menubar/edit'), `${FOLDER_MENU}main/edit.svg`);
+        const itemWindow =  new SUEY.MenuItem(Language.getKey('menubar/window'), `${FOLDER_MENU}main/window.svg`);
+        const itemHelp =    new SUEY.MenuItem(Language.getKey('menubar/help'), `${FOLDER_MENU}main/help.svg`);
 
-            if (useFile) {
-                itemFile.attachSubMenu(new SUEY.Menu().add(
-                    fileNew, fileOpen, fileSave,
-                    new SUEY.MenuSeparator(), fileImport, fileExport,
-                    new SUEY.MenuSeparator(), filePublish, /* new SUEY.MenuSeparator(), fileClose */
-                ));
-                this.add(itemFile);
-            }
+        if (useFile) {
+            itemFile.attachSubMenu(new SUEY.Menu().add(
+                fileNew, fileOpen, fileSave,
+                new SUEY.MenuSeparator(), fileImport, fileExport,
+                new SUEY.MenuSeparator(), filePublish, /* new SUEY.MenuSeparator(), fileClose */
+            ));
+            this.add(itemFile);
+        }
 
-            if (useEdit) {
-                itemEdit.attachSubMenu(new SUEY.Menu().add(
-                    editUndo, editRedo,
-                    new SUEY.MenuSeparator(), editCut, editCopy, editPaste,
-                    new SUEY.MenuSeparator(), editDuplicate, editDelete,
-                    new SUEY.MenuSeparator(), editAll, editNone
-                ));
-                this.add(itemEdit);
-            }
+        if (useEdit) {
+            itemEdit.attachSubMenu(new SUEY.Menu().add(
+                editUndo, editRedo,
+                new SUEY.MenuSeparator(), editCut, editCopy, editPaste,
+                new SUEY.MenuSeparator(), editDuplicate, editDelete,
+                new SUEY.MenuSeparator(), editAll, editNone
+            ));
+            this.add(itemEdit);
+        }
 
-            if (useWindow) {
-                itemWindow.attachSubMenu(new SUEY.Menu().add(
-                    windowHide, windowShow,
-                    new SUEY.MenuSeparator(), ...windowItems,
-                    new SUEY.MenuSeparator(), windowFullscreen
-                ));
-                this.add(itemWindow);
-            }
+        if (useWindow) {
+            itemWindow.attachSubMenu(new SUEY.Menu().add(
+                windowHide, windowShow,
+                new SUEY.MenuSeparator(), ...windowItems,
+                new SUEY.MenuSeparator(), windowFullscreen
+            ));
+            this.add(itemWindow);
+        }
 
-            if (useHelp) {
-                itemHelp.attachSubMenu(new SUEY.Menu().add(
-                    helpSamples,
-                    new SUEY.MenuSeparator(), helpManual, helpFaq, helpTutorials, helpContact, helpBug,
-                    new SUEY.MenuSeparator(), helpAbout
-                ));
-                this.add(itemHelp);
-            }
+        if (useHelp) {
+            itemHelp.attachSubMenu(new SUEY.Menu().add(
+                // helpSamples,
+                // new SUEY.MenuSeparator(), helpManual, helpFaq, helpTutorials, helpContact, helpBug,
+                helpGithub,
+                new SUEY.MenuSeparator(), helpAbout
+            ));
+            this.add(itemHelp);
         }
 
     } // end ctor
