@@ -12,6 +12,7 @@ import { Signals } from '../config/Signals.js';
 
 class AbstractView extends SUEY.Div {
 
+    /** Allowed floaters */
     floaterFamily() {
         const floaters = [
             'advisor',
@@ -23,6 +24,7 @@ class AbstractView extends SUEY.Div {
         return floaters;
     }
 
+    /** Viewport's EDITOR_MODES mode */
     viewportMode() {
         return 'abstract';
     }
@@ -30,13 +32,28 @@ class AbstractView extends SUEY.Div {
     constructor() {
         super();
         this.setClass('salt-viewport');
+        this.setStyle('display', 'none');               // important! needed for initial editor.setMode()
 
         // Properties
         this.toolbar = null;                            // to be added to editor.toolbar.middle
         this.selected = [];                             // selection can differ from editor
     }
 
+    /******************** ACTIVATION********************/
+
+    // These functions run when editor.setMode() is switched to/from a viewport
+
+    activate() {
+
+    }
+
+    deactivate() {
+
+    }
+
     /******************** CLIPBOARD / EDIT ********************/
+
+    // These are menu/keyboard edit functions to be implemented in a viewport
 
     cut() {
         // SceneUtils.deleteSelection('Cut' /* commandName */);

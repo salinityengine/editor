@@ -2,11 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Dock Layout:
-    - Default / separate layout for each Viewport type
-    - Rebuild some floater types (like 'settings')
-    - Load back floaters that were removed when switching modes
-
 Toolbar:
     - View2D Toolbar 'Grid' images
 

@@ -21,14 +21,31 @@ class Layout {
 
     /******************** CONSTRUCT */
 
-    static default(docker, mode) {
+    static default(docker, viewport) {
+        // Clear Docker
         docker.clearDocks();
 
-        // Default Layout
-        Layout.installFloater(docker, Layout.createFloater('outliner'));
-        Layout.installFloater(docker, Layout.createFloater('codex'));
-        Layout.installFloater(docker, Layout.createFloater('advisor'));
-        Layout.installFloater(docker, Layout.createFloater('inspector'));
+        // Checks
+        if (!viewport) {
+            console.warn('Layout.default: Editor viewport not provided!');
+            return;
+        }
+
+        // Floaters Wanted
+        const defaultFloaters = [
+            'outliner',
+            'codex',
+            'advisor',
+            'inspector',
+        ];
+
+        // Install Floaters
+        const allowed = viewport.floaterFamily();
+        for (const floaterName of defaultFloaters) {
+            if (allowed.includes(floaterName)) {
+                Layout.installFloater(docker, Layout.createFloater(floaterName));
+            }
+        }
     }
 
     /******************** FLOATERS */
@@ -59,6 +76,7 @@ class Layout {
         const installInit = installInfo?.init ?? 'center';
         const installSide = installInfo?.side ?? installInit;
         const installSize = (installInfo && installInfo.size && installInfo.size !== '') ? installInfo.size : '20%';
+        const installSize2 = installInfo?.size2 ?? installSize;
 
         let dock = undefined;
         switch (installInit) {
@@ -82,7 +100,7 @@ class Layout {
                     dock = initialDocker.enableTabs();
                 } else {
                     let subDocker = findDocker(initialDocker, 'dockSide', installSide, true);
-                    subDocker = subDocker ?? initialDocker.addDock(installSide, installSize);
+                    subDocker = subDocker ?? initialDocker.addDock(installSide, installSize2);
                     dock = subDocker.enableTabs();
                 }
                 break;
@@ -106,26 +124,22 @@ class Layout {
 
     /******************** SAVE / LOAD */
 
-    static save(docker, mode) {
+    static save(docker, viewport) {
+        // Checks
         if (!docker.isPrimary()) {
             console.warn('Layout.save: The provided Docker is not the Primary Docker');
             return;
         }
-        // if (!mode in EDITOR_MODES.values()) {
-        //     console.warn('Layout.save: Editor mode not provided!');
-        //     return;
-        // }
+        if (!viewport) {
+            console.warn('Layout.save: Editor viewport not provided!');
+            return;
+        }
 
-        const layout = {
-            type: 'docker',
-            side: 'center',
-            children: [],
-        };
-
+        // Docker Traversal
         function traverse(currentDocker, parentLayout) {
             const reverseChildren = currentDocker.children.toReversed();
             reverseChildren.forEach(child => {
-
+                // Docker
                 if (child.hasClass('suey-docker')) {
                     const dockerLayout = {
                         type: 'docker',
@@ -138,7 +152,7 @@ class Layout {
                     if (dockerLayout.collapsed) dockerLayout.size = child.expandSize;
                     parentLayout.children.push(dockerLayout);
                     traverse(child, dockerLayout);
-
+                // Tabbed
                 } else if (child.hasClass('suey-tabbed')) {
                     const spacers = SUEY.Dom.childrenWithClass(currentDocker, 'suey-flex-spacer', false /* recursive? */);
                     const tabbedLayout = {
@@ -148,7 +162,7 @@ class Layout {
                         floaters: SUEY.Dom.childrenWithClass(child, 'suey-floater', true /* recursive? */).map(floater => floater.id),
                     };
                     parentLayout.children.push(tabbedLayout);
-
+                // Window
                 } else if (child.hasClass('suey-window')) {
                     const windowLayout = {
                         type: 'window',
@@ -165,27 +179,39 @@ class Layout {
                 }
             });
         }
+
+        // Build Layout Tree
+        const layout = {
+            type: 'docker',
+            side: 'center',
+            children: [],
+        };
         traverse(docker, layout);
 
         // Save the Layout
-        localStorage.removeItem('dockerLayout');
-        localStorage.setItem('dockerLayout', JSON.stringify(layout));
+        localStorage.removeItem(`dockerLayout/${viewport.viewportMode()}`);
+        localStorage.setItem(`dockerLayout/${viewport.viewportMode()}`, JSON.stringify(layout));
     }
 
-    static load(docker) {
-        if (!docker.isPrimary()) {
-            console.warn('Layout.load: The provided Docker is not the Primary Docker');
-            return undefined;
-        }
-
+    static load(docker, viewport) {
         // Clear Docker
         docker.clearDocks();
 
+        // Checks
+        if (!docker.isPrimary()) {
+            console.warn('Layout.load: The provided Docker is not the Primary Docker');
+            return;
+        }
+        if (!viewport) {
+            console.warn('Layout.load: Editor viewport not provided!');
+            return;
+        }
+
         // Retrieve the layout from localStorage
-        const layoutData = localStorage.getItem('dockerLayout');
+        const layoutData = localStorage.getItem(`dockerLayout/${viewport.viewportMode()}`);
         if (!layoutData) {
-            console.warn('Layout.load: No layout data found');
-            return undefined;
+            Layout.default(docker, viewport);
+            return;
         }
 
         function createDocker(layoutNode, parentDocker) {

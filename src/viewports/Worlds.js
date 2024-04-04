@@ -258,6 +258,12 @@ class Worlds extends AbstractView {
 
     } // end ctor
 
+    /******************** ACTIVATION ********************/
+
+    activate() {
+        this.graph.zoomTo();
+    }
+
     /******************** NODES ********************/
 
     allWorlds() {

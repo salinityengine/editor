@@ -68,26 +68,28 @@ class Editor extends SUEY.Div {
 
         /********** ELEMENTS */
 
+        // Gui
         this.add(this.toolbar = new EditorToolbar(this));
         this.add(this.infoBox = new InfoBox());
 
+        // Viewports
         this.viewports.push(new View2D());
         this.viewports.push(new View3D());
         this.viewports.push(new ViewUI());
         this.viewports.push(new Worlds());
         this.add(...this.viewports);
 
-        /********** DOCKS */
-
+        // Docks
         this.add(this.docker = new SUEY.Docker());
-        Layout.load(this.docker);
 
         /********** EVENTS */
 
         function onKeyDown(event) { editorKeyDown(self, event); }
         function onKeyUp(event) { editorKeyUp(self, event); }
         function onVisibilityChange(event) {
-            if (document.visibilityState === 'hidden' /* or 'visible' */) Layout.save(self.docker);
+            if (document.visibilityState === 'hidden' /* or 'visible' */) {
+                Layout.save(self.docker, self.viewport());
+            }
         }
 
         document.addEventListener('keydown', onKeyDown);
@@ -158,6 +160,10 @@ class Editor extends SUEY.Div {
     /******************** MODE ********************/
 
     setMode(mode) {
+        // Save Floater Layout
+        const currentViewport = this.viewport();
+        if (currentViewport) Layout.save(this.docker, currentViewport);
+
         // Remove Mode Toolbar
         this.toolbar.middle.detachChildren();
 
@@ -168,24 +174,16 @@ class Editor extends SUEY.Div {
                 newViewport = viewport;
                 this.toolbar.middle.add(...viewport.toolbar.buttons);
                 viewport.display();
+                viewport.activate();
             } else {
                 viewport.hide();
-                //
-                // TODO: Init?
-                //
-                // Example of something that needs to happen:
-                // this.worlds.zoomTo();
+                viewport.deactivate();
             }
         }
         Config.setKey('settings/editorMode', mode);
 
-        // Adjust Floaters
-        const allowedTypes = newViewport?.floaterFamily() ?? [];
-        for (const floater of this.docker.floaters()) {
-            if (allowedTypes.includes(floater.id) === false) {
-                Layout.removeFloater(floater);
-            }
-        }
+        // Load Floaters
+        Layout.load(this.docker, newViewport);
 
         // Dispatch Signals
         Signals.dispatch('editorModeChanged', mode);
@@ -196,8 +194,9 @@ class Editor extends SUEY.Div {
     }
 
     viewport() {
+        const currentMode = this.mode();
         for (const viewport of this.viewports) {
-            if (viewport.viewportMode() === this.mode() && viewport.isDisplayed()) return viewport;
+            if (viewport.viewportMode() === currentMode && viewport.isDisplayed()) return viewport;
         }
     }
 
@@ -474,17 +473,6 @@ function editorKeyDown(editor, event) {
 
     // Keys
     switch (event.key) {
-        // case 's': // save layout
-        //     event.stopPropagation();
-        //     event.preventDefault();
-        //     Layout.save(editor.docker);
-        //     break;
-        case 'l': // load layout
-            event.stopPropagation();
-            event.preventDefault();
-            Layout.load(editor.docker);
-            break;
-
         case 'a':
         case 'w':
         case 's':
@@ -579,7 +567,7 @@ function editorKeyDown(editor, event) {
             editor.refreshSettings();
 
             // Default Docks
-            setTimeout(() => Layout.default(editor.docker), 0);
+            setTimeout(() => Layout.default(editor.docker, editor.viewport()), 0);
             break;
     }
 }
