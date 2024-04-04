@@ -12,12 +12,14 @@ class ConfiguredShrinker extends SUEY.Shrinkable {
         text = '',
         icon = '',
         arrow = 'left',
-        border = true
+        border = true,
+        defaultExpanded = false,
     } = {}) {
         super({ text, icon, arrow, border });
 
-        const expanded = Boolean(Config.getKey(`blocks/expanded/${this.constructor.name}`));
-        this.setExpanded(expanded, false /* event? */);
+        let expanded = Config.getKey(`blocks/expanded/${this.constructor.name}`);
+        if (defaultExpanded && expanded == null) expanded = true;
+        this.setExpanded(!!expanded, false /* event? */);
     }
 
     setExpanded(expand = true, dispatchEvent = true) {

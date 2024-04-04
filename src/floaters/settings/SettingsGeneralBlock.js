@@ -18,7 +18,11 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings/general.svg`; // color: '#C04145'
-        super({ text: Language.getKey('floater/settings/general'), icon, arrow: 'right', border: true });
+        super({
+            text: Language.getKey('floater/settings/general'),
+            icon, arrow: 'right', border: true,
+            defaultExpanded: true,
+        });
         Advice.attach(this.titleDiv, 'settings');
 
         // Property Box
