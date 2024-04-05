@@ -143,7 +143,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         // TEXT SIZE //
 
         // Smaller
-        const smallerButton = new SUEY.Button().addClass('suey-property-button-flex').onClick(() => {
+        const smallerButton = new SUEY.Button().addClass('suey-property-button-flex').onPress(() => {
             editor.fontSizeChange('down');
         });
         const smallerLabel = 'Smaller'
@@ -157,7 +157,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         smallerButton.setAttribute('tooltip', Config.tooltip(smallerLabel, smallerShortcut));
 
         // Larger
-        const largerButton = new SUEY.Button().addClass('suey-property-button-flex').onClick(() => {
+        const largerButton = new SUEY.Button().addClass('suey-property-button-flex').onPress(() => {
             editor.fontSizeChange('up');
         });
         const largerLabel = 'Larger'
@@ -189,7 +189,7 @@ class SettingsGeneralBlock extends ConfiguredShrinker {
         /***** RESET *****/
 
         // Reset All Settings
-        const resetButton = new SUEY.Button().addClass('suey-property-button').onClick(() => {
+        const resetButton = new SUEY.Button().addClass('suey-property-button').onPress(() => {
             if (confirm('Reset all editor settings to default values?')) {
                 Config.clear();
                 editor.refreshSettings();

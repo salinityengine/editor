@@ -530,7 +530,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         // Button: Click
         refreshAsset.add(new SUEY.ShadowBox(refreshIcon));
-        refreshAsset.onClick(() => {
+        refreshAsset.onPress(() => {
             const component = propertyList._component;
             if (!component) return;
             const newData = component.toJSON();
@@ -587,7 +587,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             updateName();
         });
 
-        clearButton.onClick(() => {
+        clearButton.onPress(() => {
             asset = undefined;
             value = null;
             updateComponent(item, propKey, value);

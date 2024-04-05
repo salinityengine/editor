@@ -32,12 +32,12 @@ class EntityProperties extends SUEY.PropertyList {
         // UUID
         const entityUUID = new SUEY.TextBox().setDisabled(true);
         // // 'New' UUID Button
-        // const entityUUIDNew = new SUEY.Button('NEW').setStyle('marginLeft', WIDGET_SPACING).onClick(() => {
+        // const entityUUIDNew = new SUEY.Button('NEW').setStyle('marginLeft', WIDGET_SPACING).onPress(() => {
         //     entityUUID.setValue(SALT.Maths.uuid());
         //     editor.execute(new SetUUIDCommand(entity, entityUUID.getValue()));
         // });
         // // 'Copy' UUID Button
-        const entityUUIDCopy = new SUEY.Button('Copy').onClick(() => {
+        const entityUUIDCopy = new SUEY.Button('Copy').onPress(() => {
             navigator.clipboard.writeText(entity.uuid).then(
                 function() { /* success */ },
                 function(err) { console.error('Async: Could not copy text: ', err);

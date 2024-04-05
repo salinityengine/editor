@@ -104,10 +104,10 @@ class View3DToolbar {
         move.add(moveIcon, moveGrab);
         zoom.add(zoomIcon);
 
-        select.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.SELECT));
-        look.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.LOOK));
-        move.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
-        zoom.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
+        select.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.SELECT));
+        look.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.LOOK));
+        move.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
+        zoom.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
 
         Signals.connect(view3d, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
@@ -142,8 +142,8 @@ class View3DToolbar {
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
 
-        reset.onClick(() => view3d.cameraReset());
-        focus.onClick(() => view3d.cameraFocus());
+        reset.onPress(() => view3d.cameraReset());
+        focus.onPress(() => view3d.cameraFocus());
 
         let _lastTooltip = '';
 
@@ -191,13 +191,13 @@ class View3DToolbar {
         snap.add(snapMagnet, snapAttract);
         paint.add(paintBrush);
 
-        none.onClick(() => Signals.dispatch('transformModeChanged', 'none'));
-        translate.onClick(() => Signals.dispatch('transformModeChanged', 'translate'));
-        rotate.onClick(() => Signals.dispatch('transformModeChanged', 'rotate'));
-        scale.onClick(() => Signals.dispatch('transformModeChanged', 'scale'));
-        rect.onClick(() => Signals.dispatch('transformModeChanged', 'rect'));
-        snap.onClick(() => Signals.dispatch('transformModeChanged', 'snap'));
-        paint.onClick(() => Signals.dispatch('transformModeChanged', 'paint'));
+        none.onPress(() => Signals.dispatch('transformModeChanged', 'none'));
+        translate.onPress(() => Signals.dispatch('transformModeChanged', 'translate'));
+        rotate.onPress(() => Signals.dispatch('transformModeChanged', 'rotate'));
+        scale.onPress(() => Signals.dispatch('transformModeChanged', 'scale'));
+        rect.onPress(() => Signals.dispatch('transformModeChanged', 'rect'));
+        snap.onPress(() => Signals.dispatch('transformModeChanged', 'snap'));
+        paint.onPress(() => Signals.dispatch('transformModeChanged', 'paint'));
 
         Signals.connect(view3d, 'transformModeChanged', function(mode) {
             none.removeClass('suey-selected');

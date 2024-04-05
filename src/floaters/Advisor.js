@@ -104,14 +104,14 @@ class Advisor extends SUEY.Floater {
         forwardButton.setAttribute('tooltip', 'Forward');
         forwardButton.add(forwardArrow);
 
-        backButton.onClick(() => {
+        backButton.onPress(() => {
             if (history >= titles.length - 1) return;
             history++;
             setInfo(titles[history], bodies[history]);
             updateButtons();
         });
 
-        forwardButton.onClick(() => {
+        forwardButton.onPress(() => {
             if (history <= 0) return;
             history--;
             setInfo(titles[history], bodies[history]);

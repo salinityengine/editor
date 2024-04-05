@@ -59,9 +59,9 @@ class ViewUIToolbar {
         move.add(moveIcon, moveGrab);
         zoom.add(zoomIcon);
 
-        select.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.SELECT));
-        move.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
-        zoom.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
+        select.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.SELECT));
+        move.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
+        zoom.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
 
         Signals.connect(viewui, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
@@ -94,8 +94,8 @@ class ViewUIToolbar {
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
 
-        reset.onClick(() => viewui.cameraReset());
-        focus.onClick(() => viewui.cameraFocus());
+        reset.onPress(() => viewui.cameraReset());
+        focus.onPress(() => viewui.cameraFocus());
 
         let _lastTooltip = '';
 

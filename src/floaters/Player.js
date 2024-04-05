@@ -117,12 +117,12 @@ class Player extends SUEY.Floater {
         pause.add(playPause, playActive);
         stop.add(playStop);
 
-        camera.onClick(() => self.requestScreenshot());
-        pause.onClick(() => {
+        camera.onPress(() => self.requestScreenshot());
+        pause.onPress(() => {
             if (app.isPlaying) self.pause();
             else self.start();
         });
-        stop.onClick(() => Layout.removeFloater(self));
+        stop.onPress(() => Layout.removeFloater(self));
 
         const playButtons = new SUEY.FlexBox().addClass('salt-active-toolbar');
         playButtons.add(stop, pause, camera, screen);

@@ -59,7 +59,7 @@ class AssetInput {
             updateName();
         });
 
-        clearButton.onClick(() => {
+        clearButton.onPress(() => {
             asset = undefined;
             onChange(null);
             updateName();

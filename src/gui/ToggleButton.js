@@ -17,7 +17,7 @@ class ToggleButton extends SUEY.ToolbarButton {
         }
 
         // Toggle
-        this.onClick(() => {
+        this.onPress(() => {
             if (configKey) Config.setKey(configKey, (!Config.getKey(configKey)));
             setButtonValue();
             if (typeof callback === 'function') callback();

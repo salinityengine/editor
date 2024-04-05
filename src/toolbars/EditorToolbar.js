@@ -83,10 +83,10 @@ class EditorToolbar extends SUEY.Panel {
         const uiBase = new SUEY.VectorBox(`${FOLDER_TOOLBAR}ui-base.svg`).setID('tb-ui-base');
         ui.add(uiButton, uiJoystick, uiBase);
 
-        scene2d.onClick(() => editor.execute(new EditorModeCommand(EDITOR_MODES.SCENE_EDITOR_2D)));
-        scene3d.onClick(() => editor.execute(new EditorModeCommand(EDITOR_MODES.SCENE_EDITOR_3D)));
-        world.onClick(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_GRAPH)));
-        ui.onClick(() => editor.execute(new EditorModeCommand(EDITOR_MODES.UI_EDITOR)));
+        scene2d.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.SCENE_EDITOR_2D)));
+        scene3d.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.SCENE_EDITOR_3D)));
+        world.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_GRAPH)));
+        ui.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.UI_EDITOR)));
 
         Signals.connect(this, 'editorModeChanged', function(mode) {
             scene2d.removeClass('suey-selected');
@@ -106,7 +106,7 @@ class EditorToolbar extends SUEY.Panel {
         const playArrow = new SUEY.VectorBox(`${FOLDER_TOOLBAR}play-active.svg`).setID('tb-play-arrow');
         play.add(playArrow);
 
-        play.onClick(() => {
+        play.onPress(() => {
             const player = editor.getFloaterByID('player', true /* build? */);
             player.start();
         });
@@ -138,9 +138,9 @@ class EditorToolbar extends SUEY.Panel {
         const settingsShadow = new SUEY.VectorBox(`${FOLDER_TOOLBAR}settings-shadow.svg`).setID('tb-settings-shadow');
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
-        proj.onClick(() => editor.getFloaterByID('project'));
-        history.onClick(() => editor.getFloaterByID('history'));
-        settings.onClick(() => editor.getFloaterByID('settings'));
+        proj.onPress(() => editor.getFloaterByID('project'));
+        history.onPress(() => editor.getFloaterByID('history'));
+        settings.onPress(() => editor.getFloaterByID('settings'));
 
         /******************** ADD TO TOOLBAR */
 

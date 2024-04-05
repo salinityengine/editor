@@ -113,7 +113,7 @@ class WorldsToolbar {
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
 
-        reset.onClick(() => {
+        reset.onPress(() => {
             worldsGraph.centerView(true /* resetZoom */, true /* animate */);
         });
 
@@ -123,7 +123,7 @@ class WorldsToolbar {
         const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         gridSnap.add(snapMagnet, snapAttract);
 
-        gridSnap.onClick(() => {
+        gridSnap.onPress(() => {
             const snapping = !Config.getKey('viewport/grid/snap');
             Config.setKey('viewport/grid/snap', snapping);
             worldsGraph.snapToGrid = snapping;

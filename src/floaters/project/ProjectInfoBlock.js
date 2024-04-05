@@ -51,7 +51,7 @@ class ProjectInfoBlock extends ConfiguredShrinker {
             'width', '50%',
             'margin-bottom', 'var(--pad-small)',
         );
-        logButton.onClick(() => console.log(editor.project));
+        logButton.onPress(() => console.log(editor.project));
         props.add(debugRow.add(logButton));
 
         /***** UPDATE *****/

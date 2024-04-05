@@ -97,9 +97,9 @@ class View2DToolbar {
         move.add(moveIcon, moveGrab);
         zoom.add(zoomIcon);
 
-        select.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.SELECT));
-        move.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
-        zoom.onClick(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
+        select.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.SELECT));
+        move.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
+        zoom.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
 
         Signals.connect(view2d, 'mouseModeChanged', function(mouseMode) {
             select.removeClass('suey-selected');
@@ -132,8 +132,8 @@ class View2DToolbar {
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });
 
-        reset.onClick(() => view2d.cameraReset());
-        focus.onClick(() => view2d.cameraFocus());
+        reset.onPress(() => view2d.cameraReset());
+        focus.onPress(() => view2d.cameraFocus());
 
         let _lastTooltip = '';
 
@@ -329,7 +329,7 @@ class View2DToolbar {
         const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         gridSnap.add(snapMagnet, snapAttract);
 
-        gridSnap.onClick(() => {
+        gridSnap.onPress(() => {
             const snapping = !Config.getKey('viewport/grid/snap');
             Config.setKey('viewport/grid/snap', snapping);
             view2d.snapToGrid = snapping;
