@@ -29,54 +29,50 @@ class Inspector extends SUEY.Floater {
         const self = this;
         Advice.attach(this.button, 'floater/inspector');
 
-        // Flags
-        this.isEmpty = true;
+        // Private
+        let item = undefined;
 
-        // Internal
-        let _item = undefined;
-
-        /** Builds Inspector */
-        function build(buildFrom = undefined) {
-
-            // Process new 'buildFrom' item
-            if (buildFrom !== 'rebuild') {
-
-                // TEMP: Only process first item
-                if (Array.isArray(_item)) {
-                    _item = _item[0];
-                }
+        /**
+         * Builds (or rebuilds) the object inspector
+         * @param {any} from - The uuid object or array of objects to build from. Pass 'rebuild' to recreate with existing object.
+         * @param {boolean} [highlight=true] - Whether the Inspector should be selected within the Editor.
+         */
+        function build(from = undefined, highlight = true) {
+            // Process 'from'
+            if (from !== 'rebuild') {
+                // TEMP: Only process first entity
+                if (Array.isArray(from)) from = (from.length === 0) ? undefined : from[0];
 
                 // Don't rebuild an entity that is already displayed
-                if (buildFrom && _item && _item.isEntity && buildFrom.isEntity && _item.uuid === buildFrom.uuid) {
-                    return;
-                }
+                if (from && item && item.isEntity && item.uuid === from.uuid) return;
 
                 // Save Current Item
-                _item = buildFrom;
+                item = from;
             }
-
-            // Delete existing Blocks
-            self.clearContents();
-            self.isEmpty = false;
 
             // Process Item
             const blocks = [];
-            let titleName = _item;
+            let titleName = 'Inspector';
 
-            // PALETTE
-            if (_item && _item.isPalette) {
-                blocks.push(new SUEY.Floater('palette', new PaletteTab(_item), { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
+            // ITEM: None
+            if (item == undefined) {
+                const emptyText = new SUEY.Row().add(new SUEY.Text('No Selection'));
+                emptyText.setStyle('justifyContent', 'center', 'padding', '1em var(--border-small)');
+                blocks.push(emptyText);
 
-            // TEXTURE
-            } else if (_item && _item.isTexture) {
+            // ITEM: Palette
+            } else if (item.isPalette) {
+                blocks.push(new SUEY.Floater('palette', new PaletteTab(item), { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
+
+            // ITEM: Texture
+            } else if (item.isTexture) {
                 let icon = `${FOLDER_FLOATERS}asset/texture.svg`;
-                if (_item.isCubeTexture) icon = `${FOLDER_FLOATERS}asset/cube-texture.svg`;
-                blocks.push(new SUEY.Floater('texture', new TextureTab(_item), { icon, color: '#C9C1B6', shadow: false, shrink: true }));
+                if (item.isCubeTexture) icon = `${FOLDER_FLOATERS}asset/cube-texture.svg`;
+                blocks.push(new SUEY.Floater('texture', new TextureTab(item), { icon, color: '#C9C1B6', shadow: false, shrink: true }));
 
-            // ENTITY
-            } else if (_item && _item.isEntity) {
-                const entity = _item;
-
+            // ITEM: Entity
+            } else if (item.isEntity) {
+                const entity = item;
                 let icon, color, shrink, shadow, tabType;
                 if (entity.isPrefab) { tabType = 'prefab'; icon = `${FOLDER_TYPES}entity/prefab.svg`; shrink = true; }
                 else if (entity.isWorld) { tabType = 'world'; icon = `${FOLDER_TYPES}entity/world.svg`; }
@@ -109,23 +105,26 @@ class Inspector extends SUEY.Floater {
                     }
                 }
 
-            // NO SELECTION (buildFrom === undefined)
+            // ITEM: Unknown
             } else {
-                titleName = 'Inspector';
-                const emptyText = new SUEY.Row().add(new SUEY.Text('No Selection'));
-                emptyText.setStyle('justifyContent', 'center');
-                emptyText.setStyle('paddingTop', '1em').setStyle('paddingBottom', '1em');
-                blocks.push(emptyText);
-                self.isEmpty = true;
+                const unknownText = new SUEY.Row().add(new SUEY.Text(`Unknown Item: '${item.name}'`));
+                unknownText.setStyle('justifyContent', 'center', 'padding', '1em var(--border-small)');
+                blocks.push(unknownText);
             }
 
+            // Delete existing Blocks
+            self.clearContents();
+
             // Title
-            const inspectorTitle = new SUEY.Div(SUEY.Strings.capitalize(titleName)).addClass('suey-tab-title');
-            if (self.dock && self.dock.hasClass('suey-window')) inspectorTitle.addClass('suey-hidden');
-            self.add(inspectorTitle);
+            const title = new SUEY.Div(SUEY.Strings.capitalize(titleName)).addClass('suey-tab-title');
+            if (self.dock && self.dock.hasClass('suey-window')) title.addClass('suey-hidden');
+            self.add(title);
 
             // Add Blocks
             self.add(...blocks);
+
+            // Select this Floater
+            if (highlight && self.dock) self.dock.selectTab(self.id);
 
             // Dispatch Signals
             Signals.dispatch('inspectorChanged');
@@ -133,47 +132,26 @@ class Inspector extends SUEY.Floater {
 
         /***** SIGNALS *****/
 
-        Signals.connect(this, 'inspectorBuild', function(from) {
-            if (self.dock) self.dock.selectTab(self.id);
-            build(from);
-        });
-
-        Signals.connect(this, 'inspectorClear', function() {
-            build(undefined);
-        });
-
-        Signals.connect(this, 'inspectorRefresh', function() {
-            build('rebuild');
-        });
-
-        Signals.connect(this, 'promodeChanged', function() {
-            build('rebuild');
-        });
-
-        Signals.connect(this, 'selectionChanged', function () {
-            // // 'viewport' Mode?
-            // if (editor.mode() === EDITOR_MODES.SCENE_EDITOR_3D) {
-            //     // Don't rebuild inspector during rubberband mode
-            //     if (mouseState === MOUSE_STATES.SELECTING) return;
-            // }
-
+        Signals.connect(this, 'inspectorBuild', (from) => build(from, true /* highlight? */));
+        Signals.connect(this, 'inspectorClear', () => build(undefined, false /* highlight? */));
+        Signals.connect(this, 'inspectorRefresh', () => build('rebuild', true /* highlight? */));
+        Signals.connect(this, 'promodeChanged', () => build('rebuild', false /* highlight? */));
+        Signals.connect(this, 'selectionChanged', () => {
             // Don't rebuild while dragging new object into scene
             if (editor.dragInfo) return;
 
-            // Rebuild with selected entity
-            const entity = (editor.selected.length === 0) ? undefined : editor.selected[0];
-            build(entity);
+            // Don't rebuild inspector during rubberband mode
+            const viewport = editor.viewport();
+            if (viewport && viewport.mode() === EDITOR_MODES.SCENE_EDITOR_3D && viewport.mouseState === MOUSE_STATES.SELECTING) return;
+
+            // Build with Selection
+            build(editor.selected, true /* highlight? */);
         });
-
-        /***** GETTERS *****/
-
-        this.currentItem = function() { return _item; };
 
         /***** INIT *****/
 
         build();
-
-    } // end ctor
+    }
 
 }
 

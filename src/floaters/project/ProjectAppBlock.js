@@ -13,7 +13,7 @@ class ProjectAppBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/app.svg`; // color: '#773399'
-        super({ text: 'App', icon, arrow: 'right', border: true });
+        super({ title: 'App', icon, arrow: 'right', border: true });
         Advice.attach(this.titleDiv, 'project/app');
 
         // Property Box

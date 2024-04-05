@@ -12,6 +12,7 @@ import { Inspector } from '../floaters/Inspector.js';
 import { Library } from '../floaters/Library.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
+import { Previewer } from '../floaters/Previewer.js';
 import { Projecter } from '../floaters/Projecter.js';
 import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
@@ -58,6 +59,7 @@ class Layout {
             'inspector':    Inspector,
             'outliner':     Outliner,
             'player':       Player,
+            'previewer':    Previewer,
             'project':      Projecter,
             'settings':     Settings,
         };
@@ -189,8 +191,8 @@ class Layout {
         traverse(docker, layout);
 
         // Save the Layout
-        localStorage.removeItem(`dockerLayout/${viewport.viewportMode()}`);
-        localStorage.setItem(`dockerLayout/${viewport.viewportMode()}`, JSON.stringify(layout));
+        localStorage.removeItem(`dockerLayout/${viewport.mode()}`);
+        localStorage.setItem(`dockerLayout/${viewport.mode()}`, JSON.stringify(layout));
     }
 
     static load(docker, viewport) {
@@ -208,7 +210,7 @@ class Layout {
         }
 
         // Retrieve the layout from localStorage
-        const layoutData = localStorage.getItem(`dockerLayout/${viewport.viewportMode()}`);
+        const layoutData = localStorage.getItem(`dockerLayout/${viewport.mode()}`);
         if (!layoutData) {
             Layout.default(docker, viewport);
             return;

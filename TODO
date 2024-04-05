@@ -45,6 +45,7 @@ Floaters:
     Player:
         - Debug Console, override console.log to capture?
         - QR Code to load on phone
+    Previewer:
     Project:
         - Info work with new View2D
     !! Scripter:

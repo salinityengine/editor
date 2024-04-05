@@ -9,7 +9,7 @@ class PropertyGroup extends SUEY.Shrinkable {
         border = false,
         leftPropertyWidth = '50%',
     } = {}) {
-        super({ text: title, icon, arrow, border });
+        super({ title, icon, arrow, border });
 
         // Property List
         const properties = new SUEY.PropertyList(leftPropertyWidth);

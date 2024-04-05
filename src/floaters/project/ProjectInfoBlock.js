@@ -12,7 +12,7 @@ class ProjectInfoBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/info.svg`; // color: '#66C7FF', shrink: true
-        super({ text: 'Info', icon, arrow: 'right', border: true });
+        super({ title: 'Info', icon, arrow: 'right', border: true });
 
         // Property Box
         const props = new SUEY.PropertyList();

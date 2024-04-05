@@ -16,7 +16,7 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class ViewUI extends AbstractView {
 
-    viewportMode() { return EDITOR_MODES.UI_EDITOR; }
+    mode() { return EDITOR_MODES.UI_EDITOR; }
 
     floaterFamily() {
         const floaters = [
@@ -24,6 +24,7 @@ class ViewUI extends AbstractView {
             'inspector',
             'library',
             'outliner',
+            'previewer',
             'shaper',
         ];
         return [ ...super.floaterFamily(), ...floaters ];

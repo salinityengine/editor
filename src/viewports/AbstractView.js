@@ -13,7 +13,7 @@ import { Signals } from '../config/Signals.js';
 class AbstractView extends SUEY.Div {
 
     /** Set from EDITOR_MODES */
-    viewportMode() { return 'abstract'; }
+    mode() { return 'abstract'; }
 
     /** Allowed floaters */
     floaterFamily() {

@@ -33,10 +33,10 @@ class AssetBlock extends SUEY.Shrinkable {
         arrow = 'left',
         border = true,
     } = {}) {
-        if (!type) return console.error('AssetBlock.constructor(): No type defined');
+        if (!type) return console.error(`AssetBlock.constructor(): Missing 'type' argument`);
 
         // Super
-        super({ text: title, icon, arrow, border });
+        super({ title, icon, arrow, border });
         const self = this;
 
         // Properties
@@ -280,7 +280,7 @@ class AssetBlock extends SUEY.Shrinkable {
             } else if (this.type === 'material') {
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, null /* geometry */, asset /* material */);
             } else if (this.type === 'palette') {
-                // item.on('dblclick', () => { Signals.dispatch('inspectorBuild', asset); });
+                // item.on('dblclick', () => { Signals.dispatch('previewerBuild', asset); });
                 // canvas.style['border-radius'] = 'var(--radius-small)';
                 // CanvasUtils.drawPalette(canvas, asset /* palette */);
             } else if (this.type === 'shape') {
@@ -293,7 +293,7 @@ class AssetBlock extends SUEY.Shrinkable {
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
                 // shapeGeometry.dispose();
             } else if (this.type === 'texture') {
-                // item.on('dblclick', () => Signals.dispatch('inspectorBuild', asset));
+                // item.on('dblclick', () => Signals.dispatch('previewerBuild', asset));
                 // const texture = asset;
                 // if (texture.image && texture.image.complete) texture.needsUpdate = true;
                 // SALT.RenderUtils.renderTextureToCanvas(canvas, texture);
@@ -336,12 +336,12 @@ class AssetBlock extends SUEY.Shrinkable {
                 innerBox.dom.appendChild(canvas);
                 SALT.RenderUtils.renderMeshToCanvas(canvas, prefab);
             }
-            item.on('dblclick', () => { Signals.dispatch('inspectorBuild', prefab); });
+            item.on('dblclick', () => Signals.dispatch('previewerBuild', prefab));
             item.on('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
                     event.stopPropagation();
-                    Signals.dispatch('inspectorBuild', prefab);
+                    Signals.dispatch('previewerBuild', prefab);
                 }
             });
 
@@ -355,7 +355,7 @@ class AssetBlock extends SUEY.Shrinkable {
 
         // SELECT
         item.on('focus', () => {
-            Signals.dispatch('inspectorBuild', asset);
+            Signals.dispatch('previewerBuild', asset);
         });
 
         // KEY PRESS

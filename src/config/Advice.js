@@ -17,6 +17,7 @@ const _values = {
         'floater/inspector':                { title: 'Inspector', html: `View and edit properties and settings.`},
         'floater/outliner':                 { title: 'Outliner', html: `Displays interactive scene hierarchy.` },
         'floater/player':                   { title: 'Player', html: `Game play preview.` },
+        'floater/previewer':                { title: 'Previewer', html: `Preview assets and scripts.`},
         'floater/project':                  { title: 'Project', html: `Project settings viewer.` },
         'floater/settings':                 { title: 'Settings', html: `Editor settings viewer.`},
 

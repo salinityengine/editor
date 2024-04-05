@@ -170,7 +170,7 @@ class Editor extends SUEY.Div {
         // Hide Viewports
         let newViewport = undefined;
         for (const viewport of this.viewports) {
-            if (!newViewport && viewport.viewportMode() === mode) {
+            if (!newViewport && viewport.mode() === mode) {
                 newViewport = viewport;
                 this.toolbar.middle.add(...viewport.toolbar.buttons);
                 viewport.display();
@@ -196,7 +196,7 @@ class Editor extends SUEY.Div {
     viewport() {
         const currentMode = this.mode();
         for (const viewport of this.viewports) {
-            if (viewport.viewportMode() === currentMode && viewport.isDisplayed()) return viewport;
+            if (viewport.mode() === currentMode && viewport.isDisplayed()) return viewport;
         }
     }
 

@@ -52,6 +52,12 @@ const SIGNAL_NAMES = [
     'inspectorRefresh',         // -                    FUNCTION    Rebuild Inspector with current object(s)
     'inspectorChanged',         // -                    ALERT       Inspector was just built / rebuilt
 
+    // Previewer
+    'previewerBuild',           // (item)               FUNCTION    Build with object or array of objects
+    'previewerClear',           // -                    FUNCTION    Clear the Previewer
+    'previewerRefresh',         // -                    FUNCTION    Rebuild Previewer with current object(s)
+    'previewerChanged',         // -                    ALERT       Previewer was just built / rebuilt
+
     // Player
     'playerStateChanged',       // (state)              ALERT       Player state changed ('start', 'pause', 'stop')
 

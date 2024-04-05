@@ -12,7 +12,7 @@ class WorldGridBlock extends ConfiguredShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'
-        super({ text: 'Grid', icon, arrow: 'right', border: true });
+        super({ title: 'Grid', icon, arrow: 'right', border: true });
 
         // Property Box
         const props = new SUEY.PropertyList();

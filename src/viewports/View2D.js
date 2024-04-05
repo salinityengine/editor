@@ -16,7 +16,7 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class View2D extends AbstractView {
 
-    viewportMode() { return EDITOR_MODES.SCENE_EDITOR_2D; }
+    mode() { return EDITOR_MODES.SCENE_EDITOR_2D; }
 
     floaterFamily() {
         const floaters = [
@@ -25,6 +25,7 @@ class View2D extends AbstractView {
             'inspector',
             'library',
             'outliner',
+            'previewer',
             'scripter',
             'shaper',
         ];

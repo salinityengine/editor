@@ -21,7 +21,7 @@ import { SelectCommand } from '../commands/Commands.js';
 
 class Worlds extends AbstractView {
 
-    viewportMode() { return EDITOR_MODES.WORLD_GRAPH; }
+    mode() { return EDITOR_MODES.WORLD_GRAPH; }
 
     floaterFamily() {
         const floaters = [

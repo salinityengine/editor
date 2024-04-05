@@ -289,7 +289,7 @@
 #tb-arrange-top    { z-index: 3; }
 #tb-arrange-middle { z-index: 1; }
 #tb-arrange-bottom { z-index: 0;
-    filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
+    filter: brightness(87%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
 }
 #tb-arrange-top, #tb-arrange-middle, #tb-arrange-bottom {
     transition: all 0.3s ease-in-out;
@@ -312,13 +312,13 @@
 #tb-arrange-backward,
 #tb-arrange-forward,
 #tb-arrange-front {
-    filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
+    filter: brightness(87%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
 }
 
 /* Transform */
 
 #tb-transform-front {
-    filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg));
+    filter: brightness(87%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg));
 }
 
 #tb-transform-front, #tb-transform-back {
@@ -335,7 +335,7 @@
 #tb-transform-vertical,
 #tb-transform-left,
 #tb-transform-right {
-    filter: brightness(100%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
+    filter: brightness(87%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 0deg)) var(--drop-shadow);
 }
 
 /********** Views */

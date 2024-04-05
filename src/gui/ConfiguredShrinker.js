@@ -9,13 +9,13 @@ import { Config } from '../config/Config.js';
 class ConfiguredShrinker extends SUEY.Shrinkable {
 
     constructor({
-        text = '',
+        title = '',
         icon = '',
         arrow = 'left',
         border = true,
         defaultExpanded = false,
     } = {}) {
-        super({ text, icon, arrow, border });
+        super({ title, icon, arrow, border });
 
         let expanded = Config.getKey(`blocks/expanded/${this.constructor.name}`);
         if (defaultExpanded && expanded == null) expanded = true;
