@@ -61,16 +61,6 @@ class AddComponentButton extends SUEY.Button {
                 componentCount++;
             }
 
-            // Rebuilding from 'componentChanged' signal?
-            if (component && component.isComponent) {
-                const tabChange = new Event('tab-changed');
-                // // OPTION 1: Select new component tab
-                // tabChange.value = component.type;
-                // // OPTION 2: Stay on current tab when component is added/changed
-                // tabChange.value = editor.inspector.selectedID;
-                // editor.inspector.dom.dispatchEvent(tabChange);
-            }
-
             if (componentCount === 0) self.setStyle('display', 'none');
         }
 

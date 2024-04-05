@@ -225,25 +225,28 @@ class EyeMenu extends SUEY.Menu {
                 if (windowMenuItem.checked) Layout.removeFloater(editor.getFloaterByID(windowName, false, false));
                 else editor.getFloaterByID(windowName, true /* build? */, true /* select? */);
             }
-
             for (const type in Layout.allFloaters()) {
-                const windowItem = new SUEY.MenuItem(`Show ${SUEY.Strings.capitalize(type)}`);
+                const windowItem = new SUEY.MenuItem(`Show ${SUEY.Strings.capitalize(type)}`).keepOpen();
                 windowItem.onSelect(() => toggleWindow(windowItem, type));
                 windowItem.floaterType = type;
                 windowItems.push(windowItem);
             }
 
-            editor.on('tab-changed', () => {
+            // Update Items on Tabs Changed
+            function updateWindowItems() {
                 for (const windowItem of windowItems) {
                     windowItem.setChecked(editor.getFloaterByID(windowItem.floaterType, false, false));
                 }
-            });
+            }
+            editor.on('tabs-changed', updateWindowItems);
 
+            // Update Items on Editor Mode Changed
             Signals.connect(editor, 'editorModeChanged', () => {
                 const allowed = editor.viewport().floaterFamily();
                 for (const windowItem of windowItems) {
                     windowItem.setStyle('display', allowed.includes(windowItem.floaterType) ? '' : 'none');
                 }
+                updateWindowItems();
             });
         }
 
