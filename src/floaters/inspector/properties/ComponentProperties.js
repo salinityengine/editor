@@ -35,17 +35,15 @@ class ComponentProperties extends SUEY.PropertyList {
         delete startData['base'];
 
         // Initial Build
-        buildPanel();
+        buildBlock();
 
-        this.on('pointerleave', () => {
-            Signals.dispatch('advisorInfo');
-        });
+        this.on('pointerleave', () => Signals.dispatch('advisorInfo'));
 
         // ----- END CTOR ----- (ONLY FUNCTIONS BELOW)
 
         /******************** BUILDER ********************/
 
-        function buildPanel() {
+        function buildBlock() {
 
             // // Verify that Editor hasn't changed selection
             // const entity = component.entity;
@@ -113,7 +111,7 @@ class ComponentProperties extends SUEY.PropertyList {
                 self.disableInputs();
             }
 
-        } // end buildPanel()
+        } // end buildBlock()
 
         /******************** REBUILD ********************/
 
@@ -155,7 +153,7 @@ class ComponentProperties extends SUEY.PropertyList {
 
                 // Timeout to rebuild 'properties'
                 setTimeout(() => {
-                    buildPanel();
+                    buildBlock();
 
                     // Reset Scroll Position
                     if (parent) parent.scrollTop = scrollPosition;

@@ -20,7 +20,7 @@ class RemoveAssetCommand extends Command {
         // Cancel if no uuid
         if (!asset.uuid) {
             this.valid = false;
-            console.warn(`RemoveAssetCommand: Asset has no uuid, asset is as follows:`);
+            console.warn(`RemoveAssetCommand.constructor(): Asset has no uuid, asset is as follows:`);
             console.log(asset);
         }
     }

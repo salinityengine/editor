@@ -8,7 +8,7 @@ import * as SUEY from 'gui';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 
-import { AssetPanel } from '../gui/AssetPanel.js';
+import { AssetBlock } from '../gui/AssetBlock.js';
 
 /**
  * Objects / Items / Prefabs
@@ -19,13 +19,13 @@ class Library extends SUEY.Titled {
         super({ title: 'Library' });
         const self = this;
 
-        /******************** PANELS */
+        /******************** BLOCKS */
 
         this.blocks = {};
 
         // 'Entity' Category (user defined)
         const general = 'unknown';
-        this.blocks[general] = new AssetPanel({ type: 'prefab', category: general, title: 'General', icon: `${FOLDER_TYPES}prefabs/general.svg` });
+        this.blocks[general] = new AssetBlock({ type: 'prefab', category: general, title: 'General', icon: `${FOLDER_TYPES}prefabs/general.svg` });
         this.add(this.blocks[general]);
 
         // Add Search Bar
@@ -61,8 +61,8 @@ class Library extends SUEY.Titled {
 
     searchBlocks() {
         for (const category in this.blocks) {
-            const panel = this.blocks[category];
-            panel.applySearch(this.getSearchTerm());
+            const block = this.blocks[category];
+            block.applySearch(this.getSearchTerm());
         }
     }
 

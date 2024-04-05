@@ -16,7 +16,7 @@ import { Signals } from '../config/Signals.js';
 const ASSET_WIDTH = 128;
 const ASSET_HEIGHT = 128;
 
-class AssetPanel extends SUEY.Shrinkable {
+class AssetBlock extends SUEY.Shrinkable {
 
     #expandStart = true;
     #expandString = '';
@@ -33,7 +33,7 @@ class AssetPanel extends SUEY.Shrinkable {
         arrow = 'left',
         border = true,
     } = {}) {
-        if (!type) return console.error('AssetPanel: No type defined!');
+        if (!type) return console.error('AssetBlock.constructor(): No type defined');
 
         // Super
         super({ text: title, icon, arrow, border });
@@ -45,9 +45,9 @@ class AssetPanel extends SUEY.Shrinkable {
 
         // Private
         this.#expandStart = true;
-        this.#expandString = `expandAssetPanel/${type}/${(category) ? category : 'all'}/`;
+        this.#expandString = `expandAssetBlock/${type}/${(category) ? category : 'all'}/`;
         this.#viewStart = view;
-        this.#viewString = `viewAssetPanel/${type}/${(category) ? category : 'all'}/`;
+        this.#viewString = `viewAssetBlock/${type}/${(category) ? category : 'all'}/`;
 
         /***** MENU *****/
 
@@ -69,9 +69,9 @@ class AssetPanel extends SUEY.Shrinkable {
 
         // Menu
         const viewMenu = new SUEY.Menu();
-        const itemIcon = new SUEY.MenuItem('Icon View').onSelect(() => { self.setViewKey('icon'); refreshPanel(); });
-        const itemText = new SUEY.MenuItem('Text View').onSelect(() => { self.setViewKey('text'); refreshPanel(); });
-        const itemList = new SUEY.MenuItem('List View').onSelect(() => { self.setViewKey('list'); refreshPanel(); });
+        const itemIcon = new SUEY.MenuItem('Icon View').onSelect(() => { self.setViewKey('icon'); refreshBlock(); });
+        const itemText = new SUEY.MenuItem('Text View').onSelect(() => { self.setViewKey('text'); refreshBlock(); });
+        const itemList = new SUEY.MenuItem('List View').onSelect(() => { self.setViewKey('list'); refreshBlock(); });
         viewMenu.add(itemIcon, /* itemText, */ itemList);
 
         // Add Menus/Buttons
@@ -81,12 +81,12 @@ class AssetPanel extends SUEY.Shrinkable {
 
         /***** EVENTS*****/
 
-        function panelExpand() {
+        function blockExpand() {
             self.setExpandKey(self.isExpanded);
         }
 
         // Asset Selection
-        function panelKeyDown(event) {
+        function blockKeyDown(event) {
             let selected = undefined;
 
             // Get children, remove 'EmptyBox'
@@ -116,16 +116,16 @@ class AssetPanel extends SUEY.Shrinkable {
             }
         }
 
-        this.on('expand', panelExpand);
-        this.on('keydown', panelKeyDown);
+        this.on('expand', blockExpand);
+        this.on('keydown', blockKeyDown);
 
         /***** SIGNALS *****/
 
         function forceRebuild() {
-            self.buildPanel(true /* clear? */);
+            self.buildBlock(true /* clear? */);
         }
 
-        function refreshPanel() {
+        function refreshBlock() {
             updateUI();
             forceRebuild();
         }
@@ -142,7 +142,7 @@ class AssetPanel extends SUEY.Shrinkable {
         // Editor / Project Changes
         Signals.connect(this, 'projectLoaded', forceRebuild);
         Signals.connect(this, 'schemeChanged', forceRebuild);
-        Signals.connect(this, 'settingsRefreshed', refreshPanel);
+        Signals.connect(this, 'settingsRefreshed', refreshBlock);
 
         /***** INIT *****/
 
@@ -173,8 +173,7 @@ class AssetPanel extends SUEY.Shrinkable {
         if (!this.bodyDiv || !this.bodyDiv.isElement) return;
         const children = this.bodyDiv.children;
         let hidden = 0;
-        for (let i = 0; i < children.length; i++) {
-            const child = children[i];
+        for (const child of children) {
             if (!child.isElement || child.isTemporary) continue;
             const name = (child.name) ? String(child.name).toLowerCase() : '';
             if (name.indexOf(this.#searchTerm) !== -1) {
@@ -184,21 +183,19 @@ class AssetPanel extends SUEY.Shrinkable {
                 hidden++;
             }
         }
-        ///// #OPTION: Only show when panel is empty
+        ///// #OPTION: Only show when block is empty
         this.#emptyItem?.setStyle('display', (children.length <= 1) ? '' : 'none');
         ///// #OPTION: Show if all items hidden
         // this.#emptyItem?.setStyle('display', (hidden === children.length - 1) ? '' : 'none');
         return this;
     }
 
-    buildPanel(clearPanel = false) {
+    buildBlock(clear = false) {
         // Clear?
-        if (clearPanel) {
-            this.clearContents();
-        }
+        if (clear) this.clearContents();
 
         // Empty Item
-        if (clearPanel || !this.#emptyItem) {
+        if (clear || !this.#emptyItem) {
             const empty = new SUEY.Row().addClass('suey-property-full');
             empty.setAttribute('tooltip', Language.getKey('assets/empty'));
             empty.isTemporary = true;
@@ -407,4 +404,4 @@ class AssetPanel extends SUEY.Shrinkable {
 
 }
 
-export { AssetPanel };
+export { AssetBlock };

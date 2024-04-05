@@ -106,7 +106,7 @@ class Advice {
             element.on('pointerenter', () => { Signals.dispatch('advisorInfo', title, html); });
             element.on('pointerleave', () => { Signals.dispatch('advisorInfo'); });
         } else if (element instanceof HTMLElement) {
-            console.warn(`Advice.attach: Attaching HTMLElement, prefer SueyElement`);
+            console.warn(`Advice.attach(): Attaching HTMLElement, prefer SueyElement`);
             element.addEventListener('pointerenter', () => { Signals.dispatch('advisorInfo', title, html); });
             element.addEventListener('pointerleave', () => { Signals.dispatch('advisorInfo'); });
         }

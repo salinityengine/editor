@@ -13,7 +13,7 @@ import { Language } from '../config/Language.js';
 import { Signals } from '../config/Signals.js';
 
 import { AddAssetCommand } from '../commands/Commands.js';
-import { AssetPanel } from '../gui/AssetPanel.js';
+import { AssetBlock } from '../gui/AssetBlock.js';
 
 /**
  * Script Library
@@ -68,13 +68,13 @@ class Codex extends SUEY.Floater {
         buttonRow.add(addButton, new SUEY.FlexSpacer());
         libPanel.tabTitle.add(buttonRow);
 
-        /******************** PANELS */
+        /******************** BLOCKS */
 
         this.blocks = {};
 
         // No Category
         const unknown = 'unknown';
-        this.blocks[unknown] = new AssetPanel({ type: 'script', category: unknown, title: 'General', icon: `${FOLDER_TYPES}script/general.svg`, view: 'list' });
+        this.blocks[unknown] = new AssetBlock({ type: 'script', category: unknown, title: 'General', icon: `${FOLDER_TYPES}script/general.svg`, view: 'list' });
         libPanel.add(this.blocks[unknown]);
 
         // Add Search Bar
@@ -96,10 +96,10 @@ class Codex extends SUEY.Floater {
             if (!asset || !asset.uuid) return;
             if (type === 'script') {
                 const category = asset.category ?? unknown;
-                const panel = self.blocks[category];
-                if (panel) {
+                const block = self.blocks[category];
+                if (block) {
                     editor.selectFloater('scripts');
-                    panel.setExpanded();
+                    block.setExpanded();
                     const assetBox = document.getElementById(asset.uuid);
                     if (assetBox) setTimeout(() => { assetBox.focus(); assetBox.click(); }, 0);
                 }
@@ -125,16 +125,16 @@ class Codex extends SUEY.Floater {
                         //
                     }
                     const title = SUEY.Strings.capitalize(category);
-                    self.blocks[category] = new AssetPanel({ type: 'script', category, title, icon, view: 'list' });
+                    self.blocks[category] = new AssetBlock({ type: 'script', category, title, icon, view: 'list' });
                     self.add(self.blocks[category]);
                 }
             }
 
             // Add Icons
             for (const category in self.blocks) {
-                const panel = self.blocks[category];
-                panel.buildPanel(false /* clear? */);
-                panel.applySearch(self.getSearchTerm());
+                const block = self.blocks[category];
+                block.buildBlock(false /* clear? */);
+                block.applySearch(self.getSearchTerm());
             }
         }
 
@@ -144,10 +144,10 @@ class Codex extends SUEY.Floater {
                 processScripts(type);
             } else {
                 const category = script.category ?? unknown;
-                const panel = self.blocks[category];
-                if (panel) {
-                    panel.updateItem(type, script);
-                    panel.applySearch(self.getSearchTerm());
+                const block = self.blocks[category];
+                if (block) {
+                    block.updateItem(type, script);
+                    block.applySearch(self.getSearchTerm());
                 } else {
                     processScripts(type);
                 }
@@ -184,8 +184,8 @@ class Codex extends SUEY.Floater {
 
     searchBlocks() {
         for (const category in this.blocks) {
-            const panel = this.blocks[category];
-            panel.applySearch(this.getSearchTerm());
+            const block = this.blocks[category];
+            block.applySearch(this.getSearchTerm());
         }
     }
 

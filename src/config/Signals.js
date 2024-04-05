@@ -79,15 +79,15 @@ class Signals {
     /** Connects callback to signal and stores in Element slot */
     static connect(element, name, callback) {
         if (!(element instanceof SUEY.Element)) {
-            console.warn(`Signals.connect: Element was not type Suey Element`, element);
+            console.warn(`Signals.connect(): Element was not type Suey Element`, element);
         } else if (typeof callback !== 'function') {
-            console.warn(`Signals.connect: No callback function, or not of 'function' type`);
+            console.warn(`Signals.connect(): No callback function, or not of 'function' type`);
         } else {
             const signal = _signals[name];
             if (signal && signal instanceof SUEY.Signal) {
                 element.addSlot(signal.add(callback));
             } else {
-                console.warn(`Signals.connect: Could not find signal '${name}'`);
+                console.warn(`Signals.connect(): Could not find signal '${name}'`);
             }
         }
     }
@@ -97,7 +97,7 @@ class Signals {
         if (signal && signal instanceof SUEY.Signal) {
             signal.dispatch(...args);
         } else {
-            console.warn(`Signals.dispatch: Could not find signal '${name}'`);
+            console.warn(`Signals.dispatch(): Could not find signal '${name}'`);
         }
     }
 
@@ -106,7 +106,7 @@ class Signals {
         if (signal && signal instanceof SUEY.Signal) {
             signal.active = active;
         } else {
-            console.warn(`Signals.toggle: Could not find signal '${name}'`);
+            console.warn(`Signals.toggle(): Could not find signal '${name}'`);
         }
     }
 
@@ -124,7 +124,7 @@ class Signals {
 const _signals = [];
 if (_signals.length === 0) {
     for (const signalName of SIGNAL_NAMES) {
-        if (_signals[signalName]) console.warn(`Create Signals: Duplicate signal with name ('${signalName}')`);
+        if (_signals[signalName]) console.warn(`Signals.js: Duplicate signal with name ('${signalName}')`);
         else _signals[signalName] = new SUEY.Signal();
     }
 }

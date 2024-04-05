@@ -102,7 +102,7 @@ class Loader {
                 break;
 
             default:
-                console.error(`Loader.loadFile: Unsupported file format ('${extension}'')`);
+                console.error(`Loader.loadFile(): Unsupported file format ('${extension}'')`);
                 break;
         }
     }
@@ -135,7 +135,7 @@ function handleJSON(data) {
             });
 
         default:
-            console.warn(`Loader: File type unknown: ${data.metadata.type.toLowerCase()}`);
+            console.warn(`Loader.handleJSON(): File type unknown: ${data.metadata.type.toLowerCase()}`);
     }
 }
 

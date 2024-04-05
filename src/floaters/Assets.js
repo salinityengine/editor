@@ -7,7 +7,7 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { AddAssetCommand } from '../commands/Commands.js';
-import { AssetPanel } from '../gui/AssetPanel.js';
+import { AssetBlock } from '../gui/AssetBlock.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 import { Signals } from '../config/Signals.js';
@@ -58,20 +58,20 @@ class Assets extends SUEY.Titled {
         buttonRow.add(addButton, new SUEY.FlexSpacer());
         this.tabTitle.add(buttonRow);
 
-        /******************** PANELS */
+        /******************** BLOCKS */
 
         this.blocks = {};
 
-        this.blocks['geometry'] = new AssetPanel({ type: 'geometry', title: 'Geometry', icon: `${FOLDER_FLOATERS}asset/geometry.svg` });
-        this.blocks['material'] = new AssetPanel({ type: 'material', title: 'Material', icon: `${FOLDER_FLOATERS}asset/material.svg` });
-        this.blocks['palette'] = new AssetPanel({ type: 'palette', title: 'Palette', icon: `${FOLDER_FLOATERS}asset/palette.svg` });
-        this.blocks['shape'] = new AssetPanel({ type: 'shape', title: 'Shape', icon: `${FOLDER_FLOATERS}asset/shape.svg` });
-        this.blocks['texture'] = new AssetPanel({ type: 'texture', title: 'Texture', icon: `${FOLDER_FLOATERS}asset/texture.svg` });
+        this.blocks['geometry'] = new AssetBlock({ type: 'geometry', title: 'Geometry', icon: `${FOLDER_FLOATERS}asset/geometry.svg` });
+        this.blocks['material'] = new AssetBlock({ type: 'material', title: 'Material', icon: `${FOLDER_FLOATERS}asset/material.svg` });
+        this.blocks['palette'] = new AssetBlock({ type: 'palette', title: 'Palette', icon: `${FOLDER_FLOATERS}asset/palette.svg` });
+        this.blocks['shape'] = new AssetBlock({ type: 'shape', title: 'Shape', icon: `${FOLDER_FLOATERS}asset/shape.svg` });
+        this.blocks['texture'] = new AssetBlock({ type: 'texture', title: 'Texture', icon: `${FOLDER_FLOATERS}asset/texture.svg` });
 
-        // Add Panels
+        // Add Blocks
         for (const type in this.blocks) {
-            const panel = this.blocks[type];
-            this.add(panel);
+            const block = this.blocks[type];
+            this.add(block);
         }
 
         // Add Search Bar
@@ -91,28 +91,28 @@ class Assets extends SUEY.Titled {
 
         function focusAsset(type, asset) {
             if (!asset || !asset.uuid) return;
-            const panel = self.blocks[type];
-            if (panel) {
+            const block = self.blocks[type];
+            if (block) {
                 editor.selectFloater('assets');
-                panel.setExpanded();
+                block.setExpanded();
                 const assetBox = document.getElementById(asset.uuid);
                 if (assetBox) setTimeout(() => { assetBox.focus(); assetBox.click(); }, 0);
             }
         }
 
         function processAssets(type) {
-            const panel = self.blocks[type];
-            if (panel) {
-                panel.buildPanel(false /* clear? */);
-                panel.applySearch(self.getSearchTerm());
+            const block = self.blocks[type];
+            if (block) {
+                block.buildBlock(false /* clear? */);
+                block.applySearch(self.getSearchTerm());
             }
         }
 
         function assetChanged(type, asset) {
-            const panel = self.blocks[type];
-            if (panel) {
-                panel.updateItem(type, asset);
-                panel.applySearch(self.getSearchTerm());
+            const block = self.blocks[type];
+            if (block) {
+                block.updateItem(type, asset);
+                block.applySearch(self.getSearchTerm());
             }
         }
 
@@ -141,8 +141,8 @@ class Assets extends SUEY.Titled {
 
     searchBlocks() {
         for (const category in this.blocks) {
-            const panel = this.blocks[category];
-            panel.applySearch(this.getSearchTerm());
+            const block = this.blocks[category];
+            block.applySearch(this.getSearchTerm());
         }
     }
 

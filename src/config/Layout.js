@@ -27,7 +27,7 @@ class Layout {
 
         // Checks
         if (!viewport) {
-            console.warn('Layout.default: Editor viewport not provided!');
+            console.warn('Layout.default(): Editor viewport not provided!');
             return;
         }
 
@@ -67,7 +67,7 @@ class Layout {
     static createFloater(id) {
         const floaters = Layout.allFloaters();
         if (id in floaters) return new floaters[id];
-        console.warn(`Layout.createFloater: Unknown type '${id}'`);
+        console.warn(`Layout.createFloater(): Unknown type '${id}'`);
         return null;
     }
 
@@ -127,11 +127,11 @@ class Layout {
     static save(docker, viewport) {
         // Checks
         if (!docker.isPrimary()) {
-            console.warn('Layout.save: The provided Docker is not the Primary Docker');
+            console.warn('Layout.save(): The provided Docker is not the Primary Docker');
             return;
         }
         if (!viewport) {
-            console.warn('Layout.save: Editor viewport not provided!');
+            console.warn('Layout.save(): Editor viewport not provided!');
             return;
         }
 
@@ -199,11 +199,11 @@ class Layout {
 
         // Checks
         if (!docker.isPrimary()) {
-            console.warn('Layout.load: The provided Docker is not the Primary Docker');
+            console.warn('Layout.load(): The provided Docker is not the Primary Docker');
             return;
         }
         if (!viewport) {
-            console.warn('Layout.load: Editor viewport not provided!');
+            console.warn('Layout.load(): Editor viewport not provided!');
             return;
         }
 

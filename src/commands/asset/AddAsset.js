@@ -20,7 +20,7 @@ class AddAssetCommand extends Command {
         // Cancel if no uuid
         if (!asset.uuid) {
             this.valid = false;
-            console.warn(`AddAssetCommand: Asset has no uuid, asset is as follows:`);
+            console.warn(`AddAssetCommand.constructor(): Asset has no uuid, asset is as follows:`);
             console.log(asset);
         }
     }
