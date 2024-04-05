@@ -39,6 +39,7 @@ class AddAssetCommand extends Command {
             Signals.dispatch('assetAdded', this.assetType, this.asset);
             Signals.dispatch('assetSelect', this.assetType, this.asset);
             Signals.dispatch('inspectorClear');
+            Signals.dispatch('previewerClear');
         }
     }
 
@@ -48,6 +49,7 @@ class AddAssetCommand extends Command {
             this.wasAdded = false;
             Signals.dispatch('assetRemoved', this.assetType, this.asset);
             Signals.dispatch('inspectorClear');
+            Signals.dispatch('previewerClear');
         }
     }
 

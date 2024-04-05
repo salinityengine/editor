@@ -166,6 +166,9 @@ class Codex extends SUEY.Floater {
 
         /***** INIT *****/
 
+        // Build
+        processScripts('script');
+
         // Inititate search term
         this.searchBlocks();
 

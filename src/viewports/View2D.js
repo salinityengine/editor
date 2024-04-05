@@ -34,6 +34,7 @@ class View2D extends AbstractView {
 
     constructor() {
         super();
+        const self = this;
 
         // Toolbar
         this.toolbar = new View2DToolbar(this);
@@ -51,6 +52,15 @@ class View2D extends AbstractView {
         this.mouseDownButton = -1;                              // tracks button on last mouse down
         this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
+
+        /******************** EVENTS ********************/
+
+        this.on('pointerdown', (event) => viewportPointerDown(self, event));
+        this.on('pointermove', (event) => viewportPointerMove(self, event));
+        this.on('pointerup', (event) => viewportPointerUp(self, event));
+        this.on('keydown', (event) => viewportKeyDown(self, event));
+        this.on('keyup', (event) => viewportKeyUp(self, event));
+
     }
 
     /******************** CLIPBOARD / EDIT ********************/
@@ -83,3 +93,30 @@ class View2D extends AbstractView {
 }
 
 export { View2D };
+
+/******************** INTERNAL: POINTER ********************/
+
+function viewportPointerDown(viewport, event) {
+
+    // Clear Preview
+    if (editor.selected.length === 0) Signals.dispatch('previewerClear');
+
+}
+
+function viewportPointerMove(viewport, event) {
+
+}
+
+function viewportPointerUp(viewport, event) {
+
+}
+
+/******************** INTERNAL: KEYBOARD ********************/
+
+function viewportKeyDown(viewport, event) {
+
+}
+
+function viewportKeyUp(viewport, event) {
+
+}

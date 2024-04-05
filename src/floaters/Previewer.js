@@ -24,6 +24,7 @@ class Previewer extends SUEY.Floater {
 
         // Private
         let item = undefined;
+        let clearTimer = undefined;
 
         /**
          * Builds (or rebuilds) the object previewer
@@ -83,6 +84,11 @@ class Previewer extends SUEY.Floater {
 
             // Select this Floater
             if (highlight && self.dock) self.dock.selectTab(self.id);
+
+            // Hide if Empty
+            if (self.dock && self.dock.tabCount() === 1) {
+                self.dock.setStyle('display', (item == null) ? 'none' : '');
+            }
 
             // Dispatch Signals
             Signals.dispatch('previewerChanged');

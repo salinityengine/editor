@@ -202,7 +202,7 @@ class AssetBlock extends SUEY.Shrinkable {
             empty.dom.draggable = false;
 
             const noneBox = new SUEY.VectorBox(`${FOLDER_MENU}line.svg`);
-            noneBox.setStyle('height', '150%', 'opacity', '0', 'padding', '0em', 'filter', 'brightness(0)');
+            noneBox.setStyle('height', '150%', 'opacity', '0.2', 'padding', '0em', 'filter', 'brightness(0)');
             this.add(empty.add(noneBox));
 
             // Save Reference

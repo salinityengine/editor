@@ -94,7 +94,7 @@ class Editor extends SUEY.Div {
 
         document.addEventListener('keydown', onKeyDown);
         document.addEventListener('keyup', onKeyUp);
-        document.addEventListener('visibilitychange', onVisibilityChange);
+        document.addEventListener('visibilitychange', onVisibilityChange); // i.e. 'pagehide' / 'beforeunload'
 
         this.on('destroy', () => {
             document.removeEventListener('keydown');
@@ -112,10 +112,11 @@ class Editor extends SUEY.Div {
             // editor.world = editor.project.activeWorld();
             // editor.stage = editor.world.activeStage();
 
-            if (self.history) self.history.clear();     // clear history
-            Signals.dispatch('inspectorClear');         // clear inspector
-            Signals.dispatch('sceneGraphChanged');      // rebuild outliner
-            self.viewport()?.cameraReset();             // reset camera
+            if (self.history) self.history.clear();             // clear history
+            Signals.dispatch('inspectorClear');                 // clear inspector
+            Signals.dispatch('previewerClear');                 // clear previewer
+            Signals.dispatch('sceneGraphChanged');              // rebuild outliner
+            self.viewport()?.cameraReset();                     // reset camera
         });
 
         // Settings Refreshed
@@ -124,6 +125,7 @@ class Editor extends SUEY.Div {
             Signals.dispatch('mouseModeChanged', Config.getKey('viewport/mouse/mode'));
             Signals.dispatch('transformModeChanged', Config.getKey('viewport/controls/mode'));
             Signals.dispatch('inspectorRefresh');
+            Signals.dispatch('previewerRefresh');
         });
 
         // Entity Changed
@@ -184,6 +186,10 @@ class Editor extends SUEY.Div {
 
         // Load Floaters
         Layout.load(this.docker, newViewport);
+
+        // Clear Inspector / Previewer
+        Signals.dispatch('inspectorClear');
+        Signals.dispatch('previewerClear');
 
         // Dispatch Signals
         Signals.dispatch('editorModeChanged', mode);
@@ -429,7 +435,7 @@ class Editor extends SUEY.Div {
 const editor = new Editor();
 export default editor;
 
-/******************** INTERNAL ********************/
+/******************** INTERNAL: KEYBOARD ********************/
 
 function editorKeyDown(editor, event) {
     // Ignore Key Events While Playing
