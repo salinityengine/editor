@@ -228,6 +228,7 @@ class Layout {
                         createDocker(childNode, newDocker);
                         addedDock = true;
                     } else if (twinDocker) {
+                        if (childNode.collapsed) twinDocker.collapseTabs();
                         createDocker(childNode, twinDocker.contents());
                     }
 

@@ -5,9 +5,6 @@
 Toolbar:
     - View2D Toolbar 'Grid' images
 
-Docker Layout:
-    - Problem with expand/collapse and saving/loading
-
 View2D:
     Editor:
         - Build from Suey.Graph
