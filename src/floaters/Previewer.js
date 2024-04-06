@@ -76,7 +76,6 @@ class Previewer extends SUEY.Floater {
 
             // Title
             const title = new SUEY.Div(SUEY.Strings.capitalize(titleName)).addClass('suey-tab-title');
-            if (self.dock && self.dock.hasClass('suey-window')) title.addClass('suey-hidden');
             self.add(title);
 
             // Add Blocks

@@ -24,7 +24,6 @@ class Projecter extends SUEY.Floater {
 
         // Title
         const inspectorTitle = new SUEY.Div('Project').addClass('suey-tab-title');
-        if (self.dock && self.dock.hasClass('suey-window')) inspectorTitle.addClass('suey-hidden');
         self.add(inspectorTitle);
 
         // Create Blocks
