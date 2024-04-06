@@ -161,7 +161,7 @@ class Layout {
                         type: 'tabbed',
                         selectedID: child.selectedID,
                         hasSpacer: (spacers.length > 0),
-                        floaters: SUEY.Dom.childrenWithClass(child, 'suey-floater', true /* recursive? */).map(floater => floater.id),
+                        floaters: SUEY.Dom.childrenWithClass(child, 'suey-tab-button', true /* recursive? */).map(button => button.id),
                     };
                     parentLayout.children.push(tabbedLayout);
                 // Window

@@ -90,6 +90,27 @@ class View2D extends AbstractView {
         editor.execute(new SelectCommand([], editor.selected));
     }
 
+    /******************** VIEW ********************/
+
+    cameraFocus() {
+        //
+        // TODO
+        //
+    }
+
+    cameraReset() {
+        //
+        // TODO
+        //
+    }
+
+    gridSize() {
+        //
+        // TODO
+        //
+        return 0;
+    }
+
 }
 
 export { View2D };

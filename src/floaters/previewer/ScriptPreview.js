@@ -1,45 +1,49 @@
-import * as ONE from 'onsight';
-import * as OSUI from 'osui';
-import * as EDITOR from 'editor';
+import {
+    WIDGET_SPACING,
+} from 'constants';
+import editor from 'editor';
+import * as SALT from 'engine';
+import * as SUEY from 'gui';
 
 import { Config } from '../../config/Config.js';
-import { Language } from '../../config/Language.js';
+import { Signals } from '../../config/Signals.js';
+
 import { SetAssetValueCommand } from '../../commands/Commands.js';
 
-class ScriptBlock extends OSUI.Titled {
+class ScriptPreview extends SUEY.Scrollable {
 
     constructor(script) {
-        super({ title: 'Script' });
+        super();
 
         // Property Box
-        const props = new OSUI.PropertyList('30%');
+        const props = new SUEY.PropertyList('30%');
         this.add(props);
 
         // Name
-        const nameTextBox = new OSUI.TextBox().onChange(() => {
+        const nameTextBox = new SUEY.TextBox().on('change', () => {
             editor.execute(new SetAssetValueCommand(script, 'name', nameTextBox.getValue()));
         });
         props.addRow('Name', nameTextBox);
 
         // UUID
-        const scriptUUID = new OSUI.TextBox().setDisabled(true);
+        const scriptUUID = new SUEY.TextBox().setDisabled(true);
 
         // 'Copy' UUID Button
-        const scriptUUIDCopy = new OSUI.Button('Copy').onClick(() => {
+        const scriptUUIDCopy = new SUEY.Button('Copy').onPress(() => {
             navigator.clipboard.writeText(script.uuid).then(
                 function() { /* success */ },
-                function(err) { console.error('Async: Could not copy text: ', err);
-            });
+                function(err) { console.error('ScriptPreview.copy(): Could not copy text to clipboard - ', err); }
+            );
         });
-        scriptUUIDCopy.setStyle('marginLeft', EDITOR.WIDGET_SPACING)
+        scriptUUIDCopy.setStyle('marginLeft', WIDGET_SPACING)
         scriptUUIDCopy.setStyle('minWidth', '3.5em');
         if (Config.getKey('promode') === true) {
             props.addRow('UUID', scriptUUID, scriptUUIDCopy);
         }
 
         // Edit
-        const scriptEdit = new OSUI.Button(`Edit ${Language.getKey('assets/types/script')}`).onClick(() => {
-            signals.editScript.dispatch(script);
+        const scriptEdit = new SUEY.Button('Edit Script').onPress(() => {
+            Signals.dispatch('editScript', script);
         });
         props.addRow('Edit', scriptEdit);
 
@@ -57,11 +61,7 @@ class ScriptBlock extends OSUI.Titled {
             if (asset.uuid === script.uuid) updateUI();
         }
 
-        signals.assetChanged.add(assetChangedCallback);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.assetChanged.remove(assetChangedCallback);
-        }, { once: true });
+        Signals.connect(this, 'assetChanged', assetChangedCallback);
 
         /***** INIT *****/
 
@@ -70,4 +70,4 @@ class ScriptBlock extends OSUI.Titled {
 
 }
 
-export { ScriptBlock };
+export { ScriptPreview };

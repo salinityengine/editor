@@ -28,8 +28,8 @@ class ShapePreview extends OSUI.Titled {
         const shapeUUIDCopy = new OSUI.Button('Copy').onClick(() => {
             navigator.clipboard.writeText(shape.uuid).then(
                 function() { /* success */ },
-                function(err) { console.error('Async: Could not copy text: ', err);
-            });
+                function(err) { console.error('ShapePreview.copy(): Could not copy text to clipboard - ', err); }
+            );
         });
         shapeUUIDCopy.setStyle('marginLeft', EDITOR.WIDGET_SPACING)
         shapeUUIDCopy.setStyle('minWidth', '3.5em');

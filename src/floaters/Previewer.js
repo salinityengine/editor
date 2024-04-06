@@ -10,6 +10,7 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
+import { ScriptPreview } from './previewer/ScriptPreview.js';
 
 /**
  * Object Previewer
@@ -60,9 +61,8 @@ class Previewer extends SUEY.Floater {
 
             // ITEM: Script
             } else if (item.isScript) {
-                const scriptText = new SUEY.Row().add(new SUEY.Text(`Script: '${item.name}'`));
-                scriptText.setStyle('justifyContent', 'center', 'padding', '1em var(--border-small)');
-                blocks.push(scriptText);
+                titleName = 'Script';
+                blocks.push(new ScriptPreview(item));
 
             // ITEM: Unknown
             } else {

@@ -30,7 +30,7 @@ class Historian extends SUEY.Floater {
 
         /***** HEADER BUTTONS *****/
 
-        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
+        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)');
 
         // 'History Clear' Button
         const historyClear = new SUEY.Button().addClass('suey-borderless-button').onPress(() => {

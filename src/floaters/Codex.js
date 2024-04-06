@@ -33,7 +33,7 @@ class Codex extends SUEY.Floater {
 
         /******************** HEADER BUTTONS */
 
-        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
+        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)');
 
         /***** 'Add' Asset *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');

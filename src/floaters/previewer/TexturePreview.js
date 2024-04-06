@@ -32,8 +32,8 @@ class TexturePreview extends OSUI.Titled {
         const textureUUIDCopy = new OSUI.Button('Copy').onClick(() => {
             navigator.clipboard.writeText(texture.uuid).then(
                 function() { /* success */ },
-                function(err) { console.error('Async: Could not copy text: ', err);
-            });
+                function(err) { console.error('TexturePreview.copy(): Could not copy text to clipboard - ', err); }
+            );
         });
         textureUUIDCopy.setStyle('marginLeft', EDITOR.WIDGET_SPACING)
         textureUUIDCopy.setStyle('minWidth', '3.5em');

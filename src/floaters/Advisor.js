@@ -89,7 +89,7 @@ class Advisor extends SUEY.Floater {
 
         /********** HEADER BUTTONS */
 
-        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 0.75em', 'display', 'none');
+        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)', 'display', 'none');
         const buttonSpacer = new SUEY.FlexSpacer().setStyle('pointer-events', 'none');
 
         const backButton = new SUEY.Button().addClass('suey-borderless-button');

@@ -29,8 +29,8 @@ class PalettePreview extends OSUI.Titled {
         const paletteUUIDCopy = new OSUI.Button('Copy').onClick(() => {
             navigator.clipboard.writeText(palette.uuid).then(
                 function() { /* success */ },
-                function(err) { console.error('Async: Could not copy text: ', err);
-            });
+                function(err) { console.error('PalettePreview.copy(): Could not copy text to clipboard - ', err); }
+            );
         });
         paletteUUIDCopy.setStyle('marginLeft', EDITOR.WIDGET_SPACING)
         paletteUUIDCopy.setStyle('minWidth', '3.5em');

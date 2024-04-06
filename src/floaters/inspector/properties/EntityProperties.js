@@ -40,8 +40,8 @@ class EntityProperties extends SUEY.PropertyList {
         const entityUUIDCopy = new SUEY.Button('Copy').onPress(() => {
             navigator.clipboard.writeText(entity.uuid).then(
                 function() { /* success */ },
-                function(err) { console.error('EntityProperties.copy(): Could not copy text to clipboard - ', err);
-            });
+                function(err) { console.error('EntityProperties.copy(): Could not copy text to clipboard - ', err); }
+            );
         });
         entityUUIDCopy.setStyle('marginLeft', WIDGET_SPACING)
         entityUUIDCopy.setStyle('minWidth', '3.5em');
