@@ -3,6 +3,7 @@ import {
 } from 'constants';
 import * as SUEY from 'gui';
 import { Config } from './Config.js';
+import { Signals } from './Signals.js';
 
 import { Advisor } from '../floaters/Advisor.js';
 import { Assets } from '../floaters/Assets.js';
@@ -38,6 +39,7 @@ class Layout {
             'codex',
             'advisor',
             'inspector',
+            'previewer',
         ];
 
         // Install Floaters
@@ -47,6 +49,10 @@ class Layout {
                 Layout.installFloater(docker, Layout.createFloater(floaterName));
             }
         }
+
+        // Clear Inspector / Previewer
+        Signals.dispatch('inspectorClear');
+        Signals.dispatch('previewerClear');
     }
 
     /******************** FLOATERS */
@@ -89,7 +95,11 @@ class Layout {
                     while (queue.length > 0) {
                         const currentElement = queue.shift();
                         for (const child of currentElement.children) {
-                            if (child[property] === value) return child;
+                            if (child[property] === value) {
+                                if (SUEY.Dom.childWithClass(child, 'suey-tabbed', false /* recursive? */)) {
+                                    return child;
+                                }
+                            }
                             if (recursive) queue.push(child);
                         }
                     }
