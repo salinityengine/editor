@@ -27,31 +27,31 @@ class Advisor extends SUEY.Floater {
 
         const welcomeContents = new SUEY.Div().addClass('suey-absolute-box', 'salt-advisor-welcome-box');
         welcomeContents.setInnerHtml(`
-        <div style='padding-bottom: 0.5em;'>
-            <span style='font-size: 110%; color: rgb(var(--triadic2));'>Welcome</span>
-            <span style='font-size: 110%; color: rgb(var(--triadic1));'>&nbspto&nbsp</span>
-            <span style='font-size: 110%; color: rgb(var(--icon));'>Salinity</span>
-        </div>
-        <div class='salt-advisor-wave-holder'>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_back salt-instant-start'>
-                <pattern id="wave1" patternUnits="userSpaceOnUse" width="280" height="16">
-                <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
-                </pattern>
-                <rect width="100%" height="100%" fill="url(#wave1)"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_middle salt-instant-start'>
-                <pattern id="wave2" patternUnits="userSpaceOnUse" width="280" height="16">
-                <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
-                </pattern>
-                <rect width="100%" height="100%" fill="url(#wave2)"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_front salt-instant-start'>
-                <pattern id="wave3" patternUnits="userSpaceOnUse" width="280" height="16">
-                <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
-                </pattern>
-                <rect width="100%" height="100%" fill="url(#wave3)"/>
-            </svg>
-        </div>
+            <div style='padding-bottom: 0.5em;'>
+                <span style='font-size: 110%; color: rgb(var(--triadic2));'>Welcome</span>
+                <span style='font-size: 110%; color: rgb(var(--triadic1));'>&nbspto&nbsp</span>
+                <span style='font-size: 110%; color: rgb(var(--icon));'>Salinity</span>
+            </div>
+            <div class='salt-advisor-wave-holder'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_back salt-instant-start'>
+                    <pattern id="wave1" patternUnits="userSpaceOnUse" width="280" height="16">
+                    <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#wave1)"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_middle salt-instant-start'>
+                    <pattern id="wave2" patternUnits="userSpaceOnUse" width="280" height="16">
+                    <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#wave2)"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 5600 16' class='water_wave water_wave_front salt-instant-start'>
+                    <pattern id="wave3" patternUnits="userSpaceOnUse" width="280" height="16">
+                    <path d="M140,15.986c21.5,-0.319 38.8,-1.998 51.1,-3.597c13.4,-1.758 26.5,-4.157 27.3,-4.316c15.6,-2.878 19.6,-4.317 30.1,-5.916c7.1,-1.039 17.9,-2.238 31.5,-2.158l0,15.987l-140,0Zm0,0l-140,0l0,-15.987c13.6,-0.08 24.3,1.119 31.5,2.158c10.5,1.599 14.5,3.038 30.1,5.916c0.8,0.159 13.9,2.558 27.3,4.316c12.3,1.599 29.6,3.278 51.1,3.597Z"/>
+                    </pattern>
+                    <rect width="100%" height="100%" fill="url(#wave3)"/>
+                </svg>
+            </div>
         `);
 
         // OPTION: Graphics
@@ -89,7 +89,7 @@ class Advisor extends SUEY.Floater {
 
         /********** HEADER BUTTONS */
 
-        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)', 'display', 'none');
+        const buttonRow = new SUEY.AbsoluteBox().addClass('salt-advisor-buttons');
         const buttonSpacer = new SUEY.FlexSpacer().setStyle('pointer-events', 'none');
 
         const backButton = new SUEY.Button().addClass('suey-borderless-button');
@@ -134,12 +134,14 @@ class Advisor extends SUEY.Floater {
         // Events
         this.on('pointerenter', () => {
             active = false;
-            buttonRow.setStyle('display', '');
+            buttonRow.setStyle('opacity', '1');
+            buttonRow.setStyle('pointer-events', 'all');
         });
 
         this.on('pointerleave', () => {
             active = true;
-            buttonRow.setStyle('display', 'none');
+            buttonRow.setStyle('opacity', '0');
+            buttonRow.setStyle('pointer-events', 'none');
             setInfo();
         });
 
@@ -147,19 +149,24 @@ class Advisor extends SUEY.Floater {
 
         function setInfo(title, html = '') {
             if (title === self.#title) return;
+            let newTitle = advice.title;
             if (title) {
-                titleText.setInnerHtml(title);
+                newTitle = title;
                 bodyContents.setInnerHtml(html);
                 bodyContents.setStyle('opacity', '1.0');
                 welcomeContents.setStyle('opacity', '0.0');
             } else {
-                titleText.setInnerHtml(advice.title);
                 bodyContents.setInnerHtml('');
                 bodyContents.setStyle('opacity', '0.0');
                 welcomeContents.setStyle('opacity', '1.0');
                 history = -1;
             }
+            titleText.setInnerHtml(newTitle);
+            if (self.dock && self.dock.hasClass('suey-window')) {
+                self.dock.setTitle(newTitle);
+            }
             self.#title = title;
+            updateButtons();
         }
 
         function wantsToUpdate(title, html = '') {
@@ -172,7 +179,6 @@ class Advisor extends SUEY.Floater {
                 history = 0;
             }
             setInfo(title, html);
-            updateButtons();
         }
 
         /***** SIGNALS *****/

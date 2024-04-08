@@ -3,6 +3,18 @@
 .salt-advisor {
     align-items: stretch;
 }
+.suey-window .salt-advisor {
+    z-index: 200 !important;
+}
+
+.salt-advisor-buttons {
+    pointer-events: all;
+    left: -1em !important;
+    right: -1em !important;
+    width: auto !important;
+    padding: 0 1.8em !important;
+    background-color: transparent;
+}
 
 .salt-advisor-scroller {
     position: relative;

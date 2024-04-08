@@ -2,11 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Floater Menus:
-    - Tab Title buttons conflicting with Resizers
-        - Move resizers to back of z-index, turn fancy panels pointer-events to none
-        - Do away with all uneccessary 'suey-no-resize' stuff
-
 Toolbar:
     - View2D Toolbar 'Grid' images
 

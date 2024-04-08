@@ -103,11 +103,7 @@ class PalettePreview extends OSUI.Titled {
             if (asset.uuid === palette.uuid) updateUI();
         }
 
-        signals.assetChanged.add(assetChangedCallback);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.assetChanged.remove(assetChangedCallback);
-        }, { once: true });
+        Signals.connect(this, 'assetChanged', assetChangedCallback);
 
         /***** INIT *****/
 
