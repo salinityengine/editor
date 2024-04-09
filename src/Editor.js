@@ -33,38 +33,38 @@ class Editor extends SUEY.Div {
 
         /********** ACTIVE PROJECT */
 
-        this.project = new SALT.Project();                      // SALT.Project that has the Editor's attention
+        this.project = new SALT.Project();                      // SALT.Project loaded into editor
 
         /********** MODULES */
 
-        this.clipboard = new Clipboard();                       // Copy / Paste Clipboard
-        this.history = new History();                           // Undo / Redo History
-        // this.storage = new Storage();                        // TODO: Storage / Autosave
+        this.clipboard = new Clipboard();                       // copy / paste clipboard
+        this.history = new History();                           // undo / redo history
+        // this.storage = new Storage();                        // TODO: storage / autosave
 
         /********** PROPERTIES */
 
         // Elements
-        this.docker = null;                                     // Docker
-        this.infoBox = null;                                    // Popup Information
-        this.toolbar = null;                                    // Toolbar
+        this.docker = null;                                     // primary docker
+        this.infoBox = null;                                    // popup information
+        this.toolbar = null;                                    // main toolbar
 
         // Viewports
-        this.viewports = [];                                    // Viewports
+        this.viewports = [];                                    // collection of viewports
 
         // Input
-        this.keyStates = {                                      // Track modifier keys
+        this.keyStates = {                                      // track modifier keys
             'alt': false,
             'control': false,
             'meta': false,
             'shift': false,
             'space': false,
         };
-        this.modifierKey = false;                               // True when currently a modifier key pressed
+        this.modifierKey = false;                               // true when any modifier key is pressed
 
         // Misc
-        this.dragInfo = undefined;                              // Stores data for 'dragenter' events
-        this.selected = [];                                     // Current Selection
-        this.wantsScreenshot = false;                           // Creates Screenshot (without helpers in shot)
+        this.dragInfo = undefined;                              // stores data for 'dragenter' events
+        this.selected = [];                                     // current selection
+        this.wantsScreenshot = false;                           // creates screenshot
 
         /********** ELEMENTS */
 
@@ -86,6 +86,13 @@ class Editor extends SUEY.Div {
 
         function onKeyDown(event) { editorKeyDown(editor, event); }
         function onKeyUp(event) { editorKeyUp(editor, event); }
+        function onDragOver(event) {
+            event.preventDefault();                             // keeps files dragged from outside app opening in new tab
+            event.dataTransfer.dropEffect = 'copy';             // default mouse cursor for files dragged from outside app
+        }
+        function onDrop(event) {
+            event.preventDefault();                             // keeps files dragged from outside app opening in new tab
+        }
         function onVisibilityChange(event) {
             if (document.visibilityState === 'hidden' /* or 'visible' */) {
                 Layout.save(editor.docker, editor.viewport());
@@ -94,11 +101,15 @@ class Editor extends SUEY.Div {
 
         document.addEventListener('keydown', onKeyDown);
         document.addEventListener('keyup', onKeyUp);
-        document.addEventListener('visibilitychange', onVisibilityChange); // i.e. 'pagehide' / 'beforeunload'
+        document.addEventListener('dragover', onDragOver);
+        document.addEventListener('drop', onDrop);
+        document.addEventListener('visibilitychange', onVisibilityChange);          // i.e. 'pagehide' / 'beforeunload'
 
         this.on('destroy', () => {
-            document.removeEventListener('keydown');
+            document.removeEventListener('keydown', onKeyDown);
             document.removeEventListener('keyup', onKeyUp);
+            document.removeEventListener('dragover', onDragOver);
+            document.removeEventListener('drop', onDrop);
             document.removeEventListener('visibilitychange', onVisibilityChange);
         });
 
@@ -107,9 +118,7 @@ class Editor extends SUEY.Div {
         this.setMode(Config.getKey('editor/mode'));                                 // set editor mode
         this.refreshSettings();                                                     // also selects none
         setTimeout(() => editor.removeClass('salt-disable-animations'), 1000);      // allow button animations
-
-        // Load Demo
-        setTimeout(() => { editor.loadProject(null, true /* demo? */); }, 100);
+        setTimeout(() => { editor.loadProject(null, true /* demo? */); }, 100);     // load demo project
 
     } // end ctor
 
@@ -196,7 +205,7 @@ class Editor extends SUEY.Div {
     }
 
     /**
-     * Following functions are meant to run through Undo/Redo History Commands
+     * The following functions are meant to run through Undo/Redo History Commands
      */
     cut() {
         this.copy();
@@ -428,27 +437,24 @@ function editorKeyDown(editor, event) {
 
     // Modifier Keys
     editor.updateModifiers(event);
-    switch (event.key) {
-        case ' ': /* Space */
-            editor.setKeyState(CONSTANTS.KEYS.SPACE, true);
-            break;
-    }
-
-    // Cut, Copy, Paste
-    if (event.ctrlKey || event.metaKey) {
-        if (event.key === 'c') {
-            const text = window.getSelection().toString();
-            if (text && typeof text === 'string' && text !== '') return; /* default copy */
-        }
-        switch (event.key) {
-            case 'c': editor.copy(); break;
-            case 'v': editor.paste(); break;
-            case 'x': editor.cut(); break;
-        }
-    }
+    if (event.key === ' ' /* space */) editor.setKeyState(CONSTANTS.KEYS.SPACE, true);
 
     // Keys
     switch (event.key) {
+        case 'c':
+        case 'v':
+        case 'x':
+            if (event.ctrlKey || event.metaKey) {
+                if (event.key === 'c') {
+                    const text = window.getSelection().toString();
+                    if (text && typeof text === 'string' && text !== '') return; /* default copy */
+                }
+                if (event.key === 'c') editor.copy();
+                if (event.key === 'v') editor.paste();
+                if (event.key === 'x') editor.cut();
+            }
+            break;
+
         case 'a':
         case 'w':
         case 's':
@@ -470,9 +476,14 @@ function editorKeyDown(editor, event) {
 
         // Select None
         case 'Escape':
-            // Check for Clear Selection
+            // Clear Browser Selection
             const text = window.getSelection().toString();
-            if (text && typeof text === 'string' && text !== '') { return window.clearSelection(); }
+            if (text && typeof text === 'string' && text !== '') {
+                const selection = window.getSelection();
+                if (typeof selection.empty === 'function') selection.empty();
+                if (typeof selection.removeAllRanges === 'function') selection.removeAllRanges();
+                return;
+            }
 
             // Select None
             editor.selectNone();
@@ -488,11 +499,9 @@ function editorKeyDown(editor, event) {
         // Undo / Redo
         case 'z':
             if (event.ctrlKey || event.metaKey) {
-                if (editor.checkKeyState(CONSTANTS.KEYS.SHIFT)) {
-                    editor.redo();
-                } else {
-                    editor.undo();
-                }
+                const shiftKey = editor.checkKeyState(CONSTANTS.KEYS.SHIFT);
+                if (shiftKey) editor.redo();
+                else editor.undo();
             }
             break;
 
@@ -524,21 +533,16 @@ function editorKeyDown(editor, event) {
 
         // Reset all settings
         case Config.getKey('shortcuts/reset'): /* F9 */
-            // Clear Config
-            Config.clear();
-
-            // Refresh GUI
-            editor.refreshSettings();
-
-            // Default Docks
-            setTimeout(() => Layout.default(editor.docker, editor.viewport()), 0);
+            Config.clear();                                         // clear Config.js
+            editor.refreshSettings();                               // refresh gui
+            Layout.default(editor.docker, editor.viewport());       // default docks
             break;
 
         // Return here to allow event to propagate
         default: return;
     }
 
-    // Stop event from propagating
+    // Key was captured, stop event from propagating
     event.stopPropagation();
     event.preventDefault();
 }
@@ -550,14 +554,11 @@ function editorKeyUp(editor, event) {
 
     // Modifier Keys
     editor.updateModifiers(event);
-    switch (event.key) {
-        case ' ': /* Space */
-            editor.setKeyState(CONSTANTS.KEYS.SPACE, false);
-            break;
-    }
+    if (event.key === ' ' /* space */) editor.setKeyState(CONSTANTS.KEYS.SPACE, false);
 
-    // Color Schemes
+    // Keys
     switch (event.key) {
+        // Color Schemes
         case '~': editor.cycleSchemeBackground(); break;
         case '!': editor.setSchemeColor(SUEY.THEMES.CLASSIC,    0.00); break;
         case '@': editor.setSchemeColor(SUEY.THEMES.FLAMINGO,   0.10); break;
@@ -574,7 +575,7 @@ function editorKeyUp(editor, event) {
         default: return;
     }
 
-    // Stop event from propagating
+    // Key was captured, stop event from propagating
     event.stopPropagation();
     event.preventDefault();
 }

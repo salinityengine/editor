@@ -2,6 +2,11 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Scripter:
+    - Codemirror 6
+    - JavaScript
+    - Styling
+
 View2D:
     Editor:
         - Build from Suey.Graph

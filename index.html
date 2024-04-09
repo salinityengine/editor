@@ -59,37 +59,6 @@
 
         editor.init();
 
-        /***** TEXT SELECTION *****/
-
-        window.clearSelection = function() {
-            if (typeof window.getSelection().empty === 'function') window.getSelection().empty();
-            if (typeof window.getSelection().removeAllRanges === 'function') window.getSelection().removeAllRanges();
-        };
-
-        /***** ACTIVE ELEMENT *****/
-
-        document.addEventListener('focusout', (event) => { document.focusedElement = undefined; });
-        document.addEventListener('focusin', (event) => { document.focusedElement = event.target; });
-        document.addEventListener('pointerdown', (event) => {
-            window.clearSelection();
-            document.downOnElement = event.target;
-        });
-        document.addEventListener('nofocus', (event) => {
-            document.downOnElement = undefined;
-            document.focusedElement = undefined;
-        });
-
-        /***** PREVENT DEFAULTS *****/
-
-        /** Allow Custom Drag / Drop */
-        document.addEventListener('dragover', (event) => {
-            event.preventDefault();                     // Keeps files dragged from outside app opening in new tab
-            event.dataTransfer.dropEffect = 'copy';     // Default mouse cursor for files dragged from outside app
-        });
-        document.addEventListener('drop', (event) => {
-            event.preventDefault();                     // Keeps files dragged from outside app opening in new tab
-        });
-
     </script>
 
 </body>
