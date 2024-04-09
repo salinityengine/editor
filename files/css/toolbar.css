@@ -265,6 +265,15 @@
 
 /* Snap */
 
+.suey-toolbar-button.suey-selected #tb-snap-grid {
+    z-index: 1;
+}
+.suey-toolbar-button:hover #tb-snap-grid {
+    animation: rattle 0.4s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
 #tb-snap-attract {
     opacity: 0;
 }

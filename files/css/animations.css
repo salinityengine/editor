@@ -77,6 +77,15 @@
     100% { transform: translate(-2%,  0%) rotate(  8deg); }
 }
 
+@keyframes rattle {
+     0%  { transform: rotateZ(-10deg); }
+    20%  { transform: rotateZ(  8deg); }
+    40%  { transform: rotateZ( -6deg); }
+    60%  { transform: rotateZ(  4deg); }
+    80%  { transform: rotateZ( -2deg); }
+    100% { transform: rotateZ(  0deg); }
+}
+
 @keyframes resizeRectLeft {
     0%   { transform: translate(  0%, 0%); }
     25%  { transform: translate(-10%, 0%); }

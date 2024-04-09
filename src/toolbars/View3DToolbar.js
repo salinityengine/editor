@@ -179,7 +179,7 @@ class View3DToolbar {
         const rectLeftBot = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-rect-left-bot.svg`).setID('tb-tool-rect-left-bot');
         const rectRightTop = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-rect-right-top.svg`).setID('tb-tool-rect-right-top');
         const rectRightBot = new SUEY.VectorBox(`${FOLDER_TOOLBAR}tool-rect-right-bot.svg`).setID('tb-tool-rect-right-bot');
-        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
+        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('tb-snap-magnet');
         const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         const paintBrush = new SUEY.VectorBox(`${FOLDER_TOOLBAR}paint-brush.svg`).setID('tb-paint-brush');
 

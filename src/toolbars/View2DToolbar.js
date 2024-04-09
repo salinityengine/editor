@@ -319,21 +319,42 @@ class View2DToolbar {
 
         /******************** GRID */
 
-        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
+        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('tb-snap-magnet');
         const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         gridSnap.add(snapMagnet, snapAttract);
+
+        const snapGrid = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-grid.svg`).setID('tb-snap-grid');
+        const snapObject = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-object.svg`).setID('tb-snap-object');
+        gridTop.add(snapGrid, snapObject);
+
+        gridTop.onPress(() => {
+            const ontop = !Config.getKey('viewport/grid/ontop');
+            Config.setKey('viewport/grid/ontop', ontop);
+            Signals.dispatch('gridChanged');
+        });
+
+        gridResize.onPress(() => {
+            const resizeto = !Config.getKey('view2d/grid/resize');
+            Config.setKey('view2d/grid/resize', resizeto);
+            Signals.dispatch('gridChanged');
+        });
 
         gridSnap.onPress(() => {
             const snapping = !Config.getKey('viewport/grid/snap');
             Config.setKey('viewport/grid/snap', snapping);
-            view2d.snapToGrid = snapping;
             Signals.dispatch('gridChanged');
         });
 
         Signals.connect(view2d, 'gridChanged', function() {
+            gridTop.removeClass('suey-selected');
+            gridResize.removeClass('suey-selected');
+            gridSnap.removeClass('suey-selected');
+            const ontop = Config.getKey('viewport/grid/ontop');
+            const resizeto = Config.getKey('view2d/grid/resize');
             const snapping = Config.getKey('viewport/grid/snap');
+            if (ontop) gridTop.addClass('suey-selected');
+            if (resizeto) gridResize.addClass('suey-selected');
             if (snapping) gridSnap.addClass('suey-selected');
-            else gridSnap.removeClass('suey-selected');
         })
 
         /******************** ADD TO TOOLBAR */

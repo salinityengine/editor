@@ -119,7 +119,7 @@ class WorldsToolbar {
 
         /******************** GRID */
 
-        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('SnapMagnet');
+        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('tb-snap-magnet');
         const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         gridSnap.add(snapMagnet, snapAttract);
 
