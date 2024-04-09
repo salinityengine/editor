@@ -128,19 +128,6 @@ class Editor extends SUEY.Div {
             Signals.dispatch('previewerRefresh');
         });
 
-        // Entity Changed
-        Signals.connect(this, 'entityChanged', function(entity) {
-            if (!entity || !entity.isEntity) return;
-            const activeStageUUID = self.viewport.world.activeStage().uuid;
-            const stage = entity.parentStage();
-            const world = entity.parentWorld();
-            if (stage && world && (stage.uuid === activeStageUUID || world.uuid === activeStageUUID)) {
-                if (entity.isLight || entity.isStage || entity.isWorld) self.viewport.updateSky();
-                if (entity.isCamera || entity.isLight) self.viewport.rebuildHelpers();
-                self.viewport.rebuildColliders();
-            }
-        });
-
         /********** INIT */
 
         this.setMode(Config.getKey('editor/mode'));                             // set editor mode

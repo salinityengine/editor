@@ -256,9 +256,7 @@ class View3DToolbar {
         hoverMenu.add(hoverItem);
 
         // Prepare Button
-        views.setStyle('overflow', 'visible');
-        views.setStyle('z-index', '1');
-        views.on('pointerenter', () => { document.dispatchEvent(new Event('closemenu')); });
+        views.on('pointerenter', () => document.dispatchEvent(new Event('closemenu')));
         views.addToSelf(hoverMenu);
 
         /******************** ADD TO TOOLBAR */

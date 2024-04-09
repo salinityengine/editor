@@ -212,9 +212,7 @@ class View2DToolbar {
         hoverArrangeMenu.add(hoverArrangeItem);
 
         // Prepare Button
-        arrange.setStyle('overflow', 'visible');
-        arrange.setStyle('z-index', '1');
-        arrange.on('pointerenter', () => { document.dispatchEvent(new Event('closemenu')); });
+        arrange.on('pointerenter', () => document.dispatchEvent(new Event('closemenu')));
         arrange.addToSelf(hoverArrangeMenu);
 
         /***** TRANSFORM */
@@ -274,9 +272,7 @@ class View2DToolbar {
         hoverTransformMenu.add(hoverTransformItem);
 
         // Prepare Button
-        transform.setStyle('overflow', 'visible');
-        transform.setStyle('z-index', '1');
-        transform.on('pointerenter', () => { document.dispatchEvent(new Event('closemenu')); });
+        transform.on('pointerenter', () => document.dispatchEvent(new Event('closemenu')));
         transform.addToSelf(hoverTransformMenu);
 
         /******************** VIEWS */
@@ -318,9 +314,7 @@ class View2DToolbar {
         hoverToggleMenu.add(hoverToggleItem);
 
         // Prepare Button
-        views.setStyle('overflow', 'visible');
-        views.setStyle('z-index', '1');
-        views.on('pointerenter', () => { document.dispatchEvent(new Event('closemenu')); });
+        views.on('pointerenter', () => document.dispatchEvent(new Event('closemenu')));
         views.addToSelf(hoverToggleMenu);
 
         /******************** GRID */

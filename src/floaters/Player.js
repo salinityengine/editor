@@ -224,12 +224,17 @@ class Player extends SUEY.Floater {
             const height = Math.max(1, self.contents().getHeight());
             app.setSize(width, height);
         }
-        this.on('resizer', () => updateSize());
-        window.addEventListener('resize', () => updateSize());
+        this.on('resizer', updateSize);
+        window.addEventListener('resize', updateSize);
 
         // Stop Player when Window 'X' is clicked
-        this.on('hidden', () => { self.stop(); });
-        this.on('destroy', () => { self.stop(); });
+        this.on('hidden', () => {
+            console.warn(`Player.on('hidden'): Game player should be destroyed, not hidden`);
+        });
+        this.on('destroy', () => {
+            window.removeEventListener('resize', updateSize);
+            self.stop();
+        });
 
         /******************** SCREENSHOT */
 
