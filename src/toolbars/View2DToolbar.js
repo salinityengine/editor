@@ -319,13 +319,18 @@ class View2DToolbar {
 
         /******************** GRID */
 
-        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('tb-snap-magnet');
-        const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
-        gridSnap.add(snapMagnet, snapAttract);
-
         const snapGrid = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-grid.svg`).setID('tb-snap-grid');
         const snapObject = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-object.svg`).setID('tb-snap-object');
         gridTop.add(snapGrid, snapObject);
+
+        const snapCorner = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-corner.svg`).setID('tb-snap-corner');
+        const snapSquare = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-square.svg`).setID('tb-snap-square');
+        const snapCircle = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-circle.svg`).setID('tb-snap-circle');
+        gridResize.add(snapCorner, snapSquare, snapCircle);
+
+        const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('tb-snap-magnet');
+        const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
+        gridSnap.add(snapMagnet, snapAttract);
 
         gridTop.onPress(() => {
             const ontop = !Config.getKey('viewport/grid/ontop');

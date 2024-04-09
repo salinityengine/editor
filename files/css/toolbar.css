@@ -263,21 +263,47 @@
     animation-iteration-count: 1;
 }
 
-/* Snap */
+/* Snap (Grid on Top) */
 
 .suey-toolbar-button.suey-selected #tb-snap-grid {
     z-index: 1;
 }
-.suey-toolbar-button:hover #tb-snap-grid {
-    animation: rattle 0.4s;
+.suey-toolbar-button:enabled:hover #tb-snap-grid {
+    animation: sliding 0.75s ease-in-out;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
 
+/* Snap (Resize to Grid) */
+
+#tb-snap-square,
+#tb-snap-circle {
+    transform-origin: 45% 55%; /* specific x-offset | y-offset */
+    transition: transform 0.2s ease-out;
+}
+#tb-snap-square {
+    transform: scale(0.0);
+}
+.suey-toolbar-button.suey-selected #tb-snap-square {
+    transform: scale(1.0);
+}
+#tb-snap-circle {
+    transform: scale(1.0);
+}
+.suey-toolbar-button.suey-selected #tb-snap-circle {
+    transform: scale(0.0);
+}
+.suey-toolbar-button:enabled:hover #tb-snap-corner {
+    animation: rattle 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+/* Snap (Snap to Grid) */
+
 #tb-snap-attract {
     opacity: 0;
 }
-
 .suey-toolbar-button:enabled:hover #tb-snap-attract, .suey-toolbar-button.suey-selected #tb-snap-attract {
     animation: flicker 0.5s;
     animation-iteration-count: 1;
@@ -286,7 +312,7 @@
 
 /* Paint */
 
-.suey-toolbar-button:hover #tb-paint-brush, .suey-toolbar-button.suey-selected #tb-paint-brush {
+.suey-toolbar-button:enabled:hover #tb-paint-brush, .suey-toolbar-button.suey-selected #tb-paint-brush {
     animation: painting 0.4s;
     animation-iteration-count: 2;
 }

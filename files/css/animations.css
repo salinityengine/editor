@@ -117,6 +117,16 @@
     100% { transform: translate(  0%,   0%); }
 }
 
+@keyframes sliding {
+    0%   { transform: translate( 0%, 0%); }
+    10%  { transform: translate( 0%, 0%); }
+    20%  { transform: translate(-9%, 0%); }
+    40%  { transform: translate( 6%, 0%); }
+    60%  { transform: translate(-9%, 0%); }
+    80%  { transform: translate( 0%, 0%); }
+    100% { transform: translate( 0%, 0%); }
+}
+
 @keyframes swing {
     0%   { transform: rotateZ(  0deg); }
     10%  { transform: rotateZ(-25deg); }

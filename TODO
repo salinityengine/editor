@@ -2,9 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Toolbar:
-    - View2D Toolbar 'Grid' images
-
 View2D:
     Editor:
         - Build from Suey.Graph
