@@ -129,10 +129,7 @@ function handleJSON(data) {
 
         // Published from Salinity Editor
         case 'salt':
-            editor.selectEntities(/* none */);
-            editor.project.fromJSON(data, true /* loadAssets? */, /* onLoad */ () => {
-                Signals.dispatch('projectLoaded');
-            });
+            editor.loadProject(data);
 
         default:
             console.warn(`Loader.handleJSON(): File type unknown: ${data.metadata.type.toLowerCase()}`);

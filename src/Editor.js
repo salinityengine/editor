@@ -29,7 +29,7 @@ class Editor extends SUEY.Div {
     }
 
     init() {
-        const self = this;
+        const editor = this;
 
         /********** ACTIVE PROJECT */
 
@@ -84,11 +84,11 @@ class Editor extends SUEY.Div {
 
         /********** EVENTS */
 
-        function onKeyDown(event) { editorKeyDown(self, event); }
-        function onKeyUp(event) { editorKeyUp(self, event); }
+        function onKeyDown(event) { editorKeyDown(editor, event); }
+        function onKeyUp(event) { editorKeyUp(editor, event); }
         function onVisibilityChange(event) {
             if (document.visibilityState === 'hidden' /* or 'visible' */) {
-                Layout.save(self.docker, self.viewport());
+                Layout.save(editor.docker, editor.viewport());
             }
         }
 
@@ -102,49 +102,43 @@ class Editor extends SUEY.Div {
             document.removeEventListener('visibilitychange', onVisibilityChange);
         });
 
-        /********** SIGNALS */
+        /********** INIT */
 
-        // Project Loaded
-        Signals.connect(this, 'projectLoaded', function() {
+        this.setMode(Config.getKey('editor/mode'));                                 // set editor mode
+        this.refreshSettings();                                                     // also selects none
+        setTimeout(() => editor.removeClass('salt-disable-animations'), 1000);      // allow button animations
+
+        // Load Demo
+        setTimeout(() => { editor.loadProject(null, true /* demo? */); }, 100);
+
+    } // end ctor
+
+    /******************** PROJECT ********************/
+
+    loadProject(json, demo = false) {
+        const editor = this;
+        function newProjectLoaded() {
             //
             // TODO: Editor World / Stage
             //
             // editor.world = editor.project.activeWorld();
             // editor.stage = editor.world.activeStage();
-
-            if (self.history) self.history.clear();             // clear history
-            Signals.dispatch('inspectorClear');                 // clear inspector
-            Signals.dispatch('previewerClear');                 // clear previewer
+            //
+            if (editor.history) editor.history.clear();         // clear history
+            editor.viewport()?.cameraReset();                   // reset camera
             Signals.dispatch('sceneGraphChanged');              // rebuild outliner
-            self.viewport()?.cameraReset();                     // reset camera
-        });
+            Signals.dispatch('projectLoaded');                  // alert floaters
+        }
 
-        // Settings Refreshed
-        Signals.connect(this, 'settingsRefreshed', function() {
-            Signals.dispatch('gridChanged');
-            Signals.dispatch('mouseModeChanged', Config.getKey('viewport/mouse/mode'));
-            Signals.dispatch('transformModeChanged', Config.getKey('viewport/controls/mode'));
-            Signals.dispatch('inspectorRefresh');
-            Signals.dispatch('previewerRefresh');
-        });
-
-        /********** INIT */
-
-        this.setMode(Config.getKey('editor/mode'));                             // set editor mode
-        this.refreshSettings();                                                 // also selects none
-        setTimeout(() => self.removeClass('salt-disable-animations'), 1000);    // allow button animations
-
-        /********** DEMO */
-
-        setTimeout(() => {
-            // self.selectEntities(/* none */);
-            // loadDemoProject(self.project);
-            // self.view2d.world = self.project.activeWorld();
-            // self.view2d.stage = self.view2d.world.activeStage();
-            Signals.dispatch('projectLoaded');
-        }, 100);
-
-    } // end ctor
+        if (demo) {
+            this.selectEntities(/* none */);
+            // loadDemoProject(this.project);
+            newProjectLoaded();
+        } else if (json) {
+            this.selectEntities(/* none */);
+            this.project.fromJSON(json, true /* loadAssets? */, /* onLoad */ () => { newProjectLoaded(); });
+        }
+    }
 
     /******************** MODE ********************/
 
@@ -278,21 +272,24 @@ class Editor extends SUEY.Div {
 
     /** Settings were changed, refresh app (color, font size, etc.), dispatch signals */
     refreshSettings() {
-        // Font Size Update
+        // Update Font Size
         this.fontSizeChange(Config.getKey('scheme/fontSize'));
 
-        // Color Scheme
+        // Update Color Scheme
         this.setSchemeBackground(Config.getKey('scheme/background'));
         const schemeColor = Config.getKey('scheme/color');
         const schemeTint = Config.getKey('scheme/tint');
         const schemeSaturation = Config.getKey('scheme/saturation');
         this.setSchemeColor(schemeColor, schemeTint, schemeSaturation);
 
-        // Transparency
+        // Update Transparency
         const panelAlpha = Math.max(Math.min(parseFloat(Config.getKey('scheme/transparency')), 1.0), 0.0);
         SUEY.Css.setVariable('--panel-transparency', panelAlpha);
 
-        // Dispatch Refreshed Signal
+        // Dispatch Signals
+        Signals.dispatch('gridChanged');
+        Signals.dispatch('mouseModeChanged', Config.getKey('viewport/mouse/mode'));
+        Signals.dispatch('transformModeChanged', Config.getKey('viewport/controls/mode'));
         Signals.dispatch('settingsRefreshed');
     }
 
@@ -439,26 +436,14 @@ function editorKeyDown(editor, event) {
 
     // Cut, Copy, Paste
     if (event.ctrlKey || event.metaKey) {
-        if (event.key === 'c' || event.key === 'v' || event.key === 'x') {
-            switch (event.key) {
-                case 'c':
-                    const text = window.getSelection().toString();
-                    if (text && typeof text === 'string' && text !== '') { return /* default copy */; }
-                    event.stopPropagation();
-                    event.preventDefault();
-                    editor.copy();
-                    return;
-                case 'v':
-                    event.stopPropagation();
-                    event.preventDefault();
-                    editor.paste();
-                    return;
-                case 'x':
-                    event.stopPropagation();
-                    event.preventDefault();
-                    editor.cut();
-                    return;
-            }
+        if (event.key === 'c') {
+            const text = window.getSelection().toString();
+            if (text && typeof text === 'string' && text !== '') return; /* default copy */
+        }
+        switch (event.key) {
+            case 'c': editor.copy(); break;
+            case 'v': editor.paste(); break;
+            case 'x': editor.cut(); break;
         }
     }
 
@@ -468,9 +453,6 @@ function editorKeyDown(editor, event) {
         case 'w':
         case 's':
         case 'd':
-            event.stopPropagation();
-            event.preventDefault();
-
             // Select All
             if (event.key === 'a' && (event.ctrlKey || event.metaKey)) {
                 editor.selectAll();
@@ -483,18 +465,15 @@ function editorKeyDown(editor, event) {
 
         case 'Backspace':
         case 'Delete':
-            event.stopPropagation();
-            event.preventDefault();
             editor.delete();
             break;
 
         // Select None
         case 'Escape':
-            event.stopPropagation();
-            event.preventDefault();
             // Check for Clear Selection
             const text = window.getSelection().toString();
             if (text && typeof text === 'string' && text !== '') { return window.clearSelection(); }
+
             // Select None
             editor.selectNone();
             break;
@@ -502,8 +481,6 @@ function editorKeyDown(editor, event) {
         // Fullscreen
         case 'Enter':
             if (event.altKey || event.ctrlKey || event.metaKey) {
-                event.stopPropagation();
-                event.preventDefault();
                 SALT.System.fullscreen();
             }
             break;
@@ -512,12 +489,8 @@ function editorKeyDown(editor, event) {
         case 'z':
             if (event.ctrlKey || event.metaKey) {
                 if (editor.checkKeyState(CONSTANTS.KEYS.SHIFT)) {
-                    event.stopPropagation();
-                    event.preventDefault();
                     editor.redo();
                 } else {
-                    event.stopPropagation();
-                    event.preventDefault();
                     editor.undo();
                 }
             }
@@ -560,7 +533,14 @@ function editorKeyDown(editor, event) {
             // Default Docks
             setTimeout(() => Layout.default(editor.docker, editor.viewport()), 0);
             break;
+
+        // Return here to allow event to propagate
+        default: return;
     }
+
+    // Stop event from propagating
+    event.stopPropagation();
+    event.preventDefault();
 }
 
 function editorKeyUp(editor, event) {
@@ -589,5 +569,12 @@ function editorKeyUp(editor, event) {
         case '*': editor.setSchemeColor(SUEY.THEMES.GOLDEN,     0.15); break;
         case '(': editor.setSchemeColor(SUEY.THEMES.EMERALD,    0.10); break;
         case ')': editor.setSchemeColor(SUEY.Iris.randomHex(),  0.10); break;
+
+        // Return here to allow event to propagate
+        default: return;
     }
+
+    // Stop event from propagating
+    event.stopPropagation();
+    event.preventDefault();
 }

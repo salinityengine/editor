@@ -134,7 +134,11 @@ class Inspector extends SUEY.Floater {
         Signals.connect(this, 'inspectorBuild', (from) => build(from, true /* highlight? */));
         Signals.connect(this, 'inspectorClear', () => build(undefined, false /* highlight? */));
         Signals.connect(this, 'inspectorRefresh', () => build('rebuild', true /* highlight? */));
-        Signals.connect(this, 'promodeChanged', () => build('rebuild', false /* highlight? */));
+
+        Signals.connect(this, 'projectLoaded', () => build(undefined, false));
+        Signals.connect(this, 'settingsRefreshed', () => build('rebuild', false));
+        Signals.connect(this, 'promodeChanged', () => build('rebuild', false));
+
         Signals.connect(this, 'selectionChanged', () => {
             // Don't rebuild while dragging new object into scene
             if (editor.dragInfo) return;

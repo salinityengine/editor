@@ -93,7 +93,10 @@ class Previewer extends SUEY.Floater {
         Signals.connect(this, 'previewerBuild', (from) => build(from, true /* highlight? */));
         Signals.connect(this, 'previewerClear', () => build(undefined, false /* highlight? */));
         Signals.connect(this, 'previewerRefresh', () => build('rebuild', true /* highlight? */));
-        Signals.connect(this, 'promodeChanged', () => build('rebuild', false /* highlight? */));
+
+        Signals.connect(this, 'projectLoaded', () => build(undefined, false));
+        Signals.connect(this, 'settingsRefreshed', () => build('rebuild', false));
+        Signals.connect(this, 'promodeChanged', () => build('rebuild', false));
 
         /***** INIT *****/
 

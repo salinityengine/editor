@@ -46,7 +46,7 @@ class EyeMenu extends SUEY.Menu {
                 //
                 // TODO: New Project!
                 //
-                alert('CLICK: New File');
+                alert('TODO: New File');
             });
 
             // OPEN
@@ -105,8 +105,10 @@ class EyeMenu extends SUEY.Menu {
 
             exportObject.onSelect(() => {
 
+                //
                 // TODO: Exports!
-                alert('CLICK: Export Object');
+                //
+                alert('TODO: Export Object');
 
                 // if (editor.selected.length === 0) {
                 //     alert('No object selected!');
@@ -130,6 +132,11 @@ class EyeMenu extends SUEY.Menu {
                 toZip['data/project.eye'] = strToU8(output);
 
                 const title = editor.project.name;
+
+                //
+                // TODO: Publish!
+                //
+                alert('TODO: Export Object');
 
                 // const manager = new THREE.LoadingManager(function() {
                 //     const zipped = zipSync(toZip, { level: 9 });
