@@ -28,64 +28,84 @@ class Editor extends SUEY.Div {
         document.body.appendChild(this.dom);
     }
 
+    /******************** INITIALIZE ********************/
+
     init() {
         const editor = this;
 
         /********** ACTIVE PROJECT */
 
-        this.project = new SALT.Project();                      // SALT.Project loaded into editor
+        editor.project = new SALT.Project();                    // SALT.Project loaded into editor
 
         /********** MODULES */
 
-        this.clipboard = new Clipboard();                       // copy / paste clipboard
-        this.history = new History();                           // undo / redo history
-        // this.storage = new Storage();                        // TODO: storage / autosave
+        editor.clipboard = new Clipboard();                     // copy / paste clipboard
+        editor.history = new History();                         // undo / redo history
+        // editor.storage = new Storage();                      // TODO: storage / autosave
 
         /********** PROPERTIES */
 
         // Elements
-        this.docker = null;                                     // primary docker
-        this.infoBox = null;                                    // popup information
-        this.toolbar = null;                                    // main toolbar
+        editor.docker = null;                                   // primary docker
+        editor.infoBox = null;                                  // popup information
+        editor.toolbar = null;                                  // main toolbar
 
         // Viewports
-        this.viewports = [];                                    // collection of viewports
+        editor.viewports = [];                                  // collection of viewports
 
         // Input
-        this.keyStates = {                                      // track modifier keys
+        editor.keyStates = {                                    // track modifier keys
             'alt': false,
             'control': false,
             'meta': false,
             'shift': false,
             'space': false,
         };
-        this.modifierKey = false;                               // true when any modifier key is pressed
+        editor.modifierKey = false;                             // true when any modifier key is pressed
 
         // Misc
-        this.dragInfo = undefined;                              // stores data for 'dragenter' events
-        this.selected = [];                                     // current selection
-        this.wantsScreenshot = false;                           // creates screenshot
+        editor.dragInfo = undefined;                            // stores data for 'dragenter' events
+        editor.selected = [];                                   // current selection
+        editor.wantsScreenshot = false;                         // creates screenshot
 
         /********** ELEMENTS */
 
         // Gui
-        this.add(this.toolbar = new EditorToolbar(this));
-        this.add(this.infoBox = new InfoBox());
+        editor.add(editor.toolbar = new EditorToolbar(editor));
+        editor.add(editor.infoBox = new InfoBox());
 
         // Viewports
-        this.viewports.push(new View2D());
-        this.viewports.push(new View3D());
-        this.viewports.push(new ViewUI());
-        this.viewports.push(new Worlds());
-        this.add(...this.viewports);
+        editor.viewports.push(new View2D());
+        editor.viewports.push(new View3D());
+        editor.viewports.push(new ViewUI());
+        editor.viewports.push(new Worlds());
+        editor.add(...editor.viewports);
 
         // Docks
-        this.add(this.docker = new SUEY.Docker());
+        editor.add(editor.docker = new SUEY.Docker());
 
         /********** EVENTS */
 
-        function onKeyDown(event) { editorKeyDown(editor, event); }
-        function onKeyUp(event) { editorKeyUp(editor, event); }
+        function onKeyDown(event) {
+            editorKeyDown(editor, event);
+        }
+        function onKeyUp(event) {
+            editorKeyUp(editor, event);
+        }
+        function onPointerDown(event) {
+            const selection = window.getSelection();
+            if (typeof selection.empty === 'function') selection.empty();
+            if (typeof selection.removeAllRanges === 'function') selection.removeAllRanges();
+        }
+        function onFocusOut(event) {
+            document.focusedElement = undefined;
+        }
+        function onFocusIn(event) {
+            document.focusedElement = event.target;
+        }
+        function onNoFocus(event) {
+            document.focusedElement = undefined;
+        }
         function onDragOver(event) {
             event.preventDefault();                             // keeps files dragged from outside app opening in new tab
             event.dataTransfer.dropEffect = 'copy';             // default mouse cursor for files dragged from outside app
@@ -98,25 +118,25 @@ class Editor extends SUEY.Div {
                 Layout.save(editor.docker, editor.viewport());
             }
         }
+        function addDocumentEvent(eventName, callback) {
+            document.addEventListener(eventName, callback);
+            editor.on('destroy', () => { document.removeEventListener(eventName, callback); });
+        }
 
-        document.addEventListener('keydown', onKeyDown);
-        document.addEventListener('keyup', onKeyUp);
-        document.addEventListener('dragover', onDragOver);
-        document.addEventListener('drop', onDrop);
-        document.addEventListener('visibilitychange', onVisibilityChange);          // i.e. 'pagehide' / 'beforeunload'
-
-        this.on('destroy', () => {
-            document.removeEventListener('keydown', onKeyDown);
-            document.removeEventListener('keyup', onKeyUp);
-            document.removeEventListener('dragover', onDragOver);
-            document.removeEventListener('drop', onDrop);
-            document.removeEventListener('visibilitychange', onVisibilityChange);
-        });
+        addDocumentEvent('keydown', onKeyDown);
+        addDocumentEvent('keyup', onKeyUp);
+        addDocumentEvent('pointerdown', onPointerDown);
+        addDocumentEvent('focusout', onFocusOut);
+        addDocumentEvent('focusin', onFocusIn);
+        addDocumentEvent('nofocus', onNoFocus);
+        addDocumentEvent('dragover', onDragOver);
+        addDocumentEvent('drop', onDrop);
+        addDocumentEvent('visibilitychange', onVisibilityChange); // i.e. 'pagehide' / 'beforeunload'
 
         /********** INIT */
 
-        this.setMode(Config.getKey('editor/mode'));                                 // set editor mode
-        this.refreshSettings();                                                     // also selects none
+        editor.setMode(Config.getKey('editor/mode'));                               // set editor mode
+        editor.refreshSettings();                                                   // also selects none
         setTimeout(() => editor.removeClass('salt-disable-animations'), 1000);      // allow button animations
         setTimeout(() => { editor.loadProject(null, true /* demo? */); }, 100);     // load demo project
 
@@ -430,10 +450,25 @@ export default editor;
 
 /******************** INTERNAL: KEYBOARD ********************/
 
-function editorKeyDown(editor, event) {
-    // Ignore Key Events While Playing
+function editorIgnoreKey() {
+    // IGNORE: Focused HTMLElement contains specific attribute
+    const focused = document.focusedElement;
+    if (focused && focused instanceof HTMLElement) {
+        const editable = focused.getAttribute('contentEditable');
+        if (editable) return true;
+    }
+
+    // IGNORE: While Playing
     const player = editor.getFloaterByID('player', false /* build? */);
-    if (player && player.isPlaying) return;
+    if (player && player.isPlaying) return true;
+
+    // DON'T IGNORE
+    return false;
+}
+
+function editorKeyDown(editor, event) {
+    // Ignore?
+    if (editorIgnoreKey) return;
 
     // Modifier Keys
     editor.updateModifiers(event);
@@ -548,9 +583,8 @@ function editorKeyDown(editor, event) {
 }
 
 function editorKeyUp(editor, event) {
-    // Ignore Key Events While Playing
-    const player = editor.getFloaterByID('player', false /* build? */);
-    if (player && player.isPlaying) return;
+    // Ignore?
+    if (editorIgnoreKey) return;
 
     // Modifier Keys
     editor.updateModifiers(event);

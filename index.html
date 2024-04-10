@@ -26,7 +26,8 @@
 
     <!-- ALTERNATIVE IMPORTS
             CDN:
-                "engine":           "https://unpkg.com/@scidian/salinity/build/salinity.module.js",
+                "engine":           "https://unpkg.com/@salinity/engine/build/salinity.module.js",
+                "scrimp":           "https://unpkg.com/@salinity/scrimp/build/scrimp.module.js",
                 "suey":             "https://unpkg.com/suey/build/suey.module.js",
     -->
 
@@ -36,7 +37,8 @@
                 "constants":        "./src/constants.js",
                 "editor":           "./src/Editor.js",
                 "engine":           "../engine/src/Salinity.js",
-                "gui":              "../suey/build/suey.module.js"
+                "gui":              "../suey/build/suey.module.js",
+                "scrimp":           "../scrimp/build/scrimp.module.js"
             }
         }
     </script>
@@ -48,12 +50,8 @@
     </script>
 
     <script type='module'>
-
-        /***** IMPORTS *****/
-
         import editor from 'editor';
         import * as SALT from 'engine';
-        import * as SUEY from 'gui';
 
         console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
 

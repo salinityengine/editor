@@ -19,6 +19,7 @@ const _values = {
         'floater/player':                   { title: 'Player', html: `Game play preview.` },
         'floater/previewer':                { title: 'Previewer', html: `Preview assets and scripts.`},
         'floater/project':                  { title: 'Project', html: `Project settings viewer.` },
+        'floater/scripter':                 { title: 'Scripter', html: `Script viewer and editor.` },
         'floater/settings':                 { title: 'Settings', html: `Editor settings viewer.`},
 
         // Project

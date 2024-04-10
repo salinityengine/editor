@@ -1,7 +1,14 @@
-// https://github.com/mrdoob/three.js/blob/dev/editor/js/Script.js
-
+import {
+    FOLDER_FLOATERS,
+    FOLDER_TOOLBAR,
+    SCREEN_RATIOS,
+ } from 'constants';
 import editor from 'editor';
+import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { Scrimp } from 'scrimp';
+
+import { Advice } from '../config/Advice.js';
 
 // import { SetAssetValueCommand } from '../commands/Commands.js';
 // import { SetScriptSourceCommand } from '../commands/Commands.js';
@@ -9,39 +16,23 @@ import * as SUEY from 'gui';
 /**
  * Script Editor
  */
-class Scripter extends SUEY.Window {
+class Scripter extends SUEY.Floater {
 
     constructor() {
-        super({
-            height: '85%',
-            width: '60%',
-            title: 'Scripter',
-            buttonSides: SUEY.CLOSE_SIDES.BOTH,
-        });
+        const icon = `${FOLDER_FLOATERS}scripter.svg`;
+        super('scripter', null, { icon, color: '#090B11', shrink: '75%' });
         const self = this;
-        this.setStyle('display', 'none');
-
-        // Match inner panel background with CodeMirror
-        this.contents().setStyle('backgroundColor', 'rgb(var(--background-light))');
-
-        // Header
-        const header = new SUEY.Panel();
-        header.setStyle('padding', '0.4em 0.5em');
-        this.add(header);
+        Advice.attach(this.button, 'floater/scripter');
 
         // Title Bar
-        const title = new SUEY.TextBox();
-        title.setStyle('color', 'rgb(var(--highlight))');
-        title.setStyle('marginLeft', '1.0em');
-        title.setStyle('width', 'calc(100% - 3em)');
-        title.setStyle('padding', '0.3em 0.7em');
-        header.add(title);
+        const title = new SUEY.TextBox().addClass('salt-script-title');
+        this.add(title);
 
-        title.on('change', () => {
-            if (currentScript && currentScript.isScript) {
-                editor.execute(new SetAssetValueCommand(currentScript, 'name', title.getValue()));
-            }
-        });
+        // title.on('change', () => {
+        //     if (currentScript && currentScript.isScript) {
+        //         editor.execute(new SetAssetValueCommand(currentScript, 'name', title.getValue()));
+        //     }
+        // });
 
         // Internal Variables
         let renderer = null; //editor.viewport.renderer;
@@ -52,25 +43,11 @@ class Scripter extends SUEY.Window {
 
         /***** CODEMIRROR EDITOR *****/
 
-        // const codemirror = CodeMirror(this.contents().dom, {
-        //     value: '',
-        //     autoRefresh: true,
-        //     readOnly: false,
+        const wrapper = new SUEY.Div().addClass('salt-script-wrapper');
+        wrapper.setAttribute('tabindex', '-1');
+        this.add(wrapper);
 
-        //     lineNumbers: true,
-        //     matchBrackets: true,
-        //     autoCloseBrackets: true,
-        //     showCursorWhenSelecting: true,
-
-        //     indentWithTabs: false,
-        //     tabSize: 4,
-        //     indentUnit: 4,
-
-        //     hintOptions: { completeSingle: false },
-
-        //     keymap: 'sublime', /* NEEDED FOR CMD-/ & CTRL-/ COMMENTS!? */
-        // });
-        // codemirror.setOption('theme', 'salinity');
+        const codemirror = new Scrimp(wrapper.dom);
 
         // // Codemirror: On Change
         // codemirror.on('change', function() {
@@ -109,87 +86,87 @@ class Scripter extends SUEY.Window {
 
         /***** VALIDATE *****/
 
-        const errorLines = [];
-        const lineWidgets = [];
+        // const errorLines = [];
+        // const lineWidgets = [];
 
-        const validate = function(string) {
-            return codemirror.operation(function() {
-                while (errorLines.length > 0) {
-                    codemirror.removeLineClass(errorLines.shift(), 'background', 'errorLine');
-                }
-                while (lineWidgets.length > 0) {
-                    codemirror.removeLineWidget(lineWidgets.shift());
-                }
+        // const validate = function(string) {
+        //     return codemirror.operation(function() {
+        //         while (errorLines.length > 0) {
+        //             codemirror.removeLineClass(errorLines.shift(), 'background', 'errorLine');
+        //         }
+        //         while (lineWidgets.length > 0) {
+        //             codemirror.removeLineWidget(lineWidgets.shift());
+        //         }
 
-                let errors = [];
-                switch (currentMode) {
-                    case 'javascript':
-                        // // OPTION: 'esprima' (original Three.js)
-                        try {
-                            const syntax = esprima.parse(string, { tolerant: true });
-                            // console.log(syntax);
-                            errors = syntax.errors;
-                        } catch (error) {
-                            errors.push({
-                                lineNumber: error.lineNumber - 1,
-                                message: error.message,
-                            });
-                        }
-                        for (let i = 0; i < errors.length; i++) {
-                            const error = errors[i];
-                            error.message = error.message.replace(/Line [0-9]+: /, '');
-                        }
+        //         let errors = [];
+        //         switch (currentMode) {
+        //             case 'javascript':
+        //                 // // OPTION: 'esprima' (original Three.js)
+        //                 try {
+        //                     const syntax = esprima.parse(string, { tolerant: true });
+        //                     // console.log(syntax);
+        //                     errors = syntax.errors;
+        //                 } catch (error) {
+        //                     errors.push({
+        //                         lineNumber: error.lineNumber - 1,
+        //                         message: error.message,
+        //                     });
+        //                 }
+        //                 for (let i = 0; i < errors.length; i++) {
+        //                     const error = errors[i];
+        //                     error.message = error.message.replace(/Line [0-9]+: /, '');
+        //                 }
 
-                        // // OPTION: 'jshint' (experimental)
-                        // const jshintOptions = '/* jshint esversion: 6, asi: true */';
-                        // JSHINT(jshintOptions + '\n' + string);
-                        // for (let i = 0; i < JSHINT.errors.length; ++i) {
-                        //     let error = JSHINT.errors[i];
-                        //     errors.push({
-                        //         lineNumber: error.line - 1,
-                        //         message: error.reason,
-                        //     });
-                        // }
+        //                 // // OPTION: 'jshint' (experimental)
+        //                 // const jshintOptions = '/* jshint esversion: 6, asi: true */';
+        //                 // JSHINT(jshintOptions + '\n' + string);
+        //                 // for (let i = 0; i < JSHINT.errors.length; ++i) {
+        //                 //     let error = JSHINT.errors[i];
+        //                 //     errors.push({
+        //                 //         lineNumber: error.line - 1,
+        //                 //         message: error.reason,
+        //                 //     });
+        //                 // }
 
-                        break;
+        //                 break;
 
-                    case 'json':
-                        //
-                        // NOT IMPLEMENTED
-                        //
-                        break;
+        //             case 'json':
+        //                 //
+        //                 // NOT IMPLEMENTED
+        //                 //
+        //                 break;
 
-                    case 'glsl':
-                        //
-                        // NOT IMPLEMENTED
-                        //
-                        break;
+        //             case 'glsl':
+        //                 //
+        //                 // NOT IMPLEMENTED
+        //                 //
+        //                 break;
 
-                    default: ;
+        //             default: ;
 
-                }
+        //         }
 
-                // Add Errors
-                for (const error of errors) {
-                    const message = document.createElement('div');
-                    message.className = 'errorMessage';
-                    message.textContent = error.message;
+        //         // Add Errors
+        //         for (const error of errors) {
+        //             const message = document.createElement('div');
+        //             message.className = 'errorMessage';
+        //             message.textContent = error.message;
 
-                    const lineNumber = Math.max(error.lineNumber, 0);
-                    errorLines.push(lineNumber);
-                    codemirror.addLineClass(lineNumber, 'background', 'errorLine');
+        //             const lineNumber = Math.max(error.lineNumber, 0);
+        //             errorLines.push(lineNumber);
+        //             codemirror.addLineClass(lineNumber, 'background', 'errorLine');
 
-                    const lineOptions = {
-                        coverGutter: false,
-                        noHScroll: true
-                    };
-                    const widget = codemirror.addLineWidget(lineNumber, message, lineOptions);
-                    lineWidgets.push(widget);
-                }
+        //             const lineOptions = {
+        //                 coverGutter: false,
+        //                 noHScroll: true
+        //             };
+        //             const widget = codemirror.addLineWidget(lineNumber, message, lineOptions);
+        //             lineWidgets.push(widget);
+        //         }
 
-                return (errors.length === 0);
-            });
-        };
+        //         return (errors.length === 0);
+        //     });
+        // };
 
         // /***** TERN JS AUTOCOMPLETE *****/
 

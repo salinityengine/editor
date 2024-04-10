@@ -213,7 +213,7 @@
 }
 
 .salt-search-box {
-    padding: 0.2em 0.25em 0.2em 1.5em !important; /* t r b l */
+    padding: 0.2em 0.25em 0.2em 1.5em !important; /* top rright bottom left */
     margin: none !important;
     width: 100% !important;
 }
@@ -223,6 +223,19 @@
     position: absolute;
     left: 0.8em !important;
     width: calc(var(--row-height) * 0.55) !important;
+}
+
+/********** Scripter */
+
+.salt-script-title {
+    color: rgb(var(--highlight));
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.salt-script-wrapper {
+    overflow: auto;
 }
 
 /********** Shaper */

@@ -67,6 +67,7 @@ class Layout {
             'player':       Player,
             'previewer':    Previewer,
             'project':      Projecter,
+            'scripter':     Scripter,
             'settings':     Settings,
         };
         return floaters;

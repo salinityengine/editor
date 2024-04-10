@@ -19,7 +19,7 @@ class Previewer extends SUEY.Floater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}previewer.svg`;
-        super('previewer', null, { icon, color: '#FD8469' });
+        super('previewer', null, { icon, color: '#FD8469', shrink: '92%' });
         const self = this;
         Advice.attach(this.button, 'floater/previewer');
 
