@@ -22,6 +22,7 @@ class Scripter extends SUEY.Floater {
         const icon = `${FOLDER_FLOATERS}scripter.svg`;
         super('scripter', null, { icon, color: '#090B11', shrink: '75%' });
         const self = this;
+        this.addClass('suey-custom-font');
         Advice.attach(this.button, 'floater/scripter');
 
         // Title Bar
@@ -47,7 +48,13 @@ class Scripter extends SUEY.Floater {
         wrapper.setAttribute('tabindex', '-1');
         this.add(wrapper);
 
-        const codemirror = new Scrimp(wrapper.dom);
+        const codemirror = new Scrimp(wrapper.dom, { theme: 'suey' });
+
+        // Focus on Wrapper Click
+        wrapper.on('click', () => {
+            if (codemirror) codemirror.focus();
+            console.log(codemirror.select, codemirror.selectAll)
+        });
 
         // // Codemirror: On Change
         // codemirror.on('change', function() {

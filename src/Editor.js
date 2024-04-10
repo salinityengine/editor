@@ -86,38 +86,19 @@ class Editor extends SUEY.Div {
 
         /********** EVENTS */
 
-        function onKeyDown(event) {
-            editorKeyDown(editor, event);
-        }
-        function onKeyUp(event) {
-            editorKeyUp(editor, event);
-        }
-        function onPointerDown(event) {
-            const selection = window.getSelection();
-            if (typeof selection.empty === 'function') selection.empty();
-            if (typeof selection.removeAllRanges === 'function') selection.removeAllRanges();
-        }
-        function onFocusOut(event) {
-            document.focusedElement = undefined;
-        }
-        function onFocusIn(event) {
-            document.focusedElement = event.target;
-        }
-        function onNoFocus(event) {
-            document.focusedElement = undefined;
-        }
-        function onDragOver(event) {
-            event.preventDefault();                             // keeps files dragged from outside app opening in new tab
-            event.dataTransfer.dropEffect = 'copy';             // default mouse cursor for files dragged from outside app
-        }
-        function onDrop(event) {
-            event.preventDefault();                             // keeps files dragged from outside app opening in new tab
-        }
+        function onKeyDown(event)   { editorKeyDown(editor, event); }
+        function onKeyUp(event)     { editorKeyUp(editor, event); }
+        function onFocusOut(event)  { document.focusedElement = undefined; }
+        function onFocusIn(event)   { document.focusedElement = event.target; }
+        function onNoFocus(event)   { document.focusedElement = undefined; }
+        function onDragOver(event)  { event.preventDefault(); event.dataTransfer.dropEffect = 'copy'; /* mouse cursor */ }
+        function onDrop(event)      { event.preventDefault(); }
         function onVisibilityChange(event) {
-            if (document.visibilityState === 'hidden' /* or 'visible' */) {
+            if (document.visibilityState === 'hidden' /* can also be 'visible' */) {
                 Layout.save(editor.docker, editor.viewport());
             }
         }
+
         function addDocumentEvent(eventName, callback) {
             document.addEventListener(eventName, callback);
             editor.on('destroy', () => { document.removeEventListener(eventName, callback); });
@@ -125,13 +106,12 @@ class Editor extends SUEY.Div {
 
         addDocumentEvent('keydown', onKeyDown);
         addDocumentEvent('keyup', onKeyUp);
-        addDocumentEvent('pointerdown', onPointerDown);
         addDocumentEvent('focusout', onFocusOut);
         addDocumentEvent('focusin', onFocusIn);
         addDocumentEvent('nofocus', onNoFocus);
-        addDocumentEvent('dragover', onDragOver);
-        addDocumentEvent('drop', onDrop);
-        addDocumentEvent('visibilitychange', onVisibilityChange); // i.e. 'pagehide' / 'beforeunload'
+        addDocumentEvent('dragover', onDragOver);                   // keeps drag from outside app opening in new tab
+        addDocumentEvent('drop', onDrop);                           // keeps drag from outside app opening in new tab
+        addDocumentEvent('visibilitychange', onVisibilityChange);   // i.e. 'pagehide' / 'beforeunload'
 
         /********** INIT */
 
@@ -362,6 +342,8 @@ class Editor extends SUEY.Div {
             Config.setKey('scheme/saturation', saturation);
         }
         SUEY.ColorScheme.changeColor(color, tint, saturation);
+        // // DEBUG: Output color scheme colors
+        // console.log(SUEY.ColorScheme.toString());
         Signals.dispatch('schemeChanged');
     }
 
@@ -468,7 +450,7 @@ function editorIgnoreKey() {
 
 function editorKeyDown(editor, event) {
     // Ignore?
-    if (editorIgnoreKey) return;
+    if (editorIgnoreKey()) return;
 
     // Modifier Keys
     editor.updateModifiers(event);
@@ -584,7 +566,7 @@ function editorKeyDown(editor, event) {
 
 function editorKeyUp(editor, event) {
     // Ignore?
-    if (editorIgnoreKey) return;
+    if (editorIgnoreKey()) return;
 
     // Modifier Keys
     editor.updateModifiers(event);

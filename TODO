@@ -3,8 +3,7 @@
 /**********************************************/
 
 Scripter:
-    - Codemirror 6
-    - JavaScript
+    - Linter (jshint / eshint / esprima)
     - Styling
 
 View2D:
@@ -47,6 +46,8 @@ Floaters:
     Player:
         - Debug Console, override console.log to capture?
         - QR Code to load on phone
+        - Video screen capture?
+            - https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API
     Previewer:
     Project:
         - Info work with new View2D
@@ -140,9 +141,6 @@ Scripting:
     Scripter:
         Python (Brython): https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
         Visual Scripting:
-
-Publish:
-    - Replace unpkg w/jsDelivr?
 
 /******************** FUTURE ********************/
 
