@@ -157,7 +157,8 @@ class Editor extends SUEY.Div {
         if (currentViewport) Layout.save(this.docker, currentViewport);
 
         // Remove Mode Toolbar
-        this.toolbar.middle.detachChildren();
+        const middle = this.toolbar.middle;
+        middle.detach(...middle.children);
 
         // Hide Viewports
         let newViewport = undefined;

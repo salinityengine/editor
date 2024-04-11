@@ -26,9 +26,9 @@ class Advisor extends EnhancedFloater {
 
         /********** WELCOME */
 
-        const welcomeContents = new SUEY.Div().addClass('suey-absolute-box', 'salt-advisor-welcome-box');
+        const welcomeContents = new SUEY.Div().addClass('salt-advisor-welcome-box');
         welcomeContents.setInnerHtml(`
-            <div style='padding-bottom: 0.5em;'>
+            <div style='padding: 0.55em 0; text-align: center; width: 100%; margin: auto;'>
                 <span style='font-size: 110%; color: rgb(var(--triadic2));'>Welcome</span>
                 <span style='font-size: 110%; color: rgb(var(--triadic1));'>&nbspto&nbsp</span>
                 <span style='font-size: 110%; color: rgb(var(--icon));'>Salinity</span>
@@ -161,12 +161,12 @@ class Advisor extends EnhancedFloater {
             if (title) {
                 newTitle = title;
                 bodyContents.setInnerHtml(html);
-                bodyContents.setStyle('opacity', '1.0');
-                welcomeContents.setStyle('opacity', '0.0');
+                bodyContents.setStyle('display', '');
+                welcomeContents.setStyle('display', 'none');
             } else {
                 bodyContents.setInnerHtml('');
-                bodyContents.setStyle('opacity', '0.0');
-                welcomeContents.setStyle('opacity', '1.0');
+                bodyContents.setStyle('display', 'none');
+                welcomeContents.setStyle('display', '');
                 history = -1;
             }
             titleText.setInnerHtml(newTitle);

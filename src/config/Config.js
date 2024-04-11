@@ -6,7 +6,7 @@ const DEFAULT_SETTINGS = {
 
     /***** Floating Panels */
 
-    'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '30em', size2: '15em' },
+    'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '30em', size2: '12em' },
     'floater/initial/assets':                   { init: 'left',     side: 'left',       size: '30em' },
     'floater/initial/codex':                    { init: 'left',     side: 'left',       size: '30em' },
     'floater/initial/history':                  { init: 'right',    side: 'right',      size: '35em' },
