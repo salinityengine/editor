@@ -1,25 +1,36 @@
 import {
     FOLDER_FLOATERS,
     FOLDER_MENU,
+    FOLDER_TYPES,
 } from 'constants';
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-
-import { AddAssetCommand } from '../commands/Commands.js';
 import { AssetBlock } from '../gui/AssetBlock.js';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
+
+import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 import { Signals } from '../config/Signals.js';
 
+import { AddAssetCommand } from '../commands/Commands.js';
+
 /**
  * Access to items in the AssetManager
  */
-class Assets extends SUEY.Titled {
+class Assets extends EnhancedFloater {
 
     constructor() {
-        super({ title: 'Assets' });
+        const icon = `${FOLDER_FLOATERS}assets.svg`;
+        super('assets', null, { icon });
         const self = this;
+        Advice.attach(this.button, 'floater/assets');
+
+        /******************** TITLED PANEL */
+
+        const assetPanel = new SUEY.Titled({ title: 'Assets' });
+        this.add(assetPanel);
 
         /******************** HEADER BUTTONS */
 
@@ -34,7 +45,7 @@ class Assets extends SUEY.Titled {
         const assetMenu = new SUEY.Menu();
 
         // 'Cube Texture'
-        const cubeIcon = `${FOLDER_FLOATERS}asset/cube-texture.svg`;
+        const cubeIcon = `${FOLDER_TYPES}asset/cube-texture.svg`;
         const addCubeMenuItem = new SUEY.MenuItem('Cube Texture', cubeIcon);
         addCubeMenuItem.onSelect(() => {
             const texture = new THREE.CubeTexture();
@@ -44,11 +55,11 @@ class Assets extends SUEY.Titled {
         assetMenu.add(addCubeMenuItem);
 
         // 'Palette'
-        const paletteIcon = `${FOLDER_FLOATERS}asset/palette.svg`;
-        const addPaletteMenuItem = new SUEY.MenuItem(Language.getKey('assets/types/palette'), paletteIcon);
+        const paletteIcon = `${FOLDER_TYPES}asset/palette.svg`;
+        const addPaletteMenuItem = new SUEY.MenuItem('Palette', paletteIcon);
         addPaletteMenuItem.onSelect(() => {
             const palette = new SALT.Palette();
-            palette.name = `${Language.getKey('assets/types/palette')}`;
+            palette.name = 'Palette';
             editor.execute(new AddAssetCommand(palette));
         });
         assetMenu.add(addPaletteMenuItem);
@@ -56,22 +67,22 @@ class Assets extends SUEY.Titled {
         // Append Children
         addButton.attachMenu(assetMenu);
         buttonRow.add(addButton, new SUEY.FlexSpacer());
-        this.tabTitle.add(buttonRow);
+        assetPanel.tabTitle.add(buttonRow);
 
         /******************** BLOCKS */
 
         this.blocks = {};
 
-        this.blocks['geometry'] = new AssetBlock({ type: 'geometry', title: 'Geometry', icon: `${FOLDER_FLOATERS}asset/geometry.svg` });
-        this.blocks['material'] = new AssetBlock({ type: 'material', title: 'Material', icon: `${FOLDER_FLOATERS}asset/material.svg` });
-        this.blocks['palette'] = new AssetBlock({ type: 'palette', title: 'Palette', icon: `${FOLDER_FLOATERS}asset/palette.svg` });
-        this.blocks['shape'] = new AssetBlock({ type: 'shape', title: 'Shape', icon: `${FOLDER_FLOATERS}asset/shape.svg` });
-        this.blocks['texture'] = new AssetBlock({ type: 'texture', title: 'Texture', icon: `${FOLDER_FLOATERS}asset/texture.svg` });
+        this.blocks['geometry'] = new AssetBlock({ type: 'geometry', title: 'Geometry', icon: `${FOLDER_TYPES}asset/geometry.svg` });
+        this.blocks['material'] = new AssetBlock({ type: 'material', title: 'Material', icon: `${FOLDER_TYPES}asset/material.svg` });
+        this.blocks['palette'] = new AssetBlock({ type: 'palette', title: 'Palette', icon: `${FOLDER_TYPES}asset/palette.svg` });
+        this.blocks['shape'] = new AssetBlock({ type: 'shape', title: 'Shape', icon: `${FOLDER_TYPES}asset/shape.svg` });
+        this.blocks['texture'] = new AssetBlock({ type: 'texture', title: 'Texture', icon: `${FOLDER_TYPES}asset/texture.svg` });
 
         // Add Blocks
         for (const type in this.blocks) {
             const block = this.blocks[type];
-            this.add(block);
+            assetPanel.add(block);
         }
 
         // Add Search Bar
@@ -85,7 +96,7 @@ class Assets extends SUEY.Titled {
             self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
-        this.addToSelf(searchDiv);
+        assetPanel.addToSelf(searchDiv);
 
         /***** SIGNALS *****/
 

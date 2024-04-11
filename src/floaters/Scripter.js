@@ -1,11 +1,10 @@
 import {
     FOLDER_FLOATERS,
-    FOLDER_TOOLBAR,
-    SCREEN_RATIOS,
  } from 'constants';
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 import { Scrimp } from 'scrimp';
 
 import { Advice } from '../config/Advice.js';
@@ -16,7 +15,7 @@ import { Advice } from '../config/Advice.js';
 /**
  * Script Editor
  */
-class Scripter extends SUEY.Floater {
+class Scripter extends EnhancedFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}scripter.svg`;
@@ -24,6 +23,18 @@ class Scripter extends SUEY.Floater {
         const self = this;
         this.addClass('suey-custom-font');
         Advice.attach(this.button, 'floater/scripter');
+
+        /********** EVENTS */
+
+        // Clean up when Window 'X' is clicked
+        this.on('hidden', () => {
+            console.warn(`Scripter.on('hidden'): Scripter should be destroyed, not hidden`);
+        });
+        this.on('destroy', () => {
+            scrimp.destroy(); // https://codemirror.net/docs/ref/#view.EditorView.destroy
+        });
+
+        /********** TITLE */
 
         // Title Bar
         const title = new SUEY.TextBox().addClass('salt-script-title');
@@ -35,6 +46,24 @@ class Scripter extends SUEY.Floater {
         //     }
         // });
 
+        /********** WRAPPER */
+
+        const wrapper = new SUEY.Div().addClass('salt-script-wrapper');
+        wrapper.setAttribute('tabindex', '-1');
+        this.add(wrapper);
+
+        // Wrapper Click: Focus on Scrimp
+        wrapper.on('click', () => {
+            if (scrimp) scrimp.focus();
+        });
+        // // Wrapper Double Click: Select all
+        // wrapper.on('dblclick', (event) => {
+        //     const findcode = SUEY.Dom.findElementAt('cm-editor', event.pageX, event.pageY);
+        //     if (!findcode && scrimp) scrimp.selectAll();
+        // });
+
+        /********** SCRIMP (CODEMIRROR) */
+
         // Internal Variables
         let renderer = null; //editor.viewport.renderer;
         let delay;
@@ -42,19 +71,25 @@ class Scripter extends SUEY.Floater {
         let currentScript;
         let editing = false;
 
-        /***** CODEMIRROR EDITOR *****/
+        let initialContents =
+`function updateSize() {
+    const width = Math.max(1, self.contents().getWidth());
+    const height = Math.max(1, self.contents().getHeight());
+    app.setSize(width, height);
+}
+this.on('resizer', updateSize);
+window.addEventListener('resize', updateSize);
 
-        const wrapper = new SUEY.Div().addClass('salt-script-wrapper');
-        wrapper.setAttribute('tabindex', '-1');
-        this.add(wrapper);
+// Stop Player when Window 'X' is clicked
+this.on('hidden', () => {
+    console.warn('Player.on("hidden"): Game player should be destroyed, not hidden');
+});
+this.on('destroy', () => {
+    window.removeEventListener('resize', updateSize);
+    self.stop();
+});`;
 
-        const codemirror = new Scrimp(wrapper.dom, { theme: 'suey' });
-
-        // Focus on Wrapper Click
-        wrapper.on('click', () => {
-            if (codemirror) codemirror.focus();
-            console.log(codemirror.select, codemirror.selectAll)
-        });
+        const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents });
 
         // // Codemirror: On Change
         // codemirror.on('change', function() {
@@ -74,22 +109,14 @@ class Scripter extends SUEY.Floater {
         //     }, 300);
         // });
 
-        // /***** CATCH KEY EVENTS *****/
-        // //  - Prevents 'Backspace' from deleting objects, captures Editor key events, etc.
-        // //  - Override browser 'Ctrl-S' / 'Cmd-S' save functionality
-
-        // const wrapper = codemirror.getWrapperElement();
-        // wrapper.addEventListener('keydown', function(event) {
-        //     event.stopPropagation();
-
-        //     if (event.key === 's' && (event.ctrlKey || event.metaKey)) {
-        //         event.preventDefault();
-        //         self.hide();
-        //     }
-        // });
-        // wrapper.addEventListener('keyup', function(event) {
-        //     event.stopPropagation();
-        // });
+        function onKeySave() {
+            console.log('TODO: Script wants save');
+            //
+            // Make sure script is saved and close scripter
+            //
+        }
+        scrimp.addKeymap('Ctrl-s', onKeySave);
+        scrimp.addKeymap('Meta-s', onKeySave);
 
         /***** VALIDATE *****/
 

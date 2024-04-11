@@ -1,10 +1,11 @@
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 
 /**
  * Shaper Editor
  */
-class Shaper extends SUEY.Floater {
+class Shaper extends EnhancedFloater {
 
     constructor() {
         super({

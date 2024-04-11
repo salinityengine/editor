@@ -5,6 +5,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -17,7 +18,7 @@ import { WorldGridBlock } from './settings/WorldGridBlock.js';
 /**
  * Editor Settings
  */
-class Settings extends SUEY.Floater {
+class Settings extends EnhancedFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings.svg`;
@@ -25,13 +26,14 @@ class Settings extends SUEY.Floater {
         const self = this;
         Advice.attach(this.button, 'floater/settings');
 
+        /******************** TITLED PANEL */
+
+        const settingsPanel = new SUEY.Titled({ title: 'Settings' });
+        this.add(settingsPanel);
+
         /** Builds Inspector */
         function build() {
-            self.clearContents();
-
-            // Title
-            const inspectorTitle = new SUEY.Div('Settings').addClass('suey-tab-title');
-            self.add(inspectorTitle);
+            settingsPanel.clearContents();
 
             // Create Blocks
             const blocks = [];
@@ -45,7 +47,7 @@ class Settings extends SUEY.Floater {
             }
 
             // Add Blocks
-            self.add(...blocks);
+            settingsPanel.add(...blocks);
         }
 
         /***** SIGNALS *****/

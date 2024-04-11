@@ -8,6 +8,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -21,13 +22,20 @@ import { Signals } from '../config/Signals.js';
 /**
  * Object Inspector
  */
-class Inspector extends SUEY.Floater {
+class Inspector extends EnhancedFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}inspector.svg`;
         super('inspector', null, { icon, color: '#0055CC' });
         const self = this;
         Advice.attach(this.button, 'floater/inspector');
+
+        /******************** TITLED PANEL */
+
+        const inspectorPanel = new SUEY.Titled({ title: 'Inspector' });
+        this.add(inspectorPanel);
+
+        /******************** BUILD */
 
         // Private
         let item = undefined;
@@ -113,14 +121,13 @@ class Inspector extends SUEY.Floater {
             }
 
             // Delete existing Blocks
-            self.clearContents();
+            inspectorPanel.clearContents();
 
-            // Title
-            const title = new SUEY.Div(SUEY.Strings.capitalize(titleName)).addClass('suey-tab-title');
-            self.add(title);
+            // Set Title
+            inspectorPanel.setTitle(titleName);
 
             // Add Blocks
-            self.add(...blocks);
+            inspectorPanel.add(...blocks);
 
             // Select this Floater
             if (highlight && self.dock) self.dock.selectTab(self.id);

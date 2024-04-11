@@ -550,9 +550,10 @@ function editorKeyDown(editor, event) {
 
         // Reset all settings
         case Config.getKey('shortcuts/reset'): /* F9 */
-            Config.clear();                                         // clear Config.js
-            editor.refreshSettings();                               // refresh gui
-            Layout.default(editor.docker, editor.viewport());       // default docks
+            editor.docker.clearDocks();                             // clear docks first
+            Config.clear();                                         // then clear Config.js
+            editor.refreshSettings();                               // refresh gui elements
+            Layout.default(editor.docker, editor.viewport());       // load default docks
             break;
 
         // Return here to allow event to propagate

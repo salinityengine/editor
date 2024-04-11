@@ -3,6 +3,7 @@ import {
 } from 'constants';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -14,7 +15,7 @@ import { ProjectInfoBlock } from './project/ProjectInfoBlock.js';
 /**
  * Project Settings
  */
-class Projecter extends SUEY.Floater {
+class Projecter extends EnhancedFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project.svg`;
@@ -22,9 +23,10 @@ class Projecter extends SUEY.Floater {
         const self = this;
         Advice.attach(this.button, 'floater/project');
 
-        // Title
-        const inspectorTitle = new SUEY.Div('Project').addClass('suey-tab-title');
-        self.add(inspectorTitle);
+        /******************** TITLED PANEL */
+
+        const projectPanel = new SUEY.Titled({ title: 'Project' });
+        this.add(projectPanel);
 
         // Create Blocks
         const blocks = [];
@@ -32,7 +34,7 @@ class Projecter extends SUEY.Floater {
         blocks.push(new ProjectInfoBlock());
 
         // Add Blocks
-        self.add(...blocks);
+        projectPanel.add(...blocks);
 
     } // end ctor
 

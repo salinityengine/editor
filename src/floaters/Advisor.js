@@ -4,6 +4,7 @@ import {
     FOLDER_MENU,
 } from 'constants';
 import * as SUEY from 'gui';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -12,7 +13,7 @@ import { Signals } from '../config/Signals.js';
 /**
  * Helpful Advice
  */
-class Advisor extends SUEY.Floater {
+class Advisor extends EnhancedFloater {
 
     #title = '__NOT_SET__';
 
@@ -76,7 +77,7 @@ class Advisor extends SUEY.Floater {
 
         // Title
         const titleDiv = new SUEY.Div().addClass('suey-tab-title').setStyle('user-select', 'all');
-        const titleText = new SUEY.Text().addClass('suey-tab-title-text');
+        const titleText = new SUEY.Text().addClass('suey-tab-title-text').setStyle('user-select', 'all');
         titleDiv.add(titleText);
 
         // Body
@@ -133,16 +134,23 @@ class Advisor extends SUEY.Floater {
 
         // Events
         this.on('pointerenter', () => {
+            // Deactivate, Show Buttons
             active = false;
             buttonRow.setStyle('opacity', '1');
             buttonRow.setStyle('pointer-events', 'all');
         });
 
         this.on('pointerleave', () => {
+            // Reactivate, Hide Buttons, Clear Info
             active = true;
             buttonRow.setStyle('opacity', '0');
             buttonRow.setStyle('pointer-events', 'none');
             setInfo();
+
+            // Clear Selection
+            const selection = window.getSelection();
+            if (typeof selection.empty === 'function') selection.empty();
+            if (typeof selection.removeAllRanges === 'function') selection.removeAllRanges();
         });
 
         /********** SET INFO */

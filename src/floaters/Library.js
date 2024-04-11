@@ -1,23 +1,32 @@
 import {
+    FOLDER_FLOATERS,
     FOLDER_MENU,
     FOLDER_TYPES,
 } from 'constants';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { AssetBlock } from '../gui/AssetBlock.js';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 
+import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
-
-import { AssetBlock } from '../gui/AssetBlock.js';
 
 /**
  * Objects / Items / Prefabs
  */
-class Library extends SUEY.Titled {
+class Library extends EnhancedFloater {
 
     constructor() {
-        super({ title: 'Library' });
+        const icon = `${FOLDER_FLOATERS}library.svg`;
+        super('library', null, { icon });
         const self = this;
+        Advice.attach(this.button, 'floater/library');
+
+        /******************** TITLED PANEL */
+
+        const libPanel = new SUEY.Titled({ title: 'Library' });
+        this.add(libPanel);
 
         /******************** BLOCKS */
 
@@ -25,8 +34,8 @@ class Library extends SUEY.Titled {
 
         // 'Entity' Category (user defined)
         const general = 'unknown';
-        this.blocks[general] = new AssetBlock({ type: 'prefab', category: general, title: 'General', icon: `${FOLDER_TYPES}prefabs/general.svg` });
-        this.add(this.blocks[general]);
+        this.blocks[general] = new AssetBlock({ type: 'prefab', category: general, title: 'General', icon: `${FOLDER_TYPES}prefab/general.svg` });
+        libPanel.add(this.blocks[general]);
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
@@ -39,7 +48,7 @@ class Library extends SUEY.Titled {
             self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
-        this.addToSelf(searchDiv);
+        libPanel.addToSelf(searchDiv);
 
         /***** INIT *****/
 

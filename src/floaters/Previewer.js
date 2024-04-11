@@ -5,6 +5,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -15,7 +16,7 @@ import { ScriptPreview } from './previewer/ScriptPreview.js';
 /**
  * Object Previewer
  */
-class Previewer extends SUEY.Floater {
+class Previewer extends EnhancedFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}previewer.svg`;
@@ -23,9 +24,15 @@ class Previewer extends SUEY.Floater {
         const self = this;
         Advice.attach(this.button, 'floater/previewer');
 
+        /******************** TITLED PANEL */
+
+        const previewPanel = new SUEY.Titled({ title: 'Preview' });
+        this.add(previewPanel);
+
+        /******************** BUILD */
+
         // Private
         let item = undefined;
-        let clearTimer = undefined;
 
         /**
          * Builds (or rebuilds) the object previewer
@@ -47,7 +54,7 @@ class Previewer extends SUEY.Floater {
 
             // Process Item
             const blocks = [];
-            let titleName = 'Previewer';
+            let titleName = 'Preview';
 
             // ITEM: None
             if (item == undefined) {
@@ -72,14 +79,13 @@ class Previewer extends SUEY.Floater {
             }
 
             // Delete existing Blocks
-            self.clearContents();
+            previewPanel.clearContents();
 
-            // Title
-            const title = new SUEY.Div(SUEY.Strings.capitalize(titleName)).addClass('suey-tab-title');
-            self.add(title);
+            // Set Title
+            previewPanel.setTitle(titleName);
 
             // Add Blocks
-            self.add(...blocks);
+            previewPanel.add(...blocks);
 
             // Select this Floater
             if (highlight && self.dock) self.dock.selectTab(self.id);

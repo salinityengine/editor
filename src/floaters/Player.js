@@ -6,6 +6,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
+import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -17,7 +18,7 @@ const _size = { x: 0, y: 0 };
 /**
  * Game Player
  */
-class Player extends SUEY.Floater {
+class Player extends EnhancedFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}player.svg`;

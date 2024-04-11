@@ -36,6 +36,8 @@ class Layout {
         // Floaters Wanted
         const defaultFloaters = [
             'outliner',
+            'assets',
+            'library',
             'codex',
             'advisor',
             'inspector',
@@ -60,9 +62,11 @@ class Layout {
     static allFloaters() {
         const floaters = {
             'advisor':      Advisor,
+            'assets':       Assets,
             'codex':        Codex,
             'history':      Historian,
             'inspector':    Inspector,
+            'library':      Library,
             'outliner':     Outliner,
             'player':       Player,
             'previewer':    Previewer,
@@ -89,6 +93,7 @@ class Layout {
 
         let dock = undefined;
         switch (installInit) {
+            // Add Dock
             case 'left': case 'right': case 'top': case 'bottom':
                 // Docker Traversal Function
                 function findDocker(parentDocker, property, value, recursive = true) {
@@ -117,12 +122,19 @@ class Layout {
                     dock = subDocker.enableTabs();
                 }
                 break;
+            // Create Window
             case 'center':
             default:
-                // Create New Window
-                dock = new SUEY.Window({ title: floater.id, width: '50%', height: '70%' });
+                const width = installInfo?.size ?? '50%';
+                const height = installInfo?.size2 ?? '70%';
+                const startLeft = installInfo?.startLeft;
+                const startTop = installInfo?.startTop;
+                const startCentered = (startLeft == null && startTop == null);
+                dock = new SUEY.Window({ title: floater.id, width, height, startCentered });
                 docker.addToSelf(dock);
                 dock.display();
+                console.log('Start centered: ', startCentered);
+                if (!startCentered) dock.setStyle('left', SUEY.Css.toPx(startLeft, null, 'w'), 'top', SUEY.Css.toPx(startTop, null, 'h'));
         }
         dock.addTab(floater);
     }
@@ -130,8 +142,8 @@ class Layout {
     static removeFloater(floater) {
         if (floater && floater.isElement) {
             const dock = floater.dock;
-            if (dock) dock.removeTab(floater);
             floater.destroy();
+            if (dock) dock.removeTab(floater);
         }
     }
 

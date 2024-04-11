@@ -4,7 +4,9 @@
 
 Scripter:
     - Linter (jshint / eshint / esprima)
-    - Styling
+    - Style tooltips?
+    - Tern? (autocomplete)
+    - Open from Codex
 
 View2D:
     Editor:
@@ -29,32 +31,23 @@ Inspector:
         - Resizing a group of selected objects
 
 Floaters:
-    About:
-        - About box
-    Advisor:
-        - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
-    !! Assets:
-    Codex:
-        - Add scripts
-    Historian:
-        - Separate undo/redo history for each Viewport?
-    Inspector:
-        - Go through Blocks
-    !! Library:
-    Outliner:
-        - Entity2D, etc.
+    About: (about box)
+    Advisor: Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
+    Assets:
+    Codex: Add scripts
+    Historian: Separate undo/redo history for each Viewport?
+    Inspector: Go through Blocks
+    Library:
+    Outliner: Entity2D, etc.
     Player:
         - Debug Console, override console.log to capture?
         - QR Code to load on phone
         - Video screen capture?
             - https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API
     Previewer:
-    Project:
-        - Info work with new View2D
-    !! Scripter:
-        - Open from Codex
-    Settings:
-        - Get working with View2D grid
+    Project: Info work with new View2D
+    Scripter:
+    Settings: Get working with View2D grid
     !! Shaper:
 
 Undo / Redo Commands:
