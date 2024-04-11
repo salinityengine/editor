@@ -3,12 +3,12 @@ import {
     FOLDER_FLOATERS,
 } from 'constants';
 import * as SUEY from 'gui';
-import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
+import { SmartShrinker } from '../../gui/SmartShrinker.js';
 
 import { Config } from '../../config/Config.js';
 import { Signals } from '../../config/Signals.js';
 
-class WorldGridBlock extends ConfiguredShrinker {
+class WorldGridBlock extends SmartShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'

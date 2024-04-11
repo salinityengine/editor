@@ -4,8 +4,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-
-import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
+import { SmartShrinker } from '../../gui/SmartShrinker.js';
 
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
@@ -14,7 +13,7 @@ import { Signals } from '../../config/Signals.js';
 
 const _color = new SUEY.Iris();
 
-class SettingsGeneralBlock extends ConfiguredShrinker {
+class SettingsGeneralBlock extends SmartShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings/general.svg`; // color: '#C04145'

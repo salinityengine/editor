@@ -7,7 +7,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { EnhancedFloater } from '../gui/EnhancedFloater.js';
+import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -25,7 +25,7 @@ const _nodeStates = new WeakMap();
 /**
  * Project Scene Hierarchy
  */
-class Outliner extends EnhancedFloater {
+class Outliner extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}outliner.svg`;

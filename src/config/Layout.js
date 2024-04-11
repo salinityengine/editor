@@ -19,7 +19,36 @@ import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
 
+const DEFAULT_POSITIONS = {
+    'floater/position/advisor':     { init: 'left',     side: 'bottom',     size: '30em', size2: '12em' },
+    'floater/position/assets':      { init: 'left',     side: 'left',       size: '30em' },
+    'floater/position/codex':       { init: 'left',     side: 'left',       size: '30em' },
+    'floater/position/history':     { init: 'right',    side: 'right',      size: '35em' },
+    'floater/position/inspector':   { init: 'right',    side: 'right',      size: '35em' },
+    'floater/position/library':     { init: 'left',     side: 'left',       size: '30em' },
+    'floater/position/outliner':    { init: 'left',     side: 'left',       size: '30em' },
+    'floater/position/player':      { init: 'center',   size: '60%', size2: '80%' },
+    'floater/position/previewer':   { init: 'right',    side: 'right',      size: '35em' },
+    'floater/position/project':     { init: 'right',    side: 'right',      size: '35em' },
+    'floater/position/scripter':    { init: 'center',   size: '60%', size2: '90%' },
+    'floater/position/settings':    { init: 'right',    side: 'right',      size: '35em' },
+};
+
 class Layout {
+
+    /******************** POSITIONS */
+
+    static getPosition(key, defaultOnly = false) {
+        if (!defaultOnly) {
+            const data = localStorage.getItem(key);
+            if (data) return JSON.parse(data);
+        }
+        return DEFAULT_POSITIONS[key] ?? { init: 'center' };
+    }
+
+    static setPosition(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
 
     /******************** CONSTRUCT */
 
@@ -35,20 +64,15 @@ class Layout {
 
         // Floaters Wanted
         const defaultFloaters = [
-            'outliner',
-            'assets',
-            'library',
-            'codex',
-            'advisor',
-            'inspector',
-            'previewer',
+            'outliner', 'assets', 'library', 'codex', 'advisor',
+            'inspector', 'previewer',
         ];
 
         // Install Floaters
         const allowed = viewport.floaterFamily();
         for (const floaterName of defaultFloaters) {
             if (allowed.includes(floaterName)) {
-                Layout.installFloater(docker, Layout.createFloater(floaterName));
+                Layout.installFloater(docker, Layout.createFloater(floaterName), true /* defaultOnly */);
             }
         }
 
@@ -84,8 +108,8 @@ class Layout {
         return null;
     }
 
-    static installFloater(docker, floater) {
-        const installInfo = Config.getKey(`floater/initial/${floater?.id}`) ?? { init: 'center', side: null, size: '20%' };
+    static installFloater(docker, floater, defaultOnly = false) {
+        const installInfo = Layout.getPosition(`floater/position/${floater?.id}`, defaultOnly);
         const installInit = installInfo?.init ?? 'center';
         const installSide = installInfo?.side ?? installInit;
         const installSize = (installInfo && installInfo.size && installInfo.size !== '') ? installInfo.size : '20%';

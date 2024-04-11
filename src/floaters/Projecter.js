@@ -3,7 +3,7 @@ import {
 } from 'constants';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { EnhancedFloater } from '../gui/EnhancedFloater.js';
+import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -15,7 +15,7 @@ import { ProjectInfoBlock } from './project/ProjectInfoBlock.js';
 /**
  * Project Settings
  */
-class Projecter extends EnhancedFloater {
+class Projecter extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project.svg`;

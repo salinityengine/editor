@@ -7,7 +7,7 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 import { AssetBlock } from '../gui/AssetBlock.js';
-import { EnhancedFloater } from '../gui/EnhancedFloater.js';
+import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -19,7 +19,7 @@ import { AddAssetCommand } from '../commands/Commands.js';
 /**
  * Script Library
  */
-class Codex extends EnhancedFloater {
+class Codex extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}codex.svg`;

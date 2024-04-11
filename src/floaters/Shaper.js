@@ -1,11 +1,11 @@
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { EnhancedFloater } from '../gui/EnhancedFloater.js';
+import { SmartFloater } from '../gui/SmartFloater.js';
 
 /**
  * Shaper Editor
  */
-class Shaper extends EnhancedFloater {
+class Shaper extends SmartFloater {
 
     constructor() {
         super({

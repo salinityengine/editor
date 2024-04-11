@@ -4,7 +4,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { EnhancedFloater } from '../gui/EnhancedFloater.js';
+import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -13,7 +13,7 @@ import { Signals } from '../config/Signals.js';
 /**
  * Undo / Redo History
  */
-class Historian extends EnhancedFloater {
+class Historian extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}history.svg`;

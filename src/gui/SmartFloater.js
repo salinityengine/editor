@@ -1,8 +1,8 @@
 import * as SUEY from 'gui';
 
-import { Config } from '../config/Config.js';
+import { Layout } from '../config/Layout.js';
 
-class EnhancedFloater extends SUEY.Floater {
+class SmartFloater extends SUEY.Floater {
 
     constructor(id = 'unknown', content, options = {}) {
         super(id, content, options);
@@ -12,7 +12,7 @@ class EnhancedFloater extends SUEY.Floater {
         this.on('destroy', () => {
             const dock = self.dock;
             if (dock) {
-                const key = `floater/initial/${self.id}`;
+                const key = `floater/position/${self.id}`;
                 const value = {};
                 if (dock.hasClass('suey-window')) {
                     value.init = 'center';
@@ -32,7 +32,7 @@ class EnhancedFloater extends SUEY.Floater {
                         value.size2 = (value.side === 'left' || value.side === 'right') ? rect.width : rect.height;
                     }
                 }
-                Config.setKey(key, value);
+                Layout.setPosition(key, value);
             }
         });
 
@@ -40,4 +40,4 @@ class EnhancedFloater extends SUEY.Floater {
 
 }
 
-export { EnhancedFloater };
+export { SmartFloater };

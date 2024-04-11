@@ -5,7 +5,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { EnhancedFloater } from '../gui/EnhancedFloater.js';
+import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
@@ -16,7 +16,7 @@ import { ScriptPreview } from './previewer/ScriptPreview.js';
 /**
  * Object Previewer
  */
-class Previewer extends EnhancedFloater {
+class Previewer extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}previewer.svg`;

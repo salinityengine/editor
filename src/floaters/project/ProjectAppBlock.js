@@ -3,13 +3,13 @@ import {
 } from 'constants';
 import editor from 'editor';
 import * as SUEY from 'gui';
-import { ConfiguredShrinker } from '../../gui/ConfiguredShrinker.js';
+import { SmartShrinker } from '../../gui/SmartShrinker.js';
 
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
 import { Signals } from '../../config/Signals.js';
 
-class ProjectAppBlock extends ConfiguredShrinker {
+class ProjectAppBlock extends SmartShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/app.svg`; // color: '#773399'

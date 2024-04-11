@@ -4,8 +4,8 @@ import {
 import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
-import { EnhancedFloater } from '../gui/EnhancedFloater.js';
 import { Scrimp } from 'scrimp';
+import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
 
@@ -15,7 +15,7 @@ import { Advice } from '../config/Advice.js';
 /**
  * Script Editor
  */
-class Scripter extends EnhancedFloater {
+class Scripter extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}scripter.svg`;

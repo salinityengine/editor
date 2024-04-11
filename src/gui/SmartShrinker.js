@@ -6,7 +6,7 @@ import * as SUEY from 'gui';
 
 import { Config } from '../config/Config.js';
 
-class ConfiguredShrinker extends SUEY.Shrinkable {
+class SmartShrinker extends SUEY.Shrinkable {
 
     constructor({
         title = '',
@@ -29,4 +29,4 @@ class ConfiguredShrinker extends SUEY.Shrinkable {
 
 }
 
-export { ConfiguredShrinker };
+export { SmartShrinker };
