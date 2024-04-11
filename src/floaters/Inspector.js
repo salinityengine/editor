@@ -138,7 +138,7 @@ class Inspector extends SmartFloater {
 
         /***** SIGNALS *****/
 
-        Signals.connect(this, 'inspectorBuild', (from) => build(from, true /* highlight? */));
+        Signals.connect(this, 'inspectorBuild', (from, highlight = true) => build(from, highlight));
         Signals.connect(this, 'inspectorClear', () => build(undefined, false /* highlight? */));
         Signals.connect(this, 'inspectorRefresh', () => build('rebuild', true /* highlight? */));
 
@@ -155,12 +155,12 @@ class Inspector extends SmartFloater {
             if (viewport && viewport.mode() === EDITOR_MODES.SCENE_EDITOR_3D && viewport.mouseState === MOUSE_STATES.SELECTING) return;
 
             // Build with Selection
-            build(editor.selected, true /* highlight? */);
+            build(editor.selected, (editor.selected.length > 0) /* highlight? */);
         });
 
         /***** INIT *****/
 
-        build();
+        build(null, false /* highlight? */);
     }
 
 }

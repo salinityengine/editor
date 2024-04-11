@@ -106,7 +106,7 @@ class Previewer extends SmartFloater {
 
         /***** INIT *****/
 
-        build();
+        build(null, false /* highlight? */);
     }
 
 }
