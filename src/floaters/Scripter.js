@@ -21,6 +21,7 @@ class Scripter extends EnhancedFloater {
         const icon = `${FOLDER_FLOATERS}scripter.svg`;
         super('scripter', null, { icon, color: '#090B11', shrink: '75%' });
         const self = this;
+        this.addClass('salt-scripter');
         this.addClass('suey-custom-font');
         Advice.attach(this.button, 'floater/scripter');
 
@@ -50,12 +51,12 @@ class Scripter extends EnhancedFloater {
 
         const wrapper = new SUEY.Div().addClass('salt-script-wrapper');
         wrapper.setAttribute('tabindex', '-1');
-        this.add(wrapper);
+        this.add(wrapper, new SUEY.FlexBox());
 
-        // Wrapper Click: Focus on Scrimp
-        wrapper.on('click', () => {
-            if (scrimp) scrimp.focus();
-        });
+        // // Wrapper Click: Focus on Scrimp
+        // wrapper.on('click', () => {
+        //     if (scrimp) scrimp.focus();
+        // });
         // // Wrapper Double Click: Select all
         // wrapper.on('dblclick', (event) => {
         //     const findcode = SUEY.Dom.findElementAt('cm-editor', event.pageX, event.pageY);
@@ -77,6 +78,7 @@ class Scripter extends EnhancedFloater {
     const height = Math.max(1, self.contents().getHeight());
     app.setSize(width, height);
 }
+
 this.on('resizer', updateSize);
 window.addEventListener('resize', updateSize);
 
@@ -84,6 +86,7 @@ window.addEventListener('resize', updateSize);
 this.on('hidden', () => {
     console.warn('Player.on("hidden"): Game player should be destroyed, not hidden');
 });
+
 this.on('destroy', () => {
     window.removeEventListener('resize', updateSize);
     self.stop();

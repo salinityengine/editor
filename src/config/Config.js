@@ -6,18 +6,18 @@ const DEFAULT_SETTINGS = {
 
     /***** Floating Panels */
 
-    'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '24em', size2: '15em' },
-    'floater/initial/assets':                   { init: 'left',     side: 'left',       size: '24em' },
-    'floater/initial/codex':                    { init: 'left',     side: 'left',       size: '24em' },
-    'floater/initial/history':                  { init: 'right',    side: 'right',      size: '30em' },
-    'floater/initial/inspector':                { init: 'right',    side: 'right',      size: '30em' },
-    'floater/initial/library':                  { init: 'left',     side: 'left',       size: '24em' },
-    'floater/initial/outliner':                 { init: 'left',     side: 'left',       size: '24em' },
+    'floater/initial/advisor':                  { init: 'left',     side: 'bottom',     size: '30em', size2: '15em' },
+    'floater/initial/assets':                   { init: 'left',     side: 'left',       size: '30em' },
+    'floater/initial/codex':                    { init: 'left',     side: 'left',       size: '30em' },
+    'floater/initial/history':                  { init: 'right',    side: 'right',      size: '35em' },
+    'floater/initial/inspector':                { init: 'right',    side: 'right',      size: '35em' },
+    'floater/initial/library':                  { init: 'left',     side: 'left',       size: '30em' },
+    'floater/initial/outliner':                 { init: 'left',     side: 'left',       size: '30em' },
     'floater/initial/player':                   { init: 'center',   size: '60%', size2: '80%' },
-    'floater/initial/previewer':                { init: 'right',    side: 'right',      size: '30em' },
-    'floater/initial/project':                  { init: 'right',    side: 'right',      size: '30em' },
+    'floater/initial/previewer':                { init: 'right',    side: 'right',      size: '35em' },
+    'floater/initial/project':                  { init: 'right',    side: 'right',      size: '35em' },
     'floater/initial/scripter':                 { init: 'center',   size: '60%', size2: '90%' },
-    'floater/initial/settings':                 { init: 'right',    side: 'right',      size: '30em' },
+    'floater/initial/settings':                 { init: 'right',    side: 'right',      size: '35em' },
 
     /***** Editor *****/
 

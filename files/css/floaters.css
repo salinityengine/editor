@@ -314,7 +314,8 @@
 }
 
 .salt-script-wrapper {
-    overflow: auto;
+    display: flex;
+    overflow: hidden;
     width: 100%;
     height: 100%;
 }
@@ -322,6 +323,11 @@
 .salt-script-wrapper * {
     font-size: calc(var(--font-size) * 0.9);
     line-height: 1.5em !important;
+}
+
+.salt-script-wrapper .cm-editor {
+    overflow: auto;
+    flex: 1 1 auto;
 }
 
 /********** Shaper */

@@ -133,7 +133,6 @@ class Layout {
                 dock = new SUEY.Window({ title: floater.id, width, height, startCentered });
                 docker.addToSelf(dock);
                 dock.display();
-                console.log('Start centered: ', startCentered);
                 if (!startCentered) dock.setStyle('left', SUEY.Css.toPx(startLeft, null, 'w'), 'top', SUEY.Css.toPx(startTop, null, 'h'));
         }
         dock.addTab(floater);
