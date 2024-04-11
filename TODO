@@ -2,11 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Toolbar:
-    - Move 'player' toolbar to main toolbar
-    - Add 'toolbar' for 'scripter'?
-    - Tie in EyeMenu commands (copy / paste) to Scripter. Need way to send commnands to active Floater / View
-
 Scripter:
     - Linter (jshint / eshint / esprima)
     - Style tooltips?

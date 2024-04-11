@@ -20,11 +20,11 @@ import { Worlds } from './viewports/Worlds.js';
 
 import { loadDemoProject } from './Demo.js';
 
-class Editor extends SUEY.Div {
+class Editor extends SUEY.MainWindow {
 
     constructor() {
         super();
-        this.setClass('salt-editor', 'suey-unselectable', 'salt-disable-animations');
+        this.addClass('salt-editor', 'suey-unselectable', 'salt-disable-animations');
         document.body.appendChild(this.dom);
     }
 
@@ -46,7 +46,6 @@ class Editor extends SUEY.Div {
         /********** PROPERTIES */
 
         // Elements
-        editor.docker = null;                                   // primary docker
         editor.infoBox = null;                                  // popup information
         editor.toolbar = null;                                  // main toolbar
 
@@ -81,9 +80,6 @@ class Editor extends SUEY.Div {
         editor.viewports.push(new Worlds());
         editor.add(...editor.viewports);
 
-        // Docks
-        editor.add(editor.docker = new SUEY.Docker());
-
         /********** EVENTS */
 
         function onKeyDown(event)   { editorKeyDown(editor, event); }
@@ -93,11 +89,7 @@ class Editor extends SUEY.Div {
         function onNoFocus(event)   { document.focusedElement = undefined; }
         function onDragOver(event)  { event.preventDefault(); event.dataTransfer.dropEffect = 'copy'; /* mouse cursor */ }
         function onDrop(event)      { event.preventDefault(); }
-        function onVisibilityChange(event) {
-            if (document.visibilityState === 'hidden' /* can also be 'visible' */) {
-                Layout.save(editor.docker, editor.viewport());
-            }
-        }
+        function onVisibilityChange(event) { if (document.visibilityState === 'hidden') { Layout.save(); } }
 
         function addDocumentEvent(eventName, callback) {
             document.addEventListener(eventName, callback);
@@ -154,7 +146,7 @@ class Editor extends SUEY.Div {
     setMode(mode) {
         // Save Floater Layout
         const currentViewport = this.viewport();
-        if (currentViewport) Layout.save(this.docker, currentViewport);
+        if (currentViewport) Layout.save();
 
         // Remove Mode Toolbar
         const middle = this.toolbar.middle;
@@ -176,7 +168,7 @@ class Editor extends SUEY.Div {
         Config.setKey('editor/mode', mode);
 
         // Load Floaters
-        Layout.load(this.docker, newViewport);
+        Layout.load();
 
         // Clear Inspector / Previewer
         Signals.dispatch('inspectorClear');
@@ -409,10 +401,10 @@ class Editor extends SUEY.Div {
 
     /** Returns Floater if present in Editor. Options to build if not present and ensure active.  */
     getFloaterByID(tabID, build = true, select = true) {
-        let floater = this.docker.getFloaterByID(tabID);
+        let floater = super.getFloaterByID(tabID);
         if (!floater && build) {
             floater = Layout.createFloater(tabID);
-            if (floater) Layout.installFloater(this.docker, floater);
+            if (floater) Layout.installFloater(floater);
         }
         if (select && floater && floater.dock) floater.dock.selectTab(floater.id);
         return floater;
@@ -421,8 +413,8 @@ class Editor extends SUEY.Div {
     /** If Floater is present in Editor, ensures parent Dock Tab is active */
     selectFloater(tabID = '') {
         if (tabID && tabID.isElement) tabID = tabID.id;
-        const floater = this.docker.getFloaterByID(tabID);
-        if (floater && floater.dock) floater.dock.selectTab(floater.id);
+        if (tabID == undefined || tabID == '') return;
+        this.getFloaterByID(tabID, false /* build? */, true /* select */);
     }
 
 }
@@ -551,10 +543,10 @@ function editorKeyDown(editor, event) {
 
         // Reset all settings
         case Config.getKey('shortcuts/reset'): /* F9 */
-            editor.docker.clearDocks();                             // clear docks first
-            Config.clear();                                         // then clear Config.js
-            editor.refreshSettings();                               // refresh gui elements
-            Layout.default(editor.docker, editor.viewport());       // load default docks
+            editor.clearFloaters();                             // clear docks / windows
+            Config.clear();                                     // then clear Config.js
+            editor.refreshSettings();                           // refresh gui elements
+            Layout.default();                                   // load default docks
             break;
 
         // Return here to allow event to propagate

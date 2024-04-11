@@ -1,6 +1,4 @@
-import {
-    EDITOR_MODES,
-} from 'constants';
+import editor from 'editor';
 import * as SUEY from 'gui';
 import { Config } from './Config.js';
 import { Signals } from './Signals.js';
@@ -52,19 +50,18 @@ class Layout {
 
     /******************** CONSTRUCT */
 
-    static default(docker, viewport) {
-        // Clear Docker
-        docker.clearDocks();
+    static default() {
+        // Clear Floaters
+        editor.clearFloaters();
 
         // Checks
-        if (!viewport) {
-            console.warn('Layout.default(): Editor viewport not provided!');
-            return;
-        }
+        const viewport = editor.viewport();
+        if (!viewport) return console.warn('Layout.default(): Viewport not found!');
 
         // Floaters Wanted
         const defaultFloaters = [
-            'outliner', 'assets', 'library', 'codex', 'advisor',
+            'outliner', 'assets', 'library', 'codex',
+            'advisor',
             'inspector', 'previewer',
         ];
 
@@ -72,7 +69,8 @@ class Layout {
         const allowed = viewport.floaterFamily();
         for (const floaterName of defaultFloaters) {
             if (allowed.includes(floaterName)) {
-                Layout.installFloater(docker, Layout.createFloater(floaterName), true /* defaultOnly */);
+                const floater = Layout.createFloater(floaterName);
+                if (floater) Layout.installFloater(floater, true /* defaultOnly */);
             }
         }
 
@@ -108,13 +106,14 @@ class Layout {
         return null;
     }
 
-    static installFloater(docker, floater, defaultOnly = false) {
+    static installFloater(floater, defaultOnly = false) {
         const installInfo = Layout.getPosition(`floater/position/${floater?.id}`, defaultOnly);
         const installInit = installInfo?.init ?? 'center';
         const installSide = installInfo?.side ?? installInit;
         const installSize = (installInfo && installInfo.size && installInfo.size !== '') ? installInfo.size : '20%';
         const installSize2 = installInfo?.size2 ?? installSize;
 
+        const docker = editor.docker;
         let dock = undefined;
         switch (installInit) {
             // Add Dock
@@ -154,9 +153,8 @@ class Layout {
                 const startLeft = installInfo?.startLeft;
                 const startTop = installInfo?.startTop;
                 const startCentered = (startLeft == null && startTop == null);
-                dock = new SUEY.Window({ title: floater.id, width, height, startCentered });
-                docker.addToSelf(dock);
-                dock.display();
+
+                dock = editor.addWindow({ title: floater.id, width, height, startCentered });
                 if (!startCentered) dock.setStyle('left', SUEY.Css.toPx(startLeft, null, 'w'), 'top', SUEY.Css.toPx(startTop, null, 'h'));
         }
         dock.addTab(floater);
@@ -164,23 +162,23 @@ class Layout {
 
     /******************** SAVE / LOAD */
 
-    static save(docker, viewport) {
-        // Checks
-        if (!docker.isPrimary()) {
-            console.warn('Layout.save(): The provided Docker is not the Primary Docker');
-            return;
-        }
-        if (!viewport) {
-            console.warn('Layout.save(): Editor viewport not provided!');
-            return;
-        }
+    static save() {
+        if (!editor.viewport()) return console.warn('Layout.save(): Viewport not found');
 
         // Docker Traversal
         function traverse(currentDocker, parentLayout) {
             const reverseChildren = currentDocker.children.toReversed();
             reverseChildren.forEach(child => {
+                // Primary
+                if (child.hasClass('suey-docker-primary')) {
+                    const primaryLayout = {
+                        type: 'primary',
+                        children: [],
+                    };
+                    parentLayout.children.push(primaryLayout);
+                    traverse(child, primaryLayout);
                 // Docker
-                if (child.hasClass('suey-docker')) {
+                } else if (child.hasClass('suey-docker')) {
                     const dockerLayout = {
                         type: 'docker',
                         initialSide: child.initialSide,
@@ -206,7 +204,7 @@ class Layout {
                 } else if (child.hasClass('suey-window')) {
                     const windowLayout = {
                         type: 'window',
-                        active: child.hasClass('suey-active-window'),
+                        zIndex: SUEY.Css.getVariable('--window-z-index', child),
                         left: child.dom.style.left,
                         top: child.dom.style.top,
                         width: child.dom.style.width,
@@ -222,45 +220,40 @@ class Layout {
 
         // Build Layout Tree
         const layout = {
-            type: 'docker',
-            side: 'center',
+            type: 'main-window',
             children: [],
         };
-        traverse(docker, layout);
+        traverse(editor, layout);
 
         // Save the Layout
+        const viewport = editor.viewport();
         localStorage.removeItem(`dockerLayout/${viewport.mode()}`);
         localStorage.setItem(`dockerLayout/${viewport.mode()}`, JSON.stringify(layout));
     }
 
-    static load(docker, viewport) {
-        // Clear Docker
-        docker.clearDocks();
+    static load() {
+        if (!editor.viewport()) return console.warn('Layout.load(): Viewport not found');
 
-        // Checks
-        if (!docker.isPrimary()) {
-            console.warn('Layout.load(): The provided Docker is not the Primary Docker');
-            return;
-        }
-        if (!viewport) {
-            console.warn('Layout.load(): Editor viewport not provided!');
-            return;
-        }
+        // Clear Floaters
+        editor.clearFloaters();
+        const docker = editor.docker;
+        const viewport = editor.viewport();
 
         // Retrieve the layout from localStorage
         const layoutData = localStorage.getItem(`dockerLayout/${viewport.mode()}`);
-        if (!layoutData) {
-            Layout.default(docker, viewport);
-            return;
-        }
+        if (!layoutData) return Layout.default();
 
+        // Build Layout
         function createDocker(layoutNode, parentDocker) {
-            let activeWindow = undefined;
+            let activeWindow = undefined, activeZ = 0;
             let addedDock = false;
             let twinDocker = undefined;
             layoutNode.children.forEach(childNode => {
-
-                if (childNode.type === 'docker') {
+                // Primary
+                if (childNode.type === 'primary') {
+                    createDocker(childNode, parentDocker);
+                // Docker
+                } else if (childNode.type === 'docker') {
                     if (!addedDock) {
                         const newDocker = parentDocker.addDock(childNode.side, childNode.size);
                         if (childNode.collapsed) newDocker.collapseTabs();
@@ -271,12 +264,12 @@ class Layout {
                         if (childNode.collapsed) twinDocker.collapseTabs();
                         createDocker(childNode, twinDocker.contents());
                     }
-
+                // Tabbed
                 } else if (childNode.type === 'tabbed') {
                     const tabbed = parentDocker.enableTabs(childNode.hasSpacer /* flexBefore? */);
                     childNode.floaters.forEach(floaterID => tabbed.addTab(Layout.createFloater(floaterID)));
                     tabbed.selectTab(childNode.selectedID);
-
+                // Window
                 } else if (childNode.type === 'window') {
                     childNode.floaters.forEach(floaterID => {
                         const floater = Layout.createFloater(floaterID);
@@ -291,11 +284,15 @@ class Layout {
                                 left: childNode.left,
                                 top: childNode.top,
                             });
-                            parentDocker.addToSelf(window);
-                            window.display();
+                            editor.addWindow(window);
                             window.addTab(floater);
                             window.selectTab(floaterID);
-                            if (childNode.active) activeWindow = window;
+                            // Wants Active?
+                            const zIndex = parseFloat(childNode.zIndex);
+                            if (zIndex && !Number.isNaN(zIndex) && Number.isFinite(zIndex) && zIndex > activeZ) {
+                                activeWindow = window;
+                                activeZ = zIndex;
+                            }
                         }
                     });
                 }

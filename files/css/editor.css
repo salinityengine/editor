@@ -30,16 +30,6 @@ body {
 
 /********** Editor */
 
-.salt-editor {
-    user-select: none;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-}
-
 .salt-editor .suey-docker-primary {
     width: 100% !important;
     height: calc(100% - (var(--button-size) + (var(--pad-small) * 2))) !important;

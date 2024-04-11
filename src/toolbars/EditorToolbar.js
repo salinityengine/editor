@@ -17,7 +17,6 @@ class EditorToolbar extends SUEY.Panel {
     constructor(editor) {
         super({ style: SUEY.PANEL_STYLES.NONE });
         this.setClass('salt-toolbar');
-        this.addClass('editor-toolbar');
 
         /******************** BUTTONS */
 
