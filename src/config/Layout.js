@@ -138,14 +138,6 @@ class Layout {
         dock.addTab(floater);
     }
 
-    static removeFloater(floater) {
-        if (floater && floater.isElement) {
-            const dock = floater.dock;
-            floater.destroy();
-            if (dock) dock.removeTab(floater);
-        }
-    }
-
     /******************** SAVE / LOAD */
 
     static save(docker, viewport) {

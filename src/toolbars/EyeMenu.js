@@ -229,7 +229,10 @@ class EyeMenu extends SUEY.Menu {
 
             // Toggle Window Types
             function toggleWindow(windowMenuItem, windowName) {
-                if (windowMenuItem.checked) Layout.removeFloater(editor.getFloaterByID(windowName, false, false));
+                if (windowMenuItem.checked) {
+                    const floater = editor.getFloaterByID(windowName, false, false);
+                    if (floater) floater.removeSelf();
+                }
                 else editor.getFloaterByID(windowName, true /* build? */, true /* select? */);
             }
             for (const type in Layout.allFloaters()) {

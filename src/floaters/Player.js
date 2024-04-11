@@ -123,7 +123,7 @@ class Player extends EnhancedFloater {
             if (app.isPlaying) self.pause();
             else self.start();
         });
-        stop.onPress(() => Layout.removeFloater(self));
+        stop.onPress(() => self.removeSelf());
 
         const playButtons = new SUEY.FlexBox().addClass('salt-active-toolbar');
         playButtons.add(stop, pause, camera, screen);
