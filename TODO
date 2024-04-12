@@ -3,10 +3,11 @@
 /**********************************************/
 
 Scripter:
-    - Linter (jshint / eshint / esprima)
-    - Style tooltips?
-    - Tern? (autocomplete)
     - Open from Codex
+    - Editable script name textbox
+        - Style text box
+    - Linter (jshint / eshint / esprima)
+    - Tern? (autocomplete)
 
 View2D:
     Editor:
@@ -134,6 +135,9 @@ Scripting:
     Scripter:
         Python (Brython): https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
         Visual Scripting:
+
+Publish:
+    - Replace unpkg w/jsDelivr?: Uptime, reliability, speed
 
 /******************** FUTURE ********************/
 

@@ -25,7 +25,19 @@ class Scripter extends SmartFloater {
         this.addClass('suey-custom-font');
         Advice.attach(this.button, 'floater/scripter');
 
+        // Title Text
+        const titleText = new SUEY.Text('Scripter').addClass('suey-tab-title-text');
+        const tabTitle = new SUEY.Div().addClass('suey-tab-title');
+        tabTitle.add(titleText);
+        this.add(tabTitle);
+        this.tabTitle = tabTitle;
+
         /********** EVENTS */
+
+        // Focus on Scrimp when parent dock gains focus
+        this.on('activate-window', () => {
+            if (scrimp) scrimp.focus();
+        });
 
         // Clean up when Window 'X' is clicked
         this.on('hidden', () => {
@@ -50,18 +62,7 @@ class Scripter extends SmartFloater {
         /********** WRAPPER */
 
         const wrapper = new SUEY.Div().addClass('salt-script-wrapper');
-        wrapper.setAttribute('tabindex', '-1');
         this.add(wrapper, new SUEY.FlexBox());
-
-        // // Wrapper Click: Focus on Scrimp
-        // wrapper.on('click', () => {
-        //     if (scrimp) scrimp.focus();
-        // });
-        // // Wrapper Double Click: Select all
-        // wrapper.on('dblclick', (event) => {
-        //     const findcode = SUEY.Dom.findElementAt('cm-editor', event.pageX, event.pageY);
-        //     if (!findcode && scrimp) scrimp.selectAll();
-        // });
 
         /********** SCRIMP (CODEMIRROR) */
 

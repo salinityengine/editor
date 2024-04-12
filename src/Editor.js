@@ -84,9 +84,6 @@ class Editor extends SUEY.MainWindow {
 
         function onKeyDown(event)   { editorKeyDown(editor, event); }
         function onKeyUp(event)     { editorKeyUp(editor, event); }
-        function onFocusOut(event)  { document.focusedElement = undefined; }
-        function onFocusIn(event)   { document.focusedElement = event.target; }
-        function onNoFocus(event)   { document.focusedElement = undefined; }
         function onDragOver(event)  { event.preventDefault(); event.dataTransfer.dropEffect = 'copy'; /* mouse cursor */ }
         function onDrop(event)      { event.preventDefault(); }
         function onVisibilityChange(event) { if (document.visibilityState === 'hidden') { Layout.save(); } }
@@ -98,9 +95,6 @@ class Editor extends SUEY.MainWindow {
 
         addDocumentEvent('keydown', onKeyDown);
         addDocumentEvent('keyup', onKeyUp);
-        addDocumentEvent('focusout', onFocusOut);
-        addDocumentEvent('focusin', onFocusIn);
-        addDocumentEvent('nofocus', onNoFocus);
         addDocumentEvent('dragover', onDragOver);                   // keeps drag from outside app opening in new tab
         addDocumentEvent('drop', onDrop);                           // keeps drag from outside app opening in new tab
         addDocumentEvent('visibilitychange', onVisibilityChange);   // i.e. 'pagehide' / 'beforeunload'
@@ -412,9 +406,12 @@ class Editor extends SUEY.MainWindow {
 
     /** If Floater is present in Editor, ensures parent Dock Tab is active */
     selectFloater(tabID = '') {
-        if (tabID && tabID.isElement) tabID = tabID.id;
-        if (tabID == undefined || tabID == '') return;
-        this.getFloaterByID(tabID, false /* build? */, true /* select */);
+        if (tabID && tabID.isElement && tabID.hasClass('suey-floater')) {
+            const floater = tabID;
+            if (floater.dock) floater.dock.selectTab(floater.id);
+        } else if (tabID && tabID != '' && typeof tabID === 'string') {
+            this.getFloaterByID(tabID, false /* build? */, true /* select */);
+        }
     }
 
 }
@@ -425,17 +422,26 @@ export default editor;
 
 /******************** INTERNAL: KEYBOARD ********************/
 
-function editorIgnoreKey() {
-    // IGNORE: Focused HTMLElement contains specific attribute
-    const focused = document.focusedElement;
-    if (focused && focused instanceof HTMLElement) {
-        const editable = focused.getAttribute('contentEditable');
-        if (editable) return true;
-    }
+function editorIgnoreKey(event) {
+    // // DEBUG: See active element
+    // if (event.type === 'keydown') {
+    //     console.log(document.activeElement, document.activeElement.toString());
+    // }
 
     // IGNORE: While Playing
-    const player = editor.getFloaterByID('player', false /* build? */);
-    if (player && player.isPlaying) return true;
+    const player = editor.getFloaterByID('player', false /* build? */, false /* select */);
+    if (player && player.isPlaying) {
+        editor.selectFloater('player');
+        return true;
+    }
+
+    // IGNORE: Focused HTMLElement contains specific attribute
+    const focused = document.activeElement;
+    if (focused && focused instanceof HTMLElement) {
+        // const editable = focused.getAttribute('contentEditable');
+        // const tabIndex = focused.tabIndex;
+        if (!(focused instanceof HTMLBodyElement)) return true;
+    }
 
     // DON'T IGNORE
     return false;
@@ -443,7 +449,7 @@ function editorIgnoreKey() {
 
 function editorKeyDown(editor, event) {
     // Ignore?
-    if (editorIgnoreKey()) return;
+    if (editorIgnoreKey(event)) return;
 
     // Modifier Keys
     editor.updateModifiers(event);
@@ -560,7 +566,7 @@ function editorKeyDown(editor, event) {
 
 function editorKeyUp(editor, event) {
     // Ignore?
-    if (editorIgnoreKey()) return;
+    if (editorIgnoreKey(event)) return;
 
     // Modifier Keys
     editor.updateModifiers(event);

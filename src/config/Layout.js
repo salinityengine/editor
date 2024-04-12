@@ -153,7 +153,6 @@ class Layout {
                 const startLeft = installInfo?.startLeft;
                 const startTop = installInfo?.startTop;
                 const startCentered = (startLeft == null && startTop == null);
-
                 dock = editor.addWindow({ title: floater.id, width, height, startCentered });
                 if (!startCentered) dock.setStyle('left', SUEY.Css.toPx(startLeft, null, 'w'), 'top', SUEY.Css.toPx(startTop, null, 'h'));
         }
@@ -244,8 +243,9 @@ class Layout {
         if (!layoutData) return Layout.default();
 
         // Build Layout
+        let windowWantsActive = undefined;
+        let activeZ = 0;
         function createDocker(layoutNode, parentDocker) {
-            let activeWindow = undefined, activeZ = 0;
             let addedDock = false;
             let twinDocker = undefined;
             layoutNode.children.forEach(childNode => {
@@ -285,24 +285,27 @@ class Layout {
                                 top: childNode.top,
                             });
                             editor.addWindow(window);
-                            window.addTab(floater);
-                            window.selectTab(floaterID);
+                            window.addTab(floater).selectTab(floaterID);
                             // Wants Active?
                             const zIndex = parseFloat(childNode.zIndex);
                             if (zIndex && !Number.isNaN(zIndex) && Number.isFinite(zIndex) && zIndex > activeZ) {
-                                activeWindow = window;
+                                windowWantsActive = window;
                                 activeZ = zIndex;
                             }
                         }
                     });
                 }
             });
-            if (activeWindow) activeWindow.focus();
         }
 
         // Build Docker
         const layout = JSON.parse(layoutData);
         createDocker(layout, docker);
+
+        // Set Focus on Window?
+        if (windowWantsActive) {
+            windowWantsActive.focus();
+        }
     }
 
 }

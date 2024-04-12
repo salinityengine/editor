@@ -336,6 +336,23 @@
     flex: 1 1 auto;
 }
 
+/* Scrimp Tooltip Autocomplete */
+.cm-tooltip-autocomplete {
+    background-color: rgb(var(--background-light));
+    border: solid var(--border-small) rgb(var(--background-dark));
+    border-radius: var(--radius-large);
+    outline: solid var(--pad-smallish) rgba(var(--background-dark), 0.5);
+}
+.cm-tooltip-autocomplete > ul {
+    background-color: rgb(var(--background-light));
+    border: solid var(--border-small) rgba(var(--background-dark), 0.5);
+    border-radius: var(--radius-large);
+    outline: solid var(--border-small) rgb(var(--icon));
+}
+.cm-tooltip-autocomplete ul li[aria-selected] {
+    background: rgb(var(--icon-dark)) !important;
+}
+
 /********** Shaper */
 
 .salt-shaper-canvas {
