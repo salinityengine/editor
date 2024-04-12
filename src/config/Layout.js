@@ -28,7 +28,7 @@ const DEFAULT_POSITIONS = {
     'floater/position/player':      { init: 'center',   size: '60%', size2: '80%' },
     'floater/position/previewer':   { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/project':     { init: 'right',    side: 'right',      size: '35em' },
-    'floater/position/scripter':    { init: 'center',   size: '60%', size2: '90%' },
+    'floater/position/scripter':    { init: 'center',   size: '60%', size2: '85%' },
     'floater/position/settings':    { init: 'right',    side: 'right',      size: '35em' },
 };
 
@@ -169,14 +169,14 @@ class Layout {
         function traverse(currentDocker, parentLayout) {
             const reverseChildren = currentDocker.children.toReversed();
             reverseChildren.forEach(child => {
-                // Primary
-                if (child.hasClass('suey-docker-primary')) {
-                    const primaryLayout = {
-                        type: 'primary',
+                // Primary Docker or Window Holder
+                if (child.hasClass('suey-docker-primary') || child.hasClass('suey-window-holder')) {
+                    const containerLayout = {
+                        type: 'container',
                         children: [],
                     };
-                    parentLayout.children.push(primaryLayout);
-                    traverse(child, primaryLayout);
+                    parentLayout.children.push(containerLayout);
+                    traverse(child, containerLayout);
                 // Docker
                 } else if (child.hasClass('suey-docker')) {
                     const dockerLayout = {
@@ -249,8 +249,8 @@ class Layout {
             let addedDock = false;
             let twinDocker = undefined;
             layoutNode.children.forEach(childNode => {
-                // Primary
-                if (childNode.type === 'primary') {
+                // Primary Docker or Window Holder
+                if (childNode.type === 'container') {
                     createDocker(childNode, parentDocker);
                 // Docker
                 } else if (childNode.type === 'docker') {
