@@ -70,6 +70,7 @@
 - Code Editing
     blockly             (Apache)    Visual Code         https://developers.google.com/blockly
     brython             (BSD)       Python Scripting    https://github.com/brython-dev/brython
+    monaco              (MIT)       Code Editor         https://github.com/microsoft/monaco-editor
 
 - Entity Component System
     square              (MIT)       ECS                 https://github.com/harshdoesdev/square

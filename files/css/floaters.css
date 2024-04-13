@@ -212,7 +212,7 @@
 /********** Player */
 
 .salt-player {
-    min-height: 200px !important;;
+    min-height: 200px !important;
 }
 
 .salt-gray-out * {
@@ -334,6 +334,53 @@
 .salt-script-wrapper .cm-editor {
     overflow: auto;
     flex: 1 1 auto;
+}
+
+/* Scrimp Search */
+.cm-panel {
+    background-color: rgba(var(--background-dark), 1);
+}
+.cm-search {
+    border-top: solid var(--pad-small) rgb(var(--darklight));
+    padding-top: var(--pad-small) !important;
+}
+.cm-button {
+    color: rgba(var(--text-light), 1) !important;
+
+    border: var(--border-micro) solid rgba(var(--shadow), 0.75) !important;
+    border-radius: var(--radius-small) !important;
+    outline: var(--border-small) solid rgba(var(--darklight), 0.0) !important;
+
+    background-color: rgba(var(--button-dark), 0.75) !important;
+    background-image: linear-gradient(to bottom, rgba(var(--icon-light), 0.5), rgba(var(--icon-dark), 0.5)) !important;
+    box-shadow: /* pop-out-shadow */
+        inset var(--minus) var(--pixel) var(--pixel) var(--pixel) rgba(var(--white), 0.1),
+        inset var(--pixel) var(--minus) var(--pixel) var(--pixel) rgba(var(--black), 0.1) !important;
+    text-shadow: var(--minus) var(--pixel) rgba(var(--shadow), 0.5) !important;
+}
+.cm-button:enabled:active {
+    color: rgba(var(--icon), 1) !important;
+    background-color: rgba(var(--button-dark), 0.75) !important;
+    background-image: none !important;
+    box-shadow: inset 0 var(--pad-micro) var(--pad-x-small) 0 rgba(var(--shadow), 1) !important; /* sunk-in-shadow */
+}
+.cm-button:focus {
+    color: rgba(var(--complement), 1) !important;
+    outline: var(--border-small) solid rgba(var(--darklight), 1) !important;
+}
+.cm-panel input[type=checkbox]:focus,
+.cm-panel [name=close]:focus {
+    outline: var(--border-micro) solid rgba(var(--complement), 1.0) !important;
+}
+.cm-textfield {
+    border-radius: var(--radius-small) !important;
+}
+.cm-textfield:focus {
+    outline: var(--border-small) solid rgba(var(--complement), 1.0) !important;
+}
+.cm-textfield::selection {
+    color: rgba(var(--blacklight), 1) !important;
+    background-color: rgba(var(--icon), 1) !important;
 }
 
 /* Scrimp Tooltip Autocomplete */

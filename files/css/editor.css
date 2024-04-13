@@ -65,7 +65,7 @@ body {
         inset  0.00em -0.15em rgba(var(--black), 0.30),
         inset  0.15em  0.00em rgba(var(--black), 0.30),
         inset -0.15em  0.00em rgba(var(--white), 0.30),
-        inset  0.00em  0.15em rgba(var(--white), 0.30) !important;;
+        inset  0.00em  0.15em rgba(var(--white), 0.30) !important;
 }
 
 .salt-key-input:active, .salt-key-input:focus {

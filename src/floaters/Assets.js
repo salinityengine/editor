@@ -134,6 +134,12 @@ class Assets extends SmartFloater {
 
         /***** INIT *****/
 
+        // Process Blocks
+        for (const type in this.blocks) {
+            const block = this.blocks[type];
+            processAssets(type);
+        }
+
         // Inititate search term
         this.searchBlocks();
 

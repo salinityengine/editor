@@ -2,12 +2,24 @@
 /*                    TO DO                   */
 /**********************************************/
 
+SmartFloater:
+    - Save scroll position to Config
+
+AssetFloater extends SmartFloater: (assets, codex, library)
+    - Move search box to title bar when over a certain width
+    - Option for 'Add new category' button
+
 Scripter:
+    - Right click menu?
     - Open from Codex
     - Editable script name textbox
         - Style text box
     - Linter (jshint / eshint / esprima)
-    - Tern? (autocomplete)
+        https://discuss.codemirror.net/t/how-to-actually-use-eslint-in-codemirror-6/4184
+    - Auto complete / Tern
+        https://codemirror.net/try/?example=Custom%20completions
+        https://codemirror.net/examples/autocompletion/
+        https://codemirror.net/docs/ref/#autocomplete
 
 View2D:
     Editor:
@@ -34,11 +46,11 @@ Inspector:
 Floaters:
     About: (about box)
     Advisor: Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
-    Assets:
+    Assets: ie 'Project Folder' - Objects, Textures, etc.
     Codex: Add scripts
     Historian: Separate undo/redo history for each Viewport?
     Inspector: Go through Blocks
-    Library:
+    Library: Prebuilt object Types - Actor, Action (Trigger), Decoration, etc.
     Outliner: Entity2D, etc.
     Player:
         - Debug Console, override console.log to capture?
@@ -59,12 +71,12 @@ Undo / Redo Commands:
 Editor:
     Loading: Progress Bar
     File Menu:
-        New: Popup Dialogs (Warning!, You Sure?, etc)
+        New: Warn before starting new "You Sure?"
         Save / Load:
         Import / Export:
     Help Menu:
         Tips: (show tips / hide tips)
-        Samples: Sample Projects floater?
+        Samples: Sample projects floater?
         Manual / FAQ / Tutorials / Contact / Bug Report:
         Keyboard Layout Map:
     Storage: Autosave / Browser Storage
