@@ -12,7 +12,8 @@ import { View3DToolbar } from '../toolbars/View3DToolbar.js';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
-import { SelectCommand } from '../commands/Commands.js';
+
+import { SelectCommand } from '../commands/CommandList.js';
 
 class View3D extends AbstractView {
 

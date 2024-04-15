@@ -7,7 +7,8 @@ import * as SUEY from 'gui';
 
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
-import { SetValueCommand } from '../../../commands/Commands.js';
+
+import { SetValueCommand } from '../../../commands/CommandList.js';
 
 class EntityProperties extends SUEY.PropertyList {
 

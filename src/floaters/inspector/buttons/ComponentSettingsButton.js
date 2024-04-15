@@ -7,10 +7,10 @@ import * as SUEY from 'gui';
 
 import { Signals } from '../../../config/Signals.js';
 
-import { AddAssetCommand } from '../../../commands/Commands.js';
-import { AddComponentCommand } from '../../../commands/Commands.js';
-import { MultiCmdsCommand } from '../../../commands/Commands.js';
-import { RemoveComponentCommand } from '../../../commands/Commands.js';
+import { AddAssetCommand } from '../../../commands/CommandList.js';
+// import { AddComponentCommand } from '../../../commands/CommandList.js';
+import { MultiCmdsCommand } from '../../../commands/CommandList.js';
+// import { RemoveComponentCommand } from '../../../commands/CommandList.js';
 
 const _saveTypes = [
     'geometry',

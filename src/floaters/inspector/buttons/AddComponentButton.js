@@ -6,7 +6,7 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { AddComponentCommand } from '../../../commands/Commands.js';
+// import { AddComponentCommand } from '../../../commands/CommandList.js';
 
 class AddComponentButton extends SUEY.Button {
 

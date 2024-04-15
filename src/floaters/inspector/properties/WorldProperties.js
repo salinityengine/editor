@@ -10,7 +10,8 @@ import { AssetInput } from './inputs/AssetInput.js';
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { PropertyGroup } from '../../../gui/PropertyGroup.js';
-import { SetValueCommand } from '../../../commands/Commands.js';
+
+import { SetValueCommand } from '../../../commands/CommandList.js';
 
 class WorldProperties extends SUEY.Div {
 

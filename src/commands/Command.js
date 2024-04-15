@@ -14,7 +14,7 @@ class Command {
         /** OVERLOAD */
     }
 
-    /** Called when History stack is cleared, good time to dispose() of things */
+    /** Called when Commands stack is cleared, good time to dispose() of things */
     purge() {
         /** OVERLOAD */
     }

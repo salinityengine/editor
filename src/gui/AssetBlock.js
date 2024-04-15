@@ -9,9 +9,10 @@ import { CanvasUtils } from './CanvasUtils.js';
 import { ColorizeFilter } from './ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
-import { RemoveAssetCommand } from '../commands/Commands.js';
 import { Shaper } from '../floaters/Shaper.js';
 import { Signals } from '../config/Signals.js';
+
+import { RemoveAssetCommand } from '../commands/CommandList.js';
 
 const ASSET_WIDTH = 128;
 const ASSET_HEIGHT = 128;

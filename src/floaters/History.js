@@ -13,7 +13,7 @@ import { Signals } from '../config/Signals.js';
 /**
  * Undo / Redo History
  */
-class Historian extends SmartFloater {
+class History extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}history.svg`;
@@ -35,7 +35,7 @@ class Historian extends SmartFloater {
 
         // 'History Clear' Button
         const historyClear = new SUEY.Button().addClass('suey-borderless-button').onPress(() => {
-            editor.history.clear();
+            editor.commands.clear();
         });
         historyClear.setAttribute('tooltip', 'Clear History');
         historyClear.add(new SUEY.ShadowBox(`${FOLDER_FLOATERS}history/clear.svg`));
@@ -52,8 +52,8 @@ class Historian extends SmartFloater {
         let ignoreObjectSelectedSignal = false;
         treeList.on('change', () => {
             ignoreObjectSelectedSignal = true;
-            editor.history.goToState(parseInt(treeList.getValue()));
-            treeList.setValue(editor.history.undos.length);
+            editor.commands.goToState(parseInt(treeList.getValue()));
+            treeList.setValue(editor.commands.undos.length);
             ignoreObjectSelectedSignal = false;
         });
 
@@ -71,8 +71,8 @@ class Historian extends SmartFloater {
             const options = [ startOption ];
 
             // Undo Items
-            for (let i = 0; i < editor.history.undos.length; i++) {
-                const object = editor.history.undos[i];
+            for (let i = 0; i < editor.commands.undos.length; i++) {
+                const object = editor.commands.undos[i];
                 const option = document.createElement('div');
                 option.style.paddingLeft = '0.75em';
                 option.value = object.id;
@@ -80,58 +80,58 @@ class Historian extends SmartFloater {
                 options.push(option);
             }
 
-            const undoLength = editor.history.undos.length;
+            const undoLength = editor.commands.undos.length;
 
             // Redo Items
-            for (let i = editor.history.redos.length - 1; i >= 0; i--) {
-                const object = editor.history.redos[i];
+            for (let i = editor.commands.redos.length - 1; i >= 0; i--) {
+                const object = editor.commands.redos[i];
                 const option = document.createElement('div');
                 option.style.paddingLeft = '0.75em';
                 option.value = object.id;
-                option.textContent = `${(editor.history.redos.length - i + undoLength)} - ` + object.name;
+                option.textContent = `${(editor.commands.redos.length - i + undoLength)} - ` + object.name;
                 option.style.opacity = 0.3;
                 options.push(option);
             }
 
             // Set Items, Value
             treeList.setOptions(options);
-            treeList.setValue(editor.history.undos.length, true);
+            treeList.setValue(editor.commands.undos.length, true);
         };
 
         function updateUI() {
             let optionNumber = 1;
 
             // Undo Items
-            for (let i = 0; i < editor.history.undos.length; i++) {
-                const object = editor.history.undos[i];
+            for (let i = 0; i < editor.commands.undos.length; i++) {
+                const object = editor.commands.undos[i];
                 const option = treeList.options[optionNumber];
                 option.textContent = `${i + 1} - ` + object.name;
                 option.style.opacity = 1.0;
                 optionNumber++;
             }
 
-            const undoLength = editor.history.undos.length;
+            const undoLength = editor.commands.undos.length;
 
             // Redo Items
-            for (let i = editor.history.redos.length - 1; i >= 0; i--) {
-                const object = editor.history.redos[i];
+            for (let i = editor.commands.redos.length - 1; i >= 0; i--) {
+                const object = editor.commands.redos[i];
                 const option = treeList.options[optionNumber];
-                option.textContent = `${(editor.history.redos.length - i + undoLength)} - ` + object.name;
+                option.textContent = `${(editor.commands.redos.length - i + undoLength)} - ` + object.name;
                 option.style.opacity = 0.3;
                 optionNumber++;
             }
 
             if (ignoreObjectSelectedSignal !== true) {
-                treeList.setValue(editor.history.undos.length, true);
+                treeList.setValue(editor.commands.undos.length, true);
             }
         }
 
         /***** SIGNALS *****/
 
-        let lastHistorySize = editor.history.undos.length + editor.history.redos.length;
+        let lastHistorySize = editor.commands.undos.length + editor.commands.redos.length;
 
         Signals.connect(this, 'historyChanged', function() {
-            let thisHistorySize = editor.history.undos.length + editor.history.redos.length;
+            let thisHistorySize = editor.commands.undos.length + editor.commands.redos.length;
             if (lastHistorySize === thisHistorySize) {
                 updateUI();
             } else {
@@ -149,4 +149,4 @@ class Historian extends SmartFloater {
 
 }
 
-export { Historian };
+export { History };

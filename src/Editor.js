@@ -4,8 +4,8 @@ import * as SUEY from 'gui';
 
 import { Advice } from './config/Advice.js';
 import { Clipboard } from './config/Clipboard.js';
+import { Commands } from './config/Commands.js';
 import { Config } from './config/Config.js';
-import { History } from './config/History.js';
 import { Language } from './config/Language.js';
 import { Layout } from './config/Layout.js';
 import { Signals } from './config/Signals.js';
@@ -37,10 +37,10 @@ class Editor extends SUEY.MainWindow {
 
         editor.project = new SALT.Project();                    // SALT.Project loaded into editor
 
-        /********** MODULES */
+        /********** ADD-ONS */
 
+        editor.commands = new Commands();                       // undo / redo history
         editor.clipboard = new Clipboard();                     // copy / paste clipboard
-        editor.history = new History();                         // undo / redo history
         // editor.storage = new Storage();                      // TODO: storage / autosave
 
         /********** PROPERTIES */
@@ -119,7 +119,7 @@ class Editor extends SUEY.MainWindow {
             // editor.world = editor.project.activeWorld();
             // editor.stage = editor.world.activeStage();
             //
-            if (editor.history) editor.history.clear();         // clear history
+            editor.commands.clear();                            // clear history
             editor.viewport()?.cameraReset();                   // reset camera
             Signals.dispatch('sceneGraphChanged');              // rebuild outliner
             Signals.dispatch('projectLoaded');                  // alert floaters
@@ -192,7 +192,7 @@ class Editor extends SUEY.MainWindow {
     }
 
     /**
-     * The following functions are meant to run through Undo/Redo History Commands
+     * The following functions are meant to run through Undo/Redo Commands
      */
     cut() {
         this.copy();
@@ -219,24 +219,24 @@ class Editor extends SUEY.MainWindow {
         this.viewport()?.selectNone();
     }
 
-    /******************** UNDO HISTORY ********************/
+    /******************** UNDO / REDO ********************/
 
     execute(cmd) {
-        this.history?.execute(cmd);
+        this.commands.execute(cmd);
     }
 
     undo() {
-        this.history?.undo();
+        this.commands.undo();
     }
 
     redo() {
-        this.history?.redo();
+        this.commands.redo();
     }
 
     /******************** SELECTION ********************/
 
     /**
-     * This function is *** NOT *** meant to run through Undo/Redo History Commands
+     * This function is *** NOT *** meant to run through Undo/Redo Commands
      * Emits 'selectionChanged' signal upon new selection
      */
     selectEntities(/* entity, entity array, or any number of entites to select */) {

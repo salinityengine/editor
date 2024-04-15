@@ -1,7 +1,7 @@
 import * as SUEY from 'gui';
 import { Signals } from './Signals.js';
 
-class History extends SUEY.Div {
+class Commands extends SUEY.Div {
 
     constructor() {
         super();
@@ -52,7 +52,7 @@ class History extends SUEY.Div {
             lastCmd.update(cmd);
             cmd = lastCmd;
 
-        // Command is not updatable, add to history
+        // Command is not updatable, add to undo history
         } else {
             this.undos.push(cmd);
             cmd.id = this.undos.length;
@@ -159,4 +159,4 @@ class History extends SUEY.Div {
 
 }
 
-export { History };
+export { Commands };

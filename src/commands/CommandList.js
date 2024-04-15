@@ -1,26 +1,26 @@
-// General
+// GENERAL
 export { MultiCmdsCommand } from './MultiCmds.js';
 
-// // Assets
+// ASSET
 export { AddAssetCommand } from './asset/AddAsset.js';
 export { RemoveAssetCommand } from './asset/RemoveAsset.js';
 // export { SetAssetCopyCommand } from './asset/SetAssetCopy.js';
 export { SetAssetValueCommand } from './asset/SetAssetValue.js';
 // export { SetScriptSourceCommand } from './asset/SetScriptSource.js';
 
-// // Components
+// COMPONENT
 // export { AddComponentCommand } from './component/AddComponent.js';
 // export { ChangeComponentCommand } from './component/ChangeComponent.js';
 // export { RemoveComponentCommand } from './component/RemoveComponent.js';
 
-// // Editor
+// EDITOR
 export { EditorModeCommand } from './editor/EditorMode.js';
 // export { RebuildInspectorCommand } from './editor/RebuildInspector.js';
 export { SelectCommand } from './editor/Select.js';
 export { SetStageCommand } from './editor/SetStage.js';
 // export { SetTabPriorityCommand } from './editor/SetTabPriority.js';
 
-// // Entity
+// ENTITY
 export { AddEntityCommand } from './entity/AddEntity.js';
 // export { CallbackEntityCommand } from './entity/CallbackEntity.js';
 export { MoveEntityCommand } from './entity/MoveEntity.js';
@@ -32,7 +32,7 @@ export { MoveEntityCommand } from './entity/MoveEntity.js';
 // export { SetScaleCommand } from './entity/SetScale.js';
 export { SetValueCommand } from './entity/SetValue.js';
 
-// // World
+// WORLD
 // export { AddWorldCommand } from './world/AddWorld.js';
 // export { PositionWorldCommand } from './world/PositionWorld.js';
 // export { RemoveWorldCommand } from './world/RemoveWorld.js';

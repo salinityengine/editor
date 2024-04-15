@@ -12,7 +12,8 @@ import { View2DToolbar } from '../toolbars/View2DToolbar.js';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
-import { SelectCommand } from '../commands/Commands.js';
+
+import { SelectCommand } from '../commands/CommandList.js';
 
 class View2D extends AbstractView {
 

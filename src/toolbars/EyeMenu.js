@@ -195,8 +195,8 @@ class EyeMenu extends SUEY.Menu {
 
             // History changed
             Signals.connect(this, 'historyChanged', function() {
-                editUndo.setDisabled(editor.history.undos.length == 0);
-                editRedo.setDisabled(editor.history.redos.length == 0);
+                editUndo.setDisabled(editor.commands.undos.length == 0);
+                editRedo.setDisabled(editor.commands.redos.length == 0);
             });
 
             // Disable menu items when no selection

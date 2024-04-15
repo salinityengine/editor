@@ -5,10 +5,10 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { AddAssetCommand, ChangeComponentCommand } from '../../../commands/Commands.js';
-import { AddComponentCommand } from '../../../commands/Commands.js';
-import { MultiCmdsCommand } from '../../../commands/Commands.js';
-import { RemoveComponentCommand } from '../../../commands/Commands.js';
+import { AddAssetCommand } from '../../../commands/CommandList.js';
+// import { AddComponentCommand } from '../../../commands/CommandList.js';
+import { MultiCmdsCommand } from '../../../commands/CommandList.js';
+// import { RemoveComponentCommand } from '../../../commands/CommandList.js';
 
 class EntitySettingsButton extends SUEY.Button {
 

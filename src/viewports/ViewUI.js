@@ -12,7 +12,8 @@ import { ViewUIToolbar } from '../toolbars/ViewUIToolbar.js';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
-import { SelectCommand } from '../commands/Commands.js';
+
+import { SelectCommand } from '../commands/CommandList.js';
 
 class ViewUI extends AbstractView {
 

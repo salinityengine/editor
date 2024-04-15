@@ -11,12 +11,13 @@ import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { WorldsToolbar } from '../toolbars/WorldsToolbar.js';
 
-// import { AddWorldCommand } from '../commands/Commands.js';
-// import { MultiCmdsCommand } from '../commands/Commands.js';
-// import { PositionWorldCommand } from '../commands/Commands.js';
-// import { RemoveWorldCommand } from '../commands/Commands.js';
-import { SelectCommand } from '../commands/Commands.js';
-// import { SetStageCommand } from '../commands/Commands.js';
+// import { AddWorldCommand } from '../commands/CommandList.js';
+import { MultiCmdsCommand } from '../commands/CommandList.js';
+// import { PositionWorldCommand } from '../commands/CommandList.js';
+// import { RemoveWorldCommand } from '../commands/CommandList.js';
+import { SelectCommand } from '../commands/CommandList.js';
+import { SetStageCommand } from '../commands/CommandList.js';
+
 // import { EntityUtils } from '../../../engine/src/utils/three/EntityUtils.js';
 
 class Worlds extends AbstractView {

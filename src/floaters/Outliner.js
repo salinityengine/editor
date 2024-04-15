@@ -13,12 +13,12 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 
-import { AddEntityCommand } from '../commands/Commands.js';
-import { MoveEntityCommand } from '../commands/Commands.js';
-import { MultiCmdsCommand } from '../commands/Commands.js';
-import { SelectCommand } from '../commands/Commands.js';
-import { SetStageCommand } from '../commands/Commands.js';
-import { SetValueCommand } from '../commands/Commands.js';
+import { AddEntityCommand } from '../commands/CommandList.js';
+import { MoveEntityCommand } from '../commands/CommandList.js';
+import { MultiCmdsCommand } from '../commands/CommandList.js';
+import { SelectCommand } from '../commands/CommandList.js';
+import { SetStageCommand } from '../commands/CommandList.js';
+import { SetValueCommand } from '../commands/CommandList.js';
 
 const _nodeStates = new WeakMap();
 

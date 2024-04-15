@@ -2,10 +2,9 @@ import * as ONE from 'onsight';
 import * as OSUI from 'osui';
 import * as EDITOR from 'editor';
 
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
 import { Config } from '../../config/Config.js';
-import { SetAssetValueCommand } from '../../commands/Commands.js';
+
+import { SetAssetValueCommand } from '../../commands/CommandList.js';
 
 let _controls;
 let _scene, _camera, _material, _geometry, _mesh;

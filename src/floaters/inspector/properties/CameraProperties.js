@@ -6,7 +6,6 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { CallbackEntityCommand } from '../../../commands/Commands.js';
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { PropertyGroup } from '../../../gui/PropertyGroup.js';
@@ -32,9 +31,9 @@ class CameraProperties extends SUEY.Div {
         };
         typeDrop.setOptions(typeOptions);
         typeDrop.on('change', () => {
-            const newType = typeDrop.getValue();
-            const oldType = camera.type;
-            editor.execute(new CallbackEntityCommand(camera, () => { camera.changeType(newType); }, () => { camera.changeType(oldType); }, 'Set Camera Type'));
+            // const newType = typeDrop.getValue();
+            // const oldType = camera.type;
+            // editor.execute(new CallbackEntityCommand(camera, () => { camera.changeType(newType); }, () => { camera.changeType(oldType); }, 'Set Camera Type'));
         });
         displayGroup.addRow('Type', typeDrop);
 

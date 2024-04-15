@@ -14,7 +14,7 @@ import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 import { Signals } from '../config/Signals.js';
 
-import { AddAssetCommand } from '../commands/Commands.js';
+import { AddAssetCommand } from '../commands/CommandList.js';
 
 /**
  * Script Library

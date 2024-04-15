@@ -14,11 +14,11 @@ import { PropertyGroup } from '../../../gui/PropertyGroup.js';
 import { SceneUtils } from '../../../viewport/SceneUtils.js';
 import { Signals } from '../../../config/Signals.js';
 
-import { MultiCmdsCommand } from '../../../commands/Commands.js';
-import { SetPositionCommand } from '../../../commands/Commands.js';
-import { SetRotationCommand } from '../../../commands/Commands.js';
-import { SetScaleCommand } from '../../../commands/Commands.js';
-import { SetValueCommand } from '../../../commands/Commands.js';
+import { MultiCmdsCommand } from '../../../commands/CommandList.js';
+// import { SetPositionCommand } from '../../../commands/CommandList.js';
+// import { SetRotationCommand } from '../../../commands/CommandList.js';
+// import { SetScaleCommand } from '../../../commands/CommandList.js';
+import { SetValueCommand } from '../../../commands/CommandList.js';
 
 const PROCESS_SIGNAL_MILLISECONDS = 50;         // 20 times per second
 

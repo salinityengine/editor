@@ -4,7 +4,8 @@ import * as EDITOR from 'editor';
 
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
-import { SetAssetValueCommand } from '../../commands/Commands.js';
+
+import { SetAssetValueCommand } from '../../commands/CommandList.js';
 
 class ShapePreview extends OSUI.Titled {
 

@@ -5,7 +5,8 @@ import * as EDITOR from 'editor';
 import { CanvasUtils } from '../../gui/CanvasUtils.js';
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
-import { SetAssetValueCommand } from '../../commands/Commands.js';
+
+import { SetAssetValueCommand } from '../../commands/CommandList.js';
 
 class PalettePreview extends OSUI.Titled {
 

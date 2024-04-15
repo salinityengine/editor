@@ -9,8 +9,8 @@ import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
 
-// import { SetAssetValueCommand } from '../commands/Commands.js';
-// import { SetScriptSourceCommand } from '../commands/Commands.js';
+// import { SetAssetValueCommand } from '../commands/CommandList.js';
+// import { SetScriptSourceCommand } from '../commands/CommandList.js';
 
 /**
  * Script Editor

@@ -48,7 +48,7 @@ Floaters:
     Advisor: Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
     Assets: ie 'Project Folder' - Objects, Textures, etc.
     Codex: Add scripts
-    Historian: Separate undo/redo history for each Viewport?
+    History: Separate undo/redo history for each Viewport?
     Inspector: Go through Blocks
     Library: Prebuilt object Types - Actor, Action (Trigger), Decoration, etc.
     Outliner: Entity2D, etc.
@@ -158,7 +158,7 @@ Additional Floaters:
     Collision Editor:
     Color Picker:
     Font Editor:
-    Helper:
+    Helper: Manual, FAQ, etc.
     Image Editor:
         - Export to png
         - Vectors

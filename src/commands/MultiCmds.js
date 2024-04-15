@@ -96,7 +96,6 @@ class MultiCmdsCommand extends Command {
                     addToChangedArray(entitiesChanged, command.oldParent);
                     addToChangedArray(entitiesChanged, command.newParent);
                     break;
-                case 'CallbackEntityCommand':
                 case 'SetCopyCommand':
                 case 'SetUUIDCommand':
                 case 'SetValueCommand':

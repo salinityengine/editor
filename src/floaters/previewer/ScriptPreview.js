@@ -8,7 +8,7 @@ import * as SUEY from 'gui';
 import { Config } from '../../config/Config.js';
 import { Signals } from '../../config/Signals.js';
 
-import { SetAssetValueCommand } from '../../commands/Commands.js';
+import { SetAssetValueCommand } from '../../commands/CommandList.js';
 
 class ScriptPreview extends SUEY.Scrollable {
 

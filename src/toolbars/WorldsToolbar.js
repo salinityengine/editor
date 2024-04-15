@@ -12,9 +12,9 @@ import { ColorizeFilter } from '../gui/ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-// import { AddWorldCommand } from '../commands/Commands.js';
-// import { MultiCmdsCommand } from '../commands/Commands.js';
-// import { SetStageCommand } from '../commands/Commands.js';
+// import { AddWorldCommand } from '../commands/CommandList.js';
+import { MultiCmdsCommand } from '../commands/CommandList.js';
+import { SetStageCommand } from '../commands/CommandList.js';
 
 class WorldsToolbar {
 

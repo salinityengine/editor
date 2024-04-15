@@ -12,9 +12,8 @@ import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { Signals } from '../../../config/Signals.js';
 
-import { ChangeComponentCommand } from '../../../commands/Commands.js';
-import { MultiCmdsCommand } from '../../../commands/Commands.js';
-import { RebuildInspectorCommand } from '../../../commands/Commands.js';
+// import { ChangeComponentCommand } from '../../../commands/CommandList.js';
+import { MultiCmdsCommand } from '../../../commands/CommandList.js';
 
 let lastAddedType = undefined;
 
@@ -536,7 +535,6 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
             const newData = component.toJSON();
             const cmds = [];
             cmds.push(new ChangeComponentCommand(component, newData));
-            cmds.push(new RebuildInspectorCommand());
             editor.execute(new MultiCmdsCommand(cmds, `Refresh Script Component`));
             setRefreshButtonState(false);
         });

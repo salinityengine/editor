@@ -8,7 +8,7 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-import { EditorModeCommand } from '../commands/Commands.js';
+import { EditorModeCommand } from '../commands/CommandList.js';
 
 import { EyeMenu } from './EyeMenu.js';
 

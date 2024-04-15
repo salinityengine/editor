@@ -6,7 +6,7 @@ import { Signals } from './Signals.js';
 import { Advisor } from '../floaters/Advisor.js';
 import { Assets } from '../floaters/Assets.js';
 import { Codex } from '../floaters/Codex.js';
-import { Historian } from '../floaters/Historian.js';
+import { History } from '../floaters/History.js';
 import { Inspector } from '../floaters/Inspector.js';
 import { Library } from '../floaters/Library.js';
 import { Outliner } from '../floaters/Outliner.js';
@@ -86,7 +86,7 @@ class Layout {
             'advisor':      Advisor,
             'assets':       Assets,
             'codex':        Codex,
-            'history':      Historian,
+            'history':      History,
             'inspector':    Inspector,
             'library':      Library,
             'outliner':     Outliner,
