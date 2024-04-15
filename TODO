@@ -2,6 +2,10 @@
 /*                    TO DO                   */
 /**********************************************/
 
+- Improve tab title / window / floater
+- Floater contents should be "scroller"?
+- Asset block split left / right when wide?
+
 SmartFloater:
     - Save scroll position to Config
 
@@ -48,9 +52,11 @@ Floaters:
     Advisor: Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
     Assets: ie 'Project Folder' - Objects, Textures, etc.
     Codex: Add scripts
+    Game: Info work with new View2D
     History: Separate undo/redo history for each Viewport?
     Inspector: Go through Blocks
     Library: Prebuilt object Types - Actor, Action (Trigger), Decoration, etc.
+    Notepad: Global / project scratchpads
     Outliner: Entity2D, etc.
     Player:
         - Debug Console, override console.log to capture?
@@ -58,7 +64,6 @@ Floaters:
         - Video screen capture?
             - https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API
     Previewer:
-    Project: Info work with new View2D
     Scripter:
     Settings: Get working with View2D grid
     !! Shaper:
@@ -163,7 +168,6 @@ Additional Floaters:
         - Export to png
         - Vectors
     Particle Editor:
-    Scratchpad: Global / project scratchpads (like in Ct.js)
     Shape Editor: Editable points. Save shapes.
 Analytics / Advertising:
 Asset Store:

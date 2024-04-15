@@ -10,6 +10,7 @@ import { Game } from '../floaters/Game.js';
 import { History } from '../floaters/History.js';
 import { Inspector } from '../floaters/Inspector.js';
 import { Library } from '../floaters/Library.js';
+import { Notepad } from '../floaters/Notepad.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
 import { Previewer } from '../floaters/Previewer.js';
@@ -25,6 +26,7 @@ const DEFAULT_POSITIONS = {
     'floater/position/history':     { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/inspector':   { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/library':     { init: 'left',     side: 'left',       size: '30em' },
+    'floater/position/notepad':     { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/outliner':    { init: 'left',     side: 'left',       size: '30em' },
     'floater/position/player':      { init: 'center',   size: '60%', size2: '80%' },
     'floater/position/previewer':   { init: 'right',    side: 'right',      size: '35em' },
@@ -92,6 +94,7 @@ class Layout {
             'history':      History,
             'inspector':    Inspector,
             'library':      Library,
+            'notepad':      Notepad,
             'outliner':     Outliner,
             'player':       Player,
             'previewer':    Previewer,

@@ -18,6 +18,7 @@ const _values = {
         'floater/history':                  { title: 'History', html: `Undo / redo history log.`},
         'floater/inspector':                { title: 'Inspector', html: `View and edit properties and settings.`},
         'floater/library':                  { title: 'Library', html: `Prefab collection.`},
+        'floater/notepad':                  { title: 'Notepad', html: `Scratchpad to keep project notes and ideas.`},
         'floater/outliner':                 { title: 'Outliner', html: `Displays interactive scene hierarchy.` },
         'floater/player':                   { title: 'Player', html: `Play game in it's current state.` },
         'floater/previewer':                { title: 'Previewer', html: `Preview assets and scripts.`},
@@ -91,6 +92,7 @@ const _values = {
 
         // Toolbar, Settings
         'toolbar/play':                     { title: 'Play Game', html: `Play game in it's current state.` },
+        'toolbar/notepad':                  { title: 'Notepad', html: `Scratchpad to keep project notes and ideas.`},
         'toolbar/game':                     { title: 'Game Settings', html: `Various settings for current game.` },
         'toolbar/history':                  { title: 'History', html: `List of undo / redo actions taken in editor.` },
         'toolbar/settings':                 { title: 'Editor Settings', html: `Various settings for the Salinity Editor.` },

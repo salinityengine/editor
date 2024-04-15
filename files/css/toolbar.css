@@ -62,17 +62,6 @@
 
 /* Scene Edior 2D */
 
-.suey-toolbar-button:hover #tb-edit-pencil, .suey-toolbar-button.suey-selected #tb-edit-pencil {
-    animation: writing 0.7s;
-    animation-iteration-count: var(--animation-count);
-}
-
-.suey-toolbar-button:hover #tb-edit-pencil-tip, .suey-toolbar-button.suey-selected #tb-edit-pencil-tip {
-    filter: brightness(65%) sepia(1000%) saturate(1000%) hue-rotate(calc(var(--rotate-hue) + 160deg));
-    animation: writing 0.7s;
-    animation-iteration-count: var(--animation-count);
-}
-
 #tb-scene2d-frame {
     transform-origin: 50% 5%; /* specific x-offset | y-offset */
 }
@@ -460,6 +449,13 @@
     animation: takeOff 1.2s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
+}
+
+/* Notes */
+
+.suey-toolbar-button:hover #tb-notes-pencil, .suey-toolbar-button.suey-selected #tb-notes-pencil {
+    animation: writing 0.7s;
+    animation-iteration-count: var(--animation-count);
 }
 
 /* History */
