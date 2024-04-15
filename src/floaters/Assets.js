@@ -23,7 +23,7 @@ class Assets extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}assets.svg`;
-        super('assets', null, { icon });
+        super('assets', { icon });
         const self = this;
         Advice.attach(this.button, 'floater/assets');
 

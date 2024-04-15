@@ -23,7 +23,7 @@ class Codex extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}codex.svg`;
-        super('codex', null, { icon, color: '#090B11' });
+        super('codex', { icon, color: '#090B11' });
         const self = this;
         Advice.attach(this.button, 'floater/codex');
 

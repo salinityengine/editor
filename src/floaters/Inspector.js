@@ -26,7 +26,7 @@ class Inspector extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}inspector.svg`;
-        super('inspector', null, { icon, color: '#0055CC' });
+        super('inspector', { icon, color: '#0055CC' });
         const self = this;
         Advice.attach(this.button, 'floater/inspector');
 
@@ -70,13 +70,13 @@ class Inspector extends SmartFloater {
 
             // ITEM: Palette
             } else if (item.isPalette) {
-                blocks.push(new SUEY.Floater('palette', new PaletteTab(item), { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }));
+                blocks.push(new SUEY.Floater('palette', { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }).add(new PaletteTab(item)));
 
             // ITEM: Texture
             } else if (item.isTexture) {
                 let icon = `${FOLDER_FLOATERS}asset/texture.svg`;
                 if (item.isCubeTexture) icon = `${FOLDER_FLOATERS}asset/cube-texture.svg`;
-                blocks.push(new SUEY.Floater('texture', new TextureTab(item), { icon, color: '#C9C1B6', shadow: false, shrink: true }));
+                blocks.push(new SUEY.Floater('texture', { icon, color: '#C9C1B6', shadow: false, shrink: true }).add(new TextureTab(item)));
 
             // ITEM: Entity
             } else if (item.isEntity) {
@@ -90,7 +90,7 @@ class Inspector extends SmartFloater {
                 else { /* isEntity */ tabType = 'entity'; icon = `${FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
 
                 // Entity Tab
-                blocks.push(new SUEY.Floater(tabType, new EntityTab(entity), { icon, color, shrink, shadow }));
+                blocks.push(new SUEY.Floater(tabType, { icon, color, shrink, shadow }).add(new EntityTab(entity)));
 
                 // Component Tabs
                 const components = entity.components;
@@ -109,7 +109,7 @@ class Inspector extends SmartFloater {
                         if (!ComponentClass) continue;
                         const icon = COMPONENT_ICONS[compType] ?? ComponentClass.config.icon ?? '';
                         const color = ComponentClass.config.color;
-                        blocks.push(new SUEY.Floater(compType, new ComponentTab(entity, compType), { icon, color, shrink: true }));
+                        blocks.push(new SUEY.Floater(compType, { icon, color, shrink: true }).add(new ComponentTab(entity, compType)));
                     }
                 }
 

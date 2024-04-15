@@ -19,7 +19,7 @@ class Game extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}game.svg`;
-        super('game', null, { icon, color: '#773399' });
+        super('game', { icon, color: '#773399' });
         const self = this;
         Advice.attach(this.button, 'floater/game');
 

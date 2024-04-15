@@ -22,7 +22,7 @@ class Settings extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings.svg`;
-        super('settings', null, { icon, color: '#C04145', shrink: true });
+        super('settings', { icon, color: '#C04145', shrink: '75%' });
         const self = this;
         Advice.attach(this.button, 'floater/settings');
 

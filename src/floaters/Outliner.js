@@ -29,7 +29,7 @@ class Outliner extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}outliner.svg`;
-        super('outliner', null, { icon });
+        super('outliner', { icon });
         const self = this;
         Advice.attach(this.button, 'floater/outliner');
 

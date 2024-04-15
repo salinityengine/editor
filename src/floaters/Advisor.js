@@ -19,7 +19,7 @@ class Advisor extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}advisor.svg`;
-        super('advisor', null, { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
+        super('advisor', { icon, color: 'var(--button-dark)' });//, alpha: 0.5 });
         const self = this;
         this.addClass('salt-advisor');
         Advice.attach(this.button, 'floater/advisor');
@@ -76,8 +76,8 @@ class Advisor extends SmartFloater {
         /********** CONTENTS */
 
         // Title
-        const titleDiv = new SUEY.Div().addClass('suey-tab-title').setStyle('user-select', 'all');
-        const titleText = new SUEY.Text().addClass('suey-tab-title-text').setStyle('user-select', 'all');
+        const titleDiv = new SUEY.Div().addClass('suey-tab-title');
+        const titleText = new SUEY.Text().addClass('suey-tab-title-text');
         titleDiv.add(titleText);
 
         // Body
@@ -90,7 +90,7 @@ class Advisor extends SmartFloater {
 
         /********** HEADER BUTTONS */
 
-        const buttonRow = new SUEY.AbsoluteBox().addClass('salt-advisor-buttons');
+        const buttonRow = new SUEY.AbsoluteBox().addClass('salt-advisor-buttons').setStyle('pointer-events', 'all');
         const buttonSpacer = new SUEY.FlexSpacer().setStyle('pointer-events', 'none');
 
         const backButton = new SUEY.Button().addClass('suey-borderless-button');
@@ -137,14 +137,12 @@ class Advisor extends SmartFloater {
             // Deactivate, Show Buttons
             active = false;
             buttonRow.setStyle('opacity', '1');
-            buttonRow.setStyle('pointer-events', 'all');
         });
 
         this.on('pointerleave', () => {
             // Reactivate, Hide Buttons, Clear Info
             active = true;
             buttonRow.setStyle('opacity', '0');
-            buttonRow.setStyle('pointer-events', 'none');
             setInfo();
 
             // Clear Selection

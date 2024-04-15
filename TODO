@@ -2,16 +2,13 @@
 /*                    TO DO                   */
 /**********************************************/
 
-- Improve tab title / window / floater
-- Floater contents should be "scroller"?
-- Asset block split left / right when wide?
-
 SmartFloater:
     - Save scroll position to Config
 
 AssetFloater extends SmartFloater: (assets, codex, library)
     - Move search box to title bar when over a certain width
     - Option for 'Add new category' button
+    - Asset block split left / right when wide?
 
 Scripter:
     - Right click menu?

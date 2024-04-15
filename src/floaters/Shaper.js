@@ -8,13 +8,8 @@ import { SmartFloater } from '../gui/SmartFloater.js';
 class Shaper extends SmartFloater {
 
     constructor() {
-        super({
-            height: '85%',
-            width: '60%',
-            title: 'Shaper',
-        });
+        super();
         const self = this;
-        this.id = 'Shaper';
         this.setStyle('display', 'none');
 
         // Background Color

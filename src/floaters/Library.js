@@ -19,7 +19,7 @@ class Library extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}library.svg`;
-        super('library', null, { icon });
+        super('library', { icon });
         const self = this;
         Advice.attach(this.button, 'floater/library');
 

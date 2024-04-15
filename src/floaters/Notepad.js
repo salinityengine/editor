@@ -18,7 +18,7 @@ class Notepad extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}notepad.svg`;
-        super('notepad', null, { icon, color: '#FEC24D' });
+        super('notepad', { icon, color: '#FEC24D' });
         const self = this;
         Advice.attach(this.button, 'floater/notepad');
 

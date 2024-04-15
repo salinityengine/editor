@@ -19,15 +19,16 @@ class Scripter extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}scripter.svg`;
-        super('scripter', null, { icon, color: '#090B11', shrink: '75%' });
+        super('scripter', { icon, color: '#090B11', shrink: '75%' });
         const self = this;
         this.addClass('salt-scripter');
         this.addClass('suey-custom-font');
         Advice.attach(this.button, 'floater/scripter');
 
-        // Title Text
-        const titleText = new SUEY.Text('Scripter').addClass('suey-tab-title-text');
+        /********** TITLE */
+
         const tabTitle = new SUEY.Div().addClass('suey-tab-title');
+        const titleText = new SUEY.Text('Scripter').addClass('suey-tab-title-text');
         tabTitle.add(titleText);
         this.add(tabTitle);
         this.tabTitle = tabTitle;
@@ -47,15 +48,14 @@ class Scripter extends SmartFloater {
             scrimp.destroy(); // https://codemirror.net/docs/ref/#view.EditorView.destroy
         });
 
-        /********** TITLE */
+        /********** SCRIPT NAME */
 
-        // Title Bar
-        const title = new SUEY.TextBox().addClass('salt-script-title');
-        this.add(title);
+        const scriptName = new SUEY.TextBox().addClass('salt-script-name');
+        this.add(scriptName);
 
-        // title.on('change', () => {
+        // scriptName.on('change', () => {
         //     if (currentScript && currentScript.isScript) {
-        //         editor.execute(new SetAssetValueCommand(currentScript, 'name', title.getValue()));
+        //         editor.execute(new SetAssetValueCommand(currentScript, 'name', scriptName.getValue()));
         //     }
         // });
 
@@ -260,7 +260,7 @@ this.on('destroy', () => {
         // signals.editScript.add(function(script) {
         //     editing = false;
         //     // Set Script
-        //     title.setValue(script.name);
+        //     scriptName.setValue(script.name);
         //     currentMode = 'javascript';
         //     currentScript = script;
         //     // Display Scripter

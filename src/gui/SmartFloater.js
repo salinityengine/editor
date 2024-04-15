@@ -4,8 +4,8 @@ import { Layout } from '../config/Layout.js';
 
 class SmartFloater extends SUEY.Floater {
 
-    constructor(id = 'unknown', content, options = {}) {
-        super(id, content, options);
+    constructor(id = 'unknown', options = {}) {
+        super(id, options);
         const self = this;
 
         // Remember where Floater was installed (see Layout.js)
