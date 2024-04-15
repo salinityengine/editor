@@ -228,10 +228,12 @@ class Player extends SmartFloater {
         this.on('resizer', updateSize);
         window.addEventListener('resize', updateSize);
 
-        // Stop Player when Window 'X' is clicked
+        // Stop Player when hidden, i.e. Tab is changed
         this.on('hidden', () => {
-            console.warn(`Player.on('hidden'): Player should be destroyed, not hidden`);
+            self.stop();
         });
+
+        // Stop Player when Window 'X' is clicked
         this.on('destroy', () => {
             window.removeEventListener('resize', updateSize);
             self.stop();

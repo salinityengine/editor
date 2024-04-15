@@ -20,7 +20,7 @@ import { Shaper } from '../floaters/Shaper.js';
 
 const DEFAULT_POSITIONS = {
     'floater/position/advisor':     { init: 'right',    side: 'bottom',     size: '30em', size2: '12em' },
-    'floater/position/assets':      { init: 'left',     side: 'left',     size: '30em' },
+    'floater/position/assets':      { init: 'left',     side: 'left',       size: '30em' },
     'floater/position/codex':       { init: 'left',     side: 'left',       size: '30em' },
     'floater/position/game':        { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/history':     { init: 'right',    side: 'right',      size: '35em' },
@@ -311,6 +311,11 @@ class Layout {
         if (windowWantsActive) {
             windowWantsActive.focus();
         }
+
+        // Force initial resizing
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 0);
     }
 
 }

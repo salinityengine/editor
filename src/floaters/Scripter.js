@@ -19,11 +19,18 @@ class Scripter extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}scripter.svg`;
-        super('scripter', { icon, color: '#090B11', shrink: '75%' });
+        super('scripter', { titled: false, icon, color: '#090B11', shrink: '75%' });
         const self = this;
         this.addClass('salt-scripter');
         this.addClass('suey-custom-font');
         Advice.attach(this.button, 'floater/scripter');
+
+        /********** TITLE */
+
+        const tabTitle = new SUEY.Div().addClass('suey-tab-title');
+        tabTitle.add(new SUEY.Text('Scripter').addClass('suey-tab-title-text'));
+        this.add(tabTitle);
+        this.tabTitle = tabTitle;
 
         /********** EVENTS */
 
@@ -33,9 +40,6 @@ class Scripter extends SmartFloater {
         });
 
         // Clean up when Window 'X' is clicked
-        this.on('hidden', () => {
-            console.warn(`Scripter.on('hidden'): Scripter should be destroyed, not hidden`);
-        });
         this.on('destroy', () => {
             scrimp.destroy(); // https://codemirror.net/docs/ref/#view.EditorView.destroy
         });
@@ -86,6 +90,7 @@ this.on('destroy', () => {
 });`;
 
         const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents });
+        this.scroller = scrimp;
 
         // // Codemirror: On Change
         // codemirror.on('change', function() {
