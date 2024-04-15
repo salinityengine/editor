@@ -16,7 +16,7 @@ const DEFAULT_SETTINGS = {
     'scheme/fontSize':                          '14px',             // Font / Gui size, originally 14px
     'scheme/transparency':                      0.85,               // Panel transparency
 
-    /***** Game Player *****/
+    /***** Player *****/
 
     'player/screen/name':                       'Default',          // Target output name
     'player/screen/width':                      1000,               // Target output width
@@ -81,7 +81,7 @@ const DEFAULT_SETTINGS = {
     'shortcuts/snap':                           '6',                // Shortcut Key: Transform - 'snap'
     'shortcuts/paint':                          '7',                // Shortcut Key: Transform - 'paint'
 
-    'shortcuts/play':                           'F5',               // Shortcut Key: Start/Stop Game Player
+    'shortcuts/play':                           'F5',               // Shortcut Key: Start/Stop Player
     'shortcuts/reset':                          'F9',               // Shortcut Key: Reset Settings
 
     'shortcuts/focus':                          'f',                // Shortcut Key: Focus

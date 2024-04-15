@@ -85,7 +85,7 @@ window.addEventListener('resize', updateSize);
 
 // Stop Player when Window 'X' is clicked
 this.on('hidden', () => {
-    console.warn('Player.on("hidden"): Game player should be destroyed, not hidden');
+    console.warn('Player.on("hidden"): Player should be destroyed, not hidden');
 });
 
 this.on('destroy', () => {

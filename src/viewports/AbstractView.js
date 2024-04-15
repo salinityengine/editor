@@ -19,8 +19,8 @@ class AbstractView extends SUEY.Div {
     floaterFamily() {
         const floaters = [
             'advisor',
+            'game',
             'player',
-            'project',
             'history',
             'settings',
         ];

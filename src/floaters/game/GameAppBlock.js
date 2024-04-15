@@ -9,7 +9,7 @@ import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
 import { Signals } from '../../config/Signals.js';
 
-class ProjectAppBlock extends SmartShrinker {
+class GameAppBlock extends SmartShrinker {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/app.svg`; // color: '#773399'
@@ -85,4 +85,4 @@ class ProjectAppBlock extends SmartShrinker {
 
 }
 
-export { ProjectAppBlock };
+export { GameAppBlock };

@@ -14,13 +14,13 @@ const _values = {
         'floater/advisor':                  { title: 'Advisor', html: `Shows helpful tips and information.` },
         'floater/assets':                   { title: 'Assets', html: `Collection of assets for use in your project.` },
         'floater/codex':                    { title: 'Codex', html: `Collection of scripts for use in your project.` },
+        'floater/game':                     { title: 'Game', html: `Game settings viewer.` },
         'floater/history':                  { title: 'History', html: `Undo / redo history log.`},
         'floater/inspector':                { title: 'Inspector', html: `View and edit properties and settings.`},
         'floater/library':                  { title: 'Library', html: `Prefab collection.`},
         'floater/outliner':                 { title: 'Outliner', html: `Displays interactive scene hierarchy.` },
-        'floater/player':                   { title: 'Player', html: `Game play preview.` },
+        'floater/player':                   { title: 'Player', html: `Play game in it's current state.` },
         'floater/previewer':                { title: 'Previewer', html: `Preview assets and scripts.`},
-        'floater/project':                  { title: 'Project', html: `Project settings viewer.` },
         'floater/scripter':                 { title: 'Scripter', html: `Script viewer and editor.` },
         'floater/settings':                 { title: 'Settings', html: `Editor settings viewer.`},
 
@@ -90,10 +90,10 @@ const _values = {
         'toolbar/grid/snap':                { title: 'Snap to Grid?', html: `During tranlation, should objects snap to align with grid?` },
 
         // Toolbar, Settings
-        'toolbar/play':                     { title: 'Play Game', html: `Start game preview using the current active World.` },
-        'toolbar/project':                  { title: 'Project Settings', html: `` },
+        'toolbar/play':                     { title: 'Play Game', html: `Play game in it's current state.` },
+        'toolbar/game':                     { title: 'Game Settings', html: `Various settings for current game.` },
         'toolbar/history':                  { title: 'History', html: `List of undo / redo actions taken in editor.` },
-        'toolbar/settings':                 { title: 'Editor Settings', html: `` },
+        'toolbar/settings':                 { title: 'Editor Settings', html: `Various settings for the Salinity Editor.` },
     },
 
 };

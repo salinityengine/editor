@@ -532,7 +532,7 @@ function editorKeyDown(editor, event) {
             editor.viewport()?.cameraFocus();
             break;
 
-        // Reset camera
+        // Reset Camera
         case 'r':
             editor.viewport()?.cameraReset();
             break;

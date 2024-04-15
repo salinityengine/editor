@@ -6,28 +6,28 @@ import { Signals } from './Signals.js';
 import { Advisor } from '../floaters/Advisor.js';
 import { Assets } from '../floaters/Assets.js';
 import { Codex } from '../floaters/Codex.js';
+import { Game } from '../floaters/Game.js';
 import { History } from '../floaters/History.js';
 import { Inspector } from '../floaters/Inspector.js';
 import { Library } from '../floaters/Library.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
 import { Previewer } from '../floaters/Previewer.js';
-import { Projecter } from '../floaters/Projecter.js';
 import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
 
 const DEFAULT_POSITIONS = {
-    'floater/position/advisor':     { init: 'left',     side: 'bottom',     size: '30em', size2: '12em' },
-    'floater/position/assets':      { init: 'left',     side: 'left',       size: '30em' },
+    'floater/position/advisor':     { init: 'right',    side: 'bottom',     size: '30em', size2: '12em' },
+    'floater/position/assets':      { init: 'left',     side: 'left',     size: '30em' },
     'floater/position/codex':       { init: 'left',     side: 'left',       size: '30em' },
+    'floater/position/game':        { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/history':     { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/inspector':   { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/library':     { init: 'left',     side: 'left',       size: '30em' },
     'floater/position/outliner':    { init: 'left',     side: 'left',       size: '30em' },
     'floater/position/player':      { init: 'center',   size: '60%', size2: '80%' },
     'floater/position/previewer':   { init: 'right',    side: 'right',      size: '35em' },
-    'floater/position/project':     { init: 'right',    side: 'right',      size: '35em' },
     'floater/position/scripter':    { init: 'center',   size: '60%', size2: '85%' },
     'floater/position/settings':    { init: 'right',    side: 'right',      size: '35em' },
 };
@@ -60,9 +60,11 @@ class Layout {
 
         // Floaters Wanted
         const defaultFloaters = [
-            'outliner', 'assets', 'library', 'codex',
-            'advisor',
             'inspector', 'previewer',
+            'outliner',
+            'assets',
+            'library', 'codex',
+            'advisor',
         ];
 
         // Install Floaters
@@ -86,13 +88,13 @@ class Layout {
             'advisor':      Advisor,
             'assets':       Assets,
             'codex':        Codex,
+            'game':         Game,
             'history':      History,
             'inspector':    Inspector,
             'library':      Library,
             'outliner':     Outliner,
             'player':       Player,
             'previewer':    Previewer,
-            'project':      Projecter,
             'scripter':     Scripter,
             'settings':     Settings,
         };
