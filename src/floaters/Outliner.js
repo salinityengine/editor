@@ -33,11 +33,6 @@ class Outliner extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/outliner');
 
-        /******************** TITLED PANEL */
-
-        const outPanel = new SUEY.Titled({ title: 'Outliner' });
-        this.add(outPanel);
-
         /******************** HEADER BUTTONS */
 
         const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)');
@@ -88,12 +83,12 @@ class Outliner extends SmartFloater {
         // Append Children
         addButton.attachMenu(entityMenu);
         buttonRow.add(addButton, new SUEY.FlexSpacer());
-        outPanel.tabTitle.add(buttonRow);
+        this.tabTitle.add(buttonRow);
 
         /******************** TREELIST */
 
         const treeList = new SUEY.TreeList(true /* multiSelect */).addClass('salt-outliner');
-        outPanel.add(treeList);
+        this.add(treeList);
 
         // Change Event (fired on Key Down & Pointer Click)
         let ignoreSelectionChangedSignal = false;

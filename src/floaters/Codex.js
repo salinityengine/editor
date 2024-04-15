@@ -27,11 +27,6 @@ class Codex extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/codex');
 
-        /******************** TITLED PANEL */
-
-        const libPanel = new SUEY.Titled({ title: 'Codex' });
-        this.add(libPanel);
-
         /******************** HEADER BUTTONS */
 
         const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)');
@@ -67,7 +62,7 @@ class Codex extends SmartFloater {
         // Append Children
         addButton.attachMenu(assetMenu);
         buttonRow.add(addButton, new SUEY.FlexSpacer());
-        libPanel.tabTitle.add(buttonRow);
+        this.tabTitle.add(buttonRow);
 
         /******************** BLOCKS */
 
@@ -76,7 +71,7 @@ class Codex extends SmartFloater {
         // No Category
         const unknown = 'unknown';
         this.blocks[unknown] = new AssetBlock({ type: 'script', category: unknown, title: 'General', icon: `${FOLDER_TYPES}script/general.svg`, view: 'list' });
-        libPanel.add(this.blocks[unknown]);
+        this.add(this.blocks[unknown]);
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
@@ -89,7 +84,7 @@ class Codex extends SmartFloater {
             self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
-        libPanel.addToSelf(searchDiv);
+        this.addToSelf(searchDiv);
 
         /***** SIGNALS */
 

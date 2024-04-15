@@ -30,11 +30,6 @@ class Inspector extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/inspector');
 
-        /******************** TITLED PANEL */
-
-        const inspectorPanel = new SUEY.Titled({ title: 'Inspector' });
-        this.add(inspectorPanel);
-
         /******************** BUILD */
 
         // Private
@@ -121,13 +116,13 @@ class Inspector extends SmartFloater {
             }
 
             // Delete existing Blocks
-            inspectorPanel.clearContents();
+            self.clearContents();
 
             // Set Title
-            inspectorPanel.setTitle(titleName);
+            self.setTitle(titleName);
 
             // Add Blocks
-            inspectorPanel.add(...blocks);
+            self.add(...blocks);
 
             // Select this Floater
             if (highlight && self.dock) self.dock.selectTab(self.id);

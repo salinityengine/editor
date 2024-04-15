@@ -24,11 +24,6 @@ class Previewer extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/previewer');
 
-        /******************** TITLED PANEL */
-
-        const previewPanel = new SUEY.Titled({ title: 'Preview' });
-        this.add(previewPanel);
-
         /******************** BUILD */
 
         // Private
@@ -54,7 +49,7 @@ class Previewer extends SmartFloater {
 
             // Process Item
             const blocks = [];
-            let titleName = 'Preview';
+            let titleName = 'Previewer';
 
             // ITEM: None
             if (item == undefined) {
@@ -64,7 +59,7 @@ class Previewer extends SmartFloater {
 
             // ITEM: Palette
             } else if (item.isPalette) {
-                // blocks.push(new SUEY.Floater('palette', { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }).add(new PaletteTab(item)));
+                blocks.push(new SUEY.Floater('palette', { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }).add(new PaletteTab(item)));
 
             // ITEM: Script
             } else if (item.isScript) {
@@ -79,13 +74,13 @@ class Previewer extends SmartFloater {
             }
 
             // Delete existing Blocks
-            previewPanel.clearContents();
+            self.clearContents();
 
             // Set Title
-            previewPanel.setTitle(titleName);
+            self.setTitle(titleName);
 
             // Add Blocks
-            previewPanel.add(...blocks);
+            self.add(...blocks);
 
             // Select this Floater
             if (highlight && self.dock) self.dock.selectTab(self.id);

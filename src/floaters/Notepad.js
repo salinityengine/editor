@@ -22,13 +22,6 @@ class Notepad extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/notepad');
 
-        /******************** TITLED PANEL */
-
-        const notepadPanel = new SUEY.Titled({ title: 'Notepad' });
-        this.add(notepadPanel);
-
-        /******************** SCRATCHPAD */
-
         //
         // TODO
         //

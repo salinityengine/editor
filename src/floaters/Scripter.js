@@ -25,14 +25,6 @@ class Scripter extends SmartFloater {
         this.addClass('suey-custom-font');
         Advice.attach(this.button, 'floater/scripter');
 
-        /********** TITLE */
-
-        const tabTitle = new SUEY.Div().addClass('suey-tab-title');
-        const titleText = new SUEY.Text('Scripter').addClass('suey-tab-title-text');
-        tabTitle.add(titleText);
-        this.add(tabTitle);
-        this.tabTitle = tabTitle;
-
         /********** EVENTS */
 
         // Focus on Scrimp when parent dock gains focus

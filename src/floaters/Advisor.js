@@ -75,18 +75,9 @@ class Advisor extends SmartFloater {
 
         /********** CONTENTS */
 
-        // Title
-        const titleDiv = new SUEY.Div().addClass('suey-tab-title');
-        const titleText = new SUEY.Text().addClass('suey-tab-title-text');
-        titleDiv.add(titleText);
-
-        // Body
-        const bodyScroller = new SUEY.Div().addClass('salt-advisor-scroller');
         const bodyContents = new SUEY.Div().addClass('salt-advisor-contents');
-        bodyScroller.add(welcomeContents, bodyContents);
-
-        // Add to Advisor
-        this.add(titleDiv, bodyScroller);
+        this.scroller.addClass('salt-advisor-scroller');
+        this.add(welcomeContents, bodyContents);
 
         /********** HEADER BUTTONS */
 
@@ -128,7 +119,7 @@ class Advisor extends SmartFloater {
         updateButtons();
 
         buttonRow.add(backButton, buttonSpacer, forwardButton);
-        titleDiv.add(buttonRow);
+        this.tabTitle.add(buttonRow);
 
         /********** EVENTS */
 
@@ -167,7 +158,7 @@ class Advisor extends SmartFloater {
                 welcomeContents.setStyle('display', '');
                 history = -1;
             }
-            titleText.setInnerHtml(newTitle);
+            self.setTitle(newTitle);
             if (self.dock && self.dock.hasClass('suey-window')) {
                 self.dock.setTitle(newTitle);
             }

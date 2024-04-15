@@ -27,11 +27,6 @@ class Assets extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/assets');
 
-        /******************** TITLED PANEL */
-
-        const assetPanel = new SUEY.Titled({ title: 'Assets' });
-        this.add(assetPanel);
-
         /******************** HEADER BUTTONS */
 
         const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)');
@@ -67,7 +62,7 @@ class Assets extends SmartFloater {
         // Append Children
         addButton.attachMenu(assetMenu);
         buttonRow.add(addButton, new SUEY.FlexSpacer());
-        assetPanel.tabTitle.add(buttonRow);
+        this.tabTitle.add(buttonRow);
 
         /******************** BLOCKS */
 
@@ -82,7 +77,7 @@ class Assets extends SmartFloater {
         // Add Blocks
         for (const type in this.blocks) {
             const block = this.blocks[type];
-            assetPanel.add(block);
+            this.add(block);
         }
 
         // Add Search Bar
@@ -96,7 +91,7 @@ class Assets extends SmartFloater {
             self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
-        assetPanel.addToSelf(searchDiv);
+        this.addToSelf(searchDiv);
 
         /***** SIGNALS *****/
 

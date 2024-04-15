@@ -20,15 +20,6 @@ class History extends SmartFloater {
         super('history', { icon, color: '#BF4044', shadow: false, shrink: 0.75 });
         Advice.attach(this.button, 'floater/history');
 
-        /******************** TITLED PANEL */
-
-        const historyPanel = new SUEY.Titled({ title: 'History' });
-        this.add(historyPanel);
-
-        // Property Box
-        const props = new SUEY.PropertyList();
-        historyPanel.add(props);
-
         /***** HEADER BUTTONS *****/
 
         const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)');
@@ -42,11 +33,15 @@ class History extends SmartFloater {
 
         // Add Buttons
         buttonRow.add(new SUEY.FlexSpacer(), historyClear);
-        historyPanel.tabTitle.add(buttonRow);
+        this.tabTitle.add(buttonRow);
 
         /***** TREELIST *****/
 
+        const props = new SUEY.PropertyList();
+        this.add(props);
+
         const treeList = new SUEY.TreeList();
+        props.add(treeList);
 
         // Key Down / Pointer Click
         let ignoreObjectSelectedSignal = false;
@@ -56,8 +51,6 @@ class History extends SmartFloater {
             treeList.setValue(editor.commands.undos.length);
             ignoreObjectSelectedSignal = false;
         });
-
-        props.add(treeList);
 
         /***** UPDATE *****/
 

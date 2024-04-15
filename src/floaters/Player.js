@@ -22,7 +22,7 @@ class Player extends SmartFloater {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}player.svg`;
-        super('player', { icon, color: 'var(--button-dark)', color: 'rgb(223, 32, 32)', shadow: false, shrink: 0.75 });
+        super('player', { titled: false, icon, color: 'var(--button-dark)', color: 'rgb(223, 32, 32)', shadow: false, shrink: 0.75 });
         const self = this;
         this.addClass('salt-player');
         Advice.attach(this.button, 'floater/player');

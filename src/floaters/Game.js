@@ -23,18 +23,13 @@ class Game extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/game');
 
-        /******************** TITLED PANEL */
-
-        const gamePanel = new SUEY.Titled({ title: 'Game' });
-        this.add(gamePanel);
-
         // Create Blocks
         const blocks = [];
         blocks.push(new GameAppBlock());
         blocks.push(new GameInfoBlock());
 
         // Add Blocks
-        gamePanel.add(...blocks);
+        this.add(...blocks);
 
     } // end ctor
 

@@ -23,11 +23,6 @@ class Library extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/library');
 
-        /******************** TITLED PANEL */
-
-        const libPanel = new SUEY.Titled({ title: 'Library' });
-        this.add(libPanel);
-
         /******************** BLOCKS */
 
         this.blocks = {};
@@ -35,7 +30,7 @@ class Library extends SmartFloater {
         // 'Entity' Category (user defined)
         const general = 'unknown';
         this.blocks[general] = new AssetBlock({ type: 'prefab', category: general, title: 'General', icon: `${FOLDER_TYPES}prefab/general.svg` });
-        libPanel.add(this.blocks[general]);
+        this.add(this.blocks[general]);
 
         // Add Search Bar
         const searchDiv = new SUEY.Div().addClass('salt-search-holder');
@@ -48,7 +43,7 @@ class Library extends SmartFloater {
             self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
-        libPanel.addToSelf(searchDiv);
+        this.addToSelf(searchDiv);
 
         /***** INIT *****/
 

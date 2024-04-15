@@ -26,14 +26,11 @@ class Settings extends SmartFloater {
         const self = this;
         Advice.attach(this.button, 'floater/settings');
 
-        /******************** TITLED PANEL */
-
-        const settingsPanel = new SUEY.Titled({ title: 'Settings' });
-        this.add(settingsPanel);
+        /***** BUILD *****/
 
         /** Builds Inspector */
         function build() {
-            settingsPanel.clearContents();
+            self.clearContents();
 
             // Create Blocks
             const blocks = [];
@@ -47,7 +44,7 @@ class Settings extends SmartFloater {
             }
 
             // Add Blocks
-            settingsPanel.add(...blocks);
+            self.add(...blocks);
         }
 
         /***** SIGNALS *****/
