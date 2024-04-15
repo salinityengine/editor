@@ -2,9 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-SmartFloater:
-    - Save scroll position to Config
-
 AssetFloater extends SmartFloater: (assets, codex, library)
     - Move search box to title bar when over a certain width
     - Option for 'Add new category' button
