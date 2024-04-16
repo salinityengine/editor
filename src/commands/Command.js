@@ -1,7 +1,8 @@
 class Command {
 
     constructor() {
-        this.id = - 1;
+        this.isCommand = true;
+        this.id = -1;
         this.inMemory = false;
         this.updatable = false;
         this.type = '';
