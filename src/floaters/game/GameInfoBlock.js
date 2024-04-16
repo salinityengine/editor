@@ -11,7 +11,7 @@ import { Signals } from '../../config/Signals.js';
 class GameInfoBlock extends SmartShrinker {
 
     constructor() {
-        const icon = `${FOLDER_FLOATERS}project/info.svg`; // color: '#66C7FF', shrink: true
+        const icon = `${FOLDER_FLOATERS}game/info.svg`;
         super({ title: 'Info', icon, arrow: 'right', border: true });
 
         // Property Box

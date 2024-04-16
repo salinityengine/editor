@@ -12,6 +12,7 @@ const _values = {
         'menubar/window':                   'Window',
         'menubar/help':                     'Help',
 
+        // Sub Menus
         'menubar/file/new':                 'New',
         'menubar/file/open':                'Open',
         'menubar/file/save':                'Save',
@@ -68,7 +69,7 @@ const _values = {
         'assets/empty':                     'Empty',
 
         // Advisor
-        'advisor/noInfo':                   'No description provided.',
+        'advisor/empty':                    'No description provided.',
 
     },
 

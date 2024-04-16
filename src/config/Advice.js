@@ -25,13 +25,13 @@ const _values = {
         'floater/scripter':                 { title: 'Scripter', html: `Script viewer and editor.` },
         'floater/settings':                 { title: 'Settings', html: `Editor settings viewer.`},
 
-        // Project
-        'project/app':                      { title: 'App Settings', html: `` },
-        'project/app/name':                 { title: 'Project Name', html: `` },
-        'project/app/orientation':          { title: 'Orientation', html: `App is to be displayed in 'Portrait' or 'Landscape' mode?` },
-        'project/threshold':                { title: 'Threshold', html: `Distance thresholds are used for loading additional Entities (via Stages) and removing Entities that are out of view.` },
-        'project/threshold/preload':        { title: 'Preload', html: `Stages will be loaded this far ahead of camera target. Value in world units, -1 to disable.` },
-        'project/threshold/unload':         { title: 'Unload', html: `Entities will be removed when camera target is this far past an Entity. Value in world units, -1 to disable.` },
+        // Game
+        'game/app':                         { title: 'App Settings', html: `` },
+        'game/app/name':                    { title: 'App Name', html: `` },
+        'game/app/orientation':             { title: 'Orientation', html: `App is to be displayed in 'Portrait' or 'Landscape' mode?` },
+        'game/threshold':                   { title: 'Threshold', html: `Distance thresholds are used for loading additional Entities (via Stages) and removing Entities that are out of view.` },
+        'game/threshold/preload':           { title: 'Preload', html: `Stages will be loaded this far ahead of camera target. Value in world units, -1 to disable.` },
+        'game/threshold/unload':            { title: 'Unload', html: `Entities will be removed when camera target is this far past an Entity. Value in world units, -1 to disable.` },
 
         // History
         'history':                          { title: 'History', html: `List of undo / redo actions taken in editor.` },

@@ -28,7 +28,7 @@ class Advisor extends SmartFloater {
 
         const welcomeContents = new SUEY.Div().addClass('salt-advisor-welcome-box');
         welcomeContents.setInnerHtml(`
-            <div style='padding: 0.55em 0; text-align: center; width: 100%; margin: auto;'>
+            <div style='padding: 0; padding-top: 0.1em; padding-bottom: 0.5em; text-align: center; width: 100%; margin: auto;'>
                 <span style='font-size: 110%; color: rgb(var(--triadic2));'>Welcome</span>
                 <span style='font-size: 110%; color: rgb(var(--triadic1));'>&nbspto&nbsp</span>
                 <span style='font-size: 110%; color: rgb(var(--icon));'>Salinity</span>
@@ -61,6 +61,7 @@ class Advisor extends SmartFloater {
             'z-index', '-1',
             'opacity', '0.25',
             'transform', 'scale(1.5)',
+            'padding-bottom', '0.2em',
         );
         welcomeContents.add(irisLogo);
 

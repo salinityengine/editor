@@ -659,7 +659,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const propertyRow = propertyList.addRow(itemName, ...rightWidgets);
 
         propertyRow.on('pointerenter', () => {
-            const info = item.info ?? Language.getKey('advisor/noInfo');
+            const info = item.info ?? Language.getKey('advisor/empty');
             Signals.dispatch('advisorInfo', itemName, info);
         });
 

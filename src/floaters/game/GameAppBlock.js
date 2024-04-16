@@ -12,9 +12,9 @@ import { Signals } from '../../config/Signals.js';
 class GameAppBlock extends SmartShrinker {
 
     constructor() {
-        const icon = `${FOLDER_FLOATERS}project/app.svg`; // color: '#773399'
+        const icon = `${FOLDER_FLOATERS}game/app.svg`;
         super({ title: 'App', icon, arrow: 'right', border: true });
-        Advice.attach(this.titleDiv, 'project/app');
+        Advice.attach(this.titleDiv, 'game/app');
 
         // Property Box
         const props = new SUEY.PropertyList();
@@ -27,7 +27,7 @@ class GameAppBlock extends SmartShrinker {
             editor.project.name = projectName.getValue();
         });
         const nameRow = props.addRow('Name', projectName);
-        Advice.attach(nameRow, 'project/app/name');
+        Advice.attach(nameRow, 'game/app/name');
 
         // Orientation
         const orientOptions = {
@@ -41,12 +41,12 @@ class GameAppBlock extends SmartShrinker {
             editor.project.settings.orientation = orientSelect.getValue();
         });
         const orientRow = props.addRow('Orientation', orientSelect);
-        Advice.attach(orientRow, 'project/app/orientation');
+        Advice.attach(orientRow, 'game/app/orientation');
 
         /***** THRESHOLD *****/
 
-        const thresholdHeader = props.addHeader('Threshold', `${FOLDER_FLOATERS}project/threshold.svg`);
-        Advice.attach(thresholdHeader, 'project/threshold');
+        const thresholdHeader = props.addHeader('Threshold', `${FOLDER_FLOATERS}game/threshold.svg`);
+        Advice.attach(thresholdHeader, 'game/threshold');
 
         // Preload
         const preload = new SUEY.NumberBox().setPrecision(3).setStep(0.1);
@@ -54,7 +54,7 @@ class GameAppBlock extends SmartShrinker {
             editor.project.settings.preload = preload.getValue();
         });
         const preloadRow = props.addRow('Preload', preload);
-        Advice.attach(preloadRow, 'project/threshold/preload');
+        Advice.attach(preloadRow, 'game/threshold/preload');
 
         // Unload
         const unload = new SUEY.NumberBox().setPrecision(3).setStep(0.1);
@@ -62,7 +62,7 @@ class GameAppBlock extends SmartShrinker {
             editor.project.settings.unload = unload.getValue();
         });
         const unloadRow = props.addRow('Unload', unload);
-        Advice.attach(unloadRow, 'project/threshold/unload');
+        Advice.attach(unloadRow, 'game/threshold/unload');
 
         /***** UPDATE *****/
 
