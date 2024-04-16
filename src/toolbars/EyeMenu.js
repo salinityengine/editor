@@ -235,7 +235,7 @@ class EyeMenu extends SUEY.Menu {
                 }
                 else editor.getFloaterByID(windowName, true /* build? */, true /* select? */);
             }
-            for (const type in Layout.allFloaters()) {
+            for (const type of Layout.floaterTypes()) {
                 const windowItem = new SUEY.MenuItem(`Show ${SUEY.Strings.capitalize(type)}`).keepOpen();
                 windowItem.onSelect(() => toggleWindow(windowItem, type));
                 windowItem.floaterType = type;

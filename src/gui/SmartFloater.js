@@ -13,7 +13,7 @@ class SmartFloater extends SUEY.Floater {
         this.on('destroy', () => {
             const dock = self.dock;
             if (!dock) return;
-            const key = `floater/position/${self.id}`;
+            const key = self.id;
             const value = {};
             if (dock.hasClass('suey-window')) {
                 value.init = 'center';
@@ -39,20 +39,19 @@ class SmartFloater extends SUEY.Floater {
         // Remember Scroller Position
         this.on('destroy', () => {
             if (!self.scroller) return;
-            const key = `floater/scroller/${self.id}`;
-            Config.setKey(key, self.scroller.dom.scrollTop);
+            if (self.id == null || self.id == '') return;
+            Config.setKey(`floater/scroller/${self.id}`, self.scroller.dom.scrollTop);
         });
         this.on('hidden', () => {
             if (!self.scroller) return;
-            const key = `floater/scroller/${self.id}`;
-            Config.setKey(key, self.scroller.dom.scrollTop);
+            if (self.id == null || self.id == '') return;
+            Config.setKey(`floater/scroller/${self.id}`, self.scroller.dom.scrollTop);
         });
         this.on('displayed', () => {
             if (!self.scroller) return;
+            if (self.id == null || self.id == '') return;
             const scrollTop = parseFloat(Config.getKey(`floater/scroller/${self.id}`));
-            if (!isNaN(scrollTop) && isFinite(scrollTop)) {
-                self.scroller.dom.scrollTop = scrollTop;
-            }
+            if (!isNaN(scrollTop) && isFinite(scrollTop)) self.scroller.dom.scrollTop = scrollTop;
         });
 
     } // end ctor

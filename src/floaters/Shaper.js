@@ -109,9 +109,9 @@ class Shaper extends SmartFloater {
 
         //         case 'CubicBezierCurve':
         //             // v0       Vector2     start point
-		//             // v1       Vector2     control point 1
-		//             // v2       Vector2     control point 2
-		//             // v3       Vector2     end point
+        //             // v1       Vector2     control point 1
+        //             // v2       Vector2     control point 2
+        //             // v3       Vector2     end point
         //             ctx.beginPath();
         //             ctx.moveTo(mapX(curve.v0.x), mapY(curve.v0.y));
         //             ctx.bezierCurveTo(mapX(curve.v1.x), mapY(curve.v1.y), mapX(curve.v2.x), mapY(curve.v2.y), mapX(curve.v3.x), mapY(curve.v3.y));
@@ -129,8 +129,8 @@ class Shaper extends SmartFloater {
 
         //         case 'QuadraticBezierCurve':
         //             // v0       Vector2     start point
-		//             // v1       Vector2     control point
-		//             // v2       Vector2     end point
+        //             // v1       Vector2     control point
+        //             // v2       Vector2     end point
         //             ctx.beginPath();
         //             ctx.moveTo(mapX(curve.v0.x), mapY(curve.v0.y));
         //             ctx.quadraticCurveTo(mapX(curve.v1.x), mapY(curve.v1.y), mapX(curve.v2.x), mapY(curve.v2.y));

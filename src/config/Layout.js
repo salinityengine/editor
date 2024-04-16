@@ -18,20 +18,20 @@ import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
 
-const DEFAULT_POSITIONS = {
-    'floater/position/advisor':     { init: 'left',     side: 'bottom',     size: '30em', size2: '13em' },
-    'floater/position/assets':      { init: 'left',     side: 'left',       size: '30em' },
-    'floater/position/codex':       { init: 'left',     side: 'left',       size: '30em' },
-    'floater/position/game':        { init: 'right',    side: 'right',      size: '35em' },
-    'floater/position/history':     { init: 'right',    side: 'right',      size: '35em' },
-    'floater/position/inspector':   { init: 'right',    side: 'right',      size: '35em' },
-    'floater/position/library':     { init: 'left',     side: 'left',       size: '30em' },
-    'floater/position/notepad':     { init: 'right',    side: 'right',      size: '35em' },
-    'floater/position/outliner':    { init: 'left',     side: 'left',       size: '30em' },
-    'floater/position/player':      { init: 'center',   size: '60%', size2: '80%' },
-    'floater/position/previewer':   { init: 'right',    side: 'right',      size: '35em' },
-    'floater/position/scripter':    { init: 'center',   size: '60%', size2: '85%' },
-    'floater/position/settings':    { init: 'right',    side: 'right',      size: '35em' },
+const _types = {
+    'advisor':      { type: Advisor,    init: 'left',     side: 'bottom',     size: '30em', size2: '13em' },
+    'assets':       { type: Assets,     init: 'left',     side: 'left',       size: '30em' },
+    'codex':        { type: Codex,      init: 'left',     side: 'left',       size: '30em' },
+    'game':         { type: Game,       init: 'right',    side: 'right',      size: '35em' },
+    'history':      { type: History,    init: 'right',    side: 'right',      size: '35em' },
+    'inspector':    { type: Inspector,  init: 'right',    side: 'right',      size: '35em' },
+    'library':      { type: Library,    init: 'left',     side: 'left',       size: '30em' },
+    'notepad':      { type: Notepad,    init: 'right',    side: 'right',      size: '35em' },
+    'outliner':     { type: Outliner,   init: 'left',     side: 'left',       size: '30em' },
+    'player':       { type: Player,     init: 'center',                       size: '60%', size2: '80%' },
+    'previewer':    { type: Previewer,  init: 'right',    side: 'right',      size: '35em' },
+    'scripter':     { type: Scripter,   init: 'center',                       size: '60%', size2: '85%' },
+    'settings':     { type: Settings,   init: 'right',    side: 'right',      size: '35em' },
 };
 
 class Layout {
@@ -39,15 +39,16 @@ class Layout {
     /******************** POSITIONS */
 
     static getPosition(key, defaultOnly = false) {
-        if (!defaultOnly) {
-            const data = localStorage.getItem(key);
+        if (!defaultOnly && key && typeof key === 'string' && key != '') {
+            const data = localStorage.getItem(`floater/position/${key}`);
             if (data) return JSON.parse(data);
         }
-        return DEFAULT_POSITIONS[key] ?? { init: 'center' };
+        return _types[key] ?? { init: 'center' };
     }
 
     static setPosition(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
+        if (key == null || key == '') return;
+        localStorage.setItem(`floater/position/${key}`, JSON.stringify(value));
     }
 
     /******************** CONSTRUCT */
@@ -85,34 +86,18 @@ class Layout {
 
     /******************** FLOATERS */
 
-    static allFloaters() {
-        const floaters = {
-            'advisor':      Advisor,
-            'assets':       Assets,
-            'codex':        Codex,
-            'game':         Game,
-            'history':      History,
-            'inspector':    Inspector,
-            'library':      Library,
-            'notepad':      Notepad,
-            'outliner':     Outliner,
-            'player':       Player,
-            'previewer':    Previewer,
-            'scripter':     Scripter,
-            'settings':     Settings,
-        };
-        return floaters;
+    static floaterTypes() {
+        return Object.keys(_types);
     }
 
     static createFloater(id) {
-        const floaters = Layout.allFloaters();
-        if (id in floaters) return new floaters[id];
+        if (id in _types) return new _types[id].type;
         console.warn(`Layout.createFloater(): Unknown type '${id}'`);
         return null;
     }
 
     static installFloater(floater, defaultOnly = false) {
-        const installInfo = Layout.getPosition(`floater/position/${floater?.id}`, defaultOnly);
+        const installInfo = Layout.getPosition(floater?.id, defaultOnly);
         const installInit = installInfo?.init ?? 'center';
         const installSide = installInfo?.side ?? installInit;
         const installSize = (installInfo && installInfo.size && installInfo.size !== '') ? installInfo.size : '20%';

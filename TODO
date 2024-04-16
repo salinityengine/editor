@@ -87,6 +87,8 @@ Settings:
 
 !! Shaper:
     - Modernize with SmartFloater
+    - Editable points
+    - Save shapes
 
 /******************** LONG TERM ********************/
 
@@ -170,16 +172,13 @@ Scripting Events:
 
 Additional Floaters:
     About: About box
-    Animator: Keyframe Editing
+    Animator: Keyframe editing
     Collision Editor:
     Color Picker:
     Font Editor:
     Helper: Manual, FAQ, etc.
-    Image Editor:
-        - Export to png
-        - Vectors
+    Image / Vector Editor: Export to png
     Particle Editor:
-    Shape Editor: Editable points. Save shapes.
 Analytics / Advertising:
 Asset Store:
 Docs:
