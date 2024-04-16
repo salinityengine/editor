@@ -2,10 +2,15 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Dialog Boxes:
+    - Yes / No
+    - Cancel
+    - Okay
+
 Project:
-    - World
-    - Stage
-    - Entity
+    - World, Stage, Entity
+    - World2D, Stage2D, Entity2D, Components
+    - Save / load
 
 AssetFloater extends SmartFloater: (assets, codex, library)
     - Move search box to title bar when over a certain width
@@ -27,70 +32,7 @@ View2D:
 Undo / Redo Commands:
     - Import from Onsight
 
-/******************** FLOATERS ********************/
-
-Advisor:
-    - Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
-
-Assets: aka 'Project Folder'
-    - Categories / folders
-
-Codex:
-    - Add scripts
-
-Inspector:
-    - Go through Blocks
-    - Multi-Select
-        - Only show shared properties in inspector?
-        - Resizing a group of selected objects
-
-Game:
-    - Get info to work with View2D
-
-History:
-    - Separate undo/redo history for each Viewport?
-
-Library:
-    - Prebuilt object Types - Actor, Action (Trigger), Decoration, etc.
-
-Notepad:
-    - Global / project scratchpads
-    - Save project scratchpad to Project
-
-Outliner:
-    - Scene2D, Entity2D, etc.
-
-Player:
-    - Debug Console, override console.log to capture?
-    - QR Code to load on phone
-    - Video screen capture?
-        - https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API
-
-Previewer:
-
-Scripter:
-    - Right click menu?
-    - Open from Codex
-    - Editable script name textbox
-        - Style text box
-    - Linter (jshint / eshint / esprima)
-        https://discuss.codemirror.net/t/how-to-actually-use-eslint-in-codemirror-6/4184
-    - Auto complete / Tern
-        https://codemirror.net/try/?example=Custom%20completions
-        https://codemirror.net/examples/autocompletion/
-        https://codemirror.net/docs/ref/#autocomplete
-    Python (Brython): https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
-    Visual Scripting:
-
-Settings:
-    - Get working with View2D grid
-
-!! Shaper:
-    - Modernize with SmartFloater
-    - Editable points
-    - Save shapes
-
-/******************** LONG TERM ********************/
+/******************** FUTURE ********************/
 
 Editor:
     Loading: Progress Bar
@@ -106,6 +48,44 @@ Editor:
     Storage: Autosave / Browser Storage
         - https://github.com/mrdoob/three.js/blob/dev/editor/js/Storage.js
         - https://github.com/DVLP/localStorageDB/blob/master/localdata.js
+
+Floaters:
+    Advisor: Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc).
+    Assets (Project Folder): Categories / folders.
+    Codex: Add scripts.
+    Inspector:
+        - Go through Blocks
+        - Multi-Select
+            - Only show shared properties in inspector?
+            - Resizing a group of selected objects
+    Game: Get info to work with View2D.
+    History: Separate undo/redo history for each Viewport?
+    Library: Prebuilt objects.
+    Notepad: Global & project scratchpads. Save project scratchpad to Project.
+    Outliner: Scene2D, Entity2D, etc.
+    Player:
+        - Debug Console, override console.log to capture?
+        - QR Code to load on phone
+        - Video screen capture? (https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API)
+    Previewer:
+    Scripter:
+        - Right click menu?
+        - Open from Codex
+        - Editable script name textbox
+            - Style text box
+        - Linter (jshint / eshint / esprima)
+            https://discuss.codemirror.net/t/how-to-actually-use-eslint-in-codemirror-6/4184
+        - Auto complete / Tern
+            https://codemirror.net/try/?example=Custom%20completions
+            https://codemirror.net/examples/autocompletion/
+            https://codemirror.net/docs/ref/#autocomplete
+        Python (Brython): https://github.com/tentone/nunuStudio/blob/master/source/core/objects/script/PythonScript.js
+        Visual Scripting:
+    Settings: Get working with View2D grid
+    !! Shaper:
+        - Modernize with SmartFloater
+        - Editable points
+        - Save shapes
 
 Modes:
     UI Editor:

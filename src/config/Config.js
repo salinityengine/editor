@@ -1,5 +1,11 @@
 import { THEMES } from 'gui';
 
+/** Keys not to be cleared during Config.clear() */
+const KEEP_SETTINGS = [
+    'editor/mode',
+];
+
+/** Default values for particular keys */
 const DEFAULT_SETTINGS = {
 
     'promode':                                  false,              // Enhanced menu and inspector
@@ -93,15 +99,26 @@ const DEFAULT_SETTINGS = {
 class Config {
 
     static clear() {
-        const mode = Config.getKey('editor/mode');
+        // Preserve Key Values
+        const preserve = {};
+        for (const key of KEEP_SETTINGS) {
+            preserve[key] = Config.getKey(key);
+        }
+
+        // Clear
         localStorage.clear();
-        if (mode) Config.setKey('editor/mode', mode); /* preserve editor mode */
+
+        // Restore Key Values
+        for (const key of KEEP_SETTINGS) {
+            if (preserve[key] != null) {
+                Config.setKey(key, preserve[key]);
+            }
+        }
     }
 
     static getKey(key) {
         const data = localStorage.getItem(key);
-        const value = (data === undefined || data === null) ? DEFAULT_SETTINGS[key] : JSON.parse(data);
-        return value;
+        return (data == null) ? DEFAULT_SETTINGS[key] : JSON.parse(data);
     }
 
     /** Sets series of keys to values, pass in by key, value pair. */
