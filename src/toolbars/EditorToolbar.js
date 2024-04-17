@@ -20,16 +20,16 @@ class EditorToolbar extends SUEY.Panel {
 
         /******************** BUTTONS */
 
-        const eye = new SUEY.ToolbarButton().addClass('suey-complement-button');
-        const scene2d = new SUEY.ToolbarButton(null, 'left').addClass('suey-brown-button');
-        const scene3d = new SUEY.ToolbarButton(null, 'middle').addClass('suey-brown-button');
-        const world = new SUEY.ToolbarButton(null, 'middle').addClass('suey-brown-button');
-        const ui = new SUEY.ToolbarButton(null, 'right').addClass('suey-brown-button');
-        const play = new SUEY.ToolbarButton().addClass('suey-red-button');
-        const game = new SUEY.ToolbarButton(null, 'left').addClass('suey-gray-button');
-        const notes = new SUEY.ToolbarButton(null, 'middle').addClass('suey-gray-button');
-        const history = new SUEY.ToolbarButton(null, 'middle').addClass('suey-gray-button');
-        const settings = new SUEY.ToolbarButton(null, 'right').addClass('suey-gray-button');
+        const eye = new SUEY.ToolbarButton().setColor('complement');
+        const scene2d = new SUEY.ToolbarButton(null, 'left').setColor('sienna');
+        const scene3d = new SUEY.ToolbarButton(null, 'middle').setColor('sienna');
+        const world = new SUEY.ToolbarButton(null, 'middle').setColor('sienna');
+        const ui = new SUEY.ToolbarButton(null, 'right').setColor('sienna');
+        const play = new SUEY.ToolbarButton().setColor('red');
+        const game = new SUEY.ToolbarButton(null, 'left').setColor('gray');
+        const notes = new SUEY.ToolbarButton(null, 'middle').setColor('gray');
+        const history = new SUEY.ToolbarButton(null, 'middle').setColor('gray');
+        const settings = new SUEY.ToolbarButton(null, 'right').setColor('gray');
 
         eye.setAttribute('tooltip', 'Menu');
         scene2d.setAttribute('tooltip', Config.tooltip('Scene Editor 2D'));

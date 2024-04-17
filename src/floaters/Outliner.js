@@ -41,11 +41,7 @@ class Outliner extends SmartFloater {
         /***** 'Add' Entity *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
         addButton.setAttribute('tooltip', 'Add Asset');
-        const addImage = new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`);
-        function setAddImageColor() { addImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.COMPLEMENT)); }
-        Signals.connect(addButton, 'schemeChanged', setAddImageColor);
-        setAddImageColor();
-        addButton.add(addImage);
+        addButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).setColor('complement'));
 
         // 'Add' Menu
         const entityMenu = new SUEY.Menu();

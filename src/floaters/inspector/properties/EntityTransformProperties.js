@@ -47,13 +47,7 @@ class EntityTransformProperties extends SUEY.Div {
         const editTransform = new SUEY.Button().addClass('suey-borderless-button');
         editTransform.overflowMenu = SUEY.OVERFLOW.LEFT;
         editTransform.setAttribute('tooltip', 'Edit Transform');
-
-        // 'Edit Transform' Image
-        const editImage = new SUEY.ShadowBox(`${FOLDER_MENU}more.svg`);
-        function setEditImageColor() { editImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC5)); }
-        Signals.connect(editTransform, 'schemeChanged', setEditImageColor);
-        setEditImageColor();
-        editTransform.add(editImage);
+        editTransform.add(new SUEY.ShadowBox(`${FOLDER_MENU}more.svg`).setColor(SUEY.TRAIT.TRIADIC5));
 
         // Transform Menu
         const transformMenu = new SUEY.Menu();
@@ -145,8 +139,8 @@ class EntityTransformProperties extends SUEY.Div {
 
         const scaleButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
         const lockScale = new SUEY.Button().addClass('suey-borderless-button').setStyle('font-size', '90%');
-        const lockIcon = new SUEY.VectorBox(`${FOLDER_MENU}lock.svg`);
-        const unlockIcon = new SUEY.VectorBox(`${FOLDER_MENU}unlock.svg`);
+        const lockIcon = new SUEY.VectorBox(`${FOLDER_MENU}lock.svg`).setColor(SUEY.TRAIT.TEXT);
+        const unlockIcon = new SUEY.VectorBox(`${FOLDER_MENU}unlock.svg`).setColor(SUEY.TRAIT.TEXT);
         lockScale.add(new SUEY.ShadowBox(lockIcon, unlockIcon));
         lockScale.on('pointerdown', () => {
             Config.setKey('viewport/transform/aspectLock', !Config.getKey('viewport/transform/aspectLock'));
@@ -162,13 +156,7 @@ class EntityTransformProperties extends SUEY.Div {
             unlockIcon.setStyle('opacity', (locked) ? '0' : '1');
             lockScale.setAttribute('tooltip', (locked) ? 'Unlock Aspect Ratio' : 'Lock Aspect Ratio');
         }
-        function setIconColors() {
-            const filterLock = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
-            unlockIcon.setStyle('filter', `${filterLock}`);
-            lockIcon.setStyle('filter', `${filterLock}`);
-        }
         setScaleIconState();
-        setIconColors();
 
         // Size
         const entitySizeX = new SUEY.NumberBox(1).setStep(moveSize).setNudge(1).on('change', () => update('x'));
@@ -365,7 +353,6 @@ class EntityTransformProperties extends SUEY.Div {
 
         Signals.connect(this, 'entityChanged', entityChanged);
         Signals.connect(this, 'transformsChanged', transformsChanged);
-        Signals.connect(this, 'schemeChanged', setIconColors);
 
         /***** INIT *****/
 

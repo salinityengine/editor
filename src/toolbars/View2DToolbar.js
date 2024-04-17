@@ -121,15 +121,10 @@ class View2DToolbar {
 
         const resetAxisX = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
         const resetAxisY = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
+        resetAxisX.setColor(COLORS.X_COLOR);
+        resetAxisY.setColor(COLORS.Y_COLOR);
         const resetTarget = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
-
-        Signals.connect(view2d, 'schemeChanged', function() {
-            const filterX = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
-            const filterY = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
-            resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
-            resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
-        });
 
         reset.onPress(() => view2d.cameraReset());
         focus.onPress(() => view2d.cameraFocus());

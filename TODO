@@ -5,7 +5,7 @@
 Project:
     - World, Stage, Entity
     - World2D, Stage2D, Entity2D, Components
-    - Save / load
+    - Save / Load
 
 AssetFloater extends SmartFloater: (assets, codex, library)
     - Move search box to title bar when over a certain width
@@ -21,6 +21,7 @@ View2D:
         - Duplication (WASD keyboard controls)
         - Rotate / Flip
     Scenes:
+        - Multiple scene flipping, drop down select list?
         - Stage List
         - Arrange / Connections
 

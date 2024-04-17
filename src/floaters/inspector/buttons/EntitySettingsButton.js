@@ -27,11 +27,7 @@ class EntitySettingsButton extends SUEY.Button {
         this.setAttribute('tooltip', 'Edit Component');
 
         // Image
-        const editImage = new SUEY.ShadowBox(`${FOLDER_MENU}edit.svg`);
-        function setEditImageColor() { editImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC5)); }
-        Signals.connect(this, 'schemeChanged', setEditImageColor);
-        setEditImageColor();
-        this.add(editImage);
+        this.add(new SUEY.ShadowBox(`${FOLDER_MENU}edit.svg`).setColor('triadic5'));
 
         // Properties
         this.componentMenu = new SUEY.Menu();

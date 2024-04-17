@@ -28,11 +28,7 @@ class AddComponentButton extends SUEY.Button {
         this.setAttribute('tooltip', 'Add Component');
 
         // Image
-        const addImage = new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`);
-        function setAddImageColor() { addImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.COMPLEMENT)); }
-        Signals.connect(this, 'schemeChanged', setAddImageColor);
-        setAddImageColor();
-        this.add(addImage);
+        this.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).setColor('complement'));
 
         // Properties
         this.componentMenu = new SUEY.Menu();

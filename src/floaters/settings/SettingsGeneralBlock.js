@@ -118,21 +118,21 @@ class SettingsGeneralBlock extends SmartShrinker {
             schemeCarrot, schemeCoffee, schemeGolden, schemeEmerald, schemeRandom);
 
         // Color Events
-        function setColor(color, tint, saturation) {
+        function applySchemeColor(color, tint, saturation) {
             editor.setSchemeColor(color, tint, saturation);
             updateUI();
         }
-        schemeClassic.onSelect(() => setColor(SUEY.THEMES.CLASSIC, 0.00));
-        schemeSteel.onSelect(() => setColor(SUEY.THEMES.STEEL, 0.10, -1.0));
-        schemeFlamingo.onSelect(() => setColor(SUEY.THEMES.FLAMINGO, 0.10));
-        schemeNavy.onSelect(() => setColor(SUEY.THEMES.NAVY, 0.20));
-        schemeGrape.onSelect(() => setColor(SUEY.THEMES.GRAPE, 0.15));
-        schemeRust.onSelect(() => setColor(SUEY.THEMES.RUST, 0.20));
-        schemeCarrot.onSelect(() => setColor(SUEY.THEMES.CARROT, 0.20));
-        schemeCoffee.onSelect(() => setColor(SUEY.THEMES.COFFEE, 0.20));
-        schemeGolden.onSelect(() => setColor(SUEY.THEMES.GOLDEN, 0.15));
-        schemeEmerald.onSelect(() => setColor(SUEY.THEMES.EMERALD, 0.10));
-        schemeRandom.onSelect(() => setColor(SUEY.Iris.randomHex(), 0.10));
+        schemeClassic.onSelect(() => applySchemeColor(SUEY.THEMES.CLASSIC, 0.00));
+        schemeSteel.onSelect(() => applySchemeColor(SUEY.THEMES.STEEL, 0.10, -1.0));
+        schemeFlamingo.onSelect(() => applySchemeColor(SUEY.THEMES.FLAMINGO, 0.10));
+        schemeNavy.onSelect(() => applySchemeColor(SUEY.THEMES.NAVY, 0.20));
+        schemeGrape.onSelect(() => applySchemeColor(SUEY.THEMES.GRAPE, 0.15));
+        schemeRust.onSelect(() => applySchemeColor(SUEY.THEMES.RUST, 0.20));
+        schemeCarrot.onSelect(() => applySchemeColor(SUEY.THEMES.CARROT, 0.20));
+        schemeCoffee.onSelect(() => applySchemeColor(SUEY.THEMES.COFFEE, 0.20));
+        schemeGolden.onSelect(() => applySchemeColor(SUEY.THEMES.GOLDEN, 0.15));
+        schemeEmerald.onSelect(() => applySchemeColor(SUEY.THEMES.EMERALD, 0.10));
+        schemeRandom.onSelect(() => applySchemeColor(SUEY.Iris.randomHex(), 0.10));
 
         // Add Color Menu and Button
         colorButton.attachMenu(colorMenu, true /* popupStyle */);
@@ -147,8 +147,7 @@ class SettingsGeneralBlock extends SmartShrinker {
         });
         const smallerLabel = 'Smaller'
         const smallerShortcut = '-';
-        const smallLetter = new SUEY.VectorBox(`${FOLDER_FLOATERS}settings/general/style/smaller.svg`);
-        smallerButton.add(new SUEY.ShadowBox(smallLetter));
+        smallerButton.add(new SUEY.ShadowBox(`${FOLDER_FLOATERS}settings/general/style/smaller.svg`).setColor(SUEY.TRAIT.ICON));
         const smallShortcutText = new SUEY.Div(smallerShortcut).setClass('suey-menu-shortcut');
         smallShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         smallerButton.add(smallShortcutText);
@@ -160,20 +159,11 @@ class SettingsGeneralBlock extends SmartShrinker {
         });
         const largerLabel = 'Larger'
         const largerShortcut = '+';
-        const largeLetter = new SUEY.VectorBox(`${FOLDER_FLOATERS}settings/general/style/larger.svg`);
-        largerButton.add(new SUEY.ShadowBox(largeLetter));
+        largerButton.add(new SUEY.ShadowBox(`${FOLDER_FLOATERS}settings/general/style/larger.svg`).setColor(SUEY.TRAIT.ICON));
         const largeShortcutText = new SUEY.Div(largerShortcut).setClass('suey-menu-shortcut');
         largeShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         largerButton.add(largeShortcutText);
         largerButton.setAttribute('tooltip', Config.tooltip(largerLabel, largerShortcut));
-
-        // Text Size Image Coloring
-        function setTextSizeImageColor() {
-            smallLetter.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.ICON));
-            largeLetter.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.ICON));
-        }
-        Signals.connect(props, 'schemeChanged', setTextSizeImageColor);
-        setTextSizeImageColor();
 
         // Font Button Row
         const textSizeRow = props.addRow(Language.getKey('floater/settings/textSize'), smallerButton, largerButton);

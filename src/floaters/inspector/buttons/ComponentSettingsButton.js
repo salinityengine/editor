@@ -28,11 +28,7 @@ class ComponentSettingsButton extends SUEY.Button {
         this.setAttribute('tooltip', 'Edit Component');
 
         // Image
-        const dotsImage = new SUEY.ShadowBox(`${FOLDER_MENU}dots.svg`);
-        function setDotsImageColor() { dotsImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC5)); }
-        Signals.connect(this, 'schemeChanged', setDotsImageColor);
-        setDotsImageColor();
-        this.add(dotsImage);
+        this.add(new SUEY.ShadowBox(`${FOLDER_MENU}dots.svg`).setColor('triadic5'));
 
         // Properties
         this.componentMenu = new SUEY.Menu();

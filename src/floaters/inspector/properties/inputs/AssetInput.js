@@ -22,12 +22,7 @@ class AssetInput {
         const clearButton = new SUEY.Button();
         clearButton.addClass('suey-property-button');
         clearButton.setAttribute('tooltip', 'Clear');
-
-        const clearImage = new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`);
-        function setClearImageColor() { clearImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC1)); }
-        Signals.connect(clearButton, 'schemeChanged', setClearImageColor);
-        setClearImageColor();
-        clearButton.add(clearImage);
+        clearButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`).setColor(SUEY.TRAIT.TRIADIC1));
 
         // Event
         textBox.on('pointerdown', () => {

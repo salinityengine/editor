@@ -215,13 +215,8 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         let aspectLocked = false;
         const aspectButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
         const lockAspect = new SUEY.Button().addClass('suey-borderless-button').setStyle('font-size', '90%');
-        const lockIcon = new SUEY.VectorBox(`${FOLDER_MENU}lock.svg`);
-        const unlockIcon = new SUEY.VectorBox(`${FOLDER_MENU}unlock.svg`);
-        function setAspectIconColors() {
-            const filterLock = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
-            unlockIcon.setStyle('filter', `${filterLock}`);
-            lockIcon.setStyle('filter', `${filterLock}`);
-        }
+        const lockIcon = new SUEY.VectorBox(`${FOLDER_MENU}lock.svg`).setColor(SUEY.TRAIT.TEXT);
+        const unlockIcon = new SUEY.VectorBox(`${FOLDER_MENU}unlock.svg`).setColor(SUEY.TRAIT.TEXT);
         function setAspectIconState() {
             lockIcon.setStyle('opacity', (aspectLocked) ? '1' : '0');
             unlockIcon.setStyle('opacity', (aspectLocked) ? '0' : '1');
@@ -241,13 +236,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
                 setAspectIconState();
             });
             aspectButtonRow.add(new SUEY.FlexSpacer(), lockAspect);
-            setAspectIconColors();
             setAspectIconState();
-            // Signals
-            signals.schemeChanged.add(setAspectIconColors);
-            propertyList.on('destroy', function() {
-                signals.schemeChanged.remove(setAspectIconColors);
-            });
         }
 
         // Helpers
@@ -491,26 +480,14 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const clearButton = new SUEY.Button();
         clearButton.addClass('suey-property-button');
         clearButton.setAttribute('tooltip', 'Clear');
-
-        const clearImage = new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`);
-        function setClearImageColor() { clearImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC1)); }
-        Signals.connect(clearButton, 'schemeChanged', setClearImageColor);
-        setClearImageColor();
-        clearButton.add(clearImage);
+        clearButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`).setColor('triadic1'));
 
         // REFRESH ASSET //
         const refreshButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
         const refreshAsset = new SUEY.Button().addClass('suey-borderless-button');
         refreshAsset.setAttribute('tooltip', `Refresh ${typeClassName}`);
         refreshAsset.setStyle('font-size', '90%');
-        const refreshIcon = new SUEY.VectorBox(`${FOLDER_MENU}reset.svg`);
-
-        // Button: Coloring
-        const setIconColors = function() {
-            const filterLock = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
-            refreshIcon.setStyle('filter', `${filterLock}`);
-        };
-        setIconColors();
+        refreshAsset.add(new SUEY.ShadowBox(`${FOLDER_MENU}reset.svg`).setColor(SUEY.TRAIT.TEXT));
 
         // Button: Visible?
         function scriptChanged(changedType, script) {
@@ -524,15 +501,9 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         setRefreshButtonState(false);
 
         // Button: Signals
-        signals.assetChanged.add(scriptChanged);
-        signals.schemeChanged.add(setIconColors);
-        propertyList.on('destroy', function() {
-            signals.assetChanged.remove(scriptChanged);
-            signals.schemeChanged.remove(setIconColors);
-        });
+        Signals.connect(propertyList, 'assetChanged', scriptChanged);
 
         // Button: Click
-        refreshAsset.add(new SUEY.ShadowBox(refreshIcon));
         refreshAsset.onPress(() => {
             const component = propertyList._component;
             if (!component) return;

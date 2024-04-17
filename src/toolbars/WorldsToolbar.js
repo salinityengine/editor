@@ -55,9 +55,7 @@ class WorldsToolbar {
         /******************** NODES */
 
         const nodePlusSign = new SUEY.VectorBox(`${FOLDER_MENU}add.svg`).setID('tb-node-plus-sign');
-        function setPlusImageColor() { nodePlusSign.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.COMPLEMENT)); }
-        Signals.connect(add, 'schemeChanged', setPlusImageColor);
-        setPlusImageColor();
+        nodePlusSign.setColor('complement');
         add.add(nodePlusSign);
 
         const nodeMenu = new SUEY.Menu();
@@ -104,15 +102,10 @@ class WorldsToolbar {
 
         const resetAxisX = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-x.svg`).setID('tb-reset-axis-x');
         const resetAxisY = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-reset-y.svg`).setID('tb-reset-axis-y');
+        resetAxisX.setColor(COLORS.X_COLOR);
+        resetAxisY.setColor(COLORS.Y_COLOR);
         const resetTarget = new SUEY.VectorBox(`${FOLDER_TOOLBAR}focus-target.svg`).setID('tb-reset-target');
         reset.add(resetAxisX, resetAxisY, resetTarget);
-
-        Signals.connect(worldsGraph, 'schemeChanged', function() {
-            const filterX = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
-            const filterY = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
-            resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
-            resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
-        });
 
         reset.onPress(() => {
             worldsGraph.centerView(true /* resetZoom */, true /* animate */);
