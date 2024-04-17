@@ -6,7 +6,6 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { CanvasUtils } from './CanvasUtils.js';
-import { ColorizeFilter } from './ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
 import { Shaper } from '../floaters/Shaper.js';
@@ -61,11 +60,7 @@ class AssetBlock extends SUEY.Shrinkable {
         viewOptions.setAttribute('tooltip', 'View Options');
 
         const shadowBox = new SUEY.ShadowBox(`${FOLDER_MENU}dots.svg`);
-        if (shadowBox.firstImage()) {
-            if (shadowBox.firstImage().firstImage()) {
-                shadowBox.firstImage().firstImage().addClass('suey-black-or-white');
-            }
-        }
+        shadowBox.firstImage().addClass('suey-black-or-white');
         viewOptions.add(shadowBox);
 
         // Menu

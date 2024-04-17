@@ -46,7 +46,7 @@ class EyeMenu extends SUEY.Menu {
                 //
                 // TODO: New Project!
                 //
-                new SUEY.Question(SUEY.QUESTION_TYPES.INFO, 'TODO: New Project!', [ SUEY.BUTTON_TYPES.OKAY ]).alert();
+                new SUEY.Question('TODO: New Project!').alert();
             });
 
             // OPEN
@@ -108,7 +108,7 @@ class EyeMenu extends SUEY.Menu {
                 //
                 // TODO: Exports!
                 //
-                new SUEY.Question(SUEY.QUESTION_TYPES.INFO, 'TODO: Export Object!', [ SUEY.BUTTON_TYPES.OKAY ]).alert();
+                new SUEY.Question('TODO: Export Object!').alert();
 
                 // if (editor.selected.length === 0) {
                 //     // No object selected
@@ -136,7 +136,7 @@ class EyeMenu extends SUEY.Menu {
                 //
                 // TODO: Publish!
                 //
-                new SUEY.Question(SUEY.QUESTION_TYPES.INFO, 'TODO: Publish!', [ SUEY.BUTTON_TYPES.OKAY ]).alert();
+                new SUEY.Question('TODO: Publish!').alert();
 
                 // const manager = new THREE.LoadingManager(function() {
                 //     const zipped = zipSync(toZip, { level: 9 });

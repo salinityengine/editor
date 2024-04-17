@@ -148,7 +148,6 @@ class SettingsGeneralBlock extends SmartShrinker {
         const smallerLabel = 'Smaller'
         const smallerShortcut = '-';
         const smallLetter = new SUEY.VectorBox(`${FOLDER_FLOATERS}settings/general/style/smaller.svg`);
-        smallLetter.firstImage().addClass('suey-icon-colorize');
         smallerButton.add(new SUEY.ShadowBox(smallLetter));
         const smallShortcutText = new SUEY.Div(smallerShortcut).setClass('suey-menu-shortcut');
         smallShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
@@ -162,12 +161,19 @@ class SettingsGeneralBlock extends SmartShrinker {
         const largerLabel = 'Larger'
         const largerShortcut = '+';
         const largeLetter = new SUEY.VectorBox(`${FOLDER_FLOATERS}settings/general/style/larger.svg`);
-        largeLetter.firstImage().addClass('suey-icon-colorize');
         largerButton.add(new SUEY.ShadowBox(largeLetter));
         const largeShortcutText = new SUEY.Div(largerShortcut).setClass('suey-menu-shortcut');
         largeShortcutText.setStyle('display', 'block', 'textAlign', 'right', 'paddingLeft', '0', 'paddingRight', '0.55em');
         largerButton.add(largeShortcutText);
         largerButton.setAttribute('tooltip', Config.tooltip(largerLabel, largerShortcut));
+
+        // Text Size Image Coloring
+        function setTextSizeImageColor() {
+            smallLetter.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.ICON));
+            largeLetter.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.ICON));
+        }
+        Signals.connect(props, 'schemeChanged', setTextSizeImageColor);
+        setTextSizeImageColor();
 
         // Font Button Row
         const textSizeRow = props.addRow(Language.getKey('floater/settings/textSize'), smallerButton, largerButton);

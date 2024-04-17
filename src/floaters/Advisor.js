@@ -87,13 +87,13 @@ class Advisor extends SmartFloater {
 
         const backButton = new SUEY.Button().addClass('suey-borderless-button');
         const backArrow = new SUEY.ShadowBox(`${FOLDER_MENU}advisor/arrow.svg`);
-        backArrow.firstImage().firstImage().setStyle('transform', 'scale(1.25)');
+        backArrow.firstImage().setStyle('transform', 'scale(1.25)');
         backButton.setAttribute('tooltip', 'Back');
         backButton.add(backArrow);
 
         const forwardButton = new SUEY.Button().addClass('suey-borderless-button');
         const forwardArrow = new SUEY.ShadowBox(`${FOLDER_MENU}advisor/arrow.svg`);
-        forwardArrow.firstImage().firstImage().setStyle('transform', 'translateX(10%) scaleX(-1.25) scaleY(1.25)');
+        forwardArrow.firstImage().setStyle('transform', 'translateX(10%) scaleX(-1.25) scaleY(1.25)');
         forwardButton.setAttribute('tooltip', 'Forward');
         forwardButton.add(forwardArrow);
 

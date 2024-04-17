@@ -27,13 +27,12 @@ class ComponentSettingsButton extends SUEY.Button {
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.setAttribute('tooltip', 'Edit Component');
 
-        const shadowBox = new SUEY.ShadowBox(`${FOLDER_MENU}dots.svg`).addClass('suey-rotate-colorize');
-        if (shadowBox.firstImage()) {
-            if (shadowBox.firstImage().firstImage()) {
-                shadowBox.firstImage().firstImage().setStyle('filter', 'brightness(1.25)');
-            }
-        }
-        this.add(shadowBox);
+        // Image
+        const dotsImage = new SUEY.ShadowBox(`${FOLDER_MENU}dots.svg`);
+        function setDotsImageColor() { dotsImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC5)); }
+        Signals.connect(this, 'schemeChanged', setDotsImageColor);
+        setDotsImageColor();
+        this.add(dotsImage);
 
         // Properties
         this.componentMenu = new SUEY.Menu();

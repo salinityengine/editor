@@ -8,7 +8,6 @@ import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
 import { Advice } from '../config/Advice.js';
-import { ColorizeFilter } from '../gui/ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
@@ -56,7 +55,9 @@ class WorldsToolbar {
         /******************** NODES */
 
         const nodePlusSign = new SUEY.VectorBox(`${FOLDER_MENU}add.svg`).setID('tb-node-plus-sign');
-        nodePlusSign.img.addClass('suey-complement-colorize')
+        function setPlusImageColor() { nodePlusSign.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.COMPLEMENT)); }
+        Signals.connect(add, 'schemeChanged', setPlusImageColor);
+        setPlusImageColor();
         add.add(nodePlusSign);
 
         const nodeMenu = new SUEY.Menu();
@@ -107,8 +108,8 @@ class WorldsToolbar {
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
         Signals.connect(worldsGraph, 'schemeChanged', function() {
-            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
-            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
+            const filterX = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
+            const filterY = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });

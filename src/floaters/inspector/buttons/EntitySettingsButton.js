@@ -25,7 +25,13 @@ class EntitySettingsButton extends SUEY.Button {
         this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.setAttribute('tooltip', 'Edit Component');
-        this.add(new SUEY.ShadowBox(`${FOLDER_MENU}edit.svg`).addClass('suey-rotate-colorize'));
+
+        // Image
+        const editImage = new SUEY.ShadowBox(`${FOLDER_MENU}edit.svg`);
+        function setEditImageColor() { editImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC5)); }
+        Signals.connect(this, 'schemeChanged', setEditImageColor);
+        setEditImageColor();
+        this.add(editImage);
 
         // Properties
         this.componentMenu = new SUEY.Menu();

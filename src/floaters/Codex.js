@@ -34,7 +34,11 @@ class Codex extends SmartFloater {
         /***** 'Add' Asset *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
         addButton.setAttribute('tooltip', 'Add Asset');
-        addButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
+        const addImage = new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`);
+        function setAddImageColor() { addImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.COMPLEMENT)); }
+        Signals.connect(addButton, 'schemeChanged', setAddImageColor);
+        setAddImageColor();
+        addButton.add(addImage);
 
         // 'Add' Menu
         const assetMenu = new SUEY.Menu();

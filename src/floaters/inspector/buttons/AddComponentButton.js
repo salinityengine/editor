@@ -6,6 +6,8 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Signals } from '../../../config/Signals.js';
+
 // import { AddComponentCommand } from '../../../commands/CommandList.js';
 
 class AddComponentButton extends SUEY.Button {
@@ -24,7 +26,13 @@ class AddComponentButton extends SUEY.Button {
         this.addClass('suey-borderless-button');
         this.overflowMenu = SUEY.OVERFLOW.LEFT;
         this.setAttribute('tooltip', 'Add Component');
-        this.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
+
+        // Image
+        const addImage = new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`);
+        function setAddImageColor() { addImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.COMPLEMENT)); }
+        Signals.connect(this, 'schemeChanged', setAddImageColor);
+        setAddImageColor();
+        this.add(addImage);
 
         // Properties
         this.componentMenu = new SUEY.Menu();

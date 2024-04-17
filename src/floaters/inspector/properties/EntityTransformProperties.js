@@ -7,7 +7,6 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { ColorizeFilter } from '../../../gui/ColorizeFilter.js';
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { PropertyGroup } from '../../../gui/PropertyGroup.js';
@@ -48,7 +47,13 @@ class EntityTransformProperties extends SUEY.Div {
         const editTransform = new SUEY.Button().addClass('suey-borderless-button');
         editTransform.overflowMenu = SUEY.OVERFLOW.LEFT;
         editTransform.setAttribute('tooltip', 'Edit Transform');
-        editTransform.add(new SUEY.ShadowBox(`${FOLDER_MENU}more.svg`).addClass('suey-rotate-colorize'));
+
+        // 'Edit Transform' Image
+        const editImage = new SUEY.ShadowBox(`${FOLDER_MENU}more.svg`);
+        function setEditImageColor() { editImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC5)); }
+        Signals.connect(editTransform, 'schemeChanged', setEditImageColor);
+        setEditImageColor();
+        editTransform.add(editImage);
 
         // Transform Menu
         const transformMenu = new SUEY.Menu();
@@ -158,7 +163,7 @@ class EntityTransformProperties extends SUEY.Div {
             lockScale.setAttribute('tooltip', (locked) ? 'Unlock Aspect Ratio' : 'Lock Aspect Ratio');
         }
         function setIconColors() {
-            const filterLock = ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
+            const filterLock = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
             unlockIcon.setStyle('filter', `${filterLock}`);
             lockIcon.setStyle('filter', `${filterLock}`);
         }

@@ -5,6 +5,8 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Signals } from '../../../../config/Signals.js';
+
 class AssetInput {
 
     static build(propertyList, itemName = '', assetType = 'asset', initialUUID = '', onChange = (value) => {}) {
@@ -17,9 +19,15 @@ class AssetInput {
         const textBox = new SUEY.TextBox();
         textBox.dom.disabled = true;
 
-        const clearButton = new SUEY.Button().addClass('suey-property-button');
-        clearButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
+        const clearButton = new SUEY.Button();
+        clearButton.addClass('suey-property-button');
         clearButton.setAttribute('tooltip', 'Clear');
+
+        const clearImage = new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`);
+        function setClearImageColor() { clearImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC1)); }
+        Signals.connect(clearButton, 'schemeChanged', setClearImageColor);
+        setClearImageColor();
+        clearButton.add(clearImage);
 
         // Event
         textBox.on('pointerdown', () => {

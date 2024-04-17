@@ -12,6 +12,7 @@ import { SmartFloater } from '../gui/SmartFloater.js';
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
+import { Signals } from '../config/Signals.js';
 
 import { AddEntityCommand } from '../commands/CommandList.js';
 import { MoveEntityCommand } from '../commands/CommandList.js';
@@ -39,8 +40,12 @@ class Outliner extends SmartFloater {
 
         /***** 'Add' Entity *****/
         const addButton = new SUEY.Button().addClass('suey-borderless-button');
-        addButton.setAttribute('tooltip', 'Add Entity');
-        addButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`).addClass('suey-complement-colorize'));
+        addButton.setAttribute('tooltip', 'Add Asset');
+        const addImage = new SUEY.ShadowBox(`${FOLDER_MENU}add.svg`);
+        function setAddImageColor() { addImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.COMPLEMENT)); }
+        Signals.connect(addButton, 'schemeChanged', setAddImageColor);
+        setAddImageColor();
+        addButton.add(addImage);
 
         // 'Add' Menu
         const entityMenu = new SUEY.Menu();

@@ -6,7 +6,6 @@ import {
 import * as SUEY from 'gui';
 
 import { Advice } from '../config/Advice.js';
-import { ColorizeFilter } from '../gui/ColorizeFilter.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
@@ -88,8 +87,8 @@ class ViewUIToolbar {
         reset.add(resetAxisX, resetAxisY, resetTarget);
 
         Signals.connect(viewui, 'schemeChanged', function() {
-            const filterX = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
-            const filterY = ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
+            const filterX = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.X_COLOR));
+            const filterY = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(COLORS.Y_COLOR));
             resetAxisX.setStyle('filter', `${filterX} ${SUEY.Css.getVariable('--drop-shadow')}`);
             resetAxisY.setStyle('filter', `${filterY} ${SUEY.Css.getVariable('--drop-shadow')}`);
         });

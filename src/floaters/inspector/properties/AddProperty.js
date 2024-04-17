@@ -7,7 +7,6 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
-import { ColorizeFilter } from '../../../gui/ColorizeFilter.js';
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { Signals } from '../../../config/Signals.js';
@@ -219,7 +218,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const lockIcon = new SUEY.VectorBox(`${FOLDER_MENU}lock.svg`);
         const unlockIcon = new SUEY.VectorBox(`${FOLDER_MENU}unlock.svg`);
         function setAspectIconColors() {
-            const filterLock = ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
+            const filterLock = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
             unlockIcon.setStyle('filter', `${filterLock}`);
             lockIcon.setStyle('filter', `${filterLock}`);
         }
@@ -491,8 +490,13 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         const clearButton = new SUEY.Button();
         clearButton.addClass('suey-property-button');
-        clearButton.add(new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`).addClass('suey-triadic-colorize'));
         clearButton.setAttribute('tooltip', 'Clear');
+
+        const clearImage = new SUEY.ShadowBox(`${FOLDER_MENU}delete.svg`);
+        function setClearImageColor() { clearImage.firstImage()?.setStyle('filter', SUEY.ColorizeFilter.fromColor(SUEY.TRAIT.TRIADIC1)); }
+        Signals.connect(clearButton, 'schemeChanged', setClearImageColor);
+        setClearImageColor();
+        clearButton.add(clearImage);
 
         // REFRESH ASSET //
         const refreshButtonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-medium)');
@@ -503,7 +507,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
 
         // Button: Coloring
         const setIconColors = function() {
-            const filterLock = ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
+            const filterLock = SUEY.ColorizeFilter.fromColor(SUEY.ColorScheme.color(SUEY.TRAIT.TEXT));
             refreshIcon.setStyle('filter', `${filterLock}`);
         };
         setIconColors();
