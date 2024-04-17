@@ -400,15 +400,15 @@ class Editor extends SUEY.MainWindow {
             floater = Layout.createFloater(tabID);
             if (floater) Layout.installFloater(floater);
         }
-        if (select && floater && floater.dock) floater.dock.selectTab(floater.id);
+        if (select && floater && floater.dock) floater.dock.selectFloater(floater.id);
         return floater;
     }
 
-    /** If Floater is present in Editor, ensures parent Dock Tab is active */
+    /** If Floater is present in Editor, ensures parent Dock Tab is active. */
     selectFloater(tabID = '') {
         if (tabID && tabID.isElement && tabID.hasClass('suey-floater')) {
             const floater = tabID;
-            if (floater.dock) floater.dock.selectTab(floater.id);
+            if (floater.dock) floater.dock.selectFloater(floater.id);
         } else if (tabID && tabID != '' && typeof tabID === 'string') {
             this.getFloaterByID(tabID, false /* build? */, true /* select */);
         }

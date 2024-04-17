@@ -83,7 +83,7 @@ class Previewer extends SmartFloater {
             self.add(...blocks);
 
             // Select this Floater
-            if (highlight && self.dock) self.dock.selectTab(self.id);
+            if (highlight && self.dock) self.dock.selectFloater(self.id);
 
             // Dispatch Signals
             Signals.dispatch('previewerChanged');

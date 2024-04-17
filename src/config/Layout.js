@@ -149,7 +149,7 @@ class Layout {
                 dock = editor.addWindow({ title: floater.id, width, height, startCentered });
                 if (!startCentered) dock.setStyle('left', SUEY.Css.toPx(startLeft, null, 'w'), 'top', SUEY.Css.toPx(startTop, null, 'h'));
         }
-        dock.addTab(floater);
+        dock.addFloater(floater);
     }
 
     /******************** SAVE / LOAD */
@@ -260,15 +260,14 @@ class Layout {
                 // Tabbed
                 } else if (childNode.type === 'tabbed') {
                     const tabbed = parentDocker.enableTabs(childNode.hasSpacer /* flexBefore? */);
-                    childNode.floaters.forEach(floaterID => tabbed.addTab(Layout.createFloater(floaterID)));
-                    tabbed.selectTab(childNode.selectedID);
+                    childNode.floaters.forEach((floaterID) => tabbed.addFloater(Layout.createFloater(floaterID)));
+                    tabbed.selectFloater(childNode.selectedID);
                 // Window
                 } else if (childNode.type === 'window') {
                     childNode.floaters.forEach(floaterID => {
                         const floater = Layout.createFloater(floaterID);
                         if (floater) {
                             const window = new SUEY.Window({
-                                title: floaterID,
                                 width: childNode.width,
                                 height: childNode.height,
                                 initialWidth: childNode.initialWidth,
@@ -278,7 +277,7 @@ class Layout {
                                 top: childNode.top,
                             });
                             editor.addWindow(window);
-                            window.addTab(floater).selectTab(floaterID);
+                            window.addFloater(floater).selectFloater(floaterID);
                             // Wants Active?
                             const zIndex = parseFloat(childNode.zIndex);
                             if (zIndex && !Number.isNaN(zIndex) && Number.isFinite(zIndex) && zIndex > activeZ) {
