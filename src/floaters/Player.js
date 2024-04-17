@@ -33,8 +33,6 @@ class Player extends SmartFloater {
         // DOM
         this.dom.appendChild(app.dom);
         this.setStyle('background', 'rgba(0, 0, 0, 1.0)');
-        this.setStyle('position', 'relative');
-        this.setStyle('padding', '0');
 
         // App State
         Object.defineProperties(this, {

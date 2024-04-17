@@ -46,7 +46,7 @@ class EyeMenu extends SUEY.Menu {
                 //
                 // TODO: New Project!
                 //
-                alert('TODO: New File');
+                new SUEY.Question(SUEY.QUESTION_TYPES.INFO, 'TODO: New Project!', [ SUEY.BUTTON_TYPES.OKAY ]).alert();
             });
 
             // OPEN
@@ -108,13 +108,13 @@ class EyeMenu extends SUEY.Menu {
                 //
                 // TODO: Exports!
                 //
-                alert('TODO: Export Object');
+                new SUEY.Question(SUEY.QUESTION_TYPES.INFO, 'TODO: Export Object!', [ SUEY.BUTTON_TYPES.OKAY ]).alert();
 
                 // if (editor.selected.length === 0) {
-                //     alert('No object selected!');
+                //     // No object selected
                 // } else if (!editor.selected[0].isObject3D) {
-                //     alert('Selection is not an Object!');
-                // } else{
+                //     // Selection is not an Object
+                // } else {
                 //     const object = editor.selected[0];
                 //     const output = formatJSON(object.toJSON());
                 //     const filename = ((object.name !== '') ? object.name : 'object') + '.json';
@@ -136,7 +136,7 @@ class EyeMenu extends SUEY.Menu {
                 //
                 // TODO: Publish!
                 //
-                alert('TODO: Export Object');
+                new SUEY.Question(SUEY.QUESTION_TYPES.INFO, 'TODO: Publish!', [ SUEY.BUTTON_TYPES.OKAY ]).alert();
 
                 // const manager = new THREE.LoadingManager(function() {
                 //     const zipped = zipSync(toZip, { level: 9 });

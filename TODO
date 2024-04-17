@@ -2,11 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Dialog Boxes:
-    - Yes / No
-    - Cancel
-    - Okay
-
 Project:
     - World, Stage, Entity
     - World2D, Stage2D, Entity2D, Components

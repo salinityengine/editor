@@ -5,19 +5,11 @@ class Commands extends SUEY.Div {
 
     constructor() {
         super();
-        const self = this;
 
         // Properties
         this.undos = [];
         this.redos = [];
         this.lastCmdTime = new Date();
-        this.isDisabled = false;
-
-        // Signals
-        Signals.connect(this, 'playerStateChanged', function(state) {
-            if (state === 'start') self.isDisabled = true;
-            if (state === 'stop') self.isDisabled = false;
-        });
     }
 
     /** Executes new command onto stack, clears old redo history */
@@ -73,11 +65,6 @@ class Commands extends SUEY.Div {
     }
 
     undo() {
-        if (this.isDisabled) {
-            alert('Undo/Redo disabled while scene is playing.');
-            return;
-        }
-
         let cmd = undefined;
         if (this.undos.length > 0) {
             cmd = this.undos.pop();
@@ -92,11 +79,6 @@ class Commands extends SUEY.Div {
     }
 
     redo() {
-        if (this.isDisabled) {
-            alert('Undo/Redo disabled while scene is playing.');
-            return;
-        }
-
         let cmd = undefined;
         if (this.redos.length > 0) {
             cmd = this.redos.pop();
@@ -112,11 +94,6 @@ class Commands extends SUEY.Div {
     }
 
     goToState(id) {
-        if (this.isDisabled) {
-            alert('Undo/Redo disabled while scene is playing.');
-            return;
-        }
-
         Signals.toggle('sceneGraphChanged', false);
         Signals.toggle('historyChanged', false);
 

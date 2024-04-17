@@ -212,6 +212,8 @@
 /********** Player */
 
 .salt-player {
+    position: relative;
+    padding: 0;
     min-height: 200px !important;
 }
 
