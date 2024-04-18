@@ -92,21 +92,43 @@ this.on('destroy', () => {
         const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents });
         this.scroller = scrimp;
 
+        function onUpdate(viewUpdate) {
+            // Replace native tooltips (HTMLElement.title) with custom tooltips
+            const queue = [ scrimp.dom ];
+            while (queue.length > 0) {
+                const currentElement = queue.shift();
+                for (const child of currentElement.children) {
+                    if (child.hasAttribute('title')) {
+                        const tooltip = child.getAttribute('title');
+                        child.removeAttribute('title');
+                        child.setAttribute('tooltip', tooltip);
+                    }
+                    queue.push(child);
+                }
+            }
+
+            // Document Changed
+            if (viewUpdate.docChanged) {
+
+
+            }
+        }
+        scrimp.addUpdate(onUpdate);
+
         // // Codemirror: On Change
-        // codemirror.on('change', function() {
-        //     if (codemirror.state.focused === false) return;
+        // scrimp.on('change', function() {
+        //    console.log('Script changed');
+        //     if (scrimp.state.focused === false) return;
         //     clearTimeout(delay);
         //     delay = setTimeout(function() {
-        //         const value = codemirror.getValue();
+        //         const value = scrimp.getValue();
         //         const hasErrors = !validate(value);
-
         //         if (typeof currentScript === 'object') {
         //             if (value !== currentScript.source) {
         //                 editor.execute(new SetScriptSourceCommand(currentScript, value, hasErrors));
         //             }
         //             return;
         //         }
-
         //     }, 300);
         // });
 
