@@ -89,7 +89,7 @@ class EntityTransformProperties extends SUEY.Div {
 
         /***** PROPERTIES *****/
 
-        const hasMesh = SALT.EntityUtils.containsMesh(entity);
+        const hasMesh = true; // EntityUtils.containsMesh(entity);
         const hasCamera = entity.isCamera;
         const isSpecial = entity.userData.flagHelper;
 

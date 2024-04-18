@@ -23,10 +23,10 @@ class SelectCommand extends Command {
             this.name = `Select ${entity.type}: ${entity.name}`;
         }
 
-        // // Cancel command if no change to selection
-        // if (SALT.EntityUtils.compareArrayOfEntities(entityArray, oldSelectionArray)) {
-        //     this.valid = false;
-        // }
+        // Cancel command if no change to selection
+        if (SALT.Arrays.compareEntityArrays(entityArray, oldSelectionArray)) {
+            this.valid = false;
+        }
     }
 
     invalid() {

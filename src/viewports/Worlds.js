@@ -18,8 +18,6 @@ import { MultiCmdsCommand } from '../commands/CommandList.js';
 import { SelectCommand } from '../commands/CommandList.js';
 import { SetStageCommand } from '../commands/CommandList.js';
 
-// import { EntityUtils } from '../../../engine/src/utils/three/EntityUtils.js';
-
 class Worlds extends AbstractView {
 
     mode() { return EDITOR_MODES.WORLD_GRAPH; }
@@ -216,7 +214,7 @@ class Worlds extends AbstractView {
             const viewWorld = editor.world;
             for (const node of graph.getNodes()) {
                 if (!node.world || !node.world.isWorld) continue;
-                const selected = EntityUtils.containsEntity(editor.selected, node.world);
+                const selected = Arrays.includesEntity(node.world, editor.selected);
                 if (selected) {
                     if (!node.hasClass('suey-node-selected')) {
                         const nodes = graph.getNodes();

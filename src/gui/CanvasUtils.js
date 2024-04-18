@@ -1,8 +1,9 @@
 // drawPalette()        // Draws a palette asset to a canvas
 
 import * as SALT from 'engine';
+import * as SUEY from 'gui';
 
-const _color = new SALT.Iris();
+const _color = new SUEY.Iris();
 
 class CanvasUtils {
 

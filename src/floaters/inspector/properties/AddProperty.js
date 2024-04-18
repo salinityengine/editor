@@ -207,7 +207,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const arraySize = item['size'] ?? 1;
         while (value.length < arraySize) value.push(0);
 
-        // Arrays
+        // Collections
         const arrayBoxes = [];
         const originalValues = [];
 
@@ -332,7 +332,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         const arraySize = item['size'] ?? 1;
         while (value.length < arraySize) value.push(false);
 
-        // Arrays
+        // Collecitons
         const arrayBoxes = [];
         const originalValues = [];
 

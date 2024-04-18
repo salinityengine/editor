@@ -250,7 +250,7 @@ class Editor extends SUEY.MainWindow {
         }
 
         // New selection same as current selection? Refresh Inspector (but don't refresh view transformGroup)
-        if (SALT.EntityUtils.compareArrayOfEntities(this.selected, filtered)) {
+        if (SALT.Arrays.compareEntityArrays(this.selected, filtered)) {
             if (this.selected.length > 0) {
                 Signals.dispatch('inspectorBuild', this.selected, (this.selected.length > 0) /* highlight? */);
                 return;
