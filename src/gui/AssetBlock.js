@@ -171,7 +171,7 @@ class AssetBlock extends SUEY.Shrinkable {
         let hidden = 0;
         for (const child of children) {
             if (!child.isElement || child.isTemporary) continue;
-            const name = (child.name) ? String(child.name).toLowerCase() : '';
+            const name = child.name ? String(child.name).toLowerCase() : '';
             if (name.indexOf(this.#searchTerm) !== -1) {
                 child.setStyle('display', '');
             } else {
@@ -209,16 +209,11 @@ class AssetBlock extends SUEY.Shrinkable {
         const assets = SALT.AssetManager.library(this.type, this.category);
 
         // Remove missing Assets
+        const uuids = SALT.Uuid.arrayFromObjects(assets);
         for (const assetBox of this.contents().children) {
             if (!assetBox.uuid) continue;
-            let found = false;
-            for (const asset of assets) {
-                if (assetBox.uuid && assetBox.uuid === asset.uuid) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) this.remove(assetBox);
+            if (uuids.includes(assetBox.uuid)) continue;
+            this.remove(assetBox);
         }
 
         // Update Items
@@ -230,18 +225,11 @@ class AssetBlock extends SUEY.Shrinkable {
     /** Add missing items */
     buildItems(assets) {
         assets = assets ?? SALT.AssetManager.library(this.type, this.category);
+        const uuids = SALT.Uuid.arrayFromObjects(this.contents().children);
         for (const asset of assets) {
-            let found = false;
-            for (const assetBox of this.contents().children) {
-                if (assetBox.uuid && assetBox.uuid === asset.uuid) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                const item = this.createItem(asset);
-                if (item) this.add(item);
-            }
+            if (uuids.includes(asset.uuid)) continue;
+            const item = this.createItem(asset);
+            if (item) this.add(item);
         }
     }
 

@@ -68,7 +68,7 @@ class Previewer extends SmartFloater {
 
             // ITEM: Unknown
             } else {
-                const unknownText = new SUEY.Row().add(new SUEY.Text(`Unknown Item: '${item.name}'`));
+                const unknownText = new SUEY.Row().add(new SUEY.Text(`Unknown Item: '${(typeof item === 'object') ? item.name : item}'`));
                 unknownText.setStyle('justifyContent', 'center', 'padding', '1em var(--border-small)');
                 blocks.push(unknownText);
             }
