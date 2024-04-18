@@ -65,11 +65,11 @@ class History extends SmartFloater {
 
             // Undo Items
             for (let i = 0; i < editor.commands.undos.length; i++) {
-                const object = editor.commands.undos[i];
+                const cmd = editor.commands.undos[i];
                 const option = document.createElement('div');
                 option.style.paddingLeft = '0.75em';
-                option.value = object.id;
-                option.textContent = `${i + 1} - ` + object.name;
+                option.value = cmd.id;
+                option.textContent = `${i + 1} - ` + cmd.brief;
                 options.push(option);
             }
 
@@ -77,11 +77,11 @@ class History extends SmartFloater {
 
             // Redo Items
             for (let i = editor.commands.redos.length - 1; i >= 0; i--) {
-                const object = editor.commands.redos[i];
+                const cmd = editor.commands.redos[i];
                 const option = document.createElement('div');
                 option.style.paddingLeft = '0.75em';
-                option.value = object.id;
-                option.textContent = `${(editor.commands.redos.length - i + undoLength)} - ` + object.name;
+                option.value = cmd.id;
+                option.textContent = `${(editor.commands.redos.length - i + undoLength)} - ` + cmd.brief;
                 option.style.opacity = 0.3;
                 options.push(option);
             }
@@ -96,9 +96,9 @@ class History extends SmartFloater {
 
             // Undo Items
             for (let i = 0; i < editor.commands.undos.length; i++) {
-                const object = editor.commands.undos[i];
+                const cmd = editor.commands.undos[i];
                 const option = treeList.options[optionNumber];
-                option.textContent = `${i + 1} - ` + object.name;
+                option.textContent = `${i + 1} - ` + cmd.brief;
                 option.style.opacity = 1.0;
                 optionNumber++;
             }
@@ -107,9 +107,9 @@ class History extends SmartFloater {
 
             // Redo Items
             for (let i = editor.commands.redos.length - 1; i >= 0; i--) {
-                const object = editor.commands.redos[i];
+                const cmd = editor.commands.redos[i];
                 const option = treeList.options[optionNumber];
-                option.textContent = `${(editor.commands.redos.length - i + undoLength)} - ` + object.name;
+                option.textContent = `${(editor.commands.redos.length - i + undoLength)} - ` + cmd.brief;
                 option.style.opacity = 0.3;
                 optionNumber++;
             }

@@ -15,12 +15,12 @@ class SelectCommand extends Command {
         this.oldSelection = Array.isArray(oldSelectionArray) ? [...oldSelectionArray] : [ oldSelectionArray ];
 
         // Command Naming
-        this.name = 'Select Entities';
+        this.brief = 'Select Entities';
         if (this.newSelection.length === 0) {
-            this.name = 'Select None';
+            this.brief = 'Select None';
         } else if (this.newSelection.length === 1) {
             const entity = this.newSelection[0];
-            this.name = `Select ${entity.type}: ${entity.name}`;
+            this.brief = `Select ${entity.type}: ${entity.name}`;
         }
 
         // Cancel command if no change to selection

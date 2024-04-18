@@ -7,7 +7,7 @@ class SetScriptSourceCommand extends Command {
         super();
 
         this.type = 'SetScriptSourceCommand';
-        this.name = `Set Script Source`;
+        this.brief = `Set Script Source`;
         this.updatable = true;
 
         this.script = script;

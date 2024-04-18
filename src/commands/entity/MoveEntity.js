@@ -7,7 +7,7 @@ class MoveEntityCommand extends Command {
         super();
 
         this.type = 'MoveEntityCommand';
-        this.name = 'Move Entity';
+        this.brief = 'Move Entity';
 
         this.entity = entity;
         this.oldParent = (entity && entity.isEntity3D) ? entity.parent : undefined;

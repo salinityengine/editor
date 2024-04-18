@@ -7,7 +7,7 @@ class SetStageCommand extends Command {
         super();
 
         this.type = 'SetStageCommand';
-        this.name = 'Set Stage';
+        this.brief = 'Set Stage';
 
         const viewWorld = editor.viewport.world;
 

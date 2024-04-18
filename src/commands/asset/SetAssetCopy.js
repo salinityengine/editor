@@ -9,7 +9,7 @@ class SetAssetCopyCommand extends Command {
         super();
 
         this.type = 'SetAssetCopyCommand';
-        this.name = `Set Asset Value: ${attributeName}`;
+        this.brief = `Set Asset Value: ${attributeName}`;
         this.updatable = updatable;
 
         if (!asset || typeof newValue.copy !== 'function') {

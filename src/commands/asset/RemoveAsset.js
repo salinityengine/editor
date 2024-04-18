@@ -11,8 +11,8 @@ class RemoveAssetCommand extends Command {
         this.type = 'RemoveAssetCommand';
 
         this.assetType = SALT.AssetManager.checkType(asset);
-        this.name = `Remove ${SUEY.Strings.capitalize(this.assetType)}`;
-        if (asset.name && asset.name !== '') this.name += `: ${asset.name}`;
+        this.brief = `Remove ${SUEY.Strings.capitalize(this.assetType)}`;
+        if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
 
         this.asset = asset;
         this.wasRemoved = false;

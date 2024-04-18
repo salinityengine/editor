@@ -39,9 +39,9 @@ class Scripter extends SmartFloater {
             if (scrimp) scrimp.focus();
         });
 
-        // Clean up when Window 'X' is clicked
+        // Dispose of things when Window 'X' is clicked
         this.on('destroy', () => {
-            scrimp.destroy(); // https://codemirror.net/docs/ref/#view.EditorView.destroy
+            scrimp.destroy(); // clean up codemirror
         });
 
         /********** SCRIPT NAME */
@@ -133,10 +133,10 @@ this.on('destroy', () => {
         // });
 
         function onKeySave() {
+            //
+            // TODO: Make sure script is saved. Close scripter?
+            //
             console.log('TODO: Script wants save');
-            //
-            // Make sure script is saved and close scripter
-            //
         }
         scrimp.addKeymap('Ctrl-s', onKeySave);
         scrimp.addKeymap('Meta-s', onKeySave);
@@ -264,10 +264,6 @@ this.on('destroy', () => {
         // });
 
         // /***** SIGNALS *****/
-
-        // signals.projectLoaded.add(function() {
-        //     self.hide();
-        // });
 
         // signals.assetRemoved.add(function(type, script) {
         //     if (type !== 'script') return;

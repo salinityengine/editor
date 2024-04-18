@@ -6,7 +6,7 @@ class SetValueCommand extends Command {
         super();
 
         this.type = 'SetValueCommand';
-        this.name = `Set Entity Value: ${attributeName}`;
+        this.brief = `Set Entity Value: ${attributeName}`;
         this.updatable = true;
         this.recursive = recursive;
 

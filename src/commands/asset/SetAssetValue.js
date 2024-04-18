@@ -9,7 +9,7 @@ class SetAssetValueCommand extends Command {
         super();
 
         this.type = 'SetAssetValueCommand';
-        this.name = `Set Asset Value: ${attributeName}`;
+        this.brief = `Set Asset Value: ${attributeName}`;
         this.updatable = updatable;
 
         if (!asset) {

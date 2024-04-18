@@ -8,7 +8,7 @@ class AddEntityCommand extends Command {
         super();
 
         this.type = 'AddEntityCommand';
-        this.name = `Add Entity: ${entity.name}`;
+        this.brief = `Add Entity: ${entity.brief}`;
 
         // Cancel if no Entity
         if (!entity) {

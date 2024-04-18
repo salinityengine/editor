@@ -8,7 +8,7 @@ class EditorModeCommand extends Command {
         super();
 
         this.type = 'EditorModeCommand';
-        this.name = 'Change Editor Mode';
+        this.brief = 'Change Editor Mode';
 
         this.newMode = mode;
         this.oldMode = Config.getKey('editor/mode');

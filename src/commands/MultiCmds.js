@@ -4,11 +4,11 @@ import { Signals } from '../config/Signals.js';
 
 class MultiCmdsCommand extends Command {
 
-    constructor(commands = [], name = undefined, onExecute, onUndo) {
+    constructor(commands = [], brief = undefined, onExecute, onUndo) {
         super();
 
         this.type = 'MultiCmdsCommand';
-        this.name = name ?? 'Multiple Changes';
+        this.brief = brief ?? 'Multiple Changes';
 
         // Check cmds are 'valid'
         const cmds = [];

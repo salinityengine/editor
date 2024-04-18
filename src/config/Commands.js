@@ -50,7 +50,6 @@ class Commands extends SUEY.Div {
             cmd.id = this.undos.length;
         }
 
-        cmd.name = cmd.name;
         cmd.execute();
         cmd.inMemory = true;
 
@@ -69,12 +68,11 @@ class Commands extends SUEY.Div {
         if (this.undos.length > 0) {
             cmd = this.undos.pop();
         }
-        if (cmd !== undefined) {
+        if (cmd != undefined) {
             cmd.undo();
             this.redos.push(cmd);
             Signals.dispatch('historyChanged', cmd);
         }
-
         return cmd;
     }
 
@@ -83,13 +81,11 @@ class Commands extends SUEY.Div {
         if (this.redos.length > 0) {
             cmd = this.redos.pop();
         }
-
-        if (cmd !== undefined) {
+        if (cmd != undefined) {
             cmd.redo(); /* base class calls command.execute(), can be overridden */
             this.undos.push(cmd);
             Signals.dispatch('historyChanged', cmd);
         }
-
         return cmd;
     }
 
@@ -98,7 +94,7 @@ class Commands extends SUEY.Div {
         Signals.toggle('historyChanged', false);
 
         let cmd = this.undos.length > 0 ? this.undos[this.undos.length - 1] : undefined;
-        if (cmd === undefined || id > cmd.id) {
+        if (cmd == undefined || id > cmd.id) {
             cmd = this.redo();
             while (cmd !== undefined && id > cmd.id) {
                 cmd = this.redo();

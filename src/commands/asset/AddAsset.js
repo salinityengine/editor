@@ -11,8 +11,8 @@ class AddAssetCommand extends Command {
         this.type = 'AddAssetCommand';
 
         this.assetType = SALT.AssetManager.checkType(asset);
-        this.name = `Add ${SUEY.Strings.capitalize(this.assetType)}`;
-        if (asset.name && asset.name !== '') this.name += `: ${asset.name}`;
+        this.brief = `Add ${SUEY.Strings.capitalize(this.assetType)}`;
+        if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
 
         this.asset = asset;
         this.wasAdded = false;

@@ -6,7 +6,7 @@ class Command {
         this.inMemory = false;
         this.updatable = false;
         this.type = '';
-        this.name = '';
+        this.brief = '';
         this.valid = true; /* used to cancel command during constructor, see example SelectCommand */
     }
 
