@@ -7,8 +7,9 @@ import * as SUEY from 'gui';
 
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
+import { Signals } from '../../../config/Signals.js';
 
-import { SetValueCommand } from '../../../commands/CommandList.js';
+import { SetEntityValueCommand } from '../../../commands/CommandList.js';
 
 class EntityProperties extends SUEY.PropertyList {
 
@@ -19,7 +20,7 @@ class EntityProperties extends SUEY.PropertyList {
 
         // NAME
         const entityName = new SUEY.TextBox().on('change', () => {
-            editor.execute(new SetValueCommand(entity, 'name', entityName.getValue()));
+            editor.execute(new SetEntityValueCommand(entity, 'name', entityName.getValue()));
         });
         this.addRow(Language.getKey('inspector/entity/name'), entityName);
 
@@ -65,13 +66,7 @@ class EntityProperties extends SUEY.PropertyList {
             if (changedEntity.uuid === entity.uuid) updateUI();
         };
 
-        signals.entityChanged.add(entityChangeCallback);
-
-        /***** DESTROY *****/
-
-        this.on('destroy', () => {
-            signals.entityChanged.remove(entityChangeCallback);
-        });
+        Signals.connect(this, 'entityChanged', entityChangeCallback);
 
         /***** INIT *****/
 

@@ -9,30 +9,25 @@ export { SetAssetValueCommand } from './asset/SetAssetValue.js';
 export { SetScriptSourceCommand } from './asset/SetScriptSource.js';
 
 // COMPONENT
-// export { AddComponentCommand } from './component/AddComponent.js';
-// export { ChangeComponentCommand } from './component/ChangeComponent.js';
-// export { RemoveComponentCommand } from './component/RemoveComponent.js';
+export { AddComponentCommand } from './component/AddComponent.js';
+export { ChangeComponentCommand } from './component/ChangeComponent.js';
+export { RemoveComponentCommand } from './component/RemoveComponent.js';
 
 // EDITOR
 export { EditorModeCommand } from './editor/EditorMode.js';
-// export { RebuildInspectorCommand } from './editor/RebuildInspector.js';
 export { SelectCommand } from './editor/Select.js';
 export { SetStageCommand } from './editor/SetStage.js';
-// export { SetTabPriorityCommand } from './editor/SetTabPriority.js';
 
 // ENTITY
 export { AddEntityCommand } from './entity/AddEntity.js';
-// export { CallbackEntityCommand } from './entity/CallbackEntity.js';
 export { MoveEntityCommand } from './entity/MoveEntity.js';
 // export { RemoveEntityCommand } from './entity/RemoveEntity.js';
-// export { SetCopyCommand } from './entity/SetCopy.js';
 // export { SetPositionCommand } from './entity/SetPosition.js';
 // export { SetRotationCommand } from './entity/SetRotation.js';
-// export { SetUUIDCommand } from './entity/SetUUID.js';
 // export { SetScaleCommand } from './entity/SetScale.js';
-export { SetValueCommand } from './entity/SetValue.js';
+export { SetEntityValueCommand } from './entity/SetEntityValue.js';
 
 // WORLD
-// export { AddWorldCommand } from './world/AddWorld.js';
-// export { PositionWorldCommand } from './world/PositionWorld.js';
-// export { RemoveWorldCommand } from './world/RemoveWorld.js';
+export { AddWorldCommand } from './world/AddWorld.js';
+export { PositionWorldCommand } from './world/PositionWorld.js';
+export { RemoveWorldCommand } from './world/RemoveWorld.js';

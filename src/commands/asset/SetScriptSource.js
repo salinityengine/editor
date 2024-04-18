@@ -5,7 +5,6 @@ class SetScriptSourceCommand extends Command {
 
     constructor(script, newSource, newErrors) {
         super();
-
         this.type = 'SetScriptSourceCommand';
         this.brief = `Set Script Source`;
         this.updatable = true;

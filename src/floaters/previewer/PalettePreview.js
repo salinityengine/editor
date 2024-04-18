@@ -1,33 +1,33 @@
-import * as ONE from 'onsight';
-import * as OSUI from 'osui';
-import * as EDITOR from 'editor';
+import editor from 'editor';
+import * as SUEY from 'gui';
 
 import { CanvasUtils } from '../../gui/CanvasUtils.js';
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
+import { Signals } from '../../config/Signals.js';
 
 import { SetAssetValueCommand } from '../../commands/CommandList.js';
 
-class PalettePreview extends OSUI.Titled {
+class PalettePreview extends SUEY.Titled {
 
     constructor(palette) {
         super({ title: 'Palette' });
 
         // Property Box
-        const props = new OSUI.PropertyList('30%');
+        const props = new SUEY.PropertyList('30%');
         this.add(props);
 
         // Name
-        const nameTextBox = new OSUI.TextBox().onChange(() => {
+        const nameTextBox = new SUEY.TextBox().onChange(() => {
             editor.execute(new SetAssetValueCommand(palette, 'name', nameTextBox.getValue()));
         });
         props.addRow('Name', nameTextBox);
 
         // UUID
-        const paletteUUID = new OSUI.TextBox().setDisabled(true);
+        const paletteUUID = new SUEY.TextBox().setDisabled(true);
 
         // 'Copy' UUID Button
-        const paletteUUIDCopy = new OSUI.Button('Copy').onClick(() => {
+        const paletteUUIDCopy = new SUEY.Button('Copy').onClick(() => {
             navigator.clipboard.writeText(palette.uuid).then(
                 function() { /* success */ },
                 function(err) { console.error('PalettePreview.copy(): Could not copy text to clipboard - ', err); }
@@ -40,17 +40,17 @@ class PalettePreview extends OSUI.Titled {
         }
 
         // Edit
-        const paletteEdit = new OSUI.Button(`Edit ${Language.getKey('assets/types/palette')}`);
+        const paletteEdit = new SUEY.Button(`Edit ${Language.getKey('assets/types/palette')}`);
         paletteEdit.onClick(() => {
-            signals.inspectorBuild.dispatch(palette);
-            signals.assetSelect.dispatch('palette', palette);
+            Signals.dispatch('inspectorBuild', palette);
+            Signals.dispatch('assetSelect', 'palette', palette);
         });
         props.addRow('Edit', paletteEdit);
 
         /***** SHAPE *****/
 
         // Outer Box
-        const assetBox = new OSUI.AssetBox(palette.name, 'icon', false /* mini */);
+        const assetBox = new SUEY.AssetBox(palette.name, 'icon', false /* mini */);
         assetBox.contents().noShadow();
         assetBox.contents().dom.style.width = '96%';
         assetBox.contents().dom.style.height = '96%';
@@ -58,7 +58,7 @@ class PalettePreview extends OSUI.Titled {
         assetBox.dom.style.aspectRatio = '2 / 1';
 
         // Inner Box
-        const dragBox = new OSUI.AbsoluteBox();
+        const dragBox = new SUEY.AbsoluteBox();
         dragBox.dom.draggable = true;
 
         // Render to Canvas
@@ -84,7 +84,7 @@ class PalettePreview extends OSUI.Titled {
         });
 
         dragBox.dom.addEventListener('dragend', (event) => {
-            signals.dropEnded.dispatch();
+            Signals.dispatch('dropEnded');
         });
 
         /***** UPDATE *****/

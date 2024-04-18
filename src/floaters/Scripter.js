@@ -77,17 +77,7 @@ class Scripter extends SmartFloater {
 }
 
 this.on('resizer', updateSize);
-window.addEventListener('resize', updateSize);
-
-// Stop Player when Window 'X' is clicked
-this.on('hidden', () => {
-    console.warn('Player.on("hidden"): Player should be destroyed, not hidden');
-});
-
-this.on('destroy', () => {
-    window.removeEventListener('resize', updateSize);
-    self.stop();
-});`;
+window.addEventListener('resize', updateSize);`;
 
         const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents });
         this.scroller = scrimp;
@@ -109,29 +99,24 @@ this.on('destroy', () => {
 
             // Document Changed
             if (viewUpdate.docChanged) {
-
-
+                // console.log('Script changed');
+                // if (scrimp.state.focused === false) return;
+                // clearTimeout(delay);
+                // delay = setTimeout(function() {
+                //     const value = scrimp.getValue();
+                //     const hasErrors = !validate(value);
+                //     if (typeof currentScript === 'object') {
+                //         if (value !== currentScript.source) {
+                //             editor.execute(new SetScriptSourceCommand(currentScript, value, hasErrors));
+                //         }
+                //         return;
+                //     }
+                // }, 300);
             }
         }
         scrimp.addUpdate(onUpdate);
 
-        // // Codemirror: On Change
-        // scrimp.on('change', function() {
-        //    console.log('Script changed');
-        //     if (scrimp.state.focused === false) return;
-        //     clearTimeout(delay);
-        //     delay = setTimeout(function() {
-        //         const value = scrimp.getValue();
-        //         const hasErrors = !validate(value);
-        //         if (typeof currentScript === 'object') {
-        //             if (value !== currentScript.source) {
-        //                 editor.execute(new SetScriptSourceCommand(currentScript, value, hasErrors));
-        //             }
-        //             return;
-        //         }
-        //     }, 300);
-        // });
-
+        // Extra Keys
         function onKeySave() {
             //
             // TODO: Make sure script is saved. Close scripter?
@@ -225,7 +210,7 @@ this.on('destroy', () => {
         //     });
         // };
 
-        // /***** TERN JS AUTOCOMPLETE *****/
+        /***** TERN JS AUTOCOMPLETE *****/
 
         // const server = new CodeMirror.TernServer({
         //     caseInsensitive: true,
@@ -240,9 +225,6 @@ this.on('destroy', () => {
         //     'Alt-,': function(cm)       { server.jumpBack(cm); },
         //     'Ctrl-Q': function(cm)      { server.rename(cm); },
         //     'Ctrl-.': function(cm)      { server.selectName(cm); },
-        //     // Enable Comments
-        //     'Cmd-/': function(cm)       { cm.execCommand('toggleCommentIndented'); },
-        //     'Ctrl-/': function(cm)      { cm.execCommand('toggleCommentIndented'); },
         // });
 
         // codemirror.on('cursorActivity', function(cm) {
@@ -263,42 +245,42 @@ this.on('destroy', () => {
         //     }
         // });
 
-        // /***** SIGNALS *****/
+        /***** SIGNALS *****/
 
-        // signals.assetRemoved.add(function(type, script) {
-        //     if (type !== 'script') return;
-        //     if (script && currentScript && currentScript.uuid === script.uuid) {
-        //         self.hide();
-        //     }
-        // });
+        Signals.connect(this, 'assetRemoved', function(type, script) {
+            // if (type !== 'script') return;
+            // if (script && currentScript && currentScript.uuid === script.uuid) {
+            //     self.hide();
+            // }
+        });
 
-        // signals.editScript.add(function(script) {
-        //     editing = false;
-        //     // Set Script
-        //     scriptName.setValue(script.name);
-        //     currentMode = 'javascript';
-        //     currentScript = script;
-        //     // Display Scripter
-        //     self.showWindow();
-        //     // Update CodeMirror
-        //     codemirror.setValue(script.source);
-        //     codemirror.clearHistory();
-        //     codemirror.setOption('mode', currentMode);
-        //     validate(codemirror.getValue());
-        //     // Set Focus
-        //     codemirror.display.input.focus();
-        //     codemirror.setCursor(script.line, script.char);
-        //     editing = true;
-        // });
+        Signals.connect(this, 'editScript', function(script) {
+            // editing = false;
+            // // Set Script
+            // scriptName.setValue(script.name);
+            // currentMode = 'javascript';
+            // currentScript = script;
+            // // Display Scripter
+            // self.showWindow();
+            // // Update CodeMirror
+            // codemirror.setValue(script.source);
+            // codemirror.clearHistory();
+            // codemirror.setOption('mode', currentMode);
+            // validate(codemirror.getValue());
+            // // Set Focus
+            // codemirror.display.input.focus();
+            // codemirror.setCursor(script.line, script.char);
+            // editing = true;
+        });
 
-        // /***** EVENTS *****/
+        /***** EVENTS *****/
 
-        // this.on('hidden', () => {
-        //     editing = false;
-        //     if (currentScript && currentScript.isScript) {
-        //         signals.assetSelect.dispatch('script', currentScript);
-        //     }
-        // });
+        this.on('hidden', () => {
+            // editing = false;
+            // if (currentScript && currentScript.isScript) {
+            //     Signals.dispatch('assetSelect', 'script', currentScript);
+            // }
+        });
 
     } // end ctor
 

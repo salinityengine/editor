@@ -19,7 +19,7 @@ import { MoveEntityCommand } from '../commands/CommandList.js';
 import { MultiCmdsCommand } from '../commands/CommandList.js';
 import { SelectCommand } from '../commands/CommandList.js';
 import { SetStageCommand } from '../commands/CommandList.js';
-import { SetValueCommand } from '../commands/CommandList.js';
+import { SetEntityValueCommand } from '../commands/CommandList.js';
 
 const _nodeStates = new WeakMap();
 
@@ -327,9 +327,9 @@ class Outliner extends SmartFloater {
                             event.stopPropagation();
                             event.preventDefault();
                             const isVisible = !entity.visible;
-                            editor.execute(new SetValueCommand(entity, 'visible', isVisible, false /* recursive */));
+                            editor.execute(new SetEntityValueCommand(entity, 'visible', isVisible, false /* recursive */));
                             setTimeout(() => {
-                                signals.selectionChanged.dispatch(); /* update transform controls */
+                                Signals.dispatch('selectionChanged'); /* update transform controls */
                                 setVisibleIcon();
                             })
                         });
@@ -368,12 +368,12 @@ class Outliner extends SmartFloater {
                                 if (!selectedEntity || !selectedEntity.isEntity) continue;
                                 if (selectedEntity.isStage) continue;
                                 if (selectedEntity.isWorld) continue;
-                                cmds.push(new SetValueCommand(selectedEntity, 'locked', lockedNow, false /** recursive? */));
+                                cmds.push(new SetEntityValueCommand(selectedEntity, 'locked', lockedNow, false /** recursive? */));
                             }
                             cmds.push(new SelectCommand([], currentSelection));
                             cmds.push(new SelectCommand(currentSelection, []));
                         } else {
-                            cmds.push(new SetValueCommand(entity, 'locked', lockedNow, false /** recursive? */));
+                            cmds.push(new SetEntityValueCommand(entity, 'locked', lockedNow, false /** recursive? */));
                         }
 
                         editor.execute(new MultiCmdsCommand(cmds, 'Toggle Entity Locked'));

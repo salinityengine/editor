@@ -1,32 +1,33 @@
-import * as ONE from 'onsight';
-import * as OSUI from 'osui';
-import * as EDITOR from 'editor';
+import editor from 'editor';
+import * as SALT from 'engine';
+import * as SUEY from 'gui';
 
 import { Config } from '../../config/Config.js';
 import { Language } from '../../config/Language.js';
+import { Signals } from '../../config/Signals.js';
 
 import { SetAssetValueCommand } from '../../commands/CommandList.js';
 
-class ShapePreview extends OSUI.Titled {
+class ShapePreview extends SUEY.Titled {
 
     constructor(shape) {
         super({ title: 'Shape' });
 
         // Property Box
-        const props = new OSUI.PropertyList('30%');
+        const props = new SUEY.PropertyList('30%');
         this.add(props);
 
         // Name
-        const nameTextBox = new OSUI.TextBox().onChange(() => {
+        const nameTextBox = new SUEY.TextBox().onChange(() => {
             editor.execute(new SetAssetValueCommand(shape, 'name', nameTextBox.getValue()));
         });
         props.addRow('Name', nameTextBox);
 
         // UUID
-        const shapeUUID = new OSUI.TextBox().setDisabled(true);
+        const shapeUUID = new SUEY.TextBox().setDisabled(true);
 
         // 'Copy' UUID Button
-        const shapeUUIDCopy = new OSUI.Button('Copy').onClick(() => {
+        const shapeUUIDCopy = new SUEY.Button('Copy').onClick(() => {
             navigator.clipboard.writeText(shape.uuid).then(
                 function() { /* success */ },
                 function(err) { console.error('ShapePreview.copy(): Could not copy text to clipboard - ', err); }
@@ -39,14 +40,14 @@ class ShapePreview extends OSUI.Titled {
         }
 
         // Edit
-        const shapeEdit = new OSUI.Button(`Edit ${Language.getKey('assets/types/shape')}`);
+        const shapeEdit = new SUEY.Button(`Edit ${Language.getKey('assets/types/shape')}`);
         shapeEdit.onClick(() => { editor.shaper.showWindow(); });
         props.addRow('Edit', shapeEdit);
 
         /***** SHAPE *****/
 
         // Outer Box
-        const assetBox = new OSUI.AssetBox(shape.name, 'icon', false /* mini */);
+        const assetBox = new SUEY.AssetBox(shape.name, 'icon', false /* mini */);
         assetBox.contents().noShadow();
         assetBox.contents().dom.style.width = '96%';
         assetBox.contents().dom.style.height = '96%';
@@ -54,7 +55,7 @@ class ShapePreview extends OSUI.Titled {
         assetBox.dom.style.aspectRatio = '2 / 1';
 
         // Inner Box
-        const dragBox = new OSUI.AbsoluteBox();
+        const dragBox = new SUEY.AbsoluteBox();
         dragBox.dom.draggable = true;
 
         // Render to Canvas
@@ -79,7 +80,7 @@ class ShapePreview extends OSUI.Titled {
         });
 
         dragBox.dom.addEventListener('dragend', (event) => {
-            signals.dropEnded.dispatch();
+            Signals.dispatch('dropEnded');
         });
 
         /***** UPDATE *****/
@@ -91,7 +92,7 @@ class ShapePreview extends OSUI.Titled {
             // Render
             const renderHexColor = 0xff00ff;
             const shapeGeometry = new THREE.ShapeGeometry(shape);
-            ONE.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
+            SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
             shapeGeometry.dispose();
         }
 
@@ -102,11 +103,7 @@ class ShapePreview extends OSUI.Titled {
             if (asset.uuid === shape.uuid) updateUI();
         }
 
-        signals.assetChanged.add(assetChangedCallback);
-
-        this.dom.addEventListener('destroy', function() {
-            signals.assetChanged.remove(assetChangedCallback);
-        }, { once: true });
+        Signals.connect(this, 'assetChanged', assetChangedCallback);
 
         /***** INIT *****/
 

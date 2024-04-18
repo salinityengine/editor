@@ -3,10 +3,10 @@ class Command {
     constructor() {
         this.isCommand = true;
         this.id = -1;
-        this.inMemory = false;
-        this.updatable = false;
         this.type = '';
         this.brief = '';
+        this.inMemory = false;
+        this.updatable = false;
         this.valid = true; /* used to cancel command during constructor, see example SelectCommand */
     }
 

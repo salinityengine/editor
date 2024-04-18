@@ -264,9 +264,12 @@ class AssetBlock extends SUEY.Shrinkable {
             } else if (this.type === 'material') {
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, null /* geometry */, asset /* material */);
             } else if (this.type === 'palette') {
-                // item.on('dblclick', () => { Signals.dispatch('previewerBuild', asset); });
-                // canvas.style['border-radius'] = 'var(--radius-small)';
-                // CanvasUtils.drawPalette(canvas, asset /* palette */);
+                item.on('dblclick', () => Signals.dispatch('previewerBuild', asset));
+                canvas.style['border-radius'] = 'var(--radius-small)';
+                CanvasUtils.drawPalette(canvas, asset /* palette */);
+
+                console.log('Drawing palette');
+
             } else if (this.type === 'shape') {
                 // item.on('dblclick', () => {
                 //     const shaper = editor.getFloaterByID('shaper') ?? new Shaper();

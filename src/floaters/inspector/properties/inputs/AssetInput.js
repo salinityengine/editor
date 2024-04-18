@@ -28,7 +28,7 @@ class AssetInput {
         textBox.on('pointerdown', () => {
             if (asset) {
                 const verifyType = SALT.AssetManager.checkType(asset);
-                signals.assetSelect.dispatch(verifyType, asset);
+                Signals.dispatch('assetSelect', verifyType, asset);
             }
         });
 

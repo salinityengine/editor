@@ -8,7 +8,7 @@ import * as SUEY from 'gui';
 
 import { Signals } from '../../../config/Signals.js';
 
-// import { AddComponentCommand } from '../../../commands/CommandList.js';
+import { AddComponentCommand } from '../../../commands/CommandList.js';
 
 class AddComponentButton extends SUEY.Button {
 
@@ -70,13 +70,7 @@ class AddComponentButton extends SUEY.Button {
 
         /***** SIGNALS *****/
 
-        signals.componentChanged.add(buildMenu);
-
-        /***** DESTROY *****/
-
-        this.on('destroy', () => {
-            signals.componentChanged.remove(buildMenu);
-        });
+        Signals.connect(this, 'componentChanged', buildMenu);
 
         /***** INIT *****/
 

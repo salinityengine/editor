@@ -2,7 +2,7 @@ import * as SUEY from 'gui';
 
 class SelectInput extends SUEY.Dropdown {
 
-    constructor(callback, value, options, overflow = OSUI.OVERFLOW.RIGHT) {
+    constructor(callback, value, options, overflow = SUEY.OVERFLOW.RIGHT) {
         super();
         const self = this;
         this.overflowMenu = overflow;

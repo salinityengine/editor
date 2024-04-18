@@ -1,10 +1,10 @@
 import { Command } from '../Command.js';
+import { Signals } from '../../config/Signals.js';
 
-class SetValueCommand extends Command {
+class SetEntityValueCommand extends Command {
 
     constructor(entity, attributeName, newValue, recursive = false) {
         super();
-
         this.type = 'SetValueCommand';
         this.brief = `Set Entity Value: ${attributeName}`;
         this.updatable = true;
@@ -22,8 +22,8 @@ class SetValueCommand extends Command {
         } else {
             this.entity[this.attributeName] = this.newValue;
         }
-        signals.entityChanged.dispatch(this.entity);
-        signals.sceneGraphChanged.dispatch();
+        Signals.dispatch('entityChanged', this.entity);
+        Signals.dispatch('sceneGraphChanged');
     }
 
     undo() {
@@ -32,8 +32,8 @@ class SetValueCommand extends Command {
         } else {
             this.entity[this.attributeName] = this.oldValue;
         }
-        signals.entityChanged.dispatch(this.entity);
-        signals.sceneGraphChanged.dispatch();
+        Signals.dispatch('entityChanged', this.entity);
+        Signals.dispatch('sceneGraphChanged');
     }
 
     update(cmd) {
@@ -42,4 +42,4 @@ class SetValueCommand extends Command {
 
 }
 
-export { SetValueCommand };
+export { SetEntityValueCommand };

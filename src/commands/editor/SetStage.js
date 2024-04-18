@@ -5,7 +5,6 @@ class SetStageCommand extends Command {
 
     constructor(stage, world) {
         super();
-
         this.type = 'SetStageCommand';
         this.brief = 'Set Stage';
 

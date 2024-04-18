@@ -7,7 +7,6 @@ class AddAssetCommand extends Command {
 
     constructor(asset) {
         super();
-
         this.type = 'AddAssetCommand';
 
         this.assetType = SALT.AssetManager.checkType(asset);

@@ -6,7 +6,6 @@ class EditorModeCommand extends Command {
 
     constructor(mode) {
         super();
-
         this.type = 'EditorModeCommand';
         this.brief = 'Change Editor Mode';
 

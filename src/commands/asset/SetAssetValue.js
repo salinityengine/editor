@@ -7,7 +7,6 @@ class SetAssetValueCommand extends Command {
 
     constructor(asset, attributeName, newValue, updatable = true) {
         super();
-
         this.type = 'SetAssetValueCommand';
         this.brief = `Set Asset Value: ${attributeName}`;
         this.updatable = updatable;

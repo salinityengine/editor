@@ -6,7 +6,6 @@ class MultiCmdsCommand extends Command {
 
     constructor(commands = [], brief = undefined, onExecute, onUndo) {
         super();
-
         this.type = 'MultiCmdsCommand';
         this.brief = brief ?? 'Multiple Changes';
 
@@ -98,7 +97,7 @@ class MultiCmdsCommand extends Command {
                     break;
                 case 'SetCopyCommand':
                 case 'SetUUIDCommand':
-                case 'SetValueCommand':
+                case 'SetEntityValueCommand':
                     addToChangedArray(entitiesChanged, command.entity);
                     break;
             }

@@ -17,7 +17,7 @@ import { MultiCmdsCommand } from '../../../commands/CommandList.js';
 // import { SetPositionCommand } from '../../../commands/CommandList.js';
 // import { SetRotationCommand } from '../../../commands/CommandList.js';
 // import { SetScaleCommand } from '../../../commands/CommandList.js';
-import { SetValueCommand } from '../../../commands/CommandList.js';
+import { SetEntityValueCommand } from '../../../commands/CommandList.js';
 
 const PROCESS_SIGNAL_MILLISECONDS = 50;         // 20 times per second
 
@@ -176,12 +176,12 @@ class EntityTransformProperties extends SUEY.Div {
         // Billboard
         const billboardBox = new SUEY.Checkbox().on('change', () => {
             const isBillboard = billboardBox.getValue();
-            editor.execute(new SetValueCommand(entity, 'lookAtCamera', isBillboard, false /* recursive */));
+            editor.execute(new SetEntityValueCommand(entity, 'lookAtCamera', isBillboard, false /* recursive */));
         });
         const yOnlyTitle = new SUEY.Text(`Y Only`).selectable(false);
         const lookAtYOnlyBox = new SUEY.Checkbox().on('change', () => {
             const isYOnly = lookAtYOnlyBox.getValue();
-            editor.execute(new SetValueCommand(entity, 'lookAtYOnly', isYOnly, false /* recursive */));
+            editor.execute(new SetEntityValueCommand(entity, 'lookAtYOnly', isYOnly, false /* recursive */));
         });
         if (showBillboard) {
             transformGroup.addRow('Billboard', billboardBox, yOnlyTitle, lookAtYOnlyBox);
@@ -190,7 +190,7 @@ class EntityTransformProperties extends SUEY.Div {
         // Visible
         const visibleBox = new SUEY.Checkbox().on('change', () => {
             const isVisible = visibleBox.getValue();
-            editor.execute(new SetValueCommand(entity, 'visible', isVisible, false /* recursive */));
+            editor.execute(new SetEntityValueCommand(entity, 'visible', isVisible, false /* recursive */));
         });
         if (showVisible) {
             transformGroup.addRow('Visible', visibleBox);
@@ -205,19 +205,19 @@ class EntityTransformProperties extends SUEY.Div {
 
         // Bloom
         const bloomBox = new SUEY.Checkbox().on('change', () => {
-            editor.execute(new SetValueCommand(entity, 'bloom', bloomBox.getValue(), true /* recursive */));
+            editor.execute(new SetEntityValueCommand(entity, 'bloom', bloomBox.getValue(), true /* recursive */));
         });
         shadowGroup.addRow('Bloom', bloomBox);
 
         // Cast Shadow
         const castBox = new SUEY.Checkbox().on('change', () => {
-            editor.execute(new SetValueCommand(entity, 'castShadow', castBox.getValue(), true /* recursive */));
+            editor.execute(new SetEntityValueCommand(entity, 'castShadow', castBox.getValue(), true /* recursive */));
         });
         shadowGroup.addRow('Cast Shadow', castBox);
 
         // Receive Shadow
         const receiveBox = new SUEY.Checkbox().on('change', () => {
-            editor.execute(new SetValueCommand(entity, 'receiveShadow', receiveBox.getValue(), true /* recursive */));
+            editor.execute(new SetEntityValueCommand(entity, 'receiveShadow', receiveBox.getValue(), true /* recursive */));
         });
         shadowGroup.addRow('Receive Shadow', receiveBox);
 

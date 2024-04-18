@@ -11,10 +11,10 @@ import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { WorldsToolbar } from '../toolbars/WorldsToolbar.js';
 
-// import { AddWorldCommand } from '../commands/CommandList.js';
+import { AddWorldCommand } from '../commands/CommandList.js';
 import { MultiCmdsCommand } from '../commands/CommandList.js';
-// import { PositionWorldCommand } from '../commands/CommandList.js';
-// import { RemoveWorldCommand } from '../commands/CommandList.js';
+import { PositionWorldCommand } from '../commands/CommandList.js';
+import { RemoveWorldCommand } from '../commands/CommandList.js';
 import { SelectCommand } from '../commands/CommandList.js';
 import { SetStageCommand } from '../commands/CommandList.js';
 

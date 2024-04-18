@@ -11,7 +11,7 @@ import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { Signals } from '../../../config/Signals.js';
 
-// import { ChangeComponentCommand } from '../../../commands/CommandList.js';
+import { ChangeComponentCommand } from '../../../commands/CommandList.js';
 import { MultiCmdsCommand } from '../../../commands/CommandList.js';
 
 let lastAddedType = undefined;
@@ -525,7 +525,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         textBox.on('pointerdown', () => {
             if (asset) {
                 const verifyType = SALT.AssetManager.checkType(asset);
-                signals.assetSelect.dispatch(verifyType, asset);
+                Signals.dispatch('assetSelect', verifyType, asset);
             }
         });
 

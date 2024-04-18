@@ -5,7 +5,7 @@ import * as SUEY from 'gui';
 import { Config } from '../../../config/Config.js';
 import { Signals } from '../../../config/Signals.js';
 
-// import { ChangeComponentCommand } from '../../../commands/CommandList.js';
+import { ChangeComponentCommand } from '../../../commands/CommandList.js';
 import { addProperty } from './AddProperty.js';
 
 class ComponentProperties extends SUEY.PropertyList {

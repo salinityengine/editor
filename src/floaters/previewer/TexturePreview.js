@@ -1,34 +1,35 @@
-import * as ONE from 'onsight';
-import * as OSUI from 'osui';
-import * as EDITOR from 'editor';
+import editor from 'editor';
+import * as SALT from 'engine';
+import * as SUEY from 'gui';
 
 import { Config } from '../../config/Config.js';
+import { Signals } from '../../config/Signals.js';
 
 import { SetAssetValueCommand } from '../../commands/CommandList.js';
 
 let _controls;
 let _scene, _camera, _material, _geometry, _mesh;
 
-class TexturePreview extends OSUI.Titled {
+class TexturePreview extends SUEY.Titled {
 
     constructor(texture) {
         super({ title: (texture.isCubeTexture) ? 'Cube Texture' : 'Texture' });
 
         // Property Box
-        const props = new OSUI.PropertyList('30%');
+        const props = new SUEY.PropertyList('30%');
         this.add(props);
 
         // Name
-        const nameTextBox = new OSUI.TextBox().onChange(() => {
+        const nameTextBox = new SUEY.TextBox().onChange(() => {
             editor.execute(new SetAssetValueCommand(texture, 'name', nameTextBox.getValue()));
         });
         props.addRow('Name', nameTextBox);
 
         // UUID
-        const textureUUID = new OSUI.TextBox().setDisabled(true);
+        const textureUUID = new SUEY.TextBox().setDisabled(true);
 
         // 'Copy' UUID Button
-        const textureUUIDCopy = new OSUI.Button('Copy').onClick(() => {
+        const textureUUIDCopy = new SUEY.Button('Copy').onClick(() => {
             navigator.clipboard.writeText(texture.uuid).then(
                 function() { /* success */ },
                 function(err) { console.error('TexturePreview.copy(): Could not copy text to clipboard - ', err); }
@@ -41,13 +42,13 @@ class TexturePreview extends OSUI.Titled {
         }
 
         // Size (Width / Height)
-        const sizeBox = new OSUI.TextBox().setDisabled(true);
+        const sizeBox = new SUEY.TextBox().setDisabled(true);
         if (!texture.isCubeTexture) props.addRow('Size', sizeBox);
 
         // Edit
-        const textureEdit = new OSUI.Button(`Properties`).onClick(() => {
-            signals.inspectorBuild.dispatch(texture);
-            signals.assetSelect.dispatch('texture', texture);
+        const textureEdit = new SUEY.Button(`Properties`).onClick(() => {
+            Signals.dispatch('inspectorBuild', texture);
+            Signals.dispatch('assetSelect', 'texture', texture);
         });
         props.addRow('Edit', textureEdit);
 
@@ -60,7 +61,7 @@ class TexturePreview extends OSUI.Titled {
 
         if (!texture.isCubeTexture) {
             // Outer Box
-            const assetBox = new OSUI.AssetBox(texture.name, 'icon', false /* mini */);
+            const assetBox = new SUEY.AssetBox(texture.name, 'icon', false /* mini */);
             assetBox.contents().noShadow();
             assetBox.contents().dom.style.width = '96%';
             assetBox.contents().dom.style.height = '96%';
@@ -70,7 +71,7 @@ class TexturePreview extends OSUI.Titled {
             assetBox.contents().dom.draggable = false;
 
             // Inner Box
-            const emptyBox = new OSUI.AbsoluteBox();
+            const emptyBox = new SUEY.AbsoluteBox();
             emptyBox.dom.draggable = false;
 
             // Scale to Canvas
@@ -114,7 +115,7 @@ class TexturePreview extends OSUI.Titled {
             _scene.add(_mesh);
 
             // Add to PropertyList
-            const emptyBox = new OSUI.FlexBox();
+            const emptyBox = new SUEY.FlexBox();
             emptyBox.dom.appendChild(canvas);
             props.add(emptyBox);
 
@@ -130,12 +131,12 @@ class TexturePreview extends OSUI.Titled {
 
         function render() {
             if (!texture.isCubeTexture) {
-                ONE.RenderUtils.renderTextureToCanvas(canvas, texture);
+                SALT.RenderUtils.renderTextureToCanvas(canvas, texture);
             } else {
-                ONE.RenderUtils.offscreenRenderer(canvas.width, canvas.height).render(_scene, _camera);
+                SALT.RenderUtils.offscreenRenderer(canvas.width, canvas.height).render(_scene, _camera);
                 if (context) {
                     context.clearRect(0, 0, canvas.width, canvas.height);
-                    context.drawImage(ONE.RenderUtils.offscreenRenderer().domElement, 0, 0, canvas.width, canvas.height);
+                    context.drawImage(SALT.RenderUtils.offscreenRenderer().domElement, 0, 0, canvas.width, canvas.height);
                 }
             }
         }
@@ -163,11 +164,9 @@ class TexturePreview extends OSUI.Titled {
             if (asset.uuid === texture.uuid) updateUI();
         }
 
-        signals.assetChanged.add(assetChangedCallback);
+        Signals.connect(this, 'assetChanged', assetChangedCallback);
 
         this.dom.addEventListener('destroy', function() {
-            signals.assetChanged.remove(assetChangedCallback);
-
             if (_controls && typeof _controls.dispose === 'function') _controls.dispose();
             if (_material && typeof _material.dispose === 'function') _material.dispose();
             if (_geometry && typeof _geometry.dispose === 'function') _geometry.dispose();

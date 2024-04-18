@@ -68,6 +68,7 @@ const SIGNAL_NAMES = [
     'stageChanged',             // -                    ALERT       Active stage of 'viewport.world' was changed
     'entityChanged',            // (entity)             ALERT       Entity was changed (excluding transform)
     'transformsChanged',        // (entityArray)        ALERT       Transforms changed (may need to rebuild transform group)
+    'componentChanged',         // (component)          ALERT       Component was changed
 
     // Assets
     'assetAdded',               // (type, asset)        ALERT       Asset added to AssetManager

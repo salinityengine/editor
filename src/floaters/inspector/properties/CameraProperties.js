@@ -9,6 +9,7 @@ import * as SUEY from 'gui';
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { PropertyGroup } from '../../../gui/PropertyGroup.js';
+import { Signals } from '../../../config/Signals.js';
 
 class CameraProperties extends SUEY.Div {
 
@@ -130,15 +131,8 @@ class CameraProperties extends SUEY.Div {
             for (const entity of entityArray) entityChanged(entity);
         }
 
-        signals.entityChanged.add(entityChanged);
-        signals.transformsChanged.add(transformsChanged);
-
-        /***** DESTROY *****/
-
-        this.on('destroy', () => {
-            signals.entityChanged.remove(entityChanged);
-            signals.transformsChanged.remove(transformsChanged);
-        });
+        Signals.connect(this, 'entityChanged', entityChanged);
+        Signals.connect(this, 'transformsChanged', transformsChanged);
 
         /***** INIT *****/
 

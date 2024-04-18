@@ -6,9 +6,8 @@ class AddEntityCommand extends Command {
 
     constructor(entity, parent = undefined, index = -1, maintainWorldTransform = false) {
         super();
-
         this.type = 'AddEntityCommand';
-        this.brief = `Add Entity: ${entity.brief}`;
+        this.brief = `Add Entity: ${entity.name}`;
 
         // Cancel if no Entity
         if (!entity) {

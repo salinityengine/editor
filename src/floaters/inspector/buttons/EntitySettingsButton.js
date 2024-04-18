@@ -5,10 +5,13 @@ import editor from 'editor';
 import * as SALT from 'engine';
 import * as SUEY from 'gui';
 
+import { Signals } from '../../../config/Signals.js';
+
 import { AddAssetCommand } from '../../../commands/CommandList.js';
-// import { AddComponentCommand } from '../../../commands/CommandList.js';
+import { AddComponentCommand } from '../../../commands/CommandList.js';
+import { ChangeComponentCommand } from '../../../commands/CommandList.js';
 import { MultiCmdsCommand } from '../../../commands/CommandList.js';
-// import { RemoveComponentCommand } from '../../../commands/CommandList.js';
+import { RemoveComponentCommand } from '../../../commands/CommandList.js';
 
 class EntitySettingsButton extends SUEY.Button {
 
@@ -81,13 +84,7 @@ class EntitySettingsButton extends SUEY.Button {
             const hasComponents = editor.clipboard.containsComponents(entity.type);
             if (pasteItem) pasteItem.setDisabled(!hasComponents);
         }
-        signals.clipboardChanged.add(updateClipboard);
-
-        /***** DESTROY *****/
-
-        this.on('destroy', () => {
-            signals.clipboardChanged.remove(updateClipboard);
-        });
+        Signals.connect(this, 'clipboardChanged', updateClipboard);
 
         /***** INIT *****/
 

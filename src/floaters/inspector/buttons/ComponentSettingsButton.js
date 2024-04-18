@@ -8,9 +8,9 @@ import * as SUEY from 'gui';
 import { Signals } from '../../../config/Signals.js';
 
 import { AddAssetCommand } from '../../../commands/CommandList.js';
-// import { AddComponentCommand } from '../../../commands/CommandList.js';
+import { AddComponentCommand } from '../../../commands/CommandList.js';
 import { MultiCmdsCommand } from '../../../commands/CommandList.js';
-// import { RemoveComponentCommand } from '../../../commands/CommandList.js';
+import { RemoveComponentCommand } from '../../../commands/CommandList.js';
 
 const _saveTypes = [
     'geometry',
@@ -123,13 +123,7 @@ class ComponentSettingsButton extends SUEY.Button {
         function updateClipboard() {
             // EMPTY
         }
-        signals.clipboardChanged.add(updateClipboard);
-
-        /***** DESTROY *****/
-
-        this.on('destroy', () => {
-            signals.clipboardChanged.remove(updateClipboard);
-        });
+        Signals.connect(this, 'clipboardChanged', updateClipboard);
 
         /***** INIT *****/
 

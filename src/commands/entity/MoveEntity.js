@@ -1,11 +1,11 @@
 import editor from 'editor';
 import { Command } from '../Command.js';
+import { Signals } from '../../config/Signals.js';
 
 class MoveEntityCommand extends Command {
 
     constructor(entity, newParent, newBefore) {
         super();
-
         this.type = 'MoveEntityCommand';
         this.brief = 'Move Entity';
 
@@ -31,10 +31,10 @@ class MoveEntityCommand extends Command {
         editor.selectEntities(/* none */);
 
         this.entity.changeParent(parent, index);
-        signals.entityChanged.dispatch(this.entity);
-        if (this.oldParent) signals.entityChanged.dispatch(this.oldParent);
-        if (this.newParent) signals.entityChanged.dispatch(this.newParent);
-        signals.sceneGraphChanged.dispatch();
+        Signals.dispatch('entityChanged', this.entity);
+        if (this.oldParent) Signals.dispatch('entityChanged', this.oldParent);
+        if (this.newParent) Signals.dispatch('entityChanged', this.newParent);
+        Signals.dispatch('sceneGraphChanged');
 
         editor.selectEntities(currentSelection);
     }

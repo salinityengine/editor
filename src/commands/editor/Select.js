@@ -14,7 +14,7 @@ class SelectCommand extends Command {
         this.newSelection = Array.isArray(entityArray) ? [...entityArray] : [ entityArray ];
         this.oldSelection = Array.isArray(oldSelectionArray) ? [...oldSelectionArray] : [ oldSelectionArray ];
 
-        // Command Naming
+        // Command Brief
         this.brief = 'Select Entities';
         if (this.newSelection.length === 0) {
             this.brief = 'Select None';

@@ -11,7 +11,7 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-// import { AddWorldCommand } from '../commands/CommandList.js';
+import { AddWorldCommand } from '../commands/CommandList.js';
 import { MultiCmdsCommand } from '../commands/CommandList.js';
 import { SetStageCommand } from '../commands/CommandList.js';
 
@@ -65,7 +65,7 @@ class WorldsToolbar {
         const addWorld3D = new SUEY.MenuItem('World 3D', `${FOLDER_MENU}node/world3d.svg`);
         const addUI = new SUEY.MenuItem('UI Screen', `${FOLDER_MENU}node/ui.svg`);
         nodeMenu.add(addWorld2D);
-        // nodeMenu.add(addWorld3D);
+        nodeMenu.add(addWorld3D);
         nodeMenu.add(addUI);
 
         addWorld2D.divIcon.addClass('suey-black-or-white').addClass('suey-drop-shadow');
@@ -91,7 +91,15 @@ class WorldsToolbar {
         });
 
         addWorld3D.onSelect(() => {
+            const world = new SALT.World3D(`World ${editor.project.worldCount() + 1}`);
+            const stage = new SALT.Stage3D('Start');
+            world.addEntity(stage);
+            centerWorldPosition(world);
 
+            const cmds = [];
+            cmds.push(new AddWorldCommand(world));
+            cmds.push(new SetStageCommand(stage, world));
+            editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
         });
 
         addUI.onSelect(() => {

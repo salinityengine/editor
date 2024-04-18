@@ -10,8 +10,9 @@ import { AssetInput } from './inputs/AssetInput.js';
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { PropertyGroup } from '../../../gui/PropertyGroup.js';
+import { Signals } from '../../../config/Signals.js';
 
-import { SetValueCommand } from '../../../commands/CommandList.js';
+import { SetEntityValueCommand } from '../../../commands/CommandList.js';
 
 class WorldProperties extends SUEY.Div {
 
@@ -51,7 +52,7 @@ class WorldProperties extends SUEY.Div {
             let background = null;
             if (style === 'color') background = new THREE.Color(backgroundColor.getValue());
             if (style === 'texture') background = value ?? 'unknown';
-            editor.execute(new SetValueCommand(entity, 'background', background));
+            editor.execute(new SetEntityValueCommand(entity, 'background', background));
         }
 
         /******************** FOG */
@@ -101,7 +102,7 @@ class WorldProperties extends SUEY.Div {
             let fog = null;
             if (style === 'standard') fog = new THREE.Fog(new THREE.Color(fogColor.getValue()), fogNear.getValue(), fogFar.getValue());
             if (style === 'exponential') fog = new THREE.FogExp2(new THREE.Color(fogColor.getValue()), fogDensity.getValue());
-            editor.execute(new SetValueCommand(entity, 'fog', fog));
+            editor.execute(new SetEntityValueCommand(entity, 'fog', fog));
         }
 
         /******************** NODES */
@@ -115,14 +116,14 @@ class WorldProperties extends SUEY.Div {
         // X Pos
         const nodeX = new SUEY.NumberBox(0).setStep(25).setNudge(5);
         nodeX.on('change', () => {
-            editor.execute(new SetValueCommand(entity, 'xPos', nodeX.getValue()));
+            editor.execute(new SetEntityValueCommand(entity, 'xPos', nodeX.getValue()));
         });
         nodeGroup.addRow('X', nodeX);
 
         // Y Pos
         const nodeY = new SUEY.NumberBox(0).setStep(25).setNudge(5);
         nodeY.on('change', () => {
-            editor.execute(new SetValueCommand(entity, 'yPos', nodeY.getValue()));
+            editor.execute(new SetEntityValueCommand(entity, 'yPos', nodeY.getValue()));
         });
         nodeGroup.addRow('Y', nodeY);
 
@@ -151,13 +152,7 @@ class WorldProperties extends SUEY.Div {
             if (changedEntity.uuid === entity.uuid) updateUI();
         };
 
-        signals.entityChanged.add(entityChangeCallback);
-
-        /***** DESTROY *****/
-
-        this.on('destroy', () => {
-            signals.entityChanged.remove(entityChangeCallback);
-        });
+        Signals.connect(this, 'entityChanged', entityChangeCallback);
 
         /***** INIT *****/
 

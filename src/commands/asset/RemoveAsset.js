@@ -7,7 +7,6 @@ class RemoveAssetCommand extends Command {
 
     constructor(asset) {
         super();
-
         this.type = 'RemoveAssetCommand';
 
         this.assetType = SALT.AssetManager.checkType(asset);

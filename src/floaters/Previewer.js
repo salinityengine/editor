@@ -59,7 +59,7 @@ class Previewer extends SmartFloater {
 
             // ITEM: Palette
             } else if (item.isPalette) {
-                blocks.push(new SUEY.Floater('palette', { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }).add(new PaletteTab(item)));
+                // blocks.push(new SUEY.Floater('palette', { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }).add(new PaletteTab(item)));
 
             // ITEM: Script
             } else if (item.isScript) {

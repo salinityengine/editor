@@ -53,7 +53,7 @@ class Assets extends SmartFloater {
         const paletteIcon = `${FOLDER_TYPES}asset/palette.svg`;
         const addPaletteMenuItem = new SUEY.MenuItem('Palette', paletteIcon);
         addPaletteMenuItem.onSelect(() => {
-            const palette = new SALT.Palette();
+            const palette = new SALT.Palette().default16();
             palette.name = 'Palette';
             editor.execute(new AddAssetCommand(palette));
         });
