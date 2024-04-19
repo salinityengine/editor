@@ -24,6 +24,7 @@ class EntityTab extends SUEY.Titled {
         else if (entity.isLight3D) return String(entity.type).replace('Light', '');
         else if (entity.isCamera3D) return String(entity.type).replace('Camera', '');
         else if (entity.isEntity3D) return 'Entity3D';
+        else if (entity.isEntity) return 'Entity';
         else console.warn(`EntityTab.entityTypeName(): Unknown entity type.`);
         return 'Unknown';
     }

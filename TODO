@@ -2,12 +2,9 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Viewports:
-    - scene / world
-
 Project:
-    - World2D, Stage2D, Entity2D, Components
-    - Save / Load
+    - Check Save / Load
+    - 2D Components
 
 AssetFloater extends SmartFloater: (assets, codex, library)
     - Move search box to title bar when over a certain width

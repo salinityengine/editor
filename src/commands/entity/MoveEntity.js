@@ -10,7 +10,7 @@ class MoveEntityCommand extends Command {
         this.brief = 'Move Entity';
 
         this.entity = entity;
-        this.oldParent = (entity && entity.isEntity3D) ? entity.parent : undefined;
+        this.oldParent = (entity && entity.isEntity) ? entity.parent : undefined;
         this.oldIndex = (this.oldParent !== undefined) ? this.oldParent.children.indexOf(this.entity) : undefined;
         this.newParent = newParent;
 

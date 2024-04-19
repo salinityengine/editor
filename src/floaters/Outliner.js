@@ -50,44 +50,57 @@ class Outliner extends SmartFloater {
         function addEntityMenuItem(name, icon, factory = () => {}) {
             const entityMenuItem = new SUEY.MenuItem(name, icon);
             entityMenuItem.onSelect(() => {
-                if (!editor.viewport().getWorld()) return;
+                const viewWorld = editor.viewport().getWorld();
+                if (!viewWorld) return;
                 const entity = factory();
+                if (!entity) return;
                 //
                 // TODO: Set entity position based on camera
                 //
                 // entity.position.copy(editor.viewport().getCameraTarget());
                 const cmds = [];
                 cmds.push(new SelectCommand([], editor.selected));
-                cmds.push(new AddEntityCommand(entity));
+                if (entity.isStage) {
+                    cmds.push(new AddEntityCommand(entity, viewWorld));
+                    cmds.push(new SetStageCommand(editor.viewport().worldType(), entity));
+                } else {
+                    cmds.push(new AddEntityCommand(entity));
+                }
                 cmds.push(new SelectCommand([ entity ], []));
                 editor.execute(new MultiCmdsCommand(cmds, `Add ${name}`));
             });
             entityMenu.add(entityMenuItem);
+            return entityMenuItem;
         }
-        addEntityMenuItem('Entity', `${FOLDER_TYPES}entity/entity.svg`, () => { return new SALT.Entity3D(); });
-        addEntityMenuItem('Camera', `${FOLDER_TYPES}entity/camera.svg`, () => { return new SALT.Camera3D(); });
 
-        // 'Stage'
-        const stageIcon = `${FOLDER_TYPES}entity/stage.svg`;
-        const addStageMenuItem = new SUEY.MenuItem('Stage', stageIcon).onSelect(() => {
-            const activeWorld = editor.viewport().getWorld();
-            if (!activeWorld) return;
-            let stage;
+        // Add Entity
+        addEntityMenuItem('Entity', `${FOLDER_TYPES}entity/entity.svg`, () => {
             switch (editor.viewport().worldType()) {
-                case 'World2D': stage = new SALT.Stage2D(`Stage ${activeWorld.getStages().length + 1}`); break;
-                case 'World3D': stage = new SALT.Stage3D(`Stage ${activeWorld.getStages().length + 1}`); break;
+                case 'World2D': return new SALT.Entity2D();
+                case 'World3D': return new SALT.Entity3D();
             }
-            if (!stage) return;
-
-            const cmds = [];
-            cmds.push(new SelectCommand([], editor.selected));
-            cmds.push(new AddEntityCommand(stage, activeWorld));
-            cmds.push(new SetStageCommand(editor.viewport().worldType(), stage));
-            cmds.push(new SelectCommand([ stage ], []));
-            editor.execute(new MultiCmdsCommand(cmds, 'Add Stage'));
         });
-        addStageMenuItem.divIcon.img.setStyle('padding', '0.05em', 'border-radius', '0.5em');
-        entityMenu.add(new SUEY.MenuSeparator(), addStageMenuItem);
+
+        // Add Camera
+        addEntityMenuItem('Camera', `${FOLDER_TYPES}entity/camera.svg`, () => {
+            switch (editor.viewport().worldType()) {
+                case 'World2D': return new SALT.Camera2D();
+                case 'World3D': return new SALT.Camera3D();
+            }
+        });
+
+        entityMenu.add(new SUEY.MenuSeparator());
+
+        // Add Stage
+        const stageMenuItem = addEntityMenuItem('Stage', `${FOLDER_TYPES}entity/stage.svg`, () => {
+            const viewWorld = editor.viewport().getWorld();
+            if (!viewWorld) return;
+            switch (editor.viewport().worldType()) {
+                case 'World2D': return new SALT.Stage2D(`Stage ${viewWorld.getStages().length + 1}`);
+                case 'World3D': return new SALT.Stage3D(`Stage ${viewWorld.getStages().length + 1}`);
+            }
+        });
+        stageMenuItem.divIcon.img.setStyle('padding', '0.05em', 'border-radius', '0.5em');
 
         // Append Children
         addButton.attachMenu(entityMenu);
