@@ -19,7 +19,7 @@ class Clipboard {
         for (let i = 0; i < data.length; i++) {
             const item = data[i];
             if (item.isEntity) {
-                const entity = item.cloneEntity();
+                const entity = item.clone();
                 this.items.push(entity);
             }
         }

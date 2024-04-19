@@ -4,6 +4,7 @@
 
 Project:
     - World, Stage, Entity
+        - to / from JSON
     - World2D, Stage2D, Entity2D, Components
     - Save / Load
 

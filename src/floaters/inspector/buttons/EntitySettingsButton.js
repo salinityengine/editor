@@ -19,9 +19,7 @@ class EntitySettingsButton extends SUEY.Button {
         super();
 
         // Checks
-        let hideButton = !entity || !entity.isEntity;
-        hideButton = hideButton || entity.isStage;
-        hideButton = hideButton || entity.userData.flagHelper;
+        let hideButton = !entity || !entity.isEntity || entity.isStage;
         if (hideButton) return this.setStyle('display', 'none');
 
         // Setup
@@ -71,7 +69,7 @@ class EntitySettingsButton extends SUEY.Button {
             const saveIcon = `${FOLDER_MENU}component/copy.svg`;
             const saveItem = new SUEY.MenuItem('Save Entity to Prefabs', saveIcon);
             saveItem.onSelect(() => {
-                const clone = entity.cloneEntity();
+                const clone = entity.clone();
                 clone.position.set(0, 0, 0);
                 editor.execute(new AddAssetCommand(clone));
             });

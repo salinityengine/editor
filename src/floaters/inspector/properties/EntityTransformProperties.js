@@ -91,15 +91,13 @@ class EntityTransformProperties extends SUEY.Div {
 
         const hasMesh = true; // EntityUtils.containsMesh(entity);
         const hasCamera = entity.isCamera;
-        const isSpecial = entity.userData.flagHelper;
 
         const showPosition = !entity.isPrefab;
-        const showRotation = hasMesh || hasCamera || isSpecial;
-        const showScale = hasMesh || hasCamera || isSpecial;
-        const showSize = hasMesh && !isSpecial;
-        const showBillboard = hasMesh && !entity.isStage && !isSpecial && !hasCamera;
-        const showVisible = !isSpecial;
-        const showShadow = hasMesh && !isSpecial;
+        const showRotation = hasMesh || hasCamera;
+        const showScale = hasMesh || hasCamera;
+        const showSize = hasMesh;
+        const showBillboard = hasMesh && !entity.isStage && !hasCamera;
+        const showShadow = hasMesh;
 
         // Position
         const gridSize = parseFloat(editor.viewport()?.gridSize() ?? 0);
@@ -192,9 +190,7 @@ class EntityTransformProperties extends SUEY.Div {
             const isVisible = visibleBox.getValue();
             editor.execute(new SetEntityValueCommand(entity, 'visible', isVisible, false /* recursive */));
         });
-        if (showVisible) {
-            transformGroup.addRow('Visible', visibleBox);
-        }
+        transformGroup.addRow('Visible', visibleBox);
 
         /***** SHADOWS *****/
 

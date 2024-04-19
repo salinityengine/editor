@@ -24,13 +24,6 @@ class EntityProperties extends SUEY.PropertyList {
         });
         this.addRow(Language.getKey('inspector/entity/name'), entityName);
 
-        // Don't allow changes to Helper Object names
-        if (entity.userData.flagHelper) entityName.setDisabled(true);
-
-        // ID
-        // const entityID = new SUEY.Text().selectable(false);
-        // this.addRow('ID', entityID);
-
         // UUID
         const entityUUID = new SUEY.TextBox().setDisabled(true);
         // // 'New' UUID Button
@@ -55,7 +48,6 @@ class EntityProperties extends SUEY.PropertyList {
 
         function updateUI() {
             entityName.setValue(entity.name);
-            // entityID.setTextContent(entity.id);
             entityUUID.setValue(entity.uuid);
         }
 

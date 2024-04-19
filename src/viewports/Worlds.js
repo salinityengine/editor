@@ -315,7 +315,7 @@ class Worlds extends AbstractView {
             if (!entity.visible) continue;
             if (entity.locked) continue;
             if (entity.isWorld) {
-                const world = entity.cloneEntity();
+                const world = entity.clone();
                 if (!world.name.startsWith('Copy of')) world.name = 'Copy of ' + world.name;
                 switch (key) {
                     case 'w': world.yPos -= nodesHeight; break;

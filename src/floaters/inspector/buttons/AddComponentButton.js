@@ -17,9 +17,7 @@ class AddComponentButton extends SUEY.Button {
         const self = this;
 
         // Checks
-        let hideButton = !entity || !entity.isEntity;
-        hideButton = hideButton || entity.locked;
-        hideButton = hideButton || entity.userData.flagHelper;
+        let hideButton = !entity || !entity.isEntity || entity.locked;
         if (hideButton) return this.setStyle('display', 'none');
 
         // Setup
@@ -48,8 +46,9 @@ class AddComponentButton extends SUEY.Button {
 
                 // FAMILY: [ 'Entity3D', 'World3D' ]
                 if (!config.family) continue;
-                const families = Array.isArray(config.family) ? config.family : [ config.family ];
-                if (families.indexOf(entity.componentFamily()) === -1) continue;
+                const componentFamily = Array.isArray(config.family) ? config.family : [ config.family ];
+                const entityFamily = Array.isArray(entity.componentFamily()) ? entity.componentFamily() : [ entity.componentFamily() ];
+                if (Arrays.shareValues(componentFamily, entityFamily) === false) continue;
 
                 // Add Component
                 const compName = SUEY.Strings.capitalize(type);
