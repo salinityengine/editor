@@ -33,6 +33,8 @@ class View2D extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
+    worldType() { return 'World2D'; }
+
     constructor() {
         super();
         const self = this;

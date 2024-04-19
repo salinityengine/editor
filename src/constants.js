@@ -4,9 +4,9 @@ import * as SUEY from 'gui';
 export const EDITOR_MODES = {
     SCENE_EDITOR_2D:    'edit2d',
     SCENE_EDITOR_3D:    'edit3d',
-    SOUND_EDITOR:       'sound',
+    SOUND_EDITOR:       'sounds',
     UI_EDITOR:          'editui',
-    WORLD_GRAPH:        'world',
+    WORLD_GRAPH:        'worlds',
 }
 
 // Keyboard Keys

@@ -11,7 +11,7 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-import { AddWorldCommand } from '../commands/CommandList.js';
+import { AddWorldCommand, SelectCommand } from '../commands/CommandList.js';
 import { MultiCmdsCommand } from '../commands/CommandList.js';
 import { SetStageCommand } from '../commands/CommandList.js';
 
@@ -85,8 +85,10 @@ class WorldsToolbar {
             centerWorldPosition(world);
 
             const cmds = [];
+            cmds.push(new SelectCommand([], editor.selected));
             cmds.push(new AddWorldCommand(world));
-            cmds.push(new SetStageCommand(stage, world));
+            cmds.push(new SetStageCommand(world.type, stage, world));
+            cmds.push(new SelectCommand([ world ], []));
             editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
         });
 
@@ -97,8 +99,10 @@ class WorldsToolbar {
             centerWorldPosition(world);
 
             const cmds = [];
+            cmds.push(new SelectCommand([], editor.selected));
             cmds.push(new AddWorldCommand(world));
-            cmds.push(new SetStageCommand(stage, world));
+            cmds.push(new SetStageCommand(world.type, stage, world));
+            cmds.push(new SelectCommand([ world ], []));
             editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
         });
 

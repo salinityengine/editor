@@ -1,20 +1,27 @@
 import editor from 'editor';
 import { Command } from '../Command.js';
+import { Signals } from '../../config/Signals.js';
 
 class SetStageCommand extends Command {
 
-    constructor(stage, world) {
+    constructor(worldType, stage, world) {
         super();
         this.type = 'SetStageCommand';
         this.brief = 'Set Stage';
 
-        const viewWorld = editor.viewport.world;
+        const viewport = editor.viewport(worldType);
+        if (!viewport) {
+            this.valid = false;
+            return;
+        }
+        this.viewport = viewport;
 
         this.newWorld = undefined;
         this.newStage = undefined;
         this.oldWorld = undefined;
         this.oldStage = undefined;
 
+        const viewWorld = viewport.getWorld();
         if (world === undefined) {
             world = (stage && stage.isStage && stage.parent) ? stage.parent : viewWorld;
         }
@@ -31,12 +38,13 @@ class SetStageCommand extends Command {
     setWorld(worldUUID, stageUUID) {
         // Set World
         const world = editor.project.getWorldByUUID(worldUUID);
-        editor.viewport.world = world;
 
         // Set Stage
         if (world && world.isWorld) {
+            this.viewport.setWorld(world);
             const stage = world.getStageByUUID(stageUUID);
-            editor.viewport.stage = stage;
+            world.setActiveStage(stage);
+            Signals.dispatch('stageChanged');
         }
     }
 

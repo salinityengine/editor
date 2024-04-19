@@ -63,7 +63,7 @@ class Scripter extends SmartFloater {
         /********** SCRIMP (CODEMIRROR) */
 
         // Internal Variables
-        let renderer = null; //editor.viewport.renderer;
+        let renderer = null; //editor.viewport().renderer;
         let delay;
         let currentMode;
         let currentScript;

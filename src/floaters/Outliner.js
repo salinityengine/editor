@@ -50,10 +50,12 @@ class Outliner extends SmartFloater {
         function addEntityMenuItem(name, icon, factory = () => {}) {
             const entityMenuItem = new SUEY.MenuItem(name, icon);
             entityMenuItem.onSelect(() => {
-                if (!editor.viewport.validWorld()) return;
+                if (!editor.viewport().getWorld()) return;
                 const entity = factory();
-                entity.position.copy(editor.viewport.getCameraTarget());
-                editor.viewport.rotateToFacingPlane(entity);
+                //
+                // TODO: Set entity position based on camera
+                //
+                // entity.position.copy(editor.viewport().getCameraTarget());
                 const cmds = [];
                 cmds.push(new SelectCommand([], editor.selected));
                 cmds.push(new AddEntityCommand(entity));
@@ -68,13 +70,19 @@ class Outliner extends SmartFloater {
         // 'Stage'
         const stageIcon = `${FOLDER_TYPES}entity/stage.svg`;
         const addStageMenuItem = new SUEY.MenuItem('Stage', stageIcon).onSelect(() => {
-            if (!editor.viewport.validWorld()) return;
-            const stage = new SALT.Stage3D(`Stage ${editor.viewport.world.getStages().length + 1}`);
+            const activeWorld = editor.viewport().getWorld();
+            if (!activeWorld) return;
+            let stage;
+            switch (editor.viewport().worldType()) {
+                case 'World2D': stage = new SALT.Stage2D(`Stage ${activeWorld.getStages().length + 1}`); break;
+                case 'World3D': stage = new SALT.Stage3D(`Stage ${activeWorld.getStages().length + 1}`); break;
+            }
+            if (!stage) return;
 
             const cmds = [];
             cmds.push(new SelectCommand([], editor.selected));
-            cmds.push(new AddEntityCommand(stage, editor.viewport.world));
-            cmds.push(new SetStageCommand(stage));
+            cmds.push(new AddEntityCommand(stage, activeWorld));
+            cmds.push(new SetStageCommand(editor.viewport().worldType(), stage));
             cmds.push(new SelectCommand([ stage ], []));
             editor.execute(new MultiCmdsCommand(cmds, 'Add Stage'));
         });
@@ -91,11 +99,11 @@ class Outliner extends SmartFloater {
         const treeList = new SUEY.TreeList(true /* multiSelect */).addClass('salt-outliner');
         this.add(treeList);
 
-        // Change Event (fired on Key Down & Pointer Click)
+        // CHANGE: Fired on Key Down & Pointer Click
         let ignoreSelectionChangedSignal = false;
         treeList.on('change', () => {
-            if (!editor.viewport.validWorld()) return;
-            const viewWorld = editor.viewport.world;
+            const viewWorld = editor.viewport().getWorld();
+            if (!viewWorld) return;
             const uuids = treeList.getValues();
             if (uuids.length === 0) return;
             ignoreSelectionChangedSignal = true;
@@ -106,7 +114,7 @@ class Outliner extends SmartFloater {
                 if (world.uuid !== viewWorld.activeStage().uuid) {
                     const cmds = [];
                     cmds.push(new SelectCommand([], editor.selected));
-                    cmds.push(new SetStageCommand(null, world));
+                    cmds.push(new SetStageCommand(viewWorld.type, null, world));
                     cmds.push(new SelectCommand([ world ], []));
                     editor.execute(new MultiCmdsCommand(cmds, 'Select World'));
                 } else {
@@ -122,7 +130,7 @@ class Outliner extends SmartFloater {
                 if (stage.uuid !== viewWorld.activeStage().uuid) {
                     const cmds = [];
                     cmds.push(new SelectCommand([], editor.selected));
-                    cmds.push(new SetStageCommand(stage));
+                    cmds.push(new SetStageCommand(viewWorld.type, stage));
                     cmds.push(new SelectCommand([ stage ], []));
                     editor.execute(new MultiCmdsCommand(cmds, 'Select Stage'));
                 } else {
@@ -142,13 +150,14 @@ class Outliner extends SmartFloater {
             ignoreSelectionChangedSignal = false;
         });
 
+        // DOUBLE CLICK
         treeList.on('dblclick', (event) => {
             if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
                 /* NOTHING */
             } else {
                 // Ensure clicked entities parent is active scene
-                if (!editor.viewport.validWorld()) return;
-                const viewWorld = editor.viewport.world;
+                const viewWorld = editor.viewport().getWorld();
+                if (!viewWorld) return;
                 const uuids = treeList.getValues();
                 if (uuids.length === 0) return;
                 const clickedEntity = editor.project.findEntityByUUID(uuids[0]);
@@ -157,7 +166,7 @@ class Outliner extends SmartFloater {
                 if (parent && parent.uuid !== viewWorld.activeStage().uuid) {
                     const cmds = [];
                     cmds.push(new SelectCommand([], editor.selected));
-                    cmds.push(new SetStageCommand(parent));
+                    cmds.push(new SetStageCommand(viewWorld.type, parent));
                     cmds.push(new SelectCommand([ clickedEntity ], []));
                     editor.execute(new MultiCmdsCommand(cmds, 'Change Active Stage'));
                 }
@@ -385,9 +394,9 @@ class Outliner extends SmartFloater {
                 return option;
             }
 
-            const viewWorld = editor.viewport?.world;
-            const viewStageUUID = (viewWorld && viewWorld.isWorld) ? viewWorld.activeStage().uuid : -1;
+            const viewWorld = editor.viewport().getWorld();
             if (!viewWorld || !viewWorld.isEntity) return treeList.setOptions([ emptyOption() ]);
+            const viewStageUUID = (viewWorld && viewWorld.isWorld) ? viewWorld.activeStage().uuid : -1;
 
             function addToOptions(entities = [], pad, recursive = true) {
                 if (!Array.isArray(entities)) entities = [ entities ];
@@ -412,7 +421,7 @@ class Outliner extends SmartFloater {
 
             // Add World, Children, Stages
             const options = [];
-            addToOptions([ viewWorld ], 0.1, false /* recursive */);
+            addToOptions(viewWorld, 0.1, false /* recursive */);
             addToOptions(viewWorld.getEntities(false /* includeStages */), 0);
             addToOptions(viewWorld.getStages(), 0);
 
@@ -429,8 +438,8 @@ class Outliner extends SmartFloater {
         /******************** DRAG & DROP */
 
         treeList.onDrop = function(event, option /* received drop */, uuids = [] /* uuids being dragged */) {
-            if (!editor.viewport.validWorld()) return;
-            const viewWorld = editor.viewport.world;
+            const viewWorld = editor.viewport().getWorld();
+            if (!viewWorld) return;
 
             let nextEntity = undefined;
             let parent = undefined;
@@ -482,6 +491,48 @@ class Outliner extends SmartFloater {
         };
 
         /******************** SIGNALS */
+
+        function rebuildOnAssetChange(type, asset) {
+            if (type === 'script') rebuildTree();
+        }
+
+        Signals.connect(this, 'assetAdded', rebuildOnAssetChange);
+        Signals.connect(this, 'assetRemoved', rebuildOnAssetChange);
+        Signals.connect(this, 'promodeChanged', rebuildTree);
+        Signals.connect(this, 'sceneGraphChanged', rebuildTree);
+
+        Signals.connect(this, 'stageChanged', () => {
+            const viewWorld = editor.viewport().getWorld();
+            const viewStageUUID = viewWorld?.activeStage()?.uuid ?? -1;
+            for (const div of treeList.options) {
+                if (div.value == viewStageUUID) div.classList.add('outliner-active-stage');
+                else div.classList.remove('outliner-active-stage');
+            }
+        });
+
+        Signals.connect(this, 'selectionChanged', () => {
+            if (ignoreSelectionChangedSignal === true) return;
+            const viewWorld = editor.viewport().getWorld();
+            if (!viewWorld) return rebuildTree();
+
+            let needsRefresh = false;
+            let highlightUUIDs = [];
+            for (const entity of editor.selected) {
+                highlightUUIDs.push(entity.uuid);
+
+                let parent = entity.parent;
+                while (parent && !parent.isStage && !parent.isWorld) {
+                    if (_nodeStates.get(parent) !== true) {
+                        _nodeStates.set(parent, true);
+                        needsRefresh = true;
+                    }
+                    parent = parent.parent;
+                }
+            }
+
+            if (needsRefresh) rebuildTree();
+            else treeList.setValues(highlightUUIDs, true /* scroll to */);
+        });
 
         // Initial Build
         rebuildTree();

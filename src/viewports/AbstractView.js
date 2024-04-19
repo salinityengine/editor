@@ -28,19 +28,22 @@ class AbstractView extends SUEY.Div {
         return floaters;
     }
 
+    /** World edit type */
+    worldType() { return 'None'; }
+
     constructor() {
         super();
         this.setClass('salt-viewport');
         this.setStyle('display', 'none');               // important! needed for initial editor.setMode()
 
-        // Properties
         this.toolbar = null;                            // to be added to editor.toolbar.middle
         this.selected = [];                             // selection can differ from editor
+        this.worlds = [];                               // open worlds
     }
 
     /******************** ACTIVATION ********************/
 
-    // These functions run when editor.setMode() is switched to/from a viewport
+    /** These functions run when editor.setMode() is switched to/from a Viewport */
 
     activate() {
 
@@ -89,6 +92,21 @@ class AbstractView extends SUEY.Div {
     gridSize() {
         console.warn(`${this.constructor.name}.gridSize(): Method must be reimplemented from AbstractView`);
         return 0;
+    }
+
+    /******************** WORLDS ********************/
+
+    //
+    // TODO: Support multiple worlds
+    //
+
+    getWorld() {
+        if (this.worlds.length > 0) return this.worlds[0];
+    }
+
+    setWorld(world) {
+        if (!world || !world.isWorld || world.type !== this.worldType()) return;
+        this.worlds[0] = world;
     }
 
 }

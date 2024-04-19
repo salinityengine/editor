@@ -75,38 +75,38 @@ class Inspector extends SmartFloater {
 
             // ITEM: Entity
             } else if (item.isEntity) {
-                const entity = item;
-                let icon, color, shrink, shadow, tabType;
-                if (entity.isPrefab) { tabType = 'prefab'; icon = `${FOLDER_TYPES}entity/prefab.svg`; shrink = true; }
-                else if (entity.isWorld) { tabType = 'world'; icon = `${FOLDER_TYPES}entity/world.svg`; }
-                else if (entity.isStage) { tabType = 'stage'; icon = `${FOLDER_TYPES}entity/stage.svg`; color = '#333355'; }
-                else if (entity.isCamera) { tabType = 'camera'; icon = `${FOLDER_TYPES}entity/camera.svg`; color = '#4B4886'; shrink = true; }
-                else if (entity.isLight) { tabType = 'light'; icon = `${FOLDER_TYPES}entity/light.svg`; color = '#222222'; shrink = true; }
-                else { /* isEntity */ tabType = 'entity'; icon = `${FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
+                // const entity = item;
+                // let icon, color, shrink, shadow, tabType;
+                // if (entity.isPrefab) { tabType = 'prefab'; icon = `${FOLDER_TYPES}entity/prefab.svg`; shrink = true; }
+                // else if (entity.isWorld) { tabType = 'world'; icon = `${FOLDER_TYPES}entity/world.svg`; }
+                // else if (entity.isStage) { tabType = 'stage'; icon = `${FOLDER_TYPES}entity/stage.svg`; color = '#333355'; }
+                // else if (entity.isCamera) { tabType = 'camera'; icon = `${FOLDER_TYPES}entity/camera.svg`; color = '#4B4886'; shrink = true; }
+                // else if (entity.isLight) { tabType = 'light'; icon = `${FOLDER_TYPES}entity/light.svg`; color = '#222222'; shrink = true; }
+                // else { /* isEntity */ tabType = 'entity'; icon = `${FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
 
-                // Entity Tab
-                blocks.push(new SUEY.Floater(tabType, { icon, color, shrink, shadow }).add(new EntityTab(entity)));
+                // // Entity Tab
+                // blocks.push(new SUEY.Floater(tabType, { icon, color, shrink, shadow }).add(new EntityTab(entity)));
 
-                // Component Tabs
-                const components = entity.components;
-                if (components && components.length > 0) {
-                    // Gather types
-                    const typesWanted = [];
-                    for (const component of components) {
-                        const compType = String(component.type ?? 'unknown').toLowerCase();
-                        if (!typesWanted.includes(compType)) typesWanted.push(compType);
-                    }
+                // // Component Tabs
+                // const components = entity.components;
+                // if (components && components.length > 0) {
+                //     // Gather types
+                //     const typesWanted = [];
+                //     for (const component of components) {
+                //         const compType = String(component.type ?? 'unknown').toLowerCase();
+                //         if (!typesWanted.includes(compType)) typesWanted.push(compType);
+                //     }
 
-                    // Add alphabetically
-                    typesWanted.sort();
-                    for (const compType of typesWanted) {
-                        const ComponentClass = SALT.ComponentManager.registered(compType);
-                        if (!ComponentClass) continue;
-                        const icon = COMPONENT_ICONS[compType] ?? ComponentClass.config.icon ?? '';
-                        const color = ComponentClass.config.color;
-                        blocks.push(new SUEY.Floater(compType, { icon, color, shrink: true }).add(new ComponentTab(entity, compType)));
-                    }
-                }
+                //     // Add alphabetically
+                //     typesWanted.sort();
+                //     for (const compType of typesWanted) {
+                //         const ComponentClass = SALT.ComponentManager.registered(compType);
+                //         if (!ComponentClass) continue;
+                //         const icon = COMPONENT_ICONS[compType] ?? ComponentClass.config.icon ?? '';
+                //         const color = ComponentClass.config.color;
+                //         blocks.push(new SUEY.Floater(compType, { icon, color, shrink: true }).add(new ComponentTab(entity, compType)));
+                //     }
+                // }
 
             // ITEM: Unknown
             } else {

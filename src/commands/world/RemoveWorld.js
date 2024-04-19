@@ -21,7 +21,7 @@ class RemoveWorldCommand extends Command {
         }
 
         this.type = 'RemoveWorldCommand';
-        this.name = `Remove World: ${world.name}`;
+        this.brief = `Remove World: ${world.name}`;
         this.world = world;
 
         this.wasAdded = false;

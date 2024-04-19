@@ -31,6 +31,8 @@ class ViewUI extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
+    worldType() { return 'WorldUI'; }
+
     constructor() {
         super();
 

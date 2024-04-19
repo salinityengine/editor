@@ -7,7 +7,7 @@ class PositionWorldCommand extends Command {
         super();
 
         this.type = 'PositionWorldCommand';
-        this.name = 'Change World Position';
+        this.brief = 'Change World Position';
         this.world = world;
 
         if (!world || !world.isWorld) {

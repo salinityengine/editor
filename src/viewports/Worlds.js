@@ -29,12 +29,11 @@ class Worlds extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
+    worldType() { return 'None'; }
+
     constructor() {
         super();
         const self = this;
-
-        // Toolbar
-        this.toolbar = new WorldsToolbar(this);
 
         /********** GRAPH */
 
@@ -44,6 +43,10 @@ class Worlds extends AbstractView {
         }).addClass('salt-world-graph');
         this.graph = graph;
         this.add(graph);
+
+        /********** TOOLBAR */
+
+        this.toolbar = new WorldsToolbar(graph);
 
         /********** NODES */
 
@@ -129,8 +132,8 @@ class Worlds extends AbstractView {
             }
         }
 
+        // Update Node Location
         function updateNode(node) {
-            // Update Location
             node.setStyle(
                 'left', `${parseFloat(node.world.xPos)}px`,
                 'top', `${parseFloat(node.world.yPos)}px`,
@@ -147,17 +150,15 @@ class Worlds extends AbstractView {
         // Selected
         graph.on('selected', () => {
             // World(s) were selected
-            const selected = self.selectedWorlds();
-            for (let i = selected.length - 1; i >= 0; i--) {
-                const world = selected[i];
-                if (world && world.isWorld) {
-                    const cmds = [];
-                    cmds.push(new SelectCommand([], editor.selected));
-                    cmds.push(new SetStageCommand(world.activeStage(), world));
-                    cmds.push(new SelectCommand(selected, []));
-                    editor.execute(new MultiCmdsCommand(cmds, `Select World: ${world.name}`));
-                    return;
-                }
+            const selected = self.selectedWorlds().toReversed();
+            for (const world of selected) {
+                if (!world || !world.isWorld) continue;
+                const cmds = [];
+                cmds.push(new SelectCommand([], editor.selected));
+                cmds.push(new SetStageCommand(world.type, world.activeStage(), world));
+                cmds.push(new SelectCommand(selected, []));
+                editor.execute(new MultiCmdsCommand(cmds, `Select World: ${world.name}`));
+                return;
             }
 
             // Did not select World(s)
@@ -211,10 +212,19 @@ class Worlds extends AbstractView {
         Signals.connect(this, 'selectionChanged', function() {
             refreshNodes();
 
-            const viewWorld = editor.world;
+            // Find Viewport Worlds
+            const viewWorlds = [];
+            for (const viewport of editor.viewports) {
+                const world = viewport.getWorld();
+                if (world && world.isWorld) viewWorlds.push(world.uuid);
+            }
+
+            // Run through World Graph Nodes
             for (const node of graph.getNodes()) {
                 if (!node.world || !node.world.isWorld) continue;
-                const selected = Arrays.includesEntity(node.world, editor.selected);
+
+                // World is Selected
+                const selected = SALT.Arrays.includesEntity(node.world, editor.selected);
                 if (selected) {
                     if (!node.hasClass('suey-node-selected')) {
                         const nodes = graph.getNodes();
@@ -227,11 +237,10 @@ class Worlds extends AbstractView {
                 } else {
                     node.removeClass('suey-node-selected');
                 }
-                if (viewWorld && viewWorld.isWorld && viewWorld.uuid === node.world.uuid) {
-                    node.addClass('suey-node-displayed');
-                } else {
-                    node.removeClass('suey-node-displayed');
-                }
+
+                // World is Selected in a Viewport
+                if (viewWorlds.includes(node.world.uuid)) node.addClass('suey-node-displayed');
+                else node.removeClass('suey-node-displayed');
             }
         });
 
@@ -242,6 +251,19 @@ class Worlds extends AbstractView {
             // Update Node reponsible for World
             for (const node of graph.getNodes()) {
                 if (node.world && node.world.isWorld && node.world.uuid === entity.uuid) {
+                    updateNode(node);
+                }
+            }
+        });
+
+        // Transforms Changed
+        Signals.connect(this, 'transformsChanged', (entities) => {
+            if (!Array.isArray(entities)) entities = [ entities ];
+            const uuidArray = SALT.Uuid.arrayFromObjects(entities);
+
+            // Update Nodes reponsible for Worlds
+            for (const node of graph.getNodes()) {
+                if (node.world && node.world.isWorld && uuidArray.includes(node.world.uuid)) {
                     updateNode(node);
                 }
             }
@@ -332,7 +354,7 @@ class Worlds extends AbstractView {
         const cmds = [];
         cmds.push(new SelectCommand([], editor.selected));
         clones.forEach((world) => { cmds.push(new AddWorldCommand(world)); });
-        cmds.push(new SetStageCommand(clones[0].activeStage(), clones[0]));
+        cmds.push(new SetStageCommand(clones[0].type, clones[0].activeStage(), clones[0]));
         cmds.push(new SelectCommand(clones, []));
         editor.execute(new MultiCmdsCommand(cmds, `${commandName} World`));
     }
@@ -344,7 +366,7 @@ class Worlds extends AbstractView {
         // Remove Worlds
         const cmds = [];
         cmds.push(new SelectCommand([], editor.selected));
-        cmds.push(new SetStageCommand(null, null));
+        cmds.push(new SetStageCommand(editor.viewport().worldType(), null, null));
         worlds.forEach((world) => { cmds.push(new RemoveWorldCommand(world)); });
         editor.execute(new MultiCmdsCommand(cmds, `${commandName} World${worlds.length > 1 ? 's' : ''}`));
     }

@@ -113,12 +113,6 @@ class Editor extends SUEY.MainWindow {
     loadProject(json, demo = false) {
         const editor = this;
         function newProjectLoaded() {
-            //
-            // TODO: Editor World / Stage
-            //
-            // editor.world = editor.project.activeWorld();
-            // editor.stage = editor.world.activeStage();
-            //
             editor.commands.clear();                            // clear history
             editor.viewport()?.cameraReset();                   // reset camera
             Signals.dispatch('sceneGraphChanged');              // rebuild outliner
@@ -176,10 +170,19 @@ class Editor extends SUEY.MainWindow {
         return Config.getKey('editor/mode');
     }
 
-    viewport() {
-        const currentMode = this.mode();
-        for (const viewport of this.viewports) {
-            if (viewport.mode() === currentMode && viewport.isDisplayed()) return viewport;
+    viewport(worldType) {
+        // Viewport by World Type
+        if (worldType && worldType.isWorld) worldType = worldType.type;
+        if (worldType) {
+            for (const viewport of this.viewports) {
+                if (viewport.worldType() === worldType) return viewport;
+            }
+        // Active Viewport
+        } else {
+            const currentMode = this.mode();
+            for (const viewport of this.viewports) {
+                if (viewport.mode() === currentMode && viewport.isDisplayed()) return viewport;
+            }
         }
     }
 
@@ -438,9 +441,9 @@ function editorIgnoreKey(event) {
     // IGNORE: Focused HTMLElement contains specific attribute
     const focused = document.activeElement;
     if (focused && focused instanceof HTMLElement) {
-        // const editable = focused.getAttribute('contentEditable');
-        // const tabIndex = focused.tabIndex;
-        if (!(focused instanceof HTMLBodyElement)) return true;
+        if (focused.closest('.salt-history')) return false;             // history child
+        if (focused.closest('.salt-viewport')) return false;            // viewport child
+        if (!(focused instanceof HTMLBodyElement)) return true;         // not a viewport
     }
 
     // DON'T IGNORE

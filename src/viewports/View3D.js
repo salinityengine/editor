@@ -33,6 +33,8 @@ class View3D extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
+    worldType() { return 'World3D'; }
+
     constructor() {
         super();
 

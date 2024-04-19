@@ -18,6 +18,7 @@ class History extends SmartFloater {
     constructor() {
         const icon = `${FOLDER_FLOATERS}history.svg`;
         super('history', { icon, color: '#BF4044', shadow: false, shrink: 0.75 });
+        this.addClass('salt-history');
         Advice.attach(this.button, 'floater/history');
 
         /***** HEADER BUTTONS *****/
