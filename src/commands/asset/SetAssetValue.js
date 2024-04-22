@@ -7,34 +7,29 @@ class SetAssetValueCommand extends Command {
 
     constructor(asset, attributeName, newValue, updatable = true) {
         super();
-        this.type = 'SetAssetValueCommand';
-        this.brief = `Set Asset Value: ${attributeName}`;
+
+        // Cancel?
+        if (!asset || !asset.uuid) return this.cancel(`SetAssetValueCommand: Missing or invalid asset provided`);
+
+        // Properties
+        this.asset = asset;
+        this.assetType = SALT.AssetManager.checkType(asset);
+        this.attributeName = attributeName;
+        this.oldValue = asset[attributeName];
+        this.newValue = newValue;
         this.updatable = updatable;
 
-        if (!asset) {
-            this.valid = false;
-            return;
-        } else {
-            this.asset = asset;
-            this.assetType = SALT.AssetManager.checkType(asset);
-            this.attributeName = attributeName;
-            this.oldValue = asset[attributeName];
-            this.newValue = newValue;
-        }
+        // Brief
+        this.brief = `Set Asset Value: ${attributeName}`;
     }
 
     execute() {
-        this.asset[this.attributeName] = this.newValue;
+        setAttributeValue(this.asset, this.attributeName, this.newValue);
         Signals.dispatch('assetChanged', this.assetType, this.asset);
     }
 
-    redo() {
-        this.execute();
-        Signals.dispatch('inspectorBuild', this.asset);
-    }
-
     undo() {
-        this.asset[this.attributeName] = this.oldValue;
+        setAttributeValue(this.asset, this.attributeName, this.oldValue);
         Signals.dispatch('assetChanged', this.assetType, this.asset);
     }
 
@@ -45,3 +40,14 @@ class SetAssetValueCommand extends Command {
 }
 
 export { SetAssetValueCommand };
+
+/******************** INTERNAL ********************/
+
+function setAttributeValue(object, attribute, value) {
+    if (typeof object !== 'object') return;
+    if (object[attribute] && typeof object[attribute].copy === 'function') {
+        object[attribute].copy(value);
+    } else {
+        object[attribute] = value;
+    }
+}

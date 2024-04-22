@@ -6,24 +6,24 @@ class MoveEntityCommand extends Command {
 
     constructor(entity, newParent, newBefore) {
         super();
-        this.type = 'MoveEntityCommand';
-        this.brief = 'Move Entity';
 
+        // Properties
         this.entity = entity;
         this.oldParent = (entity && entity.isEntity) ? entity.parent : undefined;
         this.oldIndex = (this.oldParent !== undefined) ? this.oldParent.children.indexOf(this.entity) : undefined;
         this.newParent = newParent;
-
         if (newBefore !== undefined) {
             this.newIndex = (newParent !== undefined) ? newParent.children.indexOf(newBefore) : undefined;
         } else {
             this.newIndex = (newParent !== undefined) ? newParent.children.length : undefined;
         }
-
         if (this.oldParent === this.newParent && this.newIndex > this.oldIndex) {
             this.newIndex--;
         }
         this.newBefore = newBefore;
+
+        // Brief
+        this.brief = 'Move Entity';
     }
 
     moveEntity(parent, index) {

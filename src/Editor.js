@@ -158,10 +158,6 @@ class Editor extends SUEY.MainWindow {
         // Load Floaters
         Layout.load();
 
-        // Clear Inspector / Previewer
-        Signals.dispatch('inspectorClear');
-        Signals.dispatch('previewerClear');
-
         // Dispatch Signals
         Signals.dispatch('editorModeChanged', mode);
     }
@@ -242,8 +238,8 @@ class Editor extends SUEY.MainWindow {
      * This function is *** NOT *** meant to run through Undo/Redo Commands
      * Emits 'selectionChanged' signal upon new selection
      */
-    selectEntities(/* entity, entity array, or any number of entites to select */) {
-        const entities = Array.isArray(arguments[0]) ? arguments[0] : [ ...arguments ];
+    selectEntities(...entities) {
+        if (entities.length > 0 && Array.isArray(entities[0])) entities = entities[0];
 
         // Verify items are valid for selection
         const filtered = [];
@@ -252,13 +248,8 @@ class Editor extends SUEY.MainWindow {
             filtered.push(entity);
         }
 
-        // New selection same as current selection? Refresh Inspector (but don't refresh view transformGroup)
-        if (SALT.Arrays.compareEntityArrays(this.selected, filtered)) {
-            if (this.selected.length > 0) {
-                Signals.dispatch('inspectorBuild', this.selected, (this.selected.length > 0) /* highlight? */);
-                return;
-            }
-        }
+        // New selection same as current selection?
+        if (SALT.Arrays.compareEntityArrays(this.selected, filtered)) return;
 
         // Update selection array
         this.selected = [ ...filtered ];

@@ -5,17 +5,20 @@ class SetScriptSourceCommand extends Command {
 
     constructor(script, newSource, newErrors) {
         super();
-        this.type = 'SetScriptSourceCommand';
-        this.brief = `Set Script Source`;
+
+        // Cancel?
+        if (!script || !script.uuid) return this.cancel(`SetScriptSourceCommand: Missing or invalid script provided`);
+
+        // Properties
+        this.script = script;
+        this.oldSource = (script !== undefined) ? script.source : undefined;
+        this.oldErrors = (script !== undefined) ? script.errors : false;
+        this.newSource = newSource;
+        this.newErrors = newErrors;
         this.updatable = true;
 
-        this.script = script;
-
-        this.oldSource = (script !== undefined) ? script.source : undefined;
-        this.newSource = newSource;
-
-        this.oldErrors = (script !== undefined) ? script.errors : false;
-        this.newErrors = newErrors;
+        // Brief
+        this.brief = `Set Script Source: ${script.name}`;
     }
 
     execute() {

@@ -7,24 +7,15 @@ class AddWorldCommand extends Command {
     constructor(world) {
         super();
 
-        // Cancel if 'world' is not valid
-        if (!world || !world.isWorld) {
-            this.valid = false;
-            return;
-        }
+        // Cancel?
+        if (!world || !world.isWorld) return this.cancel();
 
-        // Cancel if 'world' is already in Project
-        const checkWorld = editor.project.getWorldByUUID(world.uuid);
-        if (checkWorld && checkWorld.isWorld) {
-            this.valid = false;
-            return;
-        }
-
-        this.type = 'AddWorldCommand';
-        this.brief = `Add World: ${world.name}`;
+        // Properties
         this.world = world;
-
         this.wasAdded = false;
+
+        // Brief
+        this.brief = `Add World: ${world.name}`;
     }
 
     purge() {

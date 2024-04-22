@@ -6,18 +6,16 @@ class AddComponentCommand extends Command {
 
     constructor(entity, componentType, data = {}) {
         super();
-        this.type = 'AddComponentCommand';
-        this.brief = `Add Component: ${componentType}`;
 
+        // Properties
         this.entity = entity;
         this.componentType = componentType;
         this.components = [];
-
-        // Save data
         this.data = structuredClone(data);
-
-        // Flag
         this.wasAdded = false;
+
+        // Brief
+        this.brief = `Add Component: ${componentType}`;
     }
 
     purge() {
@@ -50,7 +48,6 @@ class AddComponentCommand extends Command {
 
         this.wasAdded = true;
         Signals.dispatch('sceneGraphChanged');
-        Signals.dispatch('inspectorRefresh');
     }
 
     undo() {
@@ -65,7 +62,6 @@ class AddComponentCommand extends Command {
 
         this.wasAdded = false;
         Signals.dispatch('sceneGraphChanged');
-        Signals.dispatch('inspectorRefresh');
     }
 
 }

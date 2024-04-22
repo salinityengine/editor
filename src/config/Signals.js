@@ -28,15 +28,10 @@ const SIGNAL_NAMES = [
     /***** VIEWPORT **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
     'mouseModeChanged',         // (mouse mode)         FUNCTION    Change mouse mode
-    'mouseStateChanged',        // (state, cursor)      ALERT       Mouse state was changed
-
     'transformModeChanged',     // (mode, temp?)        FUNCTION    Change transform mode
 
     'cameraChanged',            // -                    ALERT       Viewport camera was changed
     'gridChanged',              // -                    ALERT       Change to grid settings (shown, snap, etc.)
-
-    'preTransform',             // -                    ALERT       We're about to change some Entity transforms
-    'postTransform',            // -                    ALERT       We're done changing, record changes as History
 
     'draggingStarted',          // -                    ALERT       Dragging of selected items (translation) started
     'draggingEnded',            // -                    ALERT       Dragging of selected items (translation) ended

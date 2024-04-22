@@ -7,20 +7,18 @@ class AddAssetCommand extends Command {
 
     constructor(asset) {
         super();
-        this.type = 'AddAssetCommand';
 
-        this.assetType = SALT.AssetManager.checkType(asset);
-        this.brief = `Add ${SUEY.Strings.capitalize(this.assetType)}`;
-        if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
+        // Cancel?
+        if (!asset || !asset.uuid) return this.cancel(`AddAssetCommand: Missing or invalid asset provided`);
 
+        // Properties
         this.asset = asset;
+        this.assetType = SALT.AssetManager.checkType(asset);
         this.wasAdded = false;
 
-        // Cancel if no uuid
-        if (!asset.uuid) {
-            this.valid = false;
-            console.warn(`AddAssetCommand.constructor(): Asset has no uuid - `, asset);
-        }
+        // Brief
+        this.brief = `Add ${SUEY.Strings.capitalize(this.assetType)}`;
+        if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
     }
 
     invalid() {
@@ -28,7 +26,7 @@ class AddAssetCommand extends Command {
     }
 
     purge() {
-        if (!this.wasAdded && this.asset && typeof this.asset.dispose === 'function') this.asset.dispose();
+        if (!this.wasAdded && typeof this.asset.dispose === 'function') this.asset.dispose();
     }
 
     execute() {
@@ -36,9 +34,6 @@ class AddAssetCommand extends Command {
             SALT.AssetManager.add(this.asset);
             this.wasAdded = true;
             Signals.dispatch('assetAdded', this.assetType, this.asset);
-            Signals.dispatch('assetSelect', this.assetType, this.asset);
-            Signals.dispatch('inspectorClear');
-            Signals.dispatch('previewerClear');
         }
     }
 
@@ -47,8 +42,6 @@ class AddAssetCommand extends Command {
             SALT.AssetManager.remove(this.asset, false /* dispose */);
             this.wasAdded = false;
             Signals.dispatch('assetRemoved', this.assetType, this.asset);
-            Signals.dispatch('inspectorClear');
-            Signals.dispatch('previewerClear');
         }
     }
 

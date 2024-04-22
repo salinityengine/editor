@@ -33,7 +33,7 @@ class AssetBlock extends SUEY.Shrinkable {
         arrow = 'left',
         border = true,
     } = {}) {
-        if (!type) return console.error(`AssetBlock.constructor(): Missing 'type' argument`);
+        if (!type) return console.error(`AssetBlock: Missing 'type' argument`);
 
         // Super
         super({ title, icon, arrow, border });

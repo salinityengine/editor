@@ -2,6 +2,10 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Signals:
+    - Fix inspector / previewer (SelectionChanged / SceneGraphChanged)
+    - Replace set stage (remove editor.viewport)
+
 Project:
     - Check Save / Load
     - 2D Components

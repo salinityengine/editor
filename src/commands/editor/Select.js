@@ -8,24 +8,22 @@ class SelectCommand extends Command {
 
     constructor(entityArray = [], oldSelectionArray = []) {
         super();
-        this.type = 'SelectCommand';
+
+        // Cancel?
+        if (SALT.Arrays.compareEntityArrays(entityArray, oldSelectionArray)) return this.cancel();
 
         // Properties
-        this.newSelection = Array.isArray(entityArray) ? [...entityArray] : [ entityArray ];
-        this.oldSelection = Array.isArray(oldSelectionArray) ? [...oldSelectionArray] : [ oldSelectionArray ];
+        this.newSelection = Array.isArray(entityArray) ? [ ...entityArray ] : [ entityArray ];
+        this.oldSelection = Array.isArray(oldSelectionArray) ? [ ...oldSelectionArray ] : [ oldSelectionArray ];
 
-        // Command Brief
-        this.brief = 'Select Entities';
+        // Brief
         if (this.newSelection.length === 0) {
             this.brief = 'Select None';
         } else if (this.newSelection.length === 1) {
             const entity = this.newSelection[0];
             this.brief = `Select ${entity.type}: ${entity.name}`;
-        }
-
-        // Cancel command if no change to selection
-        if (SALT.Arrays.compareEntityArrays(entityArray, oldSelectionArray)) {
-            this.valid = false;
+        } else {
+            this.brief = 'Select Entities';
         }
     }
 

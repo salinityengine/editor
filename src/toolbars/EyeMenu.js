@@ -253,9 +253,7 @@ class EyeMenu extends SUEY.Menu {
             // Update Items on Editor Mode Changed
             Signals.connect(editor, 'editorModeChanged', () => {
                 const allowed = editor.viewport().floaterFamily();
-                for (const windowItem of windowItems) {
-                    windowItem.setStyle('display', allowed.includes(windowItem.floaterType) ? '' : 'none');
-                }
+                windowItems.forEach((item) => { item.setStyle('display', allowed.includes(item.floaterType) ? '' : 'none'); });
                 updateWindowItems();
             });
         }

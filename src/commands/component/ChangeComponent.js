@@ -6,22 +6,23 @@ class ChangeComponentCommand extends Command {
 
     constructor(component, newData = {}, optionalOldData = undefined) {
         super();
-        this.type = 'ChangeComponentCommand';
-        this.brief = `Change Component: ${component.type}`;
-        this.updatable = true;
 
+        // Properties
         this.entity = component.entity;
         this.componentType = component.type;
         this.componentIndex = this.entity.getComponentsWithProperties('type', this.componentType).indexOf(component);
+        this.updatable = true;
 
         // Sanitize data
         this.newData = {};
         SALT.ComponentManager.sanitizeData(component.type, newData);
         for (let key in newData) this.newData[key] = newData[key];
-
         this.oldData = {};
         if (!optionalOldData) optionalOldData = component.toJSON();
         for (let key in optionalOldData) this.oldData[key] = optionalOldData[key];
+
+        // Brief
+        this.brief = `Change Component: ${component.type}`;
     }
 
     purge() {
@@ -42,11 +43,6 @@ class ChangeComponentCommand extends Command {
         Signals.dispatch('componentChanged', component);
     }
 
-    redo() {
-        this.execute();
-        Signals.dispatch('inspectorRefresh');
-    }
-
     undo() {
         // Get Component by Type / Index
         const component = this.entity.getComponentsWithProperties('type', this.componentType)[this.componentIndex];
@@ -58,7 +54,6 @@ class ChangeComponentCommand extends Command {
 
         // Signals
         Signals.dispatch('componentChanged', component);
-        Signals.dispatch('inspectorRefresh');
     }
 
     update(command) {

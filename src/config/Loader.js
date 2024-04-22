@@ -7,7 +7,6 @@ import * as SUEY from 'gui'
 import { Signals } from './Signals.js';
 
 import { AddAssetCommand } from '../commands/CommandList.js';
-import { AddEntityCommand } from '../commands/CommandList.js';
 
 import { unzipSync, strFromU8 } from '../libs/fflate.module.js';
 

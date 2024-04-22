@@ -6,19 +6,18 @@ class PositionWorldCommand extends Command {
     constructor(world, newX = 0, newY = 0) {
         super();
 
-        this.type = 'PositionWorldCommand';
-        this.brief = 'Change World Position';
+        // Cancel?
+        if (!world || !world.isWorld) return this.cancel();
+
+        // Properties
         this.world = world;
-
-        if (!world || !world.isWorld) {
-            this.valid = false;
-            return;
-        }
-
         this.newX = parseFloat(newX);
         this.newY = parseFloat(newY);
         this.oldX = world.xPos;
         this.oldY = world.yPos;
+
+        // Brief
+        this.brief = 'Change World Position';
     }
 
     execute() {

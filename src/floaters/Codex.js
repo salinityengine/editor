@@ -155,7 +155,10 @@ class Codex extends SmartFloater {
         }
 
         Signals.connect(this, 'assetSelect', focusAsset);
-        Signals.connect(this, 'assetAdded', processScripts);
+        Signals.connect(this, 'assetAdded', () => {
+            processScripts();
+            focusAsset();
+        });
         Signals.connect(this, 'assetRemoved', processScripts);
         Signals.connect(this, 'assetChanged', assetChanged);
         Signals.connect(this, 'projectLoaded', projectLoaded);

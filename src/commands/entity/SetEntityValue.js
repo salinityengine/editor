@@ -5,33 +5,36 @@ class SetEntityValueCommand extends Command {
 
     constructor(entity, attributeName, newValue, recursive = false) {
         super();
-        this.type = 'SetValueCommand';
-        this.brief = `Set Entity Value: ${attributeName}`;
-        this.updatable = true;
-        this.recursive = recursive;
 
+        // Properties
         this.entity = entity;
         this.attributeName = attributeName;
         this.oldValue = (entity !== undefined) ? entity[attributeName] : undefined;
         this.newValue = newValue;
+        this.recursive = recursive;
+        this.updatable = true;
+
+        // Brief
+        this.brief = `Set Entity Value: ${attributeName}`;
+    }
+
+    setValue(value) {
+        const attribute = this.attributeName;
+        if (this.recursive) {
+            this.entity.traverse((child) => setAttributeValue(child, attribute, value));
+        } else {
+            setAttributeValue(this.entity, attribute, value);
+        }
     }
 
     execute() {
-        if (this.recursive) {
-            this.entity.traverse((child) => { child[this.attributeName] = this.newValue; });
-        } else {
-            this.entity[this.attributeName] = this.newValue;
-        }
+        this.setValue(this.newValue);
         Signals.dispatch('entityChanged', this.entity);
         Signals.dispatch('sceneGraphChanged');
     }
 
     undo() {
-        if (this.recursive) {
-            this.entity.traverse((child) => { child[this.attributeName] = this.oldValue; });
-        } else {
-            this.entity[this.attributeName] = this.oldValue;
-        }
+        this.setValue(this.oldValue);
         Signals.dispatch('entityChanged', this.entity);
         Signals.dispatch('sceneGraphChanged');
     }
@@ -43,3 +46,14 @@ class SetEntityValueCommand extends Command {
 }
 
 export { SetEntityValueCommand };
+
+/******************** INTERNAL ********************/
+
+function setAttributeValue(object, attribute, value) {
+    if (typeof object !== 'object') return;
+    if (object[attribute] && typeof object[attribute].copy === 'function') {
+        object[attribute].copy(value);
+    } else {
+        object[attribute] = value;
+    }
+}

@@ -4,7 +4,6 @@ export { MultiCmdsCommand } from './MultiCmds.js';
 // ASSET
 export { AddAssetCommand } from './asset/AddAsset.js';
 export { RemoveAssetCommand } from './asset/RemoveAsset.js';
-export { SetAssetCopyCommand } from './asset/SetAssetCopy.js';
 export { SetAssetValueCommand } from './asset/SetAssetValue.js';
 export { SetScriptSourceCommand } from './asset/SetScriptSource.js';
 

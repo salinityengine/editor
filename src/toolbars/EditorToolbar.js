@@ -89,16 +89,10 @@ class EditorToolbar extends SUEY.Panel {
         ui.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.UI_EDITOR)));
 
         Signals.connect(this, 'editorModeChanged', function(mode) {
-            scene2d.removeClass('suey-selected');
-            scene3d.removeClass('suey-selected');
-            world.removeClass('suey-selected');
-            ui.removeClass('suey-selected');
-            switch (mode) {
-                case EDITOR_MODES.SCENE_EDITOR_2D: scene2d.addClass('suey-selected'); break;
-                case EDITOR_MODES.SCENE_EDITOR_3D: scene3d.addClass('suey-selected'); break;
-                case EDITOR_MODES.WORLD_GRAPH: world.addClass('suey-selected'); break;
-                case EDITOR_MODES.UI_EDITOR: ui.addClass('suey-selected'); break;
-            }
+            scene2d.wantsClass('suey-selected', mode === EDITOR_MODES.SCENE_EDITOR_2D);
+            scene3d.wantsClass('suey-selected', mode === EDITOR_MODES.SCENE_EDITOR_3D);
+            world.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_GRAPH);
+            ui.wantsClass('suey-selected', mode === EDITOR_MODES.UI_EDITOR);
         });
 
         /******************** PLAY */

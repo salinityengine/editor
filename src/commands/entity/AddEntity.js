@@ -4,25 +4,21 @@ import { Signals } from '../../config/Signals.js';
 
 class AddEntityCommand extends Command {
 
-    constructor(entity, parent = undefined, index = -1, maintainWorldTransform = false) {
+    constructor(entity, parent = undefined, index = -1) {
         super();
-        this.type = 'AddEntityCommand';
-        this.brief = `Add Entity: ${entity.name}`;
 
-        // Cancel if no Entity
-        if (!entity) {
-            this.valid = false;
-            return;
-        }
+        // Cancel?
+        if (!entity) return this.cancel();
 
+        // Properties
         this.entity = entity;
         this.parent = parent ?? editor.viewport()?.getWorld()?.activeStage();
         this.index = (index === undefined || index === null) ? -1 : index;
-        this.maintainWorldTransform = maintainWorldTransform;
-
         this.project = editor.project;
-
         this.wasAdded = false;
+
+        // Brief
+        this.brief = `Add Entity: ${entity.name}`;
     }
 
     purge() {
@@ -36,7 +32,7 @@ class AddEntityCommand extends Command {
             this.project.addWorld(this.entity);
             Signals.dispatch('entityChanged', this.entity);
         } else {
-            this.parent.addEntity(this.entity, this.index, this.maintainWorldTransform);
+            this.parent.addEntity(this.entity, this.index);
             Signals.dispatch('entityChanged', this.entity);
             Signals.dispatch('entityChanged', this.parent);
         }

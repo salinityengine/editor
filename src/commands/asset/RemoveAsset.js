@@ -7,24 +7,22 @@ class RemoveAssetCommand extends Command {
 
     constructor(asset) {
         super();
-        this.type = 'RemoveAssetCommand';
 
-        this.assetType = SALT.AssetManager.checkType(asset);
-        this.brief = `Remove ${SUEY.Strings.capitalize(this.assetType)}`;
-        if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
+        // Cancel?
+        if (!asset || !asset.uuid) return this.cancel(`RemoveAssetCommand: Missing or invalid asset provided`);
 
+        // Properties
         this.asset = asset;
+        this.assetType = SALT.AssetManager.checkType(asset);
         this.wasRemoved = false;
 
-        // Cancel if no uuid
-        if (!asset.uuid) {
-            this.valid = false;
-            console.warn(`RemoveAssetCommand.constructor(): Asset has no uuid - `, asset);
-        }
+        // Brief
+        this.brief = `Remove ${SUEY.Strings.capitalize(this.assetType)}`;
+        if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
     }
 
     purge() {
-        if (this.wasRemoved && this.asset && typeof this.asset.dispose === 'function') this.asset.dispose();
+        if (this.wasRemoved && typeof this.asset.dispose === 'function') this.asset.dispose();
     }
 
     execute() {
@@ -32,7 +30,6 @@ class RemoveAssetCommand extends Command {
             SALT.AssetManager.remove(this.asset, false /* dispose */);
             this.wasRemoved = true;
             Signals.dispatch('assetRemoved', this.assetType, this.asset);
-            Signals.dispatch('inspectorClear');
         }
     }
 
@@ -41,8 +38,6 @@ class RemoveAssetCommand extends Command {
             SALT.AssetManager.add(this.asset);
             this.wasRemoved = false;
             Signals.dispatch('assetAdded', this.assetType, this.asset);
-            Signals.dispatch('assetSelect', this.assetType, this.asset);
-            Signals.dispatch('inspectorClear');
         }
     }
 
