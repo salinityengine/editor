@@ -123,8 +123,8 @@ class Assets extends SmartFloater {
         }
 
         Signals.connect(this, 'assetSelect', focusAsset);
-        Signals.connect(this, 'assetAdded', () => {
-            processAssets();
+        Signals.connect(this, 'assetAdded', (type, asset) => {
+            processAssets(type, asset);
             focusAsset();
         });
         Signals.connect(this, 'assetRemoved', processAssets);

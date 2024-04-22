@@ -336,14 +336,13 @@ class EntityTransformProperties extends SUEY.Div {
         };
 
         function transformsChanged(entityArray) {
-            if (!Array.isArray(entityArray)) return;
-
             // Limit how often to update UI
             let timeSinceUpdate = performance.now() - _lastSignalTime;
             if (timeSinceUpdate < PROCESS_SIGNAL_MILLISECONDS) return;
             _lastSignalTime = performance.now();
 
             // If entity is selected, update UI
+            if (!Array.isArray(entityArray)) entityArray = [ entityArray ];
             for (const changedEntity of entityArray) entityChanged(changedEntity);
         }
 

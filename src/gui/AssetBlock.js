@@ -264,7 +264,7 @@ class AssetBlock extends SUEY.Shrinkable {
             } else if (this.type === 'material') {
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, null /* geometry */, asset /* material */);
             } else if (this.type === 'palette') {
-                item.on('dblclick', () => Signals.dispatch('previewerBuild', asset));
+                item.on('dblclick', () => Signals.dispatch('assetSelect', 'palette', asset));
                 canvas.style['border-radius'] = 'var(--radius-small)';
                 CanvasUtils.drawPalette(canvas, asset /* palette */);
 
@@ -280,7 +280,7 @@ class AssetBlock extends SUEY.Shrinkable {
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
                 // shapeGeometry.dispose();
             } else if (this.type === 'texture') {
-                // item.on('dblclick', () => Signals.dispatch('previewerBuild', asset));
+                // item.on('dblclick', () => Signals.dispatch('assetSelect', 'texture', asset));
                 // const texture = asset;
                 // if (texture.image && texture.image.complete) texture.needsUpdate = true;
                 // SALT.RenderUtils.renderTextureToCanvas(canvas, texture);
@@ -323,12 +323,12 @@ class AssetBlock extends SUEY.Shrinkable {
                 innerBox.dom.appendChild(canvas);
                 SALT.RenderUtils.renderMeshToCanvas(canvas, prefab);
             }
-            item.on('dblclick', () => Signals.dispatch('previewerBuild', prefab));
+            item.on('dblclick', () => Signals.dispatch('assetSelect', 'prefab', prefab));
             item.on('keydown', (event) => {
                 if (event.key === 'Enter') {
                     event.preventDefault();
                     event.stopPropagation();
-                    Signals.dispatch('previewerBuild', prefab);
+                    Signals.dispatch('assetSelect', 'prefab', prefab);
                 }
             });
 
@@ -342,7 +342,7 @@ class AssetBlock extends SUEY.Shrinkable {
 
         // SELECT
         item.on('focus', () => {
-            Signals.dispatch('previewerBuild', asset);
+            Signals.dispatch('assetSelect', asset.type, asset);
         });
 
         // KEY PRESS

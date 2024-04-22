@@ -15,8 +15,8 @@ class SetAssetValueCommand extends Command {
         this.asset = asset;
         this.assetType = SALT.AssetManager.checkType(asset);
         this.attributeName = attributeName;
-        this.oldValue = asset[attributeName];
-        this.newValue = newValue;
+        this.oldValue = structuredClone(asset[attributeName]);
+        this.newValue = structuredClone(newValue);
         this.updatable = updatable;
 
         // Brief
@@ -34,7 +34,7 @@ class SetAssetValueCommand extends Command {
     }
 
     update(cmd) {
-        this.newValue = cmd.newValue;
+        this.newValue = structuredClone(cmd.newValue);
     }
 
 }
@@ -48,6 +48,6 @@ function setAttributeValue(object, attribute, value) {
     if (object[attribute] && typeof object[attribute].copy === 'function') {
         object[attribute].copy(value);
     } else {
-        object[attribute] = value;
+        object[attribute] = structuredClone(value);
     }
 }

@@ -32,9 +32,8 @@ class Previewer extends SmartFloater {
         /**
          * Builds (or rebuilds) the object previewer
          * @param {any} from - The uuid object or array of objects to build from. Pass 'rebuild' to recreate with existing object.
-         * @param {boolean} [highlight=true] - Whether the Previewer should be selected within the Editor.
          */
-        function build(from = undefined, highlight = true) {
+        function build(from = undefined) {
             // Process 'from'
             if (from !== 'rebuild') {
                 // TEMP: Only process first entity
@@ -81,23 +80,22 @@ class Previewer extends SmartFloater {
 
             // Add Blocks
             self.add(...blocks);
-
-            // Select this Floater
-            if (highlight && self.dock) self.dock.selectFloater(self.id);
-
-            // Dispatch Signals
-            Signals.dispatch('previewerChanged');
         }
 
         /***** SIGNALS *****/
 
-        Signals.connect(this, 'previewerBuild', (from) => build(from, true /* highlight? */));
-        Signals.connect(this, 'previewerClear', () => build(undefined, false /* highlight? */));
-        Signals.connect(this, 'previewerRefresh', () => build('rebuild', true /* highlight? */));
+        Signals.connect(this, 'promodeChanged', () => build('rebuild'));
+        Signals.connect(this, 'settingsRefreshed', () => build('rebuild'));
+        Signals.connect(this, 'projectLoaded', () => build(undefined));
 
-        Signals.connect(this, 'projectLoaded', () => build(undefined, false));
-        Signals.connect(this, 'settingsRefreshed', () => build('rebuild', false));
-        Signals.connect(this, 'promodeChanged', () => build('rebuild', false));
+        //
+        // TODO
+        //
+        // Signals.connect(this, 'assetAdded', (type, asset) => { });
+        // Signals.connect(this, 'assetChanged', (type, asset) => { });
+        // Signals.connect(this, 'assetRemoved', (type, asset) => { });
+
+        Signals.connect(this, 'assetSelect', (type, asset) => build(asset));
 
         /***** INIT *****/
 

@@ -127,7 +127,7 @@ class CameraProperties extends SUEY.Div {
         }
 
         function transformsChanged(entityArray) {
-            if (!Array.isArray(entityArray)) return;
+            entityArray = Array.isArray(entityArray) ? entityArray : [ entityArray ];
             for (const entity of entityArray) entityChanged(entity);
         }
 

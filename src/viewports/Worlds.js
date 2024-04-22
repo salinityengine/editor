@@ -11,11 +11,11 @@ import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 import { WorldsToolbar } from '../toolbars/WorldsToolbar.js';
 
-import { AddWorldCommand } from '../commands/CommandList.js';
+import { AddEntityCommand } from '../commands/CommandList.js';
 import { MultiCmdsCommand } from '../commands/CommandList.js';
-import { PositionWorldCommand } from '../commands/CommandList.js';
-import { RemoveWorldCommand } from '../commands/CommandList.js';
+import { RemoveEntityCommand } from '../commands/CommandList.js';
 import { SelectCommand } from '../commands/CommandList.js';
+import { SetEntityValueCommand } from '../commands/CommandList.js';
 import { SetStageCommand } from '../commands/CommandList.js';
 
 class Worlds extends AbstractView {
@@ -58,15 +58,15 @@ class Worlds extends AbstractView {
             if (world.isFuture) color = '#ee20ff';  // purple
 
             const node = new SUEY.Node({
-                x: world.xPos,
-                y: world.yPos,
+                x: world.position.x,
+                y: world.position.y,
                 color,
                 resizers: [],
             });
             node.world = world;
 
             if (world.isWorld2D) {
-                node.createHeader('World 2D', `${FOLDER_MENU}node/world2d.svg`);
+                node.createHeader(world.name, `${FOLDER_MENU}node/world2d.svg`);
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.OUTPUT, title: 'Load UI' }));
             } else if (world.isWorld3D) {
@@ -89,8 +89,8 @@ class Worlds extends AbstractView {
                     if (!node.world || !node.world.isWorld) return;
                     const x = node.left;
                     const y = node.top;
-                    if (node.world.xPos !== x || node.world.yPos !== y) {
-                        cmds.push(new PositionWorldCommand(node.world, x, y));
+                    if (node.world.position.x !== x || node.world.position.y !== y) {
+                        cmds.push(new SetEntityValueCommand(node.world, node.world.position, [ x, y ]));
                     }
                 });
                 if (cmds.length > 0) {
@@ -135,8 +135,8 @@ class Worlds extends AbstractView {
         // Update Node Location
         function updateNode(node) {
             node.setStyle(
-                'left', `${parseFloat(node.world.xPos)}px`,
-                'top', `${parseFloat(node.world.yPos)}px`,
+                'left', `${parseFloat(node.world.position.x)}px`,
+                'top', `${parseFloat(node.world.position.y)}px`,
             );
         }
 
@@ -174,7 +174,7 @@ class Worlds extends AbstractView {
         /********** SIGNALS */
 
         // Grid Changed
-        Signals.connect(this, 'gridChanged', function() {
+        Signals.connect(this, 'gridChanged', () => {
             graph.snapToGrid = Config.getKey('viewport/grid/snap');
             if (self.isHidden()) return;
             // Update while dragging
@@ -189,27 +189,27 @@ class Worlds extends AbstractView {
             graph.changeGridType(Config.getKey('world/grid/style'));
         });
 
-        // Project Loaded
-        Signals.connect(this, 'projectLoaded', function() {
-            refreshNodes();
-            graph.centerView(true /* resetZoom */, false /* animate */);
-        });
-
         // Refresh Settings
-        Signals.connect(this, 'settingsRefreshed', function() {
+        Signals.connect(this, 'settingsRefreshed', () => {
             graph.curveType = Config.getKey('world/curve');
             graph.changeGridType(Config.getKey('world/grid/style'));
         });
 
-        Signals.connect(this, 'fontSizeChanged', function() {
+        Signals.connect(this, 'fontSizeChanged', () => {
             setTimeout(() => graph.drawLines(), 0);
         });
 
         // Scene Graph Changed
         Signals.connect(this, 'sceneGraphChanged', refreshNodes);
 
+        // Project Loaded
+        Signals.connect(this, 'projectLoaded', () => graph.centerView(true /* resetZoom */, false /* animate */));
+
         // Selection Changed
-        Signals.connect(this, 'selectionChanged', function() {
+        Signals.connect(this, 'selectionChanged', () => {
+            if (self.isHidden()) return;
+
+            // Refresh
             refreshNodes();
 
             // Find Viewport Worlds
@@ -245,25 +245,12 @@ class Worlds extends AbstractView {
         });
 
         // Entity Changed
-        Signals.connect(this, 'entityChanged', function(entity) {
+        Signals.connect(this, 'entityChanged', (entity) => {
             if (!entity || !entity.isWorld) return;
 
             // Update Node reponsible for World
             for (const node of graph.getNodes()) {
                 if (node.world && node.world.isWorld && node.world.uuid === entity.uuid) {
-                    updateNode(node);
-                }
-            }
-        });
-
-        // Transforms Changed
-        Signals.connect(this, 'transformsChanged', (entities) => {
-            if (!Array.isArray(entities)) entities = [ entities ];
-            const uuidArray = SALT.Uuid.arrayFromObjects(entities);
-
-            // Update Nodes reponsible for Worlds
-            for (const node of graph.getNodes()) {
-                if (node.world && node.world.isWorld && uuidArray.includes(node.world.uuid)) {
                     updateNode(node);
                 }
             }
@@ -324,8 +311,8 @@ class Worlds extends AbstractView {
         graphNodes.forEach((node) => {
             const world = node.world;
             if (!world || !world.isWorld) return;
-            minX = Math.min(minX, world.xPos); maxX = Math.max(maxX, world.xPos + node.width);
-            minY = Math.min(minY, world.yPos); maxY = Math.max(maxY, world.yPos + node.height);
+            minX = Math.min(minX, world.position.x); maxX = Math.max(maxX, world.position.x + node.width);
+            minY = Math.min(minY, world.position.y); maxY = Math.max(maxY, world.position.y + node.height);
         });
         const nodesWidth = Math.max(0, maxX - minX);
         const nodesHeight = Math.max(0, maxY - minY);
@@ -340,10 +327,10 @@ class Worlds extends AbstractView {
                 const world = entity.clone();
                 if (!world.name.startsWith('Copy of')) world.name = 'Copy of ' + world.name;
                 switch (key) {
-                    case 'w': world.yPos -= nodesHeight; break;
-                    case 'a': world.xPos -= nodesWidth; break;
-                    case 's': world.yPos += nodesHeight; break;
-                    case 'd': world.xPos += nodesWidth; break;
+                    case 'w': world.position.y -= nodesHeight; break;
+                    case 'a': world.position.x -= nodesWidth; break;
+                    case 's': world.position.y += nodesHeight; break;
+                    case 'd': world.position.x += nodesWidth; break;
                 }
                 clones.push(world);
             }
@@ -353,10 +340,10 @@ class Worlds extends AbstractView {
         // Add Clones
         const cmds = [];
         cmds.push(new SelectCommand([], editor.selected));
-        clones.forEach((world) => { cmds.push(new AddWorldCommand(world)); });
+        clones.forEach((world) => cmds.push(new AddEntityCommand(world)));
         cmds.push(new SetStageCommand(clones[0].type, clones[0].activeStage(), clones[0]));
         cmds.push(new SelectCommand(clones, []));
-        editor.execute(new MultiCmdsCommand(cmds, `${commandName} World`));
+        editor.execute(new MultiCmdsCommand(cmds, `${commandName} World${clones.length > 1 ? 's' : ''}`));
     }
 
     delete(commandName = 'Delete') {
@@ -367,7 +354,7 @@ class Worlds extends AbstractView {
         const cmds = [];
         cmds.push(new SelectCommand([], editor.selected));
         cmds.push(new SetStageCommand(editor.viewport().worldType(), null, null));
-        worlds.forEach((world) => { cmds.push(new RemoveWorldCommand(world)); });
+        worlds.forEach((world) => cmds.push(new RemoveEntityCommand(world)));
         editor.execute(new MultiCmdsCommand(cmds, `${commandName} World${worlds.length > 1 ? 's' : ''}`));
     }
 

@@ -46,10 +46,8 @@ class TexturePreview extends SUEY.Titled {
         if (!texture.isCubeTexture) props.addRow('Size', sizeBox);
 
         // Edit
-        const textureEdit = new SUEY.Button(`Properties`).onClick(() => {
-            Signals.dispatch('inspectorBuild', texture);
-            Signals.dispatch('assetSelect', 'texture', texture);
-        });
+        const textureEdit = new SUEY.Button(`Properties`);
+        textureEdit.onClick(() => Signals.dispatch('assetSelect', 'texture', texture));
         props.addRow('Edit', textureEdit);
 
         /***** TEXTURE *****/

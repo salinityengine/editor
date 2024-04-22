@@ -7,6 +7,9 @@ class AddComponentCommand extends Command {
     constructor(entity, componentType, data = {}) {
         super();
 
+        // Cancel?
+        if (!entity) return this.cancel(`AddComponentCommand: No entity provided`);
+
         // Properties
         this.entity = entity;
         this.componentType = componentType;
@@ -27,8 +30,6 @@ class AddComponentCommand extends Command {
     }
 
     execute() {
-        if (!this.entity) return;
-
         // First time, store list of newly added components
         if (this.components.length === 0) {
             const existingComponents = [...this.entity.components];
@@ -47,11 +48,9 @@ class AddComponentCommand extends Command {
         }
 
         this.wasAdded = true;
-        Signals.dispatch('sceneGraphChanged');
     }
 
     undo() {
-        if (!this.entity) return;
         if (this.components.length === 0) return;
 
         // Remove components
@@ -61,7 +60,6 @@ class AddComponentCommand extends Command {
         }
 
         this.wasAdded = false;
-        Signals.dispatch('sceneGraphChanged');
     }
 
 }

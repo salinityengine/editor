@@ -94,6 +94,8 @@ class ViewUIToolbar {
         let _lastTooltip = '';
 
         Signals.connect(viewui, 'selectionChanged', function() {
+            if (viewui.isHidden()) return;
+
             // Focus on Scene or Selection?
             let sceneFocus = false;
             sceneFocus ||= (viewui.selected.length === 0);

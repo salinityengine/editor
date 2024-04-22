@@ -64,7 +64,7 @@ class Outliner extends SmartFloater {
                     cmds.push(new AddEntityCommand(entity, viewWorld));
                     cmds.push(new SetStageCommand(editor.viewport().worldType(), entity));
                 } else {
-                    cmds.push(new AddEntityCommand(entity));
+                    cmds.push(new AddEntityCommand(entity, viewWorld.activeStage()));
                 }
                 cmds.push(new SelectCommand([ entity ], []));
                 editor.execute(new MultiCmdsCommand(cmds, `Add ${name}`));
@@ -350,10 +350,7 @@ class Outliner extends SmartFloater {
                             event.preventDefault();
                             const isVisible = !entity.visible;
                             editor.execute(new SetEntityValueCommand(entity, 'visible', isVisible, false /* recursive */));
-                            setTimeout(() => {
-                                Signals.dispatch('selectionChanged'); /* update transform controls */
-                                setVisibleIcon();
-                            })
+                            setTimeout(() => { setVisibleIcon(); });
                         });
                         columnCheck.appendChild(shown);
                     }
@@ -513,6 +510,12 @@ class Outliner extends SmartFloater {
         Signals.connect(this, 'assetRemoved', rebuildOnAssetChange);
         Signals.connect(this, 'promodeChanged', rebuildTree);
         Signals.connect(this, 'sceneGraphChanged', rebuildTree);
+
+        Signals.connect(this, 'entityChanged', (entity) => {
+            //
+            // TODO: Update entity (script icon, etc)
+            //
+        });
 
         Signals.connect(this, 'stageChanged', () => {
             const viewWorld = editor.viewport().getWorld();

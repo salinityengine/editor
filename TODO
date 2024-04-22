@@ -3,8 +3,7 @@
 /**********************************************/
 
 Signals:
-    - Fix inspector / previewer (SelectionChanged / SceneGraphChanged)
-    - Replace set stage (remove editor.viewport)
+    - Replace set stage (remove editor.viewport) & 'stageChanged' signal
 
 Project:
     - Check Save / Load
@@ -53,6 +52,7 @@ Floaters:
     Assets (Project Folder): Categories / folders.
     Codex: Add scripts.
     Inspector:
+        - Incorporate updates ('entityChanged' signal)
         - Go through Blocks
         - Multi-Select
             - Only show shared properties in inspector?

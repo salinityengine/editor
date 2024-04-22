@@ -6,6 +6,9 @@ class RemoveComponentCommand extends Command {
     constructor(entity, component) {
         super();
 
+        // Cancel?
+        if (!entity) return this.cancel(`AddComponentCommand: No entity provided`);
+
         // Properties
         this.entity = entity;
         this.componentType = component.type;
@@ -24,17 +27,13 @@ class RemoveComponentCommand extends Command {
     execute() {
         this.entity.removeComponent(this.component);
         this.wasAdded = false;
-
         Signals.dispatch('componentChanged', this.component);
-        Signals.dispatch('sceneGraphChanged');
     }
 
     undo() {
         this.entity.attachComponent(this.component);
         this.wasAdded = true;
-
         Signals.dispatch('componentChanged', this.component);
-        Signals.dispatch('sceneGraphChanged');
     }
 
 }

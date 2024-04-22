@@ -11,7 +11,7 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-import { AddWorldCommand, SelectCommand } from '../commands/CommandList.js';
+import { AddEntityCommand, SelectCommand } from '../commands/CommandList.js';
 import { MultiCmdsCommand } from '../commands/CommandList.js';
 import { SetStageCommand } from '../commands/CommandList.js';
 
@@ -74,8 +74,8 @@ class WorldsToolbar {
 
         function centerWorldPosition(world) {
             const bounds = worldsGraph.nodeBounds(0, worldsGraph.nodes.children);
-            world.xPos = bounds.center().x - (200 / 2) + SUEY.GRID_SIZE;
-            world.yPos = bounds.center().y - (150 / 2) + SUEY.GRID_SIZE;
+            world.position.x = bounds.center().x - (200 / 2) + SUEY.GRID_SIZE;
+            world.position.y = bounds.center().y - (150 / 2) + SUEY.GRID_SIZE;
         }
 
         addWorld2D.onSelect(() => {
@@ -86,7 +86,7 @@ class WorldsToolbar {
 
             const cmds = [];
             cmds.push(new SelectCommand([], editor.selected));
-            cmds.push(new AddWorldCommand(world));
+            cmds.push(new AddEntityCommand(world));
             cmds.push(new SetStageCommand(world.type, stage, world));
             cmds.push(new SelectCommand([ world ], []));
             editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
@@ -100,7 +100,7 @@ class WorldsToolbar {
 
             const cmds = [];
             cmds.push(new SelectCommand([], editor.selected));
-            cmds.push(new AddWorldCommand(world));
+            cmds.push(new AddEntityCommand(world));
             cmds.push(new SetStageCommand(world.type, stage, world));
             cmds.push(new SelectCommand([ world ], []));
             editor.execute(new MultiCmdsCommand(cmds, 'Add World'));

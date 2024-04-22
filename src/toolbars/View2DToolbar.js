@@ -132,6 +132,8 @@ class View2DToolbar {
         let _lastTooltip = '';
 
         Signals.connect(view2d, 'selectionChanged', function() {
+            if (view2d.isHidden()) return;
+
             // Focus on Scene or Selection?
             let sceneFocus = false;
             sceneFocus ||= (view2d.selected.length === 0);

@@ -81,10 +81,6 @@ class Layout {
                 if (floater) Layout.installFloater(floater, true /* defaultOnly */);
             }
         }
-
-        // Clear Inspector / Previewer
-        Signals.dispatch('inspectorClear');
-        Signals.dispatch('previewerClear');
     }
 
     /******************** FLOATERS */

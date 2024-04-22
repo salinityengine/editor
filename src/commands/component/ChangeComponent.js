@@ -7,6 +7,9 @@ class ChangeComponentCommand extends Command {
     constructor(component, newData = {}, optionalOldData = undefined) {
         super();
 
+        // Cancel?
+        if (!entity) return this.cancel(`AddComponentCommand: No entity provided`);
+
         // Properties
         this.entity = component.entity;
         this.componentType = component.type;
@@ -31,28 +34,18 @@ class ChangeComponentCommand extends Command {
     }
 
     execute() {
-        // Get Component by Type / Index
         const component = this.entity.getComponentsWithProperties('type', this.componentType)[this.componentIndex];
-
-        // Update Component
         component.detach();
         component.init(this.newData);
         component.attach();
-
-        // Signals
         Signals.dispatch('componentChanged', component);
     }
 
     undo() {
-        // Get Component by Type / Index
         const component = this.entity.getComponentsWithProperties('type', this.componentType)[this.componentIndex];
-
-        // Update Component
         component.detach();
         component.init(this.oldData);
         component.attach();
-
-        // Signals
         Signals.dispatch('componentChanged', component);
     }
 

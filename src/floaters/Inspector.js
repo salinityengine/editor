@@ -38,9 +38,8 @@ class Inspector extends SmartFloater {
         /**
          * Builds (or rebuilds) the object inspector
          * @param {any} from - The uuid object or array of objects to build from. Pass 'rebuild' to recreate with existing object.
-         * @param {boolean} [highlight=true] - Whether the Inspector should be selected within the Editor.
          */
-        function build(from = undefined, highlight = true) {
+        function build(from = undefined) {
             // Process 'from'
             if (from !== 'rebuild') {
                 // TEMP: Only process first entity
@@ -123,23 +122,19 @@ class Inspector extends SmartFloater {
 
             // Add Blocks
             self.add(...blocks);
-
-            // Select this Floater
-            if (highlight && self.dock) self.dock.selectFloater(self.id);
-
-            // Dispatch Signals
-            Signals.dispatch('inspectorChanged');
         }
 
         /***** SIGNALS *****/
 
-        Signals.connect(this, 'inspectorBuild', (from, highlight = true) => build(from, highlight));
-        Signals.connect(this, 'inspectorClear', () => build(undefined, false /* highlight? */));
-        Signals.connect(this, 'inspectorRefresh', () => build('rebuild', true /* highlight? */));
+        Signals.connect(this, 'promodeChanged', () => build('rebuild'));
+        Signals.connect(this, 'settingsRefreshed', () => build('rebuild'));
+        Signals.connect(this, 'projectLoaded', () => build(undefined));
 
-        Signals.connect(this, 'projectLoaded', () => build(undefined, false));
-        Signals.connect(this, 'settingsRefreshed', () => build('rebuild', false));
-        Signals.connect(this, 'promodeChanged', () => build('rebuild', false));
+        Signals.connect(this, 'entityChanged', (entity) => {
+            //
+            // TODO: Update entity
+            //
+        });
 
         Signals.connect(this, 'selectionChanged', () => {
             // Don't rebuild while dragging new object into scene
@@ -150,7 +145,7 @@ class Inspector extends SmartFloater {
             if (viewport && viewport.mode() === EDITOR_MODES.SCENE_EDITOR_3D && viewport.mouseState === MOUSE_STATES.SELECTING) return;
 
             // Build with Selection
-            build(editor.selected, (editor.selected.length > 0) /* highlight? */);
+            build(editor.selected);
         });
 
         /***** INIT *****/

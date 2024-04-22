@@ -6,16 +6,19 @@ class SetEntityValueCommand extends Command {
     constructor(entity, attributeName, newValue, recursive = false) {
         super();
 
+        // Cancel?
+        if (!entity) return this.cancel(`SetEntityValueCommand: No entity provided`);
+
         // Properties
         this.entity = entity;
         this.attributeName = attributeName;
-        this.oldValue = (entity !== undefined) ? entity[attributeName] : undefined;
-        this.newValue = newValue;
+        this.oldValue = structuredClone(entity[attributeName]);
+        this.newValue = structuredClone(newValue);
         this.recursive = recursive;
         this.updatable = true;
 
         // Brief
-        this.brief = `Set Entity Value: ${attributeName}`;
+        this.brief = `Set ${entity.type} Value: ${attributeName}`;
     }
 
     setValue(value) {
@@ -30,17 +33,15 @@ class SetEntityValueCommand extends Command {
     execute() {
         this.setValue(this.newValue);
         Signals.dispatch('entityChanged', this.entity);
-        Signals.dispatch('sceneGraphChanged');
     }
 
     undo() {
         this.setValue(this.oldValue);
         Signals.dispatch('entityChanged', this.entity);
-        Signals.dispatch('sceneGraphChanged');
     }
 
     update(cmd) {
-        this.newValue = cmd.newValue;
+        this.newValue = structuredClone(cmd.newValue);
     }
 
 }
@@ -54,6 +55,6 @@ function setAttributeValue(object, attribute, value) {
     if (object[attribute] && typeof object[attribute].copy === 'function') {
         object[attribute].copy(value);
     } else {
-        object[attribute] = value;
+        object[attribute] = structuredClone(value);
     }
 }

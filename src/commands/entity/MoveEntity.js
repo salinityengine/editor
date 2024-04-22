@@ -7,6 +7,9 @@ class MoveEntityCommand extends Command {
     constructor(entity, newParent, newBefore) {
         super();
 
+        // Cancel?
+        if (!entity) return this.cancel(`MoveEntityCommand: No entity provided`);
+
         // Properties
         this.entity = entity;
         this.oldParent = (entity && entity.isEntity) ? entity.parent : undefined;
@@ -27,7 +30,7 @@ class MoveEntityCommand extends Command {
     }
 
     moveEntity(parent, index) {
-        const currentSelection = [...editor.selected];
+        const currentSelection = [ ...editor.selected ];
         editor.selectEntities(/* none */);
 
         this.entity.changeParent(parent, index);

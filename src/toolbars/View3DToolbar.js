@@ -142,6 +142,8 @@ class View3DToolbar {
         let _lastTooltip = '';
 
         Signals.connect(view3d, 'selectionChanged', function() {
+            if (view3d.isHidden()) return;
+
             // Focus on Scene or Selection?
             let sceneFocus = false;
             sceneFocus ||= (view3d.selected.length === 0);

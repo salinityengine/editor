@@ -41,10 +41,7 @@ class PalettePreview extends SUEY.Titled {
 
         // Edit
         const paletteEdit = new SUEY.Button(`Edit ${Language.getKey('assets/types/palette')}`);
-        paletteEdit.onClick(() => {
-            Signals.dispatch('inspectorBuild', palette);
-            Signals.dispatch('assetSelect', 'palette', palette);
-        });
+        paletteEdit.onClick(() => Signals.dispatch('assetSelect', 'palette', palette));
         props.addRow('Edit', paletteEdit);
 
         /***** SHAPE *****/

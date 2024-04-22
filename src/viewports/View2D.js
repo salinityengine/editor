@@ -123,7 +123,7 @@ export { View2D };
 function viewportPointerDown(viewport, event) {
 
     // Clear Preview
-    if (editor.selected.length === 0) Signals.dispatch('previewerClear');
+    if (editor.selected.length === 0) Signals.dispatch('assetSelect');
 
 }
 
