@@ -12,7 +12,7 @@ const DEFAULT_SETTINGS = {
 
     /***** Editor *****/
 
-    'editor/mode':                              'edit2d',           // Editor mode
+    'editor/mode':                              'World2D',          // Editor mode
     'editor/language':                          'en',               // Gui interface language (Language.js)
 
     'scheme/color':                             THEMES.CLASSIC,     // Color scheme icon color

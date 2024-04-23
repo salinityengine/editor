@@ -62,15 +62,10 @@ class ViewUIToolbar {
         move.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
         zoom.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
 
-        Signals.connect(viewui, 'mouseModeChanged', function(mouseMode) {
-            select.removeClass('suey-selected');
-            move.removeClass('suey-selected');
-            zoom.removeClass('suey-selected');
-            switch (mouseMode) {
-                case MOUSE_MODES.SELECT: select.addClass('suey-selected'); break;
-                case MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
-                case MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
-            }
+        Signals.connect(viewui, 'mouseModeChanged', (mouseMode) => {
+            select.wantsClass('suey-selected', mouseMode === MOUSE_MODES.SELECT);
+            move.wantsClass('suey-selected', mouseMode === MOUSE_MODES.MOVE);
+            zoom.wantsClass('suey-selected', mouseMode === MOUSE_MODES.ZOOM);
         });
 
         /******************** FOCUS */
@@ -93,7 +88,7 @@ class ViewUIToolbar {
 
         let _lastTooltip = '';
 
-        Signals.connect(viewui, 'selectionChanged', function() {
+        Signals.connect(viewui, 'selectionChanged', () => {
             if (viewui.isHidden()) return;
 
             // Focus on Scene or Selection?

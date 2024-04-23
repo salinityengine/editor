@@ -100,15 +100,10 @@ class View2DToolbar {
         move.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
         zoom.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
 
-        Signals.connect(view2d, 'mouseModeChanged', function(mouseMode) {
-            select.removeClass('suey-selected');
-            move.removeClass('suey-selected');
-            zoom.removeClass('suey-selected');
-            switch (mouseMode) {
-                case MOUSE_MODES.SELECT: select.addClass('suey-selected'); break;
-                case MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
-                case MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
-            }
+        Signals.connect(view2d, 'mouseModeChanged', (mouseMode) => {
+            select.wantsClass('suey-selected', mouseMode === MOUSE_MODES.SELECT);
+            move.wantsClass('suey-selected', mouseMode === MOUSE_MODES.MOVE);
+            zoom.wantsClass('suey-selected', mouseMode === MOUSE_MODES.ZOOM);
         });
 
         /******************** FOCUS */
@@ -131,7 +126,7 @@ class View2DToolbar {
 
         let _lastTooltip = '';
 
-        Signals.connect(view2d, 'selectionChanged', function() {
+        Signals.connect(view2d, 'selectionChanged', () => {
             if (view2d.isHidden()) return;
 
             // Focus on Scene or Selection?
@@ -346,16 +341,10 @@ class View2DToolbar {
             Signals.dispatch('gridChanged');
         });
 
-        Signals.connect(view2d, 'gridChanged', function() {
-            gridTop.removeClass('suey-selected');
-            gridResize.removeClass('suey-selected');
-            gridSnap.removeClass('suey-selected');
-            const ontop = Config.getKey('viewport/grid/ontop');
-            const resizeto = Config.getKey('view2d/grid/resize');
-            const snapping = Config.getKey('viewport/grid/snap');
-            if (ontop) gridTop.addClass('suey-selected');
-            if (resizeto) gridResize.addClass('suey-selected');
-            if (snapping) gridSnap.addClass('suey-selected');
+        Signals.connect(view2d, 'gridChanged', () => {
+            gridTop.wantsClass('suey-selected', Config.getKey('viewport/grid/ontop'));
+            gridResize.wantsClass('suey-selected', Config.getKey('view2d/grid/resize'));
+            gridSnap.wantsClass('suey-selected', Config.getKey('viewport/grid/snap'));
         })
 
         /******************** ADD TO TOOLBAR */

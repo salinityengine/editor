@@ -58,11 +58,12 @@ class Outliner extends SmartFloater {
                 // TODO: Set entity position based on camera
                 //
                 // entity.position.copy(editor.viewport().getCameraTarget());
+                //
                 const cmds = [];
                 cmds.push(new SelectCommand([], editor.selected));
                 if (entity.isStage) {
                     cmds.push(new AddEntityCommand(entity, viewWorld));
-                    cmds.push(new SetStageCommand(editor.viewport().worldType(), entity));
+                    cmds.push(new SetStageCommand(viewWorld.type, entity));
                 } else {
                     cmds.push(new AddEntityCommand(entity, viewWorld.activeStage()));
                 }
@@ -75,7 +76,7 @@ class Outliner extends SmartFloater {
 
         // Add Entity
         addEntityMenuItem('Entity', `${FOLDER_TYPES}entity/entity.svg`, () => {
-            switch (editor.viewport().worldType()) {
+            switch (editor.viewport().mode()) {
                 case 'World2D': return new SALT.Entity2D();
                 case 'World3D': return new SALT.Entity3D();
             }
@@ -83,7 +84,7 @@ class Outliner extends SmartFloater {
 
         // Add Camera
         addEntityMenuItem('Camera', `${FOLDER_TYPES}entity/camera.svg`, () => {
-            switch (editor.viewport().worldType()) {
+            switch (editor.viewport().mode()) {
                 case 'World2D': return new SALT.Camera2D();
                 case 'World3D': return new SALT.Camera3D();
             }
@@ -95,7 +96,7 @@ class Outliner extends SmartFloater {
         const stageMenuItem = addEntityMenuItem('Stage', `${FOLDER_TYPES}entity/stage.svg`, () => {
             const viewWorld = editor.viewport().getWorld();
             if (!viewWorld) return;
-            switch (editor.viewport().worldType()) {
+            switch (editor.viewport().mode()) {
                 case 'World2D': return new SALT.Stage2D(`Stage ${viewWorld.getStages().length + 1}`);
                 case 'World3D': return new SALT.Stage3D(`Stage ${viewWorld.getStages().length + 1}`);
             }

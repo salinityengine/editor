@@ -2,11 +2,11 @@ import * as SUEY from 'gui';
 
 // Editor Modes
 export const EDITOR_MODES = {
-    SCENE_EDITOR_2D:    'edit2d',
-    SCENE_EDITOR_3D:    'edit3d',
-    SOUND_EDITOR:       'sounds',
-    UI_EDITOR:          'editui',
-    WORLD_GRAPH:        'worlds',
+    SCENE_EDITOR_2D:    'World2D',
+    SCENE_EDITOR_3D:    'World3D',
+    SOUND_EDITOR:       'Sounds',
+    UI_EDITOR:          'WorldUI',
+    WORLD_GRAPH:        'Worlds',
 }
 
 // Keyboard Keys

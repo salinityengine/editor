@@ -2,9 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Signals:
-    - Replace set stage (remove editor.viewport) & 'stageChanged' signal
-
 Project:
     - Check Save / Load
     - 2D Components

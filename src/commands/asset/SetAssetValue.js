@@ -20,7 +20,7 @@ class SetAssetValueCommand extends Command {
         this.updatable = updatable;
 
         // Brief
-        this.brief = `Set Asset Value: ${attributeName}`;
+        this.brief = `Set Asset Value: '${attributeName}'`;
     }
 
     execute() {

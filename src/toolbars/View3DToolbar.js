@@ -108,17 +108,11 @@ class View3DToolbar {
         move.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.MOVE));
         zoom.onPress(() => Signals.dispatch('mouseModeChanged', MOUSE_MODES.ZOOM));
 
-        Signals.connect(view3d, 'mouseModeChanged', function(mouseMode) {
-            select.removeClass('suey-selected');
-            look.removeClass('suey-selected');
-            move.removeClass('suey-selected');
-            zoom.removeClass('suey-selected');
-            switch (mouseMode) {
-                case MOUSE_MODES.SELECT: select.addClass('suey-selected'); break;
-                case MOUSE_MODES.LOOK: look.addClass('suey-selected'); break;
-                case MOUSE_MODES.MOVE: move.addClass('suey-selected'); break;
-                case MOUSE_MODES.ZOOM: zoom.addClass('suey-selected'); break;
-            }
+        Signals.connect(view3d, 'mouseModeChanged', (mouseMode) => {
+            select.wantsClass('suey-selected', mouseMode === MOUSE_MODES.SELECT);
+            look.wantsClass('suey-selected', mouseMode === MOUSE_MODES.LOOK);
+            move.wantsClass('suey-selected', mouseMode === MOUSE_MODES.MOVE);
+            zoom.wantsClass('suey-selected', mouseMode === MOUSE_MODES.ZOOM);
         });
 
         /******************** FOCUS */
@@ -141,7 +135,7 @@ class View3DToolbar {
 
         let _lastTooltip = '';
 
-        Signals.connect(view3d, 'selectionChanged', function() {
+        Signals.connect(view3d, 'selectionChanged', () => {
             if (view3d.isHidden()) return;
 
             // Focus on Scene or Selection?
@@ -195,23 +189,14 @@ class View3DToolbar {
         snap.onPress(() => Signals.dispatch('transformModeChanged', 'snap'));
         paint.onPress(() => Signals.dispatch('transformModeChanged', 'paint'));
 
-        Signals.connect(view3d, 'transformModeChanged', function(mode) {
-            none.removeClass('suey-selected');
-            translate.removeClass('suey-selected');
-            rotate.removeClass('suey-selected');
-            scale.removeClass('suey-selected');
-            rect.removeClass('suey-selected');
-            snap.removeClass('suey-selected');
-            paint.removeClass('suey-selected');
-            switch (mode) {
-                case 'none': none.addClass('suey-selected'); break;
-                case 'translate': translate.addClass('suey-selected'); break;
-                case 'rotate': rotate.addClass('suey-selected'); break;
-                case 'scale': scale.addClass('suey-selected'); break;
-                case 'rect': rect.addClass('suey-selected'); break;
-                case 'snap': snap.addClass('suey-selected'); break;
-                case 'paint': paint.addClass('suey-selected'); break;
-            }
+        Signals.connect(view3d, 'transformModeChanged', (mode) => {
+            none.wantsClass('suey-selected', mode === 'none');
+            translate.wantsClass('suey-selected', mode === 'translate');
+            rotate.wantsClass('suey-selected', mode === 'rotate');
+            scale.wantsClass('suey-selected', mode === 'scale');
+            rect.wantsClass('suey-selected', mode === 'rect');
+            snap.wantsClass('suey-selected', mode === 'snap');
+            paint.wantsClass('suey-selected', mode === 'paint');
         });
 
         /******************** VIEWS */

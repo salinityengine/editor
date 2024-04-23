@@ -42,6 +42,8 @@ class SetStageCommand extends Command {
             const stage = world.getStageByUUID(stageUUID);
             world.setActiveStage(stage);
             Signals.dispatch('stageChanged');
+        } else {
+            this.viewport.setWorld(null);
         }
     }
 

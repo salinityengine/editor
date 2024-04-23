@@ -15,7 +15,7 @@ class AbstractView extends SUEY.Div {
     /** Set from EDITOR_MODES */
     mode() { return 'abstract'; }
 
-    /** Allowed floaters */
+    /** Allowed Floaters */
     floaterFamily() {
         const floaters = [
             'advisor',
@@ -27,9 +27,6 @@ class AbstractView extends SUEY.Div {
         ];
         return floaters;
     }
-
-    /** World edit type */
-    worldType() { return 'None'; }
 
     constructor() {
         super();
@@ -105,8 +102,11 @@ class AbstractView extends SUEY.Div {
     }
 
     setWorld(world) {
-        if (!world || !world.isWorld || world.type !== this.worldType()) return;
-        this.worlds[0] = world;
+        if (world && world.isWorld && world.type === this.mode()) {
+            this.worlds[0] = world;
+        } else {
+            this.worlds[0] = undefined;
+        }
     }
 
 }

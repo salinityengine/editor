@@ -63,14 +63,14 @@ class WorldsToolbar {
 
         const addWorld2D = new SUEY.MenuItem('World 2D', `${FOLDER_MENU}node/world2d.svg`);
         const addWorld3D = new SUEY.MenuItem('World 3D', `${FOLDER_MENU}node/world3d.svg`);
-        const addUI = new SUEY.MenuItem('UI Screen', `${FOLDER_MENU}node/ui.svg`);
+        const addWorldUI = new SUEY.MenuItem('UI Screen', `${FOLDER_MENU}node/worldui.svg`);
         nodeMenu.add(addWorld2D);
         nodeMenu.add(addWorld3D);
-        nodeMenu.add(addUI);
+        nodeMenu.add(addWorldUI);
 
-        addWorld2D.divIcon.addClass('suey-black-or-white').addClass('suey-drop-shadow');
-        addWorld3D.divIcon.addClass('suey-black-or-white').addClass('suey-drop-shadow');
-        addUI.divIcon.addClass('suey-black-or-white').addClass('suey-drop-shadow');
+        addWorld2D.divIcon.addClass('suey-black-or-white', 'suey-drop-shadow');
+        addWorld3D.divIcon.addClass('suey-black-or-white', 'suey-drop-shadow');
+        addWorldUI.divIcon.addClass('suey-black-or-white', 'suey-drop-shadow');
 
         function centerWorldPosition(world) {
             const bounds = worldsGraph.nodeBounds(0, worldsGraph.nodes.children);
@@ -78,9 +78,18 @@ class WorldsToolbar {
             world.position.y = bounds.center().y - (150 / 2) + SUEY.GRID_SIZE;
         }
 
-        addWorld2D.onSelect(() => {
-            const world = new SALT.World2D(`World ${editor.project.worldCount() + 1}`);
-            const stage = new SALT.Stage2D('Start');
+        function addWorld(worldType) {
+            const worldName = `World ${editor.project.worldCount() + 1}`;
+            let world, stageType;
+            switch (worldType) {
+                case 'World2D': world = new SALT.World2D(worldName); stageType = SALT.Stage2D; break;
+                case 'World3D': world = new SALT.World3D(worldName); stageType = SALT.Stage3D; break;
+                //
+                // TODO: WorldUI
+                //
+            }
+            if (!world) return;
+            const stage = new stageType('Start');
             world.addEntity(stage);
             centerWorldPosition(world);
 
@@ -90,25 +99,11 @@ class WorldsToolbar {
             cmds.push(new SetStageCommand(world.type, stage, world));
             cmds.push(new SelectCommand([ world ], []));
             editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
-        });
+        }
 
-        addWorld3D.onSelect(() => {
-            const world = new SALT.World3D(`World ${editor.project.worldCount() + 1}`);
-            const stage = new SALT.Stage3D('Start');
-            world.addEntity(stage);
-            centerWorldPosition(world);
-
-            const cmds = [];
-            cmds.push(new SelectCommand([], editor.selected));
-            cmds.push(new AddEntityCommand(world));
-            cmds.push(new SetStageCommand(world.type, stage, world));
-            cmds.push(new SelectCommand([ world ], []));
-            editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
-        });
-
-        addUI.onSelect(() => {
-
-        });
+        addWorld2D.onSelect(() => addWorld('World2D'));
+        addWorld3D.onSelect(() => addWorld('World3D'));
+        addWorldUI.onSelect(() => addWorld('WorldUI'));
 
         /******************** FOCUS */
 
@@ -136,10 +131,9 @@ class WorldsToolbar {
             Signals.dispatch('gridChanged');
         });
 
-        Signals.connect(worldsGraph, 'gridChanged', function() {
+        Signals.connect(worldsGraph, 'gridChanged', () => {
             const snapping = Config.getKey('viewport/grid/snap');
-            if (snapping) gridSnap.addClass('suey-selected');
-            else gridSnap.removeClass('suey-selected');
+            gridSnap.wantsClass('suey-selected', snapping);
         })
 
         /******************** ADD TO TOOLBAR */

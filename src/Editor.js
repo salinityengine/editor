@@ -104,7 +104,7 @@ class Editor extends SUEY.MainWindow {
         editor.setMode(Config.getKey('editor/mode'));                               // set editor mode
         editor.refreshSettings();                                                   // also selects none
         setTimeout(() => editor.removeClass('salt-disable-animations'), 1000);      // allow button animations
-        setTimeout(() => { editor.loadProject(null, true /* demo? */); }, 100);     // load demo project
+        setTimeout(() => editor.loadProject(null, true /* demo? */), 100);          // load demo project
 
     } // end ctor
 
@@ -167,11 +167,11 @@ class Editor extends SUEY.MainWindow {
     }
 
     viewport(worldType) {
-        // Viewport by World Type
+        // Find by World Type
         if (worldType && worldType.isWorld) worldType = worldType.type;
         if (worldType) {
             for (const viewport of this.viewports) {
-                if (viewport.worldType() === worldType) return viewport;
+                if (viewport.mode() === worldType) return viewport;
             }
         // Active Viewport
         } else {

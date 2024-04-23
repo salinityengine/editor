@@ -27,16 +27,16 @@ const SIGNAL_NAMES = [
 
     /***** VIEWPORT **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
 
+    'stageChanged',             // -                    ALERT       Active stage of 'viewport.world' was changed
+
     'mouseModeChanged',         // (mouse mode)         FUNCTION    Change mouse mode
     'transformModeChanged',     // (mode, temp?)        FUNCTION    Change transform mode
-
     'cameraChanged',            // -                    ALERT       Viewport camera was changed
     'gridChanged',              // -                    ALERT       Change to grid settings (shown, snap, etc.)
 
     'draggingStarted',          // -                    ALERT       Dragging of selected items (translation) started
     'draggingEnded',            // -                    ALERT       Dragging of selected items (translation) ended
     'draggingChanged',          // (point1, point2)     ALERT       Selected items currently being dragged (translated)
-
     'dropEnded',                // -                    ALERT       Fired when 'viewport.dropInfo' was set and drag done
 
     /***** FLOATER **************** DISPATCH *********** TYPE ****** DESCRIPTION *****/
@@ -48,7 +48,6 @@ const SIGNAL_NAMES = [
 
     // Scene Graph
     'sceneGraphChanged',        // -                    ALERT       Change of entities/components within 'viewport.world'
-    'stageChanged',             // -                    ALERT       Active stage of 'viewport.world' was changed
     'entityChanged',            // (entity)             ALERT       Entity was changed (excluding transform)
     'transformsChanged',        // (entityArray)        ALERT       Transforms changed (may need to rebuild transform group)
     'componentChanged',         // (component)          ALERT       Component was changed

@@ -18,7 +18,7 @@ class SetEntityValueCommand extends Command {
         this.updatable = true;
 
         // Brief
-        this.brief = `Set ${entity.type} Value: ${attributeName}`;
+        this.brief = `Set ${entity.type} Value: '${attributeName}'`;
     }
 
     setValue(value) {

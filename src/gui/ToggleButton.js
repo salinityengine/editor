@@ -24,8 +24,7 @@ class ToggleButton extends SUEY.Button {
 
         // Toggle
         function setButtonValue() {
-            self.removeClass('suey-toggled');
-            if (configKey && Config.getKey(configKey)) self.addClass('suey-toggled');
+            self.wantsClass('suey-toggled', configKey && Config.getKey(configKey));
         }
         this.onPress(() => {
             if (configKey) Config.setKey(configKey, (!Config.getKey(configKey)));

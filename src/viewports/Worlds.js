@@ -29,8 +29,6 @@ class Worlds extends AbstractView {
         return [ ...super.floaterFamily(), ...floaters ];
     }
 
-    worldType() { return 'None'; }
-
     constructor() {
         super();
         const self = this;
@@ -90,7 +88,7 @@ class Worlds extends AbstractView {
                     const x = node.left;
                     const y = node.top;
                     if (node.world.position.x !== x || node.world.position.y !== y) {
-                        cmds.push(new SetEntityValueCommand(node.world, node.world.position, [ x, y ]));
+                        cmds.push(new SetEntityValueCommand(node.world, 'position', [ x, y ]));
                     }
                 });
                 if (cmds.length > 0) {
@@ -239,8 +237,7 @@ class Worlds extends AbstractView {
                 }
 
                 // World is Selected in a Viewport
-                if (viewWorlds.includes(node.world.uuid)) node.addClass('suey-node-displayed');
-                else node.removeClass('suey-node-displayed');
+                node.wantsClass('suey-node-displayed', viewWorlds.includes(node.world.uuid));
             }
         });
 
@@ -353,7 +350,7 @@ class Worlds extends AbstractView {
         // Remove Worlds
         const cmds = [];
         cmds.push(new SelectCommand([], editor.selected));
-        cmds.push(new SetStageCommand(editor.viewport().worldType(), null, null));
+        cmds.push(new SetStageCommand(editor.viewport().mode(), null, null));
         worlds.forEach((world) => cmds.push(new RemoveEntityCommand(world)));
         editor.execute(new MultiCmdsCommand(cmds, `${commandName} World${worlds.length > 1 ? 's' : ''}`));
     }
