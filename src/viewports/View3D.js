@@ -17,7 +17,7 @@ import { SelectCommand } from '../commands/CommandList.js';
 
 class View3D extends AbstractView {
 
-    mode() { return EDITOR_MODES.SCENE_EDITOR_3D; }
+    mode() { return EDITOR_MODES.WORLD_3D; }
 
     floaterFamily() {
         const floaters = [

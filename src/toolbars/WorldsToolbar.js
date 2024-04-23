@@ -1,5 +1,6 @@
 import {
     COLORS,
+    EDITOR_MODES,
     FOLDER_MENU,
     FOLDER_TOOLBAR,
 } from 'constants';
@@ -82,8 +83,8 @@ class WorldsToolbar {
             const worldName = `World ${editor.project.worldCount() + 1}`;
             let world, stageType;
             switch (worldType) {
-                case 'World2D': world = new SALT.World2D(worldName); stageType = SALT.Stage2D; break;
-                case 'World3D': world = new SALT.World3D(worldName); stageType = SALT.Stage3D; break;
+                case EDITOR_MODES.WORLD_2D: world = new SALT.World2D(worldName); stageType = SALT.Stage2D; break;
+                case EDITOR_MODES.WORLD_3D: world = new SALT.World3D(worldName); stageType = SALT.Stage3D; break;
                 //
                 // TODO: WorldUI
                 //
@@ -101,9 +102,9 @@ class WorldsToolbar {
             editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
         }
 
-        addWorld2D.onSelect(() => addWorld('World2D'));
-        addWorld3D.onSelect(() => addWorld('World3D'));
-        addWorldUI.onSelect(() => addWorld('WorldUI'));
+        addWorld2D.onSelect(() => addWorld(EDITOR_MODES.WORLD_2D));
+        addWorld3D.onSelect(() => addWorld(EDITOR_MODES.WORLD_3D));
+        addWorldUI.onSelect(() => addWorld(EDITOR_MODES.WORLD_UI));
 
         /******************** FOCUS */
 

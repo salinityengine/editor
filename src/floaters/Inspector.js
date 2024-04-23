@@ -142,7 +142,7 @@ class Inspector extends SmartFloater {
 
             // Don't rebuild inspector during rubberband mode
             const viewport = editor.viewport();
-            if (viewport && viewport.mode() === EDITOR_MODES.SCENE_EDITOR_3D && viewport.mouseState === MOUSE_STATES.SELECTING) return;
+            if (viewport && viewport.mode() === EDITOR_MODES.WORLD_3D && viewport.mouseState === MOUSE_STATES.SELECTING) return;
 
             // Build with Selection
             build(editor.selected);

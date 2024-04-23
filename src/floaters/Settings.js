@@ -35,9 +35,9 @@ class Settings extends SmartFloater {
             // Create Blocks
             const blocks = [];
             blocks.push(new SettingsGeneralBlock());
-            if (editor.mode() === EDITOR_MODES.SCENE_EDITOR_2D) {
+            if (editor.mode() === EDITOR_MODES.WORLD_2D) {
                 blocks.push(new View2DGridBlock());
-            } else if (editor.mode() === EDITOR_MODES.SCENE_EDITOR_3D) {
+            } else if (editor.mode() === EDITOR_MODES.WORLD_3D) {
                 // EMPTY
             } else if (editor.mode() === EDITOR_MODES.WORLD_GRAPH) {
                 blocks.push(new WorldGridBlock());

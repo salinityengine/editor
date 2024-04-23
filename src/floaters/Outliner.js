@@ -1,4 +1,5 @@
 import {
+    EDITOR_MODES,
     FOLDER_FLOATERS,
     FOLDER_IMAGES,
     FOLDER_MENU,
@@ -77,16 +78,16 @@ class Outliner extends SmartFloater {
         // Add Entity
         addEntityMenuItem('Entity', `${FOLDER_TYPES}entity/entity.svg`, () => {
             switch (editor.viewport().mode()) {
-                case 'World2D': return new SALT.Entity2D();
-                case 'World3D': return new SALT.Entity3D();
+                case EDITOR_MODES.WORLD_2D: return new SALT.Entity2D();
+                case EDITOR_MODES.WORLD_3D: return new SALT.Entity3D();
             }
         });
 
         // Add Camera
         addEntityMenuItem('Camera', `${FOLDER_TYPES}entity/camera.svg`, () => {
             switch (editor.viewport().mode()) {
-                case 'World2D': return new SALT.Camera2D();
-                case 'World3D': return new SALT.Camera3D();
+                case EDITOR_MODES.WORLD_2D: return new SALT.Camera2D();
+                case EDITOR_MODES.WORLD_3D: return new SALT.Camera3D();
             }
         });
 
@@ -97,8 +98,8 @@ class Outliner extends SmartFloater {
             const viewWorld = editor.viewport().getWorld();
             if (!viewWorld) return;
             switch (editor.viewport().mode()) {
-                case 'World2D': return new SALT.Stage2D(`Stage ${viewWorld.getStages().length + 1}`);
-                case 'World3D': return new SALT.Stage3D(`Stage ${viewWorld.getStages().length + 1}`);
+                case EDITOR_MODES.WORLD_2D: return new SALT.Stage2D(`Stage ${viewWorld.getStages().length + 1}`);
+                case EDITOR_MODES.WORLD_3D: return new SALT.Stage3D(`Stage ${viewWorld.getStages().length + 1}`);
             }
         });
         stageMenuItem.divIcon.img.setStyle('padding', '0.05em', 'border-radius', '0.5em');
