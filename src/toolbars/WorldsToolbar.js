@@ -80,14 +80,12 @@ class WorldsToolbar {
         }
 
         function addWorld(worldType) {
-            const worldName = `World ${editor.project.worldCount() + 1}`;
+            const worldName = `${worldType} ${editor.project.worldCount(worldType) + 1}`;
             let world, stageType;
             switch (worldType) {
                 case EDITOR_MODES.WORLD_2D: world = new SALT.World2D(worldName); stageType = SALT.Stage2D; break;
                 case EDITOR_MODES.WORLD_3D: world = new SALT.World3D(worldName); stageType = SALT.Stage3D; break;
-                //
-                // TODO: WorldUI
-                //
+                case EDITOR_MODES.WORLD_UI: world = new SALT.WorldUI(worldName); stageType = SALT.StageUI; break;
             }
             if (!world) return;
             const stage = new stageType('Start');

@@ -72,7 +72,7 @@ class Worlds extends AbstractView {
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.OUTPUT, title: 'Load UI' }));
             } else if (world.isWorldUI) {
-                node.createHeader('UI Screen', `${FOLDER_MENU}node/ui.svg`);
+                node.createHeader(world.name, `${FOLDER_MENU}node/worldui.svg`);
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
             }
 
@@ -224,9 +224,6 @@ class Worlds extends AbstractView {
                 const world = viewport.getWorld();
                 if (world && world.isWorld) viewWorlds.push(world.uuid);
             }
-
-    console.log('Selection changed!', editor.selected);
-
 
             // Run through World Graph Nodes
             for (const node of graph.getNodes()) {
