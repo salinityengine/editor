@@ -143,11 +143,11 @@ class Worlds extends AbstractView {
         // Displayed
         let firstTime = true;
         this.on('displayed', () => {
+            refreshNodes();
             if (firstTime) {
                 graph.centerView(true /* resetZoom */, false /* animate */);
                 firstTime = false;
             } else {
-                refreshNodes();
                 graph.zoomTo();
             }
         });
@@ -159,15 +159,14 @@ class Worlds extends AbstractView {
             for (const world of selected) {
                 if (!world || !world.isWorld) continue;
                 const cmds = [];
-                cmds.push(new SelectCommand([], editor.selected));
                 cmds.push(new SetStageCommand(world.type, world.activeStage(), world));
-                cmds.push(new SelectCommand(selected, []));
+                cmds.push(new SelectCommand(selected, editor.selected));
                 editor.execute(new MultiCmdsCommand(cmds, `Select World: ${world.name}`));
                 return;
             }
 
             // Did not select World(s)
-            editor.execute(new SelectCommand(selected, [ ...editor.selected ]));
+            editor.execute(new SelectCommand(selected, editor.selected));
         });
 
         // Zoom
@@ -212,12 +211,6 @@ class Worlds extends AbstractView {
             refreshNodes();
         });
 
-        // Project Loaded
-        Signals.connect(this, 'projectLoaded', () => {
-            // Camera Reset
-            graph.centerView(true /* resetZoom */, false /* animate */);
-        });
-
         // Selection Changed
         Signals.connect(this, 'selectionChanged', () => {
             if (!self.isActive) return;
@@ -231,6 +224,9 @@ class Worlds extends AbstractView {
                 const world = viewport.getWorld();
                 if (world && world.isWorld) viewWorlds.push(world.uuid);
             }
+
+    console.log('Selection changed!', editor.selected);
+
 
             // Run through World Graph Nodes
             for (const node of graph.getNodes()) {
@@ -346,10 +342,9 @@ class Worlds extends AbstractView {
 
         // Add Clones
         const cmds = [];
-        cmds.push(new SelectCommand([], editor.selected));
         clones.forEach((world) => cmds.push(new AddEntityCommand(world)));
         cmds.push(new SetStageCommand(clones[0].type, clones[0].activeStage(), clones[0]));
-        cmds.push(new SelectCommand(clones, []));
+        cmds.push(new SelectCommand(clones, editor.selected));
         editor.execute(new MultiCmdsCommand(cmds, `${commandName} World${clones.length > 1 ? 's' : ''}`));
     }
 
@@ -379,8 +374,8 @@ class Worlds extends AbstractView {
         this.graph.zoomTo();
     }
 
-    cameraReset() {
-        this.graph.centerView(true /* resetZoom */, true /* animate */);
+    cameraReset(animate = true) {
+        this.graph.centerView(true /* resetZoom */, animate);
     }
 
 }

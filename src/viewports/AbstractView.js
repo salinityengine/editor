@@ -30,6 +30,7 @@ class AbstractView extends SUEY.Div {
 
     constructor() {
         super();
+        const self = this;
         this.setClass('salt-viewport');
         this.setStyle('display', 'none');               // important! needed for initial editor.setMode()
 
@@ -38,6 +39,13 @@ class AbstractView extends SUEY.Div {
         this.toolbar = null;                            // to be added to editor.toolbar.middle
         this.selected = [];                             // selection can differ from editor
         this.worlds = [];                               // open worlds
+
+        /***** SIGNALS */
+
+        Signals.connect(this, 'projectLoaded', () => {
+            self.setWorld(null);
+            self.cameraReset(false /* animater? */);
+        });
     }
 
     activate() {
@@ -86,7 +94,7 @@ class AbstractView extends SUEY.Div {
         console.warn(`${this.constructor.name}.cameraFocus(): Method must be reimplemented from AbstractView`);
     }
 
-    cameraReset() {
+    cameraReset(animate = true) {
         console.warn(`${this.constructor.name}.cameraReset(): Method must be reimplemented from AbstractView`);
     }
 

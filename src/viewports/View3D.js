@@ -64,13 +64,6 @@ class View3D extends AbstractView {
         this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
 
-        /******************** SIGNALS ********************/
-
-        // Project Loaded
-        Signals.connect(this, 'projectLoaded', () => {
-            self.cameraReset();
-        });
-
     }
 
     /******************** FRAME ********************/
@@ -98,6 +91,27 @@ class View3D extends AbstractView {
     resize() {
         this.width = Math.max(2, this.getWidth() * window.devicePixelRatio);
         this.height = Math.max(2, this.getHeight() * window.devicePixelRatio);
+    }
+
+    /******************** VIEW ********************/
+
+    cameraFocus() {
+        //
+        // TODO
+        //
+    }
+
+    cameraReset(animate = true) {
+        //
+        // TODO
+        //
+    }
+
+    gridSize() {
+        //
+        // TODO
+        //
+        return 0;
     }
 
 }

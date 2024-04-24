@@ -62,13 +62,6 @@ class View2D extends AbstractView {
         this.on('keydown', (event) => viewportKeyDown(self, event));
         this.on('keyup', (event) => viewportKeyUp(self, event));
 
-        /******************** SIGNALS ********************/
-
-        // Project Loaded
-        Signals.connect(this, 'projectLoaded', () => {
-            self.cameraReset();
-        });
-
     }
 
     /******************** CLIPBOARD / EDIT ********************/
@@ -106,7 +99,7 @@ class View2D extends AbstractView {
         //
     }
 
-    cameraReset() {
+    cameraReset(animate = true) {
         //
         // TODO
         //

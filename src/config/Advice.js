@@ -50,10 +50,10 @@ const _values = {
 
         // Toolbar, Modes
         'toolbar/eye':                      { title: 'Main Menu', html: `` },
+        'toolbar/mode/world':               { title: 'World Graph', html: `Editor mode for interconnecting Worlds and UI Screens.` },
         'toolbar/mode/scene2d':             { title: 'Scene Editor 2D', html: `Editor mode for editing 2D Worlds, Stages, Entities.` },
         'toolbar/mode/scene3d':             { title: 'Scene Editor 3D', html: `Editor mode for editing 3D Worlds, Stages, Entities.` },
-        'toolbar/mode/world':               { title: 'World Graph', html: `Editor mode for interconnecting Worlds and UI Screens.` },
-        'toolbar/mode/ui':                  { title: 'UI Editor', html: `Editor mode for editing UI Screens.` },
+        'toolbar/mode/sceneui':             { title: 'UI Editor', html: `Editor mode for editing UI Screens.` },
 
         // Toolbar, Nodes
         'toolbar/worlds/add':               { title: 'Add Node', html: `Menu for adding Worlds.` },

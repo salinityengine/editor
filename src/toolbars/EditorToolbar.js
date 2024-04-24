@@ -21,10 +21,10 @@ class EditorToolbar extends SUEY.Panel {
         /******************** BUTTONS */
 
         const eye = new SUEY.ToolbarButton().setColor('complement');
-        const scene2d = new SUEY.ToolbarButton(null, 'left').setColor('sienna');
+        const worlds = new SUEY.ToolbarButton(null, 'left').setColor('sienna');
+        const scene2d = new SUEY.ToolbarButton(null, 'middle').setColor('sienna');
         const scene3d = new SUEY.ToolbarButton(null, 'middle').setColor('sienna');
-        const world = new SUEY.ToolbarButton(null, 'middle').setColor('sienna');
-        const ui = new SUEY.ToolbarButton(null, 'right').setColor('sienna');
+        const sceneui = new SUEY.ToolbarButton(null, 'right').setColor('sienna');
         const play = new SUEY.ToolbarButton().setColor('red');
         const game = new SUEY.ToolbarButton(null, 'left').setColor('gray');
         const notes = new SUEY.ToolbarButton(null, 'middle').setColor('gray');
@@ -32,10 +32,10 @@ class EditorToolbar extends SUEY.Panel {
         const settings = new SUEY.ToolbarButton(null, 'right').setColor('gray');
 
         eye.setAttribute('tooltip', 'Menu');
+        worlds.setAttribute('tooltip', Config.tooltip('World Graph'));
         scene2d.setAttribute('tooltip', Config.tooltip('Scene Editor 2D'));
         scene3d.setAttribute('tooltip', Config.tooltip('Scene Editor 3D'));
-        world.setAttribute('tooltip', Config.tooltip('World Graph'));
-        ui.setAttribute('tooltip', Config.tooltip('UI Editor'));
+        sceneui.setAttribute('tooltip', Config.tooltip('UI Editor'));
         play.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
         game.setAttribute('tooltip', 'Game');
         notes.setAttribute('tooltip', 'Notepad');
@@ -43,10 +43,10 @@ class EditorToolbar extends SUEY.Panel {
         settings.setAttribute('tooltip', 'Settings');
 
         Advice.attach(eye, 'toolbar/eye');
+        Advice.attach(worlds, 'toolbar/mode/world');
         Advice.attach(scene2d, 'toolbar/mode/scene2d');
         Advice.attach(scene3d, 'toolbar/mode/scene3d');
-        Advice.attach(world, 'toolbar/mode/world');
-        Advice.attach(ui, 'toolbar/mode/ui');
+        Advice.attach(sceneui, 'toolbar/mode/sceneui');
         Advice.attach(play, 'toolbar/play');
         Advice.attach(game, 'toolbar/game');
         Advice.attach(notes, 'toolbar/notepad');
@@ -64,6 +64,10 @@ class EditorToolbar extends SUEY.Panel {
 
         /******************** EDITOR MODES */
 
+        const worldBackground = new SUEY.VectorBox().setID('tb-world-background');
+        worldBackground.setStyle('backgroundImage', `url(${FOLDER_TOOLBAR}world.svg)`);
+        worlds.add(worldBackground);
+
         const scene2DFrame = new SUEY.VectorBox(`${FOLDER_TOOLBAR}scene2d-frame.svg`).setID('tb-scene2d-frame');
         scene2d.add(scene2DFrame);
 
@@ -74,25 +78,21 @@ class EditorToolbar extends SUEY.Panel {
         const scene3DFrame = new SUEY.VectorBox(`${FOLDER_TOOLBAR}scene3d-frame.svg`).setID('tb-scene3d-frame');
         scene3d.add(scene3DCube, scene3DMtn1, scene3DSun, scene3DMtn2, scene3DFrame);
 
-        const worldBackground = new SUEY.VectorBox().setID('tb-world-background');
-        worldBackground.setStyle('backgroundImage', `url(${FOLDER_TOOLBAR}world.svg)`);
-        world.add(worldBackground);
-
         const uiButton = new SUEY.VectorBox(`${FOLDER_TOOLBAR}ui-button.svg`).setID('tb-ui-button');
         const uiJoystick = new SUEY.VectorBox(`${FOLDER_TOOLBAR}ui-joystick.svg`).setID('tb-ui-joystick');
         const uiBase = new SUEY.VectorBox(`${FOLDER_TOOLBAR}ui-base.svg`).setID('tb-ui-base');
-        ui.add(uiButton, uiJoystick, uiBase);
+        sceneui.add(uiButton, uiJoystick, uiBase);
 
+        worlds.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_GRAPH)));
         scene2d.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_2D)));
         scene3d.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_3D)));
-        world.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_GRAPH)));
-        ui.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_UI)));
+        sceneui.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_UI)));
 
         Signals.connect(this, 'editorModeChanged', (mode) => {
+            worlds.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_GRAPH);
             scene2d.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_2D);
             scene3d.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_3D);
-            world.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_GRAPH);
-            ui.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_UI);
+            sceneui.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_UI);
         });
 
         /******************** PLAY */
@@ -150,7 +150,7 @@ class EditorToolbar extends SUEY.Panel {
         const left = new SUEY.FlexBox().setStyle('flex', '0 0 auto', 'pointerEvents', 'none');
         const middle = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none');
         const right = new SUEY.FlexBox().setStyle('flex', '0 0 auto', 'pointerEvents', 'none');
-        left.add(eye, new SUEY.ToolbarSeparator(), scene2d, scene3d, world, ui, new SUEY.FlexSpacer());
+        left.add(eye, new SUEY.ToolbarSeparator(), worlds, scene2d, /* scene3d, */ sceneui, new SUEY.FlexSpacer());
         right.add(new SUEY.FlexSpacer(), play, new SUEY.ToolbarSeparator(), game, notes, history, settings);
         this.add(left, middle, right);
 

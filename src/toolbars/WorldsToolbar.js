@@ -95,10 +95,9 @@ class WorldsToolbar {
             centerWorldPosition(world);
 
             const cmds = [];
-            cmds.push(new SelectCommand([], editor.selected));
             cmds.push(new AddEntityCommand(world));
             cmds.push(new SetStageCommand(world.type, stage, world));
-            cmds.push(new SelectCommand([ world ], []));
+            cmds.push(new SelectCommand([ world ], editor.selected));
             editor.execute(new MultiCmdsCommand(cmds, 'Add World'));
         }
 

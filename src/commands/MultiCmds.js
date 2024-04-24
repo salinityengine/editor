@@ -16,20 +16,21 @@ class MultiCmdsCommand extends Command {
             if (command.valid) {
                 cmds.push(command);
             } else {
-                command.invalid();
+                command.invalid(); /* clean up */
             }
         }
 
-        // On Execute Callbacks
+        // Callbacks
         this.onExecute = onExecute;
         this.onUndo = onUndo;
 
-        // If only one command, return that command instead
+        // Cancel?
         if (cmds.length === 0) {
-            this.valid = false;
-            return;
+            return this.cancel();
+        // If only one command, return that command instead
         } else if (cmds.length === 1 && !onExecute && !onUndo) {
             return cmds[0];
+        // Use MultiCmds
         } else {
             this.commands = cmds;
         }
@@ -54,11 +55,13 @@ class MultiCmdsCommand extends Command {
         Signals.toggle('entityChanged', false);
         Signals.toggle('transformsChanged', false);
         Signals.toggle('sceneGraphChanged', false);
+        Signals.toggle('selectionChanged', false);
 
         // Changed Entity Lists
         const commandTypes = {};
         const entitiesChanged = [];
         const transformsChanged = [];
+        let hasSelection = false;
 
         function addToChangedArray(changedArray, entity) {
             if (!entity || !entity.isEntity || !Array.isArray(changedArray)) return;
@@ -100,6 +103,9 @@ class MultiCmdsCommand extends Command {
                 case 'SetEntityValueCommand':
                     addToChangedArray(entitiesChanged, command.entity);
                     break;
+                case 'SelectCommand':
+                    hasSelection = true;
+                    break;
             }
         }
 
@@ -116,6 +122,10 @@ class MultiCmdsCommand extends Command {
         // Scene Graph Signal
         Signals.toggle('sceneGraphChanged', true);
         Signals.dispatch('sceneGraphChanged');
+
+        // Selection Changed?
+        Signals.toggle('selectionChanged', true);
+        if (hasSelection) Signals.dispatch('selectionChanged');
 
         // // DEBUG: Show command types in this MultiCmd
         // console.group(`MultiCmdsCommand Execute, Qty: ${this.commands.length}`);

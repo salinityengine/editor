@@ -123,9 +123,6 @@ class History extends SmartFloater {
         // Focus on Tree List when parent dock gains focus
         this.on('activate-window', () => {
             treeList.focus();
-
-            console.log('Activate history')
-
         });
 
         /***** SIGNALS *****/

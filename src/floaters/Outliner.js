@@ -61,14 +61,13 @@ class Outliner extends SmartFloater {
                 // entity.position.copy(editor.viewport().getCameraTarget());
                 //
                 const cmds = [];
-                cmds.push(new SelectCommand([], editor.selected));
                 if (entity.isStage) {
                     cmds.push(new AddEntityCommand(entity, viewWorld));
                     cmds.push(new SetStageCommand(viewWorld.type, entity));
                 } else {
                     cmds.push(new AddEntityCommand(entity, viewWorld.activeStage()));
                 }
-                cmds.push(new SelectCommand([ entity ], []));
+                cmds.push(new SelectCommand([ entity ], editor.selected));
                 editor.execute(new MultiCmdsCommand(cmds, `Add ${name}`));
             });
             entityMenu.add(entityMenuItem);
@@ -128,9 +127,8 @@ class Outliner extends SmartFloater {
             if (world && world.isWorld) {
                 if (world.uuid !== viewWorld.activeStage().uuid) {
                     const cmds = [];
-                    cmds.push(new SelectCommand([], editor.selected));
                     cmds.push(new SetStageCommand(viewWorld.type, null, world));
-                    cmds.push(new SelectCommand([ world ], []));
+                    cmds.push(new SelectCommand([ world ], editor.selected));
                     editor.execute(new MultiCmdsCommand(cmds, 'Select World'));
                 } else {
                     editor.execute(new SelectCommand([ world ], editor.selected));
@@ -144,9 +142,8 @@ class Outliner extends SmartFloater {
             if (stage && stage.isStage) {
                 if (stage.uuid !== viewWorld.activeStage().uuid) {
                     const cmds = [];
-                    cmds.push(new SelectCommand([], editor.selected));
                     cmds.push(new SetStageCommand(viewWorld.type, stage));
-                    cmds.push(new SelectCommand([ stage ], []));
+                    cmds.push(new SelectCommand([ stage ], editor.selected));
                     editor.execute(new MultiCmdsCommand(cmds, 'Select Stage'));
                 } else {
                     editor.execute(new SelectCommand([ stage ], editor.selected));
@@ -180,9 +177,8 @@ class Outliner extends SmartFloater {
                 const parent = clickedEntity.parentStage();
                 if (parent && parent.uuid !== viewWorld.activeStage().uuid) {
                     const cmds = [];
-                    cmds.push(new SelectCommand([], editor.selected));
                     cmds.push(new SetStageCommand(viewWorld.type, parent));
-                    cmds.push(new SelectCommand([ clickedEntity ], []));
+                    cmds.push(new SelectCommand([ clickedEntity ], editor.selected));
                     editor.execute(new MultiCmdsCommand(cmds, 'Change Active Stage'));
                 }
 
@@ -383,16 +379,13 @@ class Outliner extends SmartFloater {
                         const selectedIndex = editor.selected.indexOf(entity);
                         if (selectedIndex !== -1) {
                             const currentSelection = [...editor.selected];
-                            cmds.push(new SelectCommand([], currentSelection));
-                            cmds.push(new SelectCommand(currentSelection, []));
                             for (const selectedEntity of editor.selected) {
                                 if (!selectedEntity || !selectedEntity.isEntity) continue;
                                 if (selectedEntity.isStage) continue;
                                 if (selectedEntity.isWorld) continue;
                                 cmds.push(new SetEntityValueCommand(selectedEntity, 'locked', lockedNow, false /** recursive? */));
                             }
-                            cmds.push(new SelectCommand([], currentSelection));
-                            cmds.push(new SelectCommand(currentSelection, []));
+                            cmds.push(new SelectCommand(currentSelection, currentSelection)); // force 'selectionChanged' signal
                         } else {
                             cmds.push(new SetEntityValueCommand(entity, 'locked', lockedNow, false /** recursive? */));
                         }

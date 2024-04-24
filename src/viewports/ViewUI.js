@@ -49,13 +49,27 @@ class ViewUI extends AbstractView {
         this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
 
-        /******************** SIGNALS ********************/
+    }
 
-        // Project Loaded
-        Signals.connect(this, 'projectLoaded', () => {
-            self.cameraReset();
-        });
+    /******************** VIEW ********************/
 
+    cameraFocus() {
+        //
+        // TODO
+        //
+    }
+
+    cameraReset(animate = true) {
+        //
+        // TODO
+        //
+    }
+
+    gridSize() {
+        //
+        // TODO
+        //
+        return 0;
     }
 
 }

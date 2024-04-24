@@ -111,7 +111,6 @@ class Editor extends SUEY.MainWindow {
     /******************** PROJECT ********************/
 
     loadProject(json, demo = false) {
-        const editor = this;
         function newProjectLoaded() {
             Signals.dispatch('sceneGraphChanged');              // rebuild outliner
             Signals.dispatch('projectLoaded');                  // alert floaters
