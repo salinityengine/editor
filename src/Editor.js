@@ -24,7 +24,7 @@ class Editor extends SUEY.MainWindow {
 
     constructor() {
         super();
-        this.addClass('salt-editor', 'suey-unselectable', 'salt-disable-animations');
+        this.addClass('salt-editor', 'suey-unselectable', 'salt-disable-transitions');
         document.body.appendChild(this.dom);
     }
 
@@ -103,7 +103,7 @@ class Editor extends SUEY.MainWindow {
 
         editor.setMode(Config.getKey('editor/mode'));                               // set editor mode
         editor.refreshSettings();                                                   // also selects none
-        setTimeout(() => editor.removeClass('salt-disable-animations'), 1000);      // allow button animations
+        setTimeout(() => editor.removeClass('salt-disable-transitions'), 500);      // allow css transitions
         setTimeout(() => editor.loadProject(null, true /* demo? */), 100);          // load demo project
 
     } // end ctor

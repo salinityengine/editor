@@ -14,11 +14,9 @@
     src: url('../fonts/Roboto-Regular.ttf');
 }
 
-/********** Disable Animations */
+/********** Disable Transitions */
 
-.salt-disable-animations *:not(.salt-instant-start) { /* used to stop inital page animations */
-    -webkit-animation-duration: 0s !important;
-    animation-duration: 0s !important;
+.salt-disable-transitions * { /* used to stop inital page transitions */
     transition: all 0s !important;
 }
 

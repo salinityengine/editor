@@ -27,8 +27,8 @@
     20%  { transform: translate(  0%, -15%); }
     40%  { transform: translate(  0%,  10%); }
     60%  { transform: translate(  0%, -15%); }
-    80%  { transform: translate(  0%,  -3%); }
-    100% { transform: translate(  0%,  -3%); }
+    90%  { transform: translate(  0%,   3%); }
+    100% { transform: translate(  0%,   0%); }
 }
 
 @keyframes growShrink {

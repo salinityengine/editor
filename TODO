@@ -2,6 +2,10 @@
 /*                    TO DO                   */
 /**********************************************/
 
+History:
+    - Stop all signals while traversing through the stack
+        - Keep track of the signals and only emit those that are needed?
+
 Project:
     - Save/Load Assets
     - 2D Components
