@@ -86,13 +86,13 @@ class EditorToolbar extends SUEY.Panel {
         scene2d.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_2D)));
         scene3d.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_3D)));
         world.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_GRAPH)));
-        ui.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.UI_EDITOR)));
+        ui.onPress(() => editor.execute(new EditorModeCommand(EDITOR_MODES.WORLD_UI)));
 
-        Signals.connect(this, 'editorModeChanged', function(mode) {
+        Signals.connect(this, 'editorModeChanged', (mode) => {
             scene2d.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_2D);
             scene3d.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_3D);
             world.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_GRAPH);
-            ui.wantsClass('suey-selected', mode === EDITOR_MODES.UI_EDITOR);
+            ui.wantsClass('suey-selected', mode === EDITOR_MODES.WORLD_UI);
         });
 
         /******************** PLAY */
@@ -106,7 +106,7 @@ class EditorToolbar extends SUEY.Panel {
         });
 
         /** When Player starts / stops, handle graying Editor, hiding 'Play' */
-        Signals.connect(this, 'playerStateChanged', function(state) {
+        Signals.connect(this, 'playerStateChanged', (state) => {
             if (state === 'start') {
                 editor.addClass('salt-gray-out');
                 play.setStyle('opacity', '0', 'pointer-events', 'none');
@@ -137,10 +137,10 @@ class EditorToolbar extends SUEY.Panel {
         const settingsShadow = new SUEY.VectorBox(`${FOLDER_TOOLBAR}settings-shadow.svg`).setID('tb-settings-shadow');
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
-        game.onPress(() => editor.getFloaterByID('game'));
-        notes.onPress(() => editor.getFloaterByID('notepad'));
-        history.onPress(() => editor.getFloaterByID('history'));
-        settings.onPress(() => editor.getFloaterByID('settings'));
+        game.onPress(() => editor.getFloaterByID('game', true, true, true));
+        notes.onPress(() => editor.getFloaterByID('notepad', true, true, true));
+        history.onPress(() => editor.getFloaterByID('history', true, true, true));
+        settings.onPress(() => editor.getFloaterByID('settings', true, true, true));
 
         /******************** ADD TO TOOLBAR */
 

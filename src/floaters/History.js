@@ -120,11 +120,19 @@ class History extends SmartFloater {
             }
         }
 
+        // Focus on Tree List when parent dock gains focus
+        this.on('activate-window', () => {
+            treeList.focus();
+
+            console.log('Activate history')
+
+        });
+
         /***** SIGNALS *****/
 
         let lastHistorySize = editor.commands.undos.length + editor.commands.redos.length;
 
-        Signals.connect(this, 'historyChanged', function() {
+        Signals.connect(this, 'historyChanged', () => {
             let thisHistorySize = editor.commands.undos.length + editor.commands.redos.length;
             if (lastHistorySize === thisHistorySize) {
                 updateUI();
@@ -134,10 +142,13 @@ class History extends SmartFloater {
             }
         });
 
+        Signals.connect(this, 'projectLoaded', () => {
+            editor.commands.clear();
+        });
+
         /***** INIT *****/
 
         buildUI();
-        setTimeout(() => treeList.dom.focus(), 100);
 
     } // end ctor
 

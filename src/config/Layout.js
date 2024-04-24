@@ -181,15 +181,17 @@ class Layout {
                 // Tabbed
                 } else if (child.hasClass('suey-tabbed')) {
                     const spacers = SUEY.Dom.childrenWithClass(currentDocker, 'suey-flex-spacer', false /* recursive? */);
+                    const floaters = SUEY.Dom.childrenWithClass(child, 'suey-floater', true /* recursive? */, false /* searchChildenOfTarget? */);
                     const tabbedLayout = {
                         type: 'tabbed',
                         selectedID: child.selectedID,
                         hasSpacer: (spacers.length > 0),
-                        floaters: SUEY.Dom.childrenWithClass(child, 'suey-tab-button', true /* recursive? */).map(button => button.id),
+                        floaters: floaters.map(button => button.id),
                     };
                     parentLayout.children.push(tabbedLayout);
                 // Window
                 } else if (child.hasClass('suey-window')) {
+                    const floaters = SUEY.Dom.childrenWithClass(child, 'suey-floater', true /* recursive? */, false /* searchChildenOfTarget? */);
                     const windowLayout = {
                         type: 'window',
                         zIndex: SUEY.Css.getVariable('--window-z-index', child),
@@ -199,7 +201,7 @@ class Layout {
                         height: child.dom.style.height,
                         initialWidth: child.initialWidth,
                         initialHeight: child.initialHeight,
-                        floaters: SUEY.Dom.childrenWithClass(child, 'suey-floater', true /* recursive? */).map(floater => floater.id),
+                        floaters: floaters.map(floater => floater.id),
                     };
                     parentLayout.children.push(windowLayout);
                 }
@@ -210,8 +212,18 @@ class Layout {
         const layout = {
             type: 'main-window',
             children: [],
+            active: undefined,
         };
         traverse(editor, layout);
+
+        // Active Floater?
+        const activeFloater = document.activeElement?.closest('.suey-floater');
+        if (activeFloater) {
+            layout.active = activeFloater.id;
+        } else {
+            const activeWindow = document.activeElement?.closest('.suey-active-window');
+            if (activeWindow && activeWindow.suey) layout.active = activeWindow.suey.selectedID;
+        }
 
         // Save the Layout
         const viewport = editor.viewport();
@@ -232,8 +244,6 @@ class Layout {
         if (!layoutData) return Layout.default();
 
         // Build Layout
-        let windowWantsActive = undefined;
-        let activeZ = 0;
         function createDocker(layoutNode, parentDocker) {
             let addedDock = false;
             let twinDocker = undefined;
@@ -272,13 +282,12 @@ class Layout {
                                 left: childNode.left,
                                 top: childNode.top,
                             });
-                            editor.addWindow(window);
-                            window.addFloater(floater).selectFloater(floaterID);
-                            // Wants Active?
+                            editor.addWindow(window, false);
+                            window.addFloater(floater);
+                            // Z-Index
                             const zIndex = parseFloat(childNode.zIndex);
-                            if (zIndex && !Number.isNaN(zIndex) && Number.isFinite(zIndex) && zIndex > activeZ) {
-                                windowWantsActive = window;
-                                activeZ = zIndex;
+                            if (zIndex && !Number.isNaN(zIndex) && Number.isFinite(zIndex)) {
+                                SUEY.Css.setVariable('--window-z-index', `${zIndex}`, window);
                             }
                         }
                     });
@@ -290,15 +299,19 @@ class Layout {
         const layout = JSON.parse(layoutData);
         createDocker(layout, docker);
 
-        // Set Focus on Window?
-        if (windowWantsActive) {
-            windowWantsActive.focus();
-        }
-
-        // Force initial resizing
+        // Initialize DOM
         setTimeout(() => {
+            // Force initial resizing
             window.dispatchEvent(new Event('resize'));
-        }, 0);
+
+            // Reset Focus on last active Floater
+            const focused = layout.active;
+            if (focused != undefined && focused != 'undefined' && focused != '') {
+                if (typeof focused === 'string') {
+                    editor.getFloaterByID(focused, false /* build */, true, true);
+                }
+            }
+        }, 50);
     }
 
 }

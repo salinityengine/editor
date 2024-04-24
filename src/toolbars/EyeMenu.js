@@ -138,7 +138,7 @@ class EyeMenu extends SUEY.Menu {
                 //
                 new SUEY.Question('TODO: Publish!').alert();
 
-                // const manager = new THREE.LoadingManager(function() {
+                // const manager = new SALT.LoadingManager(function() {
                 //     const zipped = zipSync(toZip, { level: 9 });
                 //     const filename = ((title !== '') ? title : 'untitled') + '.zip';
                 //     SALT.System.saveBuffer(zipped.buffer, filename, 'application/zip');
@@ -188,19 +188,19 @@ class EyeMenu extends SUEY.Menu {
             editNone.onSelect(() => { editor.selectNone(); });
 
             // Clipboard changed
-            Signals.connect(this, 'clipboardChanged', function() {
+            Signals.connect(this, 'clipboardChanged', () => {
                 const hasEntities = editor.clipboard.containsEntities();
                 editPaste.setDisabled(!hasEntities);
             });
 
             // History changed
-            Signals.connect(this, 'historyChanged', function() {
+            Signals.connect(this, 'historyChanged', () => {
                 editUndo.setDisabled(editor.commands.undos.length == 0);
                 editRedo.setDisabled(editor.commands.redos.length == 0);
             });
 
             // Disable menu items when no selection
-            Signals.connect(this, 'selectionChanged', function() {
+            Signals.connect(this, 'selectionChanged', () => {
                 const entitiesSelected = editor.selected.length;
                 editCut.setDisabled(entitiesSelected === 0);
                 editCopy.setDisabled(entitiesSelected === 0);
@@ -233,7 +233,7 @@ class EyeMenu extends SUEY.Menu {
                     const floater = editor.getFloaterByID(windowName, false, false);
                     if (floater) floater.removeSelf();
                 }
-                else editor.getFloaterByID(windowName, true /* build? */, true /* select? */);
+                else editor.getFloaterByID(windowName, true /* build? */, true /* select? */, true /* focus? */);
             }
             for (const type of Layout.floaterTypes()) {
                 const windowItem = new SUEY.MenuItem(`Show ${SUEY.Strings.capitalize(type)}`).keepOpen();

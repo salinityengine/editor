@@ -33,21 +33,25 @@ class AbstractView extends SUEY.Div {
         this.setClass('salt-viewport');
         this.setStyle('display', 'none');               // important! needed for initial editor.setMode()
 
+        this.isActive = false;
+
         this.toolbar = null;                            // to be added to editor.toolbar.middle
         this.selected = [];                             // selection can differ from editor
         this.worlds = [];                               // open worlds
     }
 
-    /******************** ACTIVATION ********************/
-
-    /** These functions run when editor.setMode() is switched to/from a Viewport */
-
     activate() {
-
+        if (this.isActive !== true) {
+            this.display();
+            this.isActive = true;
+        }
     }
 
     deactivate() {
-
+        if (this.isActive) {
+            this.hide();
+            this.isActive = false;
+        }
     }
 
     /******************** CLIPBOARD / EDIT ********************/
@@ -93,11 +97,10 @@ class AbstractView extends SUEY.Div {
 
     /******************** WORLDS ********************/
 
-    //
-    // TODO: Support multiple worlds
-    //
-
     getWorld() {
+        //
+        // TODO: Support multiple worlds
+        //
         if (this.worlds.length > 0) return this.worlds[0];
     }
 

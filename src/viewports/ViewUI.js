@@ -17,7 +17,7 @@ import { SelectCommand } from '../commands/CommandList.js';
 
 class ViewUI extends AbstractView {
 
-    mode() { return EDITOR_MODES.UI_EDITOR; }
+    mode() { return EDITOR_MODES.WORLD_UI; }
 
     floaterFamily() {
         const floaters = [
@@ -33,6 +33,7 @@ class ViewUI extends AbstractView {
 
     constructor() {
         super();
+        const self = this;
 
         // Toolbar
         this.toolbar = new ViewUIToolbar(this);
@@ -47,6 +48,14 @@ class ViewUI extends AbstractView {
         this.mouseDownButton = -1;                              // tracks button on last mouse down
         this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
+
+        /******************** SIGNALS ********************/
+
+        // Project Loaded
+        Signals.connect(this, 'projectLoaded', () => {
+            self.cameraReset();
+        });
+
     }
 
 }

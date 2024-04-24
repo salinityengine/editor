@@ -12,30 +12,14 @@ import { unzipSync, strFromU8 } from '../libs/fflate.module.js';
 
 class Loader {
 
-    static loadFiles(files, filesMap) {
-        if (!files || files.length === 0) return;
-
-        function createFilesMap(files) {
-            const map = {};
-            for (const file of files) map[file.name] = file;
-            return map;
-        }
-        filesMap = filesMap || createFilesMap(files);
-
-        const manager = new SALT.LoadingManager();
-        manager.setURLModifier(function(url) {
-            url = url.replace(/^(\.?\/)/, '');          // remove './'
-            const file = filesMap[url];
-            if (file) return URL.createObjectURL(file);
-            return url;
-        });
-
+    static loadFiles(files) {
+        if (!files) return;
         for (const file of files) {
-            Loader.loadFile(file, manager);
+            Loader.loadFile(file);
         }
     }
 
-    static loadFile(file, manager) {
+    static loadFile(file) {
         let filename = file.name;
         let extension = filename.split('.').pop().toLowerCase();
         if (file.type && file.type === 'image/png') extension = 'image';
@@ -113,8 +97,8 @@ export { Loader };
 /******************** INTERNAL ********************/
 
 function handleJSON(data) {
-    // // DEBUG: Show internal file type
-    // console.info(`Type: ${data.metadata.type.toLowerCase()}`);
+    // DEBUG: Show internal file type
+    console.info(`Type: ${data.metadata.type.toLowerCase()}`);
 
     switch (data.metadata.type.toLowerCase()) {
         case 'entity':
@@ -127,8 +111,9 @@ function handleJSON(data) {
             break;
 
         // Published from Salinity Editor
-        case 'salt':
+        case 'salinity':
             editor.loadProject(data);
+            break;
 
         default:
             console.warn(`Loader.handleJSON(): File type unknown '${data.metadata.type.toLowerCase()}'`);
@@ -139,16 +124,6 @@ async function handleZIP(contents) {
     const zip = unzipSync(new Uint8Array(contents));
     for (const path in zip) {
         const file = zip[path];
-        const manager = new SALT.LoadingManager();
-        manager.setURLModifier(function(url) {
-            const file = zip[url];
-            if (file) {
-                console.info('Loading', url);
-                const blob = new Blob([file.buffer], { type: 'application/octet-stream' });
-                return URL.createObjectURL(blob);
-            }
-            return url;
-        });
 
         /***** UNZIPPED *****/
 

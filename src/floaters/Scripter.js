@@ -8,6 +8,7 @@ import { Scrimp } from 'scrimp';
 import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
+import { Signals } from '../config/Signals.js';
 
 // import { SetAssetValueCommand } from '../commands/CommandList.js';
 // import { SetScriptSourceCommand } from '../commands/CommandList.js';
@@ -247,14 +248,14 @@ window.addEventListener('resize', updateSize);`;
 
         /***** SIGNALS *****/
 
-        Signals.connect(this, 'assetRemoved', function(type, script) {
+        Signals.connect(this, 'assetRemoved', (type, script) => {
             // if (type !== 'script') return;
             // if (script && currentScript && currentScript.uuid === script.uuid) {
             //     self.hide();
             // }
         });
 
-        Signals.connect(this, 'editScript', function(script) {
+        Signals.connect(this, 'editScript', (script) => {
             // editing = false;
             // // Set Script
             // scriptName.setValue(script.name);

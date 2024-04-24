@@ -6,6 +6,11 @@ Project:
     - Check Save / Load
     - 2D Components
 
+Scripter:
+    - Open from Codex
+    - Editable script name textbox
+        - Style text box
+
 AssetFloater extends SmartFloater: (assets, codex, library)
     - Move search box to title bar when over a certain width
     - Option for 'Add New Category' button
@@ -66,9 +71,6 @@ Floaters:
     Previewer:
     Scripter:
         - Right click menu?
-        - Open from Codex
-        - Editable script name textbox
-            - Style text box
         - Linter (jshint / eshint / esprima)
             https://discuss.codemirror.net/t/how-to-actually-use-eslint-in-codemirror-6/4184
         - Auto complete / Tern

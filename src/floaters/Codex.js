@@ -102,36 +102,36 @@ class Codex extends SmartFloater {
             }
         }
 
-        function processScripts(type) {
+        function processScripts(type, asset, focus = false) {
             if (type !== 'script') return;
-            const scripts = SALT.AssetManager.library('script');
+            const scripts = (asset && asset.isAsset) ? [ asset ] : SALT.AssetManager.library('script');
+            // Add Categories
+            const categories = [];
             for (const script of scripts) {
-                const category = String(script.category).toLowerCase();
+                const category = (script.category) ? String(script.category).toLowerCase() : undefined;
                 if (!category) continue;
-
+                if (!categories.includes(category)) categories.push(category);
                 if (!self.blocks[category]) {
                     let icon = '';
                     switch (category) {
                         case 'camera': icon = `${FOLDER_TYPES}scripts/camera.svg`; break;
                         case 'control': icon = `${FOLDER_TYPES}scripts/control.svg`; break;
                         case 'entity': icon = `${FOLDER_TYPES}scripts/entity.svg`; break;
-
-                        //
                         // ADDITIONAL CUSTOM CATEGORY ICONS HERE
-                        //
                     }
                     const title = SUEY.Strings.capitalize(category);
                     self.blocks[category] = new AssetBlock({ type: 'script', category, title, icon, view: 'list' });
                     self.add(self.blocks[category]);
                 }
             }
-
-            // Add Icons
-            for (const category in self.blocks) {
+            // Process Categories
+            for (const category of categories) {
                 const block = self.blocks[category];
                 block.buildBlock(false /* clear? */);
                 block.applySearch(self.getSearchTerm());
             }
+            // Focus?
+            if (focus) focusAsset(type, asset);
         }
 
         function assetChanged(type, script) {
@@ -150,18 +150,11 @@ class Codex extends SmartFloater {
             }
         }
 
-        function projectLoaded() {
-            processScripts('script');
-        }
-
         Signals.connect(this, 'assetSelect', focusAsset);
-        Signals.connect(this, 'assetAdded', (type, asset) => {
-            processScripts(type, asset);
-            focusAsset();
-        });
+        Signals.connect(this, 'assetAdded', (type, asset) => processScripts(type, asset, true /* focus? */));
         Signals.connect(this, 'assetRemoved', processScripts);
         Signals.connect(this, 'assetChanged', assetChanged);
-        Signals.connect(this, 'projectLoaded', projectLoaded);
+        Signals.connect(this, 'projectLoaded', () => processScripts('script'));
 
         /***** INIT *****/
 

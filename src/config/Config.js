@@ -118,7 +118,7 @@ class Config {
 
     static getKey(key) {
         const data = localStorage.getItem(key);
-        return (data == null) ? DEFAULT_SETTINGS[key] : JSON.parse(data);
+        return (data == undefined || data == 'undefined') ? DEFAULT_SETTINGS[key] : JSON.parse(data);
     }
 
     /** Sets series of keys to values, pass in by key, value pair. */

@@ -35,6 +35,7 @@ class View3D extends AbstractView {
 
     constructor() {
         super();
+        const self = this;
 
         // Toolbar
         this.toolbar = new View3DToolbar(this);
@@ -62,6 +63,14 @@ class View3D extends AbstractView {
         this.mouseDownButton = -1;                              // tracks button on last mouse down
         this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
+
+        /******************** SIGNALS ********************/
+
+        // Project Loaded
+        Signals.connect(this, 'projectLoaded', () => {
+            self.cameraReset();
+        });
+
     }
 
     /******************** FRAME ********************/

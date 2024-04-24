@@ -113,8 +113,6 @@ class Editor extends SUEY.MainWindow {
     loadProject(json, demo = false) {
         const editor = this;
         function newProjectLoaded() {
-            editor.commands.clear();                            // clear history
-            editor.viewport()?.cameraReset();                   // reset camera
             Signals.dispatch('sceneGraphChanged');              // rebuild outliner
             Signals.dispatch('projectLoaded');                  // alert floaters
         }
@@ -125,7 +123,7 @@ class Editor extends SUEY.MainWindow {
             newProjectLoaded();
         } else if (json) {
             this.selectEntities(/* none */);
-            this.project.fromJSON(json, true /* loadAssets? */, /* onLoad */ () => { newProjectLoaded(); });
+            this.project.fromJSON(json, true /* loadAssets? */, newProjectLoaded);
         }
     }
 
@@ -146,10 +144,8 @@ class Editor extends SUEY.MainWindow {
             if (!newViewport && viewport.mode() === mode) {
                 newViewport = viewport;
                 this.toolbar.middle.add(...viewport.toolbar.buttons);
-                viewport.display();
                 viewport.activate();
             } else {
-                viewport.hide();
                 viewport.deactivate();
             }
         }
@@ -388,13 +384,16 @@ class Editor extends SUEY.MainWindow {
     /******************** FLOATERS ********************/
 
     /** Returns Floater if present in Editor. Options to build if not present and ensure active.  */
-    getFloaterByID(tabID, build = true, select = true) {
+    getFloaterByID(tabID, build = true, select = true, focus = false) {
         let floater = super.getFloaterByID(tabID);
         if (!floater && build) {
             floater = Layout.createFloater(tabID);
             if (floater) Layout.installFloater(floater);
         }
-        if (select && floater && floater.dock) floater.dock.selectFloater(floater.id);
+        if (floater && floater.dock) {
+            if (select) floater.dock.selectFloater(floater.id);
+            if (focus) floater.dock.focus();
+        }
         return floater;
     }
 
@@ -432,9 +431,8 @@ function editorIgnoreKey(event) {
     // IGNORE: Focused HTMLElement contains specific attribute
     const focused = document.activeElement;
     if (focused && focused instanceof HTMLElement) {
-        if (focused.closest('.salt-history')) return false;             // history child
-        if (focused.closest('.salt-viewport')) return false;            // viewport child
-        if (!(focused instanceof HTMLBodyElement)) return true;         // not a viewport
+        if (focused.getAttribute('contenteditable')) return true;       // text box, etc.
+        if (focused instanceof HTMLBodyElement) return false;           // viewport
     }
 
     // DON'T IGNORE

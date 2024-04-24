@@ -141,9 +141,16 @@ class Worlds extends AbstractView {
         /********** EVENTS */
 
         // Displayed
+        let firstTime = true;
         this.on('displayed', () => {
-            graph.centerView(true /* resetZoom */, false /* animate */);
-        }, true /* once? */);
+            if (firstTime) {
+                graph.centerView(true /* resetZoom */, false /* animate */);
+                firstTime = false;
+            } else {
+                refreshNodes();
+                graph.zoomTo();
+            }
+        });
 
         // Selected
         graph.on('selected', () => {
@@ -174,7 +181,7 @@ class Worlds extends AbstractView {
         // Grid Changed
         Signals.connect(this, 'gridChanged', () => {
             graph.snapToGrid = Config.getKey('viewport/grid/snap');
-            if (self.isHidden()) return;
+            if (!self.isActive) return;
             // Update while dragging
             const active = document.activeElement;
             if (active && active.classList.contains('suey-node-selected')) {
@@ -190,22 +197,30 @@ class Worlds extends AbstractView {
         // Refresh Settings
         Signals.connect(this, 'settingsRefreshed', () => {
             graph.curveType = Config.getKey('world/curve');
+            if (!self.isActive) return;
             graph.changeGridType(Config.getKey('world/grid/style'));
         });
 
         Signals.connect(this, 'fontSizeChanged', () => {
+            if (!self.isActive) return;
             setTimeout(() => graph.drawLines(), 0);
         });
 
         // Scene Graph Changed
-        Signals.connect(this, 'sceneGraphChanged', refreshNodes);
+        Signals.connect(this, 'sceneGraphChanged', () => {
+            if (!self.isActive) return;
+            refreshNodes();
+        });
 
         // Project Loaded
-        Signals.connect(this, 'projectLoaded', () => graph.centerView(true /* resetZoom */, false /* animate */));
+        Signals.connect(this, 'projectLoaded', () => {
+            // Camera Reset
+            graph.centerView(true /* resetZoom */, false /* animate */);
+        });
 
         // Selection Changed
         Signals.connect(this, 'selectionChanged', () => {
-            if (self.isHidden()) return;
+            if (!self.isActive) return;
 
             // Refresh
             refreshNodes();
@@ -243,6 +258,7 @@ class Worlds extends AbstractView {
 
         // Entity Changed
         Signals.connect(this, 'entityChanged', (entity) => {
+            if (!self.isActive) return;
             if (!entity || !entity.isWorld) return;
 
             // Update Node reponsible for World
@@ -254,12 +270,6 @@ class Worlds extends AbstractView {
         });
 
     } // end ctor
-
-    /******************** ACTIVATION ********************/
-
-    activate() {
-        this.graph.zoomTo();
-    }
 
     /******************** NODES ********************/
 
