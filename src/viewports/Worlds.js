@@ -12,6 +12,7 @@ import { Signals } from '../config/Signals.js';
 import { WorldsToolbar } from '../toolbars/WorldsToolbar.js';
 
 import { AddEntityCommand } from '../commands/CommandList.js';
+import { EditorModeCommand } from '../commands/CommandList.js';
 import { MultiCmdsCommand } from '../commands/CommandList.js';
 import { RemoveEntityCommand } from '../commands/CommandList.js';
 import { SelectCommand } from '../commands/CommandList.js';
@@ -96,6 +97,12 @@ class Worlds extends AbstractView {
                 }
             }
             node.on('dragged', nodeDrag);
+
+            // Double Click (Focus)
+            function nodeDoubleClick() {
+                editor.execute(new EditorModeCommand(node.world.type));
+            }
+            node.on('dblclick', nodeDoubleClick);
 
             return node;
         }

@@ -2,9 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Worlds:
-    - Change orange highlight on active world to allow selection and orange
-
 Project:
     - Save/Load Assets
     - 2D Components
