@@ -8,6 +8,7 @@ import * as SUEY from 'gui';
 import { CanvasUtils } from './CanvasUtils.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
+import { Layout } from '../config/Layout.js';
 import { Shaper } from '../floaters/Shaper.js';
 import { Signals } from '../config/Signals.js';
 
@@ -320,9 +321,8 @@ class AssetBlock extends SUEY.Shrinkable {
             const type = String(asset.type).toLowerCase();
             switch (type) {
                 case 'script':
-                    const scripter = editor.getFloaterByID('scripter');
+                    const scripter = Layout.selectFloater('scripter', true /* build? */);
                     scripter.loadScript(asset);
-                    setTimeout(() => scripter.dock.focus(), 0);
                     break;
             }
         }

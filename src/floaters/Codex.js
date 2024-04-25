@@ -12,6 +12,7 @@ import { SmartFloater } from '../gui/SmartFloater.js';
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
+import { Layout } from '../config/Layout.js';
 import { Signals } from '../config/Signals.js';
 
 import { AddAssetCommand } from '../commands/CommandList.js';
@@ -94,15 +95,18 @@ class Codex extends SmartFloater {
                 const category = asset.category ?? unknown;
                 const block = self.blocks[category];
                 if (block) {
-                    editor.selectFloater('scripts');
+                    Layout.selectFloater(self);
                     block.setExpanded();
                     const assetBox = document.getElementById(asset.uuid);
-                    if (assetBox) setTimeout(() => { assetBox.focus(); assetBox.click(); }, 0);
+                    if (assetBox) setTimeout(() => {
+                        assetBox.focus();
+                        assetBox.click();
+                    }, 0);
                 }
             }
         }
 
-        function processScripts(type, asset, focus = false) {
+        function processAssets(type, asset, focus = false) {
             if (type !== 'script') return;
             const scripts = (asset && asset.isAsset) ? [ asset ] : SALT.AssetManager.library('script');
             // Add Categories
@@ -124,11 +128,18 @@ class Codex extends SmartFloater {
                     self.add(self.blocks[category]);
                 }
             }
-            // Process Categories
-            for (const category of categories) {
-                const block = self.blocks[category];
+            // Process Single Category
+            if (asset && asset.isAsset) {
+                const block = self.blocks[asset.category];
                 block.buildBlock(false /* clear? */);
                 block.applySearch(self.getSearchTerm());
+            // Process Categories
+            } else {
+                for (const category of categories) {
+                    const block = self.blocks[category];
+                    block.buildBlock(false /* clear? */);
+                    block.applySearch(self.getSearchTerm());
+                }
             }
             // Focus?
             if (focus) focusAsset(type, asset);
@@ -136,30 +147,26 @@ class Codex extends SmartFloater {
 
         function assetChanged(type, script) {
             if (type !== 'script') return;
-            if (!script || !script.isScript) {
-                processScripts(type);
-            } else {
+            if (script && script.isScript) {
                 const category = script.category ?? unknown;
                 const block = self.blocks[category];
                 if (block) {
-                    block.updateItem(type, script);
+                    block.updateItem('script', script);
                     block.applySearch(self.getSearchTerm());
-                } else {
-                    processScripts(type);
                 }
             }
         }
 
-        Signals.connect(this, 'assetSelect', focusAsset);
-        Signals.connect(this, 'assetAdded', (type, asset) => processScripts(type, asset, true /* focus? */));
-        Signals.connect(this, 'assetRemoved', processScripts);
+        Signals.connect(this, 'assetAdded', (type, asset) => processAssets(type, asset, true /* focus? */));
+        Signals.connect(this, 'assetRemoved', processAssets);
         Signals.connect(this, 'assetChanged', assetChanged);
-        Signals.connect(this, 'projectLoaded', () => processScripts('script'));
+        Signals.connect(this, 'assetSelect', focusAsset);
+        Signals.connect(this, 'projectLoaded', () => processAssets('script'));
 
         /***** INIT *****/
 
         // Build
-        processScripts('script');
+        processAssets('script');
 
         // Inititate search term
         this.searchBlocks();

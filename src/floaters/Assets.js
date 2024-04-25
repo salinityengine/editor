@@ -12,6 +12,7 @@ import { SmartFloater } from '../gui/SmartFloater.js';
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';
+import { Layout } from '../config/Layout.js';
 import { Signals } from '../config/Signals.js';
 
 import { AddAssetCommand } from '../commands/CommandList.js';
@@ -99,19 +100,24 @@ class Assets extends SmartFloater {
             if (!asset || !asset.uuid) return;
             const block = self.blocks[type];
             if (block) {
-                editor.selectFloater('assets');
+                Layout.selectFloater(self);
                 block.setExpanded();
                 const assetBox = document.getElementById(asset.uuid);
-                if (assetBox) setTimeout(() => { assetBox.focus(); assetBox.click(); }, 0);
+                if (assetBox) setTimeout(() => {
+                    assetBox.focus();
+                    assetBox.click();
+                }, 0);
             }
         }
 
-        function processAssets(type) {
+        function processAssets(type, asset, focus = false) {
             const block = self.blocks[type];
             if (block) {
                 block.buildBlock(false /* clear? */);
                 block.applySearch(self.getSearchTerm());
             }
+            // Focus?
+            if (focus) focusAsset(type, asset);
         }
 
         function assetChanged(type, asset) {
@@ -122,13 +128,10 @@ class Assets extends SmartFloater {
             }
         }
 
-        Signals.connect(this, 'assetSelect', focusAsset);
-        Signals.connect(this, 'assetAdded', (type, asset) => {
-            processAssets(type, asset);
-            focusAsset();
-        });
+        Signals.connect(this, 'assetAdded', (type, asset) => processAssets(type, asset, true /* focus? */));
         Signals.connect(this, 'assetRemoved', processAssets);
         Signals.connect(this, 'assetChanged', assetChanged);
+        Signals.connect(this, 'assetSelect', focusAsset);
 
         /***** INIT *****/
 

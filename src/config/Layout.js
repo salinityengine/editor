@@ -147,6 +147,32 @@ class Layout {
         dock.addFloater(floater);
     }
 
+    /** Returns Floater if present in Editor. Option to build if not present.  */
+    static findFloater(floaterID, build = false) {
+        let floater = editor.getFloaterByID(floaterID);
+        if (!floater && build) {
+            floater = Layout.createFloater(floaterID);
+            if (floater) Layout.installFloater(floater);
+        }
+        return floater;
+    }
+
+    /** If Floater is present in Editor, ensures parent Dock Tab is active. */
+    static selectFloater(floater, build = false) {
+        if (typeof floater === 'string') floater = this.findFloater(floater, build);
+        if (floater && floater.dock) {
+            floater.dock.selectFloater(floater.id);
+            floater.dock.focus();
+        }
+        return floater;
+    }
+
+    /** Removes Floater (by floater or ID) is present in Editor. */
+    static removeFloater(floater) {
+        if (typeof floater === 'string') floater = Layout.findFloater(floater, false /* build */);
+        if (floater && floater.isElement) floater.removeSelf();
+    }
+
     /******************** SAVE / LOAD */
 
     static save() {
@@ -281,7 +307,7 @@ class Layout {
                                 left: childNode.left,
                                 top: childNode.top,
                             });
-                            editor.addWindow(window, false);
+                            editor.addWindow(window);
                             window.addFloater(floater);
                             // Z-Index
                             const zIndex = parseFloat(childNode.zIndex);
@@ -306,9 +332,7 @@ class Layout {
             // Reset Focus on last active Floater
             const focused = layout.active;
             if (focused != undefined && focused != 'undefined' && focused != '') {
-                if (typeof focused === 'string') {
-                    editor.getFloaterByID(focused, false /* build */, true, true);
-                }
+                if (typeof focused === 'string') Layout.selectFloater(focused);
             }
         }, 50);
     }

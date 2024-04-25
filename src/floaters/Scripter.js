@@ -8,6 +8,7 @@ import { Scrimp } from 'scrimp';
 import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';
+import { Layout } from '../config/Layout.js';
 import { Signals } from '../config/Signals.js';
 
 import { SetAssetValueCommand } from '../commands/CommandList.js';
@@ -40,7 +41,7 @@ class Scripter extends SmartFloater {
 
         // Focus on Scrimp when parent dock gains focus
         this.on('activate-window', () => {
-            if (scrimp) scrimp.focus();
+            if (scrimp) setTimeout(() => scrimp.focus(), 0);
         });
 
         // Dispose of things when Window 'X' is clicked
@@ -114,7 +115,7 @@ class Scripter extends SmartFloater {
 
         // Extra Keys
         function onKeySave() {
-            if (self.dock) self.dock.removeFloater(self, true /* destroy */);
+            Layout.removeFloater(self);
         }
         scrimp.addKeymap('Ctrl-s', onKeySave);
         scrimp.addKeymap('Meta-s', onKeySave);
@@ -247,7 +248,7 @@ class Scripter extends SmartFloater {
         Signals.connect(this, 'assetRemoved', (type, script) => {
             if (type !== 'script' || !script || !script.isScript) return;
             if (!self.script || self.script.uuid !== script.uuid) return;
-            if (self.dock) self.dock.removeFloater(self, true /* destroy */);
+            Layout.removeFloater(self);
         });
 
     } // end ctor

@@ -229,11 +229,8 @@ class EyeMenu extends SUEY.Menu {
 
             // Toggle Window Types
             function toggleWindow(windowMenuItem, windowName) {
-                if (windowMenuItem.checked) {
-                    const floater = editor.getFloaterByID(windowName, false, false);
-                    if (floater) floater.removeSelf();
-                }
-                else editor.getFloaterByID(windowName, true /* build? */, true /* select? */, true /* focus? */);
+                if (windowMenuItem.checked) Layout.removeFloater(windowName);
+                else Layout.selectFloater(windowName, true /* build? */);
             }
             for (const type of Layout.floaterTypes()) {
                 const windowItem = new SUEY.MenuItem(`Show ${SUEY.Strings.capitalize(type)}`).keepOpen();
@@ -245,7 +242,7 @@ class EyeMenu extends SUEY.Menu {
             // Update Items on Tabs Changed
             function updateWindowItems() {
                 for (const windowItem of windowItems) {
-                    windowItem.setChecked(editor.getFloaterByID(windowItem.floaterType, false, false));
+                    windowItem.setChecked(Layout.findFloater(windowItem.floaterType));
                 }
             }
             editor.on('tabs-changed', updateWindowItems);

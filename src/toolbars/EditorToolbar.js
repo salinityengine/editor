@@ -6,6 +6,7 @@ import * as SUEY from 'gui';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
+import { Layout } from '../config/Layout.js';
 import { Signals } from '../config/Signals.js';
 
 import { EditorModeCommand } from '../commands/CommandList.js';
@@ -101,7 +102,7 @@ class EditorToolbar extends SUEY.Panel {
         play.add(playArrow);
 
         play.onPress(() => {
-            const player = editor.getFloaterByID('player', true /* build? */);
+            const player = Layout.selectFloater('player', true /* build? */);
             player.start();
         });
 
@@ -137,15 +138,10 @@ class EditorToolbar extends SUEY.Panel {
         const settingsShadow = new SUEY.VectorBox(`${FOLDER_TOOLBAR}settings-shadow.svg`).setID('tb-settings-shadow');
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
-        function buildFloaterAndFocus(name) {
-            const floater = editor.getFloaterByID('game');
-            setTimeout(() => floater.dock.focus(), 0);
-        }
-
-        game.onPress(() => buildFloaterAndFocus('game'));
-        notes.onPress(() => buildFloaterAndFocus('notepad'));
-        history.onPress(() => buildFloaterAndFocus('history'));
-        settings.onPress(() => buildFloaterAndFocus('settings'));
+        game.onPress(() => Layout.selectFloater('game', true /* build? */));
+        notes.onPress(() => Layout.selectFloater('notepad', true /* build? */));
+        history.onPress(() => Layout.selectFloater('history', true /* build? */));
+        settings.onPress(() => Layout.selectFloater('settings', true /* build? */));
 
         /******************** ADD TO TOOLBAR */
 

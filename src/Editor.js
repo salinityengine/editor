@@ -330,8 +330,8 @@ class Editor extends SUEY.MainWindow {
     /******************** INTERACTIVE ********************/
 
     requestScreenshot() {
-        const player = this.getFloaterByID('player', false /* build? */);
-        if (player && (player.isPlaying && !player.isPaused)) {
+        const player = Layout.findFloater('player');
+        if (player && player.isPlaying && !player.isPaused) {
             player.requestScreenshot();
         } else {
             this.wantsScreenshot = true;
@@ -384,29 +384,6 @@ class Editor extends SUEY.MainWindow {
             this.keyStates[CONSTANTS.KEYS.SPACE];
     }
 
-    /******************** FLOATERS ********************/
-
-    /** Returns Floater if present in Editor. Options to build if not present and ensure active.  */
-    getFloaterByID(tabID, build = true, select = true) {
-        let floater = super.getFloaterByID(tabID);
-        if (!floater && build) {
-            floater = Layout.createFloater(tabID);
-            if (floater) Layout.installFloater(floater);
-        }
-        if (floater && floater.dock && select) floater.dock.selectFloater(floater.id);
-        return floater;
-    }
-
-    /** If Floater is present in Editor, ensures parent Dock Tab is active. */
-    selectFloater(tabID = '') {
-        if (tabID && tabID.isElement && tabID.hasClass('suey-floater')) {
-            const floater = tabID;
-            if (floater.dock) floater.dock.selectFloater(floater.id);
-        } else if (tabID && tabID != '' && typeof tabID === 'string') {
-            this.getFloaterByID(tabID, false /* build? */, true /* select */);
-        }
-    }
-
 }
 
 // Export as Singleton
@@ -422,9 +399,9 @@ function editorIgnoreKey(event) {
     // }
 
     // IGNORE: While Playing
-    const player = editor.getFloaterByID('player', false /* build? */, false /* select */);
+    const player = Layout.findFloater('player');
     if (player && player.isPlaying) {
-        editor.selectFloater('player');
+        Layout.selectFloater(player);
         return true;
     }
 
@@ -531,7 +508,7 @@ function editorKeyDown(editor, event) {
 
         // Play Game
         case Config.getKey('shortcuts/play'):
-            const player = editor.getFloaterByID('player', true /* build? */);
+            const player = Layout.selectFloater('player', true /* build? */);
             player.start();
             break;
 
