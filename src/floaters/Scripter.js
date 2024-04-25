@@ -56,8 +56,11 @@ class Scripter extends SmartFloater {
 
         /********** SCRIPT NAME */
 
+        const nameRow = new SUEY.FlexBox();
+        const scriptGutter = new SUEY.Text('').addClass('salt-script-gutter').selectable(false);
         const scriptName = new SUEY.TextBox().addClass('salt-script-name');
-        this.add(scriptName);
+        this.add(nameRow.add(scriptGutter, scriptName));
+        this.scriptGutter = scriptGutter;
         this.scriptName = scriptName;
 
         scriptName.on('input', () => {
@@ -92,6 +95,13 @@ class Scripter extends SmartFloater {
                     queue.push(child);
                 }
             }
+            // Name Gutter Width
+            const cmGutter = SUEY.Dom.childWithClass(scrimp.dom, 'cm-gutters');
+            if (cmGutter) {
+                const gutterRect = cmGutter.getBoundingClientRect();
+                scriptGutter.setStyle('width', `${gutterRect.width}px`);
+            }
+
             // Document Changed
             if (viewUpdate.docChanged) {
                 const script = self.script;

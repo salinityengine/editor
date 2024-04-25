@@ -3,9 +3,6 @@
 /**********************************************/
 
 Scripter:
-    - Ctrl-s closes scripter and doesn't allow event to propagate
-    - Close scripter if window
-    - Style name text box
     - Scrimp.setMode()
     - Scrimp.clearHistory()
     - Scrimp.setCursorPosition()

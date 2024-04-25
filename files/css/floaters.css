@@ -314,11 +314,22 @@
 
 /********** Scripter */
 
-.salt-script-name {
-    color: rgb(var(--highlight));
-    width: 100%;
+.salt-script-gutter {
+    height: 100%;
+    background-color: rgb(var(--background-light));
+}
+
+.suey-input.salt-script-name {
+    font-size: calc(var(--font-size) * 1.05);
+    flex: 1 1 auto;
+    min-height: 1.5em;
     margin: 0;
     padding: 0;
+    padding-left: 0.35em;
+    background-color: rgb(var(--background-light));
+    border: var(--border-micro) solid rgb(var(--background-light));
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .salt-script-wrapper {
