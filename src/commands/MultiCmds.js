@@ -51,7 +51,7 @@ class MultiCmdsCommand extends Command {
     }
 
     process(type = 'execute') {
-        // Disable All Change Signals
+        // Disable Change Signals
         Signals.toggle('entityChanged', false);
         Signals.toggle('transformsChanged', false);
         Signals.toggle('sceneGraphChanged', false);

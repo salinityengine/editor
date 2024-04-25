@@ -356,10 +356,14 @@ class Worlds extends AbstractView {
         const worlds = this.selectedWorlds();
         if (worlds.length === 0) return;
 
+        // Types Included
+        const worldTypes = [];
+        worlds.forEach((world) => { if (worldTypes.includes(world.type) === false) worldTypes.push(world.type); });
+
         // Remove Worlds
         const cmds = [];
         cmds.push(new SelectCommand([], editor.selected));
-        cmds.push(new SetStageCommand(editor.viewport().mode(), null, null));
+        worldTypes.forEach((worldType) => cmds.push(new SetStageCommand(worldType, null, null)))
         worlds.forEach((world) => cmds.push(new RemoveEntityCommand(world)));
         editor.execute(new MultiCmdsCommand(cmds, `${commandName} World${worlds.length > 1 ? 's' : ''}`));
     }
