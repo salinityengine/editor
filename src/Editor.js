@@ -387,16 +387,13 @@ class Editor extends SUEY.MainWindow {
     /******************** FLOATERS ********************/
 
     /** Returns Floater if present in Editor. Options to build if not present and ensure active.  */
-    getFloaterByID(tabID, build = true, select = true, focus = false) {
+    getFloaterByID(tabID, build = true, select = true) {
         let floater = super.getFloaterByID(tabID);
         if (!floater && build) {
             floater = Layout.createFloater(tabID);
             if (floater) Layout.installFloater(floater);
         }
-        if (floater && floater.dock) {
-            if (select) floater.dock.selectFloater(floater.id);
-            if (focus) floater.dock.focus();
-        }
+        if (floater && floater.dock && select) floater.dock.selectFloater(floater.id);
         return floater;
     }
 

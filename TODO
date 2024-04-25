@@ -2,14 +2,17 @@
 /*                    TO DO                   */
 /**********************************************/
 
+Scripter:
+    - Ctrl-s closes scripter and doesn't allow event to propagate
+    - Close scripter if window
+    - Style name text box
+    - Scrimp.setMode()
+    - Scrimp.clearHistory()
+    - Scrimp.setCursorPosition()
+
 Project:
     - Save/Load Assets
     - 2D Components
-
-Scripter:
-    - Open from Codex
-    - Editable script name textbox
-        - Style text box
 
 AssetFloater extends SmartFloater: (assets, codex, library)
     - Move search box to title bar when over a certain width

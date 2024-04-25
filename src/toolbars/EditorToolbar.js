@@ -137,10 +137,15 @@ class EditorToolbar extends SUEY.Panel {
         const settingsShadow = new SUEY.VectorBox(`${FOLDER_TOOLBAR}settings-shadow.svg`).setID('tb-settings-shadow');
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
-        game.onPress(() => editor.getFloaterByID('game', true, true, true));
-        notes.onPress(() => editor.getFloaterByID('notepad', true, true, true));
-        history.onPress(() => editor.getFloaterByID('history', true, true, true));
-        settings.onPress(() => editor.getFloaterByID('settings', true, true, true));
+        function buildFloaterAndFocus(name) {
+            const floater = editor.getFloaterByID('game');
+            setTimeout(() => floater.dock.focus(), 0);
+        }
+
+        game.onPress(() => buildFloaterAndFocus('game'));
+        notes.onPress(() => buildFloaterAndFocus('notepad'));
+        history.onPress(() => buildFloaterAndFocus('history'));
+        settings.onPress(() => buildFloaterAndFocus('settings'));
 
         /******************** ADD TO TOOLBAR */
 

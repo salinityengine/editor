@@ -59,10 +59,7 @@ const SIGNAL_NAMES = [
     'assetAdded',               // (type, asset)        ALERT       Asset added to AssetManager
     'assetRemoved',             // (type, asset)        ALERT       Asset removed from AssetManager
     'assetChanged',             // (type, asset)        ALERT       Asset was changed
-    'assetSelect',              // (type, asset)        FUNCTION    Select Asset in Explorer
-
-    // Scripts
-    'editScript',               // (script)             FUNCTION    Open script editor (Scripter) with 'script'
+    'assetSelect',              // (type, asset)        FUNCTION    Asset wants to be highlighted in Editor
 
 ];
 

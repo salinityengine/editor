@@ -33,7 +33,7 @@ class Commands extends SUEY.Div {
         if (isUpdatableCmd) {
             updateOnly = updateOnly || cmd.type === 'ChangeComponentCommand';
             updateOnly = updateOnly || cmd.type === 'SetScriptSourceCommand';
-            updateOnly = updateOnly || timeDifference < 500;
+            updateOnly = updateOnly || timeDifference < 1000; // one second
         }
 
         // Update Command

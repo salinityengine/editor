@@ -10,13 +10,16 @@ import { SmartFloater } from '../gui/SmartFloater.js';
 import { Advice } from '../config/Advice.js';
 import { Signals } from '../config/Signals.js';
 
-// import { SetAssetValueCommand } from '../commands/CommandList.js';
-// import { SetScriptSourceCommand } from '../commands/CommandList.js';
+import { SetAssetValueCommand } from '../commands/CommandList.js';
+import { SetScriptSourceCommand } from '../commands/CommandList.js';
 
 /**
  * Script Editor
  */
 class Scripter extends SmartFloater {
+
+    mode = SALT.SCRIPT_FORMAT.JAVASCRIPT;
+    script = null;
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}scripter.svg`;
@@ -42,19 +45,25 @@ class Scripter extends SmartFloater {
 
         // Dispose of things when Window 'X' is clicked
         this.on('destroy', () => {
-            scrimp.destroy(); // clean up codemirror
+            // Clean up codemirror
+            scrimp.destroy();
+            // Highlight script
+            if (self.script && self.script.isScript) {
+                Signals.dispatch('assetSelect', 'script', self.script);
+            }
         });
 
         /********** SCRIPT NAME */
 
         const scriptName = new SUEY.TextBox().addClass('salt-script-name');
         this.add(scriptName);
+        this.scriptName = scriptName;
 
-        // scriptName.on('change', () => {
-        //     if (currentScript && currentScript.isScript) {
-        //         editor.execute(new SetAssetValueCommand(currentScript, 'name', scriptName.getValue()));
-        //     }
-        // });
+        scriptName.on('input', () => {
+            if (self.script && self.script.isScript) {
+                editor.execute(new SetAssetValueCommand(self.script, 'name', scriptName.getValue()));
+            }
+        });
 
         /********** WRAPPER */
 
@@ -63,26 +72,11 @@ class Scripter extends SmartFloater {
 
         /********** SCRIMP (CODEMIRROR) */
 
-        // Internal Variables
-        let renderer = null; //editor.viewport().renderer;
-        let delay;
-        let currentMode;
-        let currentScript;
-        let editing = false;
-
-        let initialContents =
-`function updateSize() {
-    const width = Math.max(1, self.contents().getWidth());
-    const height = Math.max(1, self.contents().getHeight());
-    app.setSize(width, height);
-}
-
-this.on('resizer', updateSize);
-window.addEventListener('resize', updateSize);`;
-
-        const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents });
+        const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents: '' });
+        this.scrimp = scrimp;
         this.scroller = scrimp;
 
+        let updateTimeout;
         function onUpdate(viewUpdate) {
             // Replace native tooltips (HTMLElement.title) with custom tooltips
             const queue = [ scrimp.dom ];
@@ -97,32 +91,30 @@ window.addEventListener('resize', updateSize);`;
                     queue.push(child);
                 }
             }
-
             // Document Changed
             if (viewUpdate.docChanged) {
-                // console.log('Script changed');
-                // if (scrimp.state.focused === false) return;
-                // clearTimeout(delay);
-                // delay = setTimeout(function() {
-                //     const value = scrimp.getValue();
-                //     const hasErrors = !validate(value);
-                //     if (typeof currentScript === 'object') {
-                //         if (value !== currentScript.source) {
-                //             editor.execute(new SetScriptSourceCommand(currentScript, value, hasErrors));
-                //         }
-                //         return;
-                //     }
-                // }, 300);
+                const script = self.script;
+                clearTimeout(updateTimeout);
+                updateTimeout = setTimeout(() => {
+                    if (!self.script || !self.script.isScript) return;
+                    const value = scrimp.getContent();
+                    // //
+                    // TODO: !validate(value);
+                    //
+                    const hasErrors = false;
+                    //
+                    // //
+                    if (value !== script.source) {
+                        editor.execute(new SetScriptSourceCommand(script, value, hasErrors));
+                    }
+                }, 300);
             }
         }
         scrimp.addUpdate(onUpdate);
 
         // Extra Keys
         function onKeySave() {
-            //
-            // TODO: Make sure script is saved. Close scripter?
-            //
-            console.log('TODO: Script wants save');
+            if (self.dock) self.dock.removeFloater(self, true /* destroy */);
         }
         scrimp.addKeymap('Ctrl-s', onKeySave);
         scrimp.addKeymap('Meta-s', onKeySave);
@@ -131,7 +123,7 @@ window.addEventListener('resize', updateSize);`;
 
         // const errorLines = [];
         // const lineWidgets = [];
-
+        //
         // const validate = function(string) {
         //     return codemirror.operation(function() {
         //         while (errorLines.length > 0) {
@@ -140,10 +132,10 @@ window.addEventListener('resize', updateSize);`;
         //         while (lineWidgets.length > 0) {
         //             codemirror.removeLineWidget(lineWidgets.shift());
         //         }
-
+        //
         //         let errors = [];
-        //         switch (currentMode) {
-        //             case 'javascript':
+        //         switch (self.mode) {
+        //             case SALT.SCRIPT_FORMAT.JAVASCRIPT:
         //                 // // OPTION: 'esprima' (original Three.js)
         //                 try {
         //                     const syntax = esprima.parse(string, { tolerant: true });
@@ -159,7 +151,7 @@ window.addEventListener('resize', updateSize);`;
         //                     const error = errors[i];
         //                     error.message = error.message.replace(/Line [0-9]+: /, '');
         //                 }
-
+        //
         //                 // // OPTION: 'jshint' (experimental)
         //                 // const jshintOptions = '/* jshint esversion: 6, asi: true */';
         //                 // JSHINT(jshintOptions + '\n' + string);
@@ -170,35 +162,31 @@ window.addEventListener('resize', updateSize);`;
         //                 //         message: error.reason,
         //                 //     });
         //                 // }
-
+        //
         //                 break;
-
         //             case 'json':
         //                 //
         //                 // NOT IMPLEMENTED
         //                 //
         //                 break;
-
         //             case 'glsl':
         //                 //
         //                 // NOT IMPLEMENTED
         //                 //
         //                 break;
-
         //             default: ;
-
         //         }
-
+        //
         //         // Add Errors
         //         for (const error of errors) {
         //             const message = document.createElement('div');
         //             message.className = 'errorMessage';
         //             message.textContent = error.message;
-
+        //
         //             const lineNumber = Math.max(error.lineNumber, 0);
         //             errorLines.push(lineNumber);
         //             codemirror.addLineClass(lineNumber, 'background', 'errorLine');
-
+        //
         //             const lineOptions = {
         //                 coverGutter: false,
         //                 noHScroll: true
@@ -206,7 +194,7 @@ window.addEventListener('resize', updateSize);`;
         //             const widget = codemirror.addLineWidget(lineNumber, message, lineOptions);
         //             lineWidgets.push(widget);
         //         }
-
+        //
         //         return (errors.length === 0);
         //     });
         // };
@@ -229,17 +217,17 @@ window.addEventListener('resize', updateSize);`;
         // });
 
         // codemirror.on('cursorActivity', function(cm) {
-        //     if (editing && currentScript && currentScript.isScript) {
+        //     if (self.script && self.script.isScript) {
         //         const pos = codemirror.getCursor();
-        //         currentScript.line = pos.line;
-        //         currentScript.char = pos.ch;
+        //         self.script.line = pos.line;
+        //         self.script.char = pos.ch;
         //     }
-        //     if (currentMode !== 'javascript') return;
+        //     if (self.mode !== SALT.SCRIPT_FORMAT.JAVASCRIPT) return;
         //     server.updateArgHints(cm);
         // });
 
         // codemirror.on('keypress', function(cm, kb) {
-        //     if (currentMode !== 'javascript') return;
+        //     if (self.mode !== SALT.SCRIPT_FORMAT.JAVASCRIPT) return;
         //     const typed = String.fromCharCode(kb.which || kb.keyCode);
         //     if (/[\w\.]/.exec(typed)) {
         //         server.complete(cm);
@@ -248,42 +236,48 @@ window.addEventListener('resize', updateSize);`;
 
         /***** SIGNALS *****/
 
+        Signals.connect(this, 'assetChanged', (type, script) => {
+            if (type !== 'script' || !script || !script.isScript) return;
+            if (!self.script || self.script.uuid !== script.uuid) return;
+            // Update Elements
+            if (self.scriptName.getValue() !== script.name) self.scriptName.setValue(script.name);
+            if (self.scrimp.getContent() !== script.source) self.scrimp.setContent(script.source);
+        });
+
         Signals.connect(this, 'assetRemoved', (type, script) => {
-            // if (type !== 'script') return;
-            // if (script && currentScript && currentScript.uuid === script.uuid) {
-            //     self.hide();
-            // }
-        });
-
-        Signals.connect(this, 'editScript', (script) => {
-            // editing = false;
-            // // Set Script
-            // scriptName.setValue(script.name);
-            // currentMode = 'javascript';
-            // currentScript = script;
-            // // Display Scripter
-            // self.showWindow();
-            // // Update CodeMirror
-            // codemirror.setValue(script.source);
-            // codemirror.clearHistory();
-            // codemirror.setOption('mode', currentMode);
-            // validate(codemirror.getValue());
-            // // Set Focus
-            // codemirror.display.input.focus();
-            // codemirror.setCursor(script.line, script.char);
-            // editing = true;
-        });
-
-        /***** EVENTS *****/
-
-        this.on('hidden', () => {
-            // editing = false;
-            // if (currentScript && currentScript.isScript) {
-            //     Signals.dispatch('assetSelect', 'script', currentScript);
-            // }
+            if (type !== 'script' || !script || !script.isScript) return;
+            if (!self.script || self.script.uuid !== script.uuid) return;
+            if (self.dock) self.dock.removeFloater(self, true /* destroy */);
         });
 
     } // end ctor
+
+    loadScript(script) {
+        // Script
+        if (script && script.isScript) {
+            this.scriptName.setValue(script.name);
+            this.script = script;
+            this.mode = script.format;
+            this.scrimp.setContent(script.source);
+        // Empty
+        } else {
+            this.scriptName.setValue('None');
+            this.script = null;
+            this.mode = SALT.SCRIPT_FORMAT.JAVASCRIPT;
+            this.scrimp.setContent('');
+        }
+
+        // //
+        //
+        // TODO: Update CodeMirror
+        //
+        // codemirror.clearHistory();
+        // codemirror.setOption('mode', this.mode);
+        // codemirror.setCursor(script.line, script.char);
+        // validate(codemirror.getContent());
+        //
+        // //
+    }
 
 }
 

@@ -242,10 +242,9 @@ class AssetBlock extends SUEY.Shrinkable {
         item.dom.draggable = true;
         item.uuid = asset.uuid;
         item.setID(asset.uuid);
-
         let innerBox = undefined;
 
-        // 'geometry' / 'material' / 'shape'
+        // TYPE: rendered ('shape', 'texture', etc.)
         if (this.type === 'geometry' ||
             this.type === 'palette' ||
             this.type === 'material' ||
@@ -259,28 +258,23 @@ class AssetBlock extends SUEY.Shrinkable {
             canvas.width = ASSET_WIDTH;
             canvas.height = ASSET_HEIGHT;
             innerBox.dom.appendChild(canvas);
+
             if (this.type === 'geometry') {
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, asset /* geometry */, null /* material */, 0xb0b0b0);
             } else if (this.type === 'material') {
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, null /* geometry */, asset /* material */);
             } else if (this.type === 'palette') {
-                item.on('dblclick', () => Signals.dispatch('assetSelect', 'palette', asset));
                 canvas.style['border-radius'] = 'var(--radius-small)';
                 CanvasUtils.drawPalette(canvas, asset /* palette */);
 
                 console.log('Drawing palette');
 
             } else if (this.type === 'shape') {
-                // item.on('dblclick', () => {
-                //     const shaper = editor.getFloaterByID('shaper') ?? new Shaper();
-                //     editor.shaper.showWindow(asset);
-                // });
                 // const renderHexColor = 0xff00ff; // SUEY.ColorScheme.color(SUEY.TRAIT.TRIADIC1);
                 // const shapeGeometry = new THREE.ShapeGeometry(asset /* shape */);
                 // SALT.RenderUtils.renderGeometryToCanvas(canvas, shapeGeometry, null /* material */, renderHexColor);
                 // shapeGeometry.dispose();
             } else if (this.type === 'texture') {
-                // item.on('dblclick', () => Signals.dispatch('assetSelect', 'texture', asset));
                 // const texture = asset;
                 // if (texture.image && texture.image.complete) texture.needsUpdate = true;
                 // SALT.RenderUtils.renderTextureToCanvas(canvas, texture);
@@ -293,22 +287,14 @@ class AssetBlock extends SUEY.Shrinkable {
         //     if (!texture.image) return;
         //     innerBox = new SUEY.VectorBox(texture.image.src).enableDragging();
 
-        // 'script'
+        // TYPE: 'script'
         } else if (this.type === 'script') {
             const script = asset;
             let sourceIcon = '';
             if (script.format === SALT.SCRIPT_FORMAT.JAVASCRIPT) sourceIcon = `${FOLDER_MENU}outliner/js.svg`;
             innerBox = new SUEY.VectorBox(sourceIcon).enableDragging();
-            item.on('dblclick', () => Signals.dispatch('editScript', script));
-            item.on('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    Signals.dispatch('editScript', script);
-                }
-            });
 
-        // 'prefab'
+        // TYPE: 'prefab'
         } else if (this.type === 'prefab' && (this.category && this.category === asset.category)) {
             const prefab = asset;
             if (prefab.icon) {
@@ -323,18 +309,22 @@ class AssetBlock extends SUEY.Shrinkable {
                 innerBox.dom.appendChild(canvas);
                 SALT.RenderUtils.renderMeshToCanvas(canvas, prefab);
             }
-            item.on('dblclick', () => Signals.dispatch('assetSelect', 'prefab', prefab));
-            item.on('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    Signals.dispatch('assetSelect', 'prefab', prefab);
-                }
-            });
 
-        // Unknown Type
+        // TYPE: unknown
         } else {
             innerBox = new SUEY.VectorBox().enableDragging();
+        }
+
+        // EDIT ASSET
+        function editAsset() {
+            const type = String(asset.type).toLowerCase();
+            switch (type) {
+                case 'script':
+                    const scripter = editor.getFloaterByID('scripter');
+                    scripter.loadScript(asset);
+                    setTimeout(() => scripter.dock.focus(), 0);
+                    break;
+            }
         }
 
         // INNER BOX
@@ -342,12 +332,21 @@ class AssetBlock extends SUEY.Shrinkable {
 
         // SELECT
         item.on('focus', () => {
-            Signals.dispatch('assetSelect', asset.type, asset);
+            // EMPTY
+        });
+
+        // DOUBLE CLICK
+        item.on('dblclick', () => {
+            editAsset();
         });
 
         // KEY PRESS
         item.on('keydown', (event) => {
-            if (event.key === 'Delete') {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                event.stopPropagation();
+                editAsset();
+            } else if (event.key === 'Delete') {
                 event.preventDefault();
                 event.stopPropagation();
                 editor.execute(new RemoveAssetCommand(asset));
