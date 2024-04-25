@@ -88,7 +88,6 @@ class Commands extends SUEY.Div {
 
     goToState(id) {
         // Disable Signals
-        Signals.toggle('historyChanged', false);
         Signals.disable();
 
         // Run through Stack
@@ -105,20 +104,10 @@ class Commands extends SUEY.Div {
                 this.undo();
             }
         }
+        Signals.dispatch('historyChanged');
 
         // Enable Signals
         Signals.enable();
-
-        // Dispatch Missed Signals
-        const missed = Signals.missed();
-        for (const signalName in missed) {
-            const lastDispatch = missed[signalName].args.at(-1);
-            Signals.dispatch(signalName, ...lastDispatch);
-        }
-
-        // History Changed
-        Signals.toggle('historyChanged', true);
-        Signals.dispatch('historyChanged');
     }
 
     clear() {

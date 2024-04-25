@@ -128,18 +128,11 @@ class Codex extends SmartFloater {
                     self.add(self.blocks[category]);
                 }
             }
-            // Process Single Category
-            if (asset && asset.isAsset) {
-                const block = self.blocks[asset.category];
+            // Process Categories
+            for (const category of categories) {
+                const block = self.blocks[category];
                 block.buildBlock(false /* clear? */);
                 block.applySearch(self.getSearchTerm());
-            // Process Categories
-            } else {
-                for (const category of categories) {
-                    const block = self.blocks[category];
-                    block.buildBlock(false /* clear? */);
-                    block.applySearch(self.getSearchTerm());
-                }
             }
             // Focus?
             if (focus) focusAsset(type, asset);
