@@ -25,7 +25,6 @@ class ViewUI extends AbstractView {
             'inspector',
             'library',
             'outliner',
-            'previewer',
             'shaper',
         ];
         return [ ...super.floaterFamily(), ...floaters ];

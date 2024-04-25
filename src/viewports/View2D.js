@@ -26,7 +26,6 @@ class View2D extends AbstractView {
             'inspector',
             'library',
             'outliner',
-            'previewer',
             'scripter',
             'shaper',
         ];

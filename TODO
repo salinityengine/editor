@@ -68,7 +68,6 @@ Floaters:
         - Debug Console, override console.log to capture?
         - QR Code to load on phone
         - Video screen capture? (https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API)
-    Previewer:
     Scripter:
         - Right click menu?
         - Linter (jshint / eshint / esprima)

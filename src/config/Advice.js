@@ -21,7 +21,6 @@ const _values = {
         'floater/notepad':                  { title: 'Notepad', html: `Scratchpad to keep project notes and ideas.`},
         'floater/outliner':                 { title: 'Outliner', html: `Displays interactive scene hierarchy.` },
         'floater/player':                   { title: 'Player', html: `Play game in it's current state.` },
-        'floater/previewer':                { title: 'Previewer', html: `Preview assets and scripts.`},
         'floater/scripter':                 { title: 'Scripter', html: `Script viewer and editor.` },
         'floater/settings':                 { title: 'Settings', html: `Editor settings viewer.`},
 

@@ -13,7 +13,6 @@ import { Library } from '../floaters/Library.js';
 import { Notepad } from '../floaters/Notepad.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
-import { Previewer } from '../floaters/Previewer.js';
 import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
@@ -32,7 +31,6 @@ const _types = {
     'notepad':      { type: Notepad,    init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
     'outliner':     { type: Outliner,   init: 'left',     side: 'left',       size: DEFAULT_LEFT    },
     'player':       { type: Player,     init: 'center',                       size: '60%',          size2: '80%' },
-    'previewer':    { type: Previewer,  init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
     'scripter':     { type: Scripter,   init: 'center',                       size: '60%',          size2: '85%' },
     'settings':     { type: Settings,   init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
 };
@@ -66,10 +64,11 @@ class Layout {
 
         // Floaters Wanted
         const defaultFloaters = [
-            'inspector', 'previewer',
+            'inspector',
             'outliner',
+            'library',
             'assets',
-            'library', 'codex',
+            'codex',
             'advisor',
         ];
 
