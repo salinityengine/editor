@@ -6,15 +6,18 @@ const SIGNAL_NAMES = [
 
     // General
     'advisorInfo',              // (title, html)        FUNCTION    New Advisor title / text
-    'editorModeChanged',        // -                    ALERT       Editor mode was changed
     'clipboardChanged',         // -                    ALERT       Clipboard was changed
-    'historyChanged',           // (command)            ALERT       History was changed
+    'historyChanged',           // -                    ALERT       History was changed
 
     // Gui
     'fontSizeChanged',          // -                    ALERT       Font size was changed
     'promodeChanged',           // -                    ALERT       Pro (advanced) mode was toggled
     'schemeChanged',            // -                    ALERT       Color scheme was changed
     'settingsRefreshed',        // -                    ALERT       Settings were refreshed
+
+    // Mode
+    'changeEditorMode',         // (mode)               FUNCTION    Change editor mode
+    'editorModeChanged',        // -                    ALERT       Editor mode was changed
 
     // Project
     'projectLoaded',            // -                    ALERT       Editor Project was loaded
@@ -90,12 +93,33 @@ class Signals {
         }
     }
 
+    static disable() {
+        SUEY.Signal.disableSignals();
+    }
+
+    static enable() {
+        SUEY.Signal.enableSignals();
+    }
+
+    static missed() {
+        return SUEY.Signal.missedSignals();
+    }
+
     static toggle(name, active = true) {
         const signal = _signals[name];
         if (signal && signal instanceof SUEY.Signal) {
             signal.active = active;
         } else {
             console.warn(`Signals.toggle(): Could not find signal '${name}'`);
+        }
+    }
+
+    static toggled(name = '') {
+        const signal = _signals[name];
+        if (signal && signal instanceof SUEY.Signal) {
+            return signal.active;
+        } else {
+            console.warn(`Signals.toggled(): Could not find signal '${name}'`);
         }
     }
 
@@ -114,7 +138,7 @@ const _signals = [];
 if (_signals.length === 0) {
     for (const signalName of SIGNAL_NAMES) {
         if (_signals[signalName]) console.warn(`Signals.js: Duplicate signal with name ('${signalName}')`);
-        else _signals[signalName] = new SUEY.Signal();
+        else _signals[signalName] = new SUEY.Signal(signalName);
     }
 }
 

@@ -27,7 +27,7 @@ class SelectCommand extends Command {
         }
     }
 
-    invalid() {
+    purge() {
         Signals.dispatch('selectionChanged');
     }
 

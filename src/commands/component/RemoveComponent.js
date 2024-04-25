@@ -8,6 +8,7 @@ class RemoveComponentCommand extends Command {
 
         // Cancel?
         if (!entity) return this.cancel(`AddComponentCommand: No entity provided`);
+        if (!component) return this.cancel(`AddComponentCommand: No component provided`);
 
         // Properties
         this.entity = entity;
@@ -21,7 +22,9 @@ class RemoveComponentCommand extends Command {
     }
 
     purge() {
-        if (!this.wasAdded) this.component.dispose();
+        if (!this.wasAdded && typeof this.component.dispose === 'function') {
+            this.component.dispose();
+        }
     }
 
     execute() {

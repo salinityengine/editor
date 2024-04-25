@@ -16,7 +16,7 @@ class MultiCmdsCommand extends Command {
             if (command.valid) {
                 cmds.push(command);
             } else {
-                command.invalid(); /* clean up */
+                command.purge(); /* clean up */
             }
         }
 
@@ -109,7 +109,7 @@ class MultiCmdsCommand extends Command {
             }
         }
 
-        // // Entity Changed Signal
+        // Entity Changed Signal
         Signals.toggle('entityChanged', true);
         for (const entity of entitiesChanged) {
             Signals.dispatch('entityChanged', entity);

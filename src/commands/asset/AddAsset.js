@@ -21,12 +21,10 @@ class AddAssetCommand extends Command {
         if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
     }
 
-    invalid() {
-        this.purge();
-    }
-
     purge() {
-        if (!this.wasAdded && typeof this.asset.dispose === 'function') this.asset.dispose();
+        if (!this.wasAdded && this.asset && typeof this.asset.dispose === 'function') {
+            this.asset.dispose();
+        }
     }
 
     execute() {

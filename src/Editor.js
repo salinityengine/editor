@@ -99,6 +99,10 @@ class Editor extends SUEY.MainWindow {
         addDocumentEvent('drop', onDrop);                           // keeps drag from outside app opening in new tab
         addDocumentEvent('visibilitychange', onVisibilityChange);   // i.e. 'pagehide' / 'beforeunload'
 
+        /********** SIGNALS */
+
+        Signals.connect(this, 'changeEditorMode', this.setMode.bind(this));
+
         /********** INIT */
 
         editor.setMode(Config.getKey('editor/mode'));                               // set editor mode

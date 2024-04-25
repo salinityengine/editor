@@ -22,7 +22,9 @@ class RemoveAssetCommand extends Command {
     }
 
     purge() {
-        if (this.wasRemoved && typeof this.asset.dispose === 'function') this.asset.dispose();
+        if (this.wasRemoved && this.asset && typeof this.asset.dispose === 'function') {
+            this.asset.dispose();
+        }
     }
 
     execute() {

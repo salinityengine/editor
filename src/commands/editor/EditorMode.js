@@ -1,6 +1,7 @@
 import editor from 'editor';
 import { Command } from '../Command.js';
 import { Config } from '../../config/Config.js';
+import { Signals } from '../../config/Signals.js';
 
 class EditorModeCommand extends Command {
 
@@ -16,11 +17,11 @@ class EditorModeCommand extends Command {
     }
 
     execute() {
-        editor.setMode(this.newMode);
+        Signals.dispatch('changeEditorMode', this.newMode);
     }
 
     undo() {
-        editor.setMode(this.oldMode);
+        Signals.dispatch('changeEditorMode', this.oldMode);
     }
 
 }

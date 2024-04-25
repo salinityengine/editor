@@ -14,10 +14,7 @@ class Commands extends SUEY.Div {
 
     /** Executes new command onto stack, clears old redo history */
     execute(cmd) {
-        if (cmd.valid !== true) {
-            cmd.invalid();
-            return;
-        }
+        if (cmd.valid !== true) return cmd.purge();
 
         const lastCmd = this.undos[this.undos.length - 1];
         const timeDifference = new Date().getTime() - this.lastCmdTime.getTime();
@@ -60,7 +57,7 @@ class Commands extends SUEY.Div {
         this.clearRedos();
 
         // Signal
-        Signals.dispatch('historyChanged', cmd);
+        Signals.dispatch('historyChanged');
     }
 
     undo() {
@@ -71,7 +68,7 @@ class Commands extends SUEY.Div {
         if (cmd != undefined) {
             cmd.undo();
             this.redos.push(cmd);
-            Signals.dispatch('historyChanged', cmd);
+            Signals.dispatch('historyChanged');
         }
         return cmd;
     }
@@ -82,17 +79,19 @@ class Commands extends SUEY.Div {
             cmd = this.redos.pop();
         }
         if (cmd != undefined) {
-            cmd.redo(); /* base class calls command.execute(), can be overridden */
+            cmd.redo(); /* base class Command.redo() simply calls Command.execute(), can be overridden */
             this.undos.push(cmd);
-            Signals.dispatch('historyChanged', cmd);
+            Signals.dispatch('historyChanged');
         }
         return cmd;
     }
 
     goToState(id) {
-        Signals.toggle('sceneGraphChanged', false);
+        // Disable Signals
         Signals.toggle('historyChanged', false);
+        Signals.disable();
 
+        // Run through Stack
         let cmd = this.undos.length > 0 ? this.undos[this.undos.length - 1] : undefined;
         if (cmd == undefined || id > cmd.id) {
             cmd = this.redo();
@@ -107,11 +106,19 @@ class Commands extends SUEY.Div {
             }
         }
 
-        Signals.toggle('sceneGraphChanged', true);
-        Signals.toggle('historyChanged', true);
+        // Enable Signals
+        Signals.enable();
 
-        Signals.dispatch('sceneGraphChanged');
-        Signals.dispatch('historyChanged', cmd);
+        // Dispatch Missed Signals
+        const missed = Signals.missed();
+        for (const signalName in missed) {
+            const lastDispatch = missed[signalName].args.at(-1);
+            Signals.dispatch(signalName, ...lastDispatch);
+        }
+
+        // History Changed
+        Signals.toggle('historyChanged', true);
+        Signals.dispatch('historyChanged');
     }
 
     clear() {
