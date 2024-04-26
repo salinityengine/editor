@@ -13,7 +13,6 @@ import { Signals } from '../config/Signals.js';
 
 import { AddAssetCommand } from '../commands/CommandList.js';
 import { SetAssetValueCommand } from '../commands/CommandList.js';
-import { SetScriptSourceCommand } from '../commands/CommandList.js';
 
 /**
  * Script Editor
@@ -131,14 +130,8 @@ class Scripter extends SmartFloater {
                 updateTimeout = setTimeout(() => {
                     if (!self.script || !self.script.isScript) return;
                     const value = scrimp.getContent();
-                    // //
-                    // TODO: !validate(value);
-                    //
-                    const hasErrors = false;
-                    //
-                    // //
                     if (value !== script.source) {
-                        editor.execute(new SetScriptSourceCommand(script, value, hasErrors));
+                        editor.execute(new SetAssetValueCommand(script, 'source', value, true));
                     }
                 }, 300);
             }
@@ -150,6 +143,10 @@ class Scripter extends SmartFloater {
             if (!self.script) {
                 const script = new SALT.Script();
                 script.name = self.scriptName.getValue();
+                if (script.name === '') {
+                    script.name = 'New Script';
+                    self.scriptName.setValue(script.name);
+                }
                 script.source = scrimp.getContent();
                 editor.execute(new AddAssetCommand(script));
                 self.script = script;
@@ -158,76 +155,6 @@ class Scripter extends SmartFloater {
         }
         scrimp.addKeymap('Ctrl-s', onKeySave);
         scrimp.addKeymap('Meta-s', onKeySave);
-
-        /***** VALIDATE *****/
-
-        // const errorLines = [];
-        // const lineWidgets = [];
-        //
-        // const validate = function(string) {
-        //     return codemirror.operation(function() {
-        //         while (errorLines.length > 0) {
-        //             codemirror.removeLineClass(errorLines.shift(), 'background', 'errorLine');
-        //         }
-        //         while (lineWidgets.length > 0) {
-        //             codemirror.removeLineWidget(lineWidgets.shift());
-        //         }
-        //
-        //         let errors = [];
-        //         switch (self.mode) {
-        //             case SALT.SCRIPT_FORMAT.JAVASCRIPT:
-        //                 // // OPTION: 'esprima' (original Three.js)
-        //                 try {
-        //                     const syntax = esprima.parse(string, { tolerant: true });
-        //                     // console.log(syntax);
-        //                     errors = syntax.errors;
-        //                 } catch (error) {
-        //                     errors.push({
-        //                         lineNumber: error.lineNumber - 1,
-        //                         message: error.message,
-        //                     });
-        //                 }
-        //                 for (let i = 0; i < errors.length; i++) {
-        //                     const error = errors[i];
-        //                     error.message = error.message.replace(/Line [0-9]+: /, '');
-        //                 }
-        //                 // // OPTION: 'jshint' (experimental)
-        //                 // const jshintOptions = '/* jshint esversion: 6, asi: true */';
-        //                 // JSHINT(jshintOptions + '\n' + string);
-        //                 // for (let i = 0; i < JSHINT.errors.length; ++i) {
-        //                 //     let error = JSHINT.errors[i];
-        //                 //     errors.push({
-        //                 //         lineNumber: error.line - 1,
-        //                 //         message: error.reason,
-        //                 //     });
-        //                 // }
-        //                 break;
-        //             case 'glsl':
-        //                 //
-        //                 // NOT IMPLEMENTED
-        //                 //
-        //                 break;
-        //             default: ;
-        //         }
-        //
-        //         // Add Errors
-        //         for (const error of errors) {
-        //             const message = document.createElement('div');
-        //             message.className = 'errorMessage';
-        //             message.textContent = error.message;
-        //             const lineNumber = Math.max(error.lineNumber, 0);
-        //             errorLines.push(lineNumber);
-        //             codemirror.addLineClass(lineNumber, 'background', 'errorLine');
-        //             const lineOptions = {
-        //                 coverGutter: false,
-        //                 noHScroll: true
-        //             };
-        //             const widget = codemirror.addLineWidget(lineNumber, message, lineOptions);
-        //             lineWidgets.push(widget);
-        //         }
-        //         return (errors.length === 0);
-        //     });
-        // };
 
         /***** TERN JS (AUTOCOMPLETE) *****/
 

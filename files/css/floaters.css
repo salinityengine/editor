@@ -402,21 +402,28 @@
 }
 
 /* Scrimp Tooltip Autocomplete */
-.cm-tooltip-autocomplete {
-    background-color: rgb(var(--background-light));
+.cm-tooltip {
+    background-color: rgb(var(--background-light)) !important;
     border: solid var(--border-small) rgb(var(--background-dark));
     border-radius: var(--radius-large);
     outline: solid var(--pad-smallish) rgba(var(--background-dark), 0.5);
 }
-.cm-tooltip-autocomplete > ul {
-    background-color: rgb(var(--background-light));
+.cm-tooltip > ul:not(.cm-tooltip-lint) {
     border: solid var(--border-small) rgba(var(--background-dark), 0.5);
+}
+.cm-tooltip > ul:not(.cm-tooltip-lint), .cm-tooltip .cm-diagnostic {
+    margin: 0 !important;
+    background-color: rgb(var(--background-light));
     border-radius: var(--radius-large);
     outline: solid var(--border-small) rgb(var(--icon));
 }
-.cm-tooltip-autocomplete ul li[aria-selected] {
+.cm-tooltip ul li[aria-selected] {
     background: rgb(var(--icon-dark)) !important;
 }
+.cm-tooltip .cm-diagnostic-error {
+    outline: solid var(--border-small) #d11;
+}
+
 
 /********** Shaper */
 

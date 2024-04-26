@@ -19,7 +19,7 @@ class AddEntityCommand extends Command {
         this.wasAdded = false;
 
         // Brief
-        this.brief = `Add Entity: ${entity.name}`;
+        this.brief = `Add Entity: "${entity.name}"`;
     }
 
     purge() {

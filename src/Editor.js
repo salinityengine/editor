@@ -408,7 +408,9 @@ function editorIgnoreKey(event) {
     // IGNORE: Focused HTMLElement contains specific attribute
     const focused = document.activeElement;
     if (focused && focused instanceof HTMLElement) {
-        if (focused.getAttribute('contenteditable')) return true;       // text box, etc.
+        if (focused.getAttribute('contenteditable')) return true;       // text field
+        if (focused instanceof HTMLButtonElement) return true;          // button
+        if (focused instanceof HTMLInputElement) return true;           // input
         if (focused instanceof HTMLBodyElement) return false;           // viewport
     }
 

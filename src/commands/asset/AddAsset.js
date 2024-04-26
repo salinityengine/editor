@@ -18,7 +18,7 @@ class AddAssetCommand extends Command {
 
         // Brief
         this.brief = `Add ${SUEY.Strings.capitalize(this.assetType)}`;
-        if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
+        if (asset.name && asset.name !== '') this.brief += `: "${asset.name}"`;
     }
 
     purge() {

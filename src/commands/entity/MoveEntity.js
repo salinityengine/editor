@@ -26,7 +26,7 @@ class MoveEntityCommand extends Command {
         this.newBefore = newBefore;
 
         // Brief
-        this.brief = 'Move Entity';
+        this.brief = `Move Entity: "${entity.name}"`;
     }
 
     moveEntity(parent, index) {

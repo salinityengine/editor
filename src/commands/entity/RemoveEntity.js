@@ -19,7 +19,7 @@ class RemoveEntityCommand extends Command {
         this.wasAdded = false;
 
         // Brief
-        this.brief = `Remove Entity: ${entity.name}`;
+        this.brief = `Remove Entity: "${entity.name}"`;
     }
 
     purge() {

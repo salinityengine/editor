@@ -20,7 +20,13 @@ class SetAssetValueCommand extends Command {
         this.updatable = updatable;
 
         // Brief
-        this.brief = `Set Asset Value: '${attributeName}'`;
+        this.setBrief(asset, attributeName, newValue);
+    }
+
+    setBrief(asset, attributeName, newValue) {
+        const assetName = (attributeName === 'name') ? newValue : asset.name;
+        const name = (typeof assetName === 'string' && assetName !== '') ? ` ("${assetName}")` : '';
+        this.brief = `Set ${SUEY.Strings.capitalize(this.assetType)}${name} Value: '${attributeName}'`;
     }
 
     execute() {
@@ -35,6 +41,7 @@ class SetAssetValueCommand extends Command {
 
     update(cmd) {
         this.newValue = structuredClone(cmd.newValue);
+        if (this.attributeName === 'name') this.setBrief(this.asset, this.attributeName, this.newValue);
     }
 
 }

@@ -18,7 +18,13 @@ class SetEntityValueCommand extends Command {
         this.updatable = true;
 
         // Brief
-        this.brief = `Set ${entity.type} Value: '${attributeName}'`;
+        this.setBrief(entity, attributeName, newValue);
+    }
+
+    setBrief(entity, attributeName, newValue) {
+        const entityName = (attributeName === 'name') ? newValue : entity.name;
+        const name = (typeof entityName === 'string' && entityName !== '') ? ` ("${entityName}")` : '';
+        this.brief = `Set ${SUEY.Strings.capitalize(entity.type)}${name} Value: '${attributeName}'`;
     }
 
     setValue(value) {
@@ -42,6 +48,7 @@ class SetEntityValueCommand extends Command {
 
     update(cmd) {
         this.newValue = structuredClone(cmd.newValue);
+        if (this.attributeName === 'name') this.setBrief(this.entity, this.attributeName, this.newValue);
     }
 
 }

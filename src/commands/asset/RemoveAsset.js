@@ -18,7 +18,7 @@ class RemoveAssetCommand extends Command {
 
         // Brief
         this.brief = `Remove ${SUEY.Strings.capitalize(this.assetType)}`;
-        if (asset.name && asset.name !== '') this.brief += `: ${asset.name}`;
+        if (asset.name && asset.name !== '') this.brief += `: "${asset.name}"`;
     }
 
     purge() {

@@ -21,7 +21,7 @@ class SelectCommand extends Command {
             this.brief = 'Select None';
         } else if (this.newSelection.length === 1) {
             const entity = this.newSelection[0];
-            this.brief = `Select ${entity.type}: ${entity.name}`;
+            this.brief = `Select ${entity.type}: "${entity.name}"`;
         } else {
             this.brief = 'Select Entities';
         }
