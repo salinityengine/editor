@@ -2,9 +2,6 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Scripter:
-    - Selection range
-
 Project:
     - Save/Load Assets
     - 2D Components
@@ -67,7 +64,6 @@ Floaters:
         - QR Code to load on phone
         - Video screen capture? (https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API)
     Scripter:
-        - Right click menu?
         - Linter (jshint / eshint / esprima)
             https://discuss.codemirror.net/t/how-to-actually-use-eslint-in-codemirror-6/4184
         - Auto complete / Tern

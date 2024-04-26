@@ -51,7 +51,7 @@ class Scripter extends SmartFloater {
             self.editing = false;           // stop saving changes
             scrimp.destroy();               // clean up codemirror
 
-            // Highlight script
+            // Highlight Script
             if (self.script && self.script.isScript) {
                 Signals.dispatch('assetSelect', 'script', self.script);
             }
@@ -73,21 +73,12 @@ class Scripter extends SmartFloater {
             }
         });
 
-        /********** SCRIMP (CODEMIRROR) */
+        /********** WRAPPER */
 
         const wrapper = new SUEY.Div().addClass('salt-script-wrapper');
         this.add(wrapper, new SUEY.FlexBox());
 
-        wrapper.on('click', (event) => {
-
-            // state.selection
-            //
-            // EditorSelection {
-            //  ranges: [ SelectionRange { from: 48, to: 48, flags: 1073741775 } ],
-            //  mainIndex: 0,
-            // }
-
-        });
+        /********** SCRIMP (CODEMIRROR) */
 
         const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents: '' });
         this.scrimp = scrimp;
@@ -116,12 +107,20 @@ class Scripter extends SmartFloater {
                 scriptGutter.setStyle('width', `${gutterRect.width}px`);
             }
 
-            // Cursor Position
+            // Positions
             if (self.script && self.script.isScript) {
                 if (self.editing) {
+                    // Cursor Position
                     self.script.position = scrimp.getCursor();
+                    // Scroll Position
                     self.script.scrollLeft = scrimp.scrollDOM.scrollLeft;
                     self.script.scrollTop = scrimp.scrollDOM.scrollTop;
+                    // Selection
+                    const selection = scrimp.state.selection;
+                    if (selection && selection.ranges && selection.ranges.length > 0) {
+                        self.script.selectFrom = selection.ranges[0].from;
+                        self.script.selectTo = selection.ranges[0].to;
+                    }
                 }
             }
 
@@ -192,7 +191,6 @@ class Scripter extends SmartFloater {
         //                     const error = errors[i];
         //                     error.message = error.message.replace(/Line [0-9]+: /, '');
         //                 }
-        //
         //                 // // OPTION: 'jshint' (experimental)
         //                 // const jshintOptions = '/* jshint esversion: 6, asi: true */';
         //                 // JSHINT(jshintOptions + '\n' + string);
@@ -203,12 +201,6 @@ class Scripter extends SmartFloater {
         //                 //         message: error.reason,
         //                 //     });
         //                 // }
-        //
-        //                 break;
-        //             case 'json':
-        //                 //
-        //                 // NOT IMPLEMENTED
-        //                 //
         //                 break;
         //             case 'glsl':
         //                 //
@@ -223,11 +215,9 @@ class Scripter extends SmartFloater {
         //             const message = document.createElement('div');
         //             message.className = 'errorMessage';
         //             message.textContent = error.message;
-        //
         //             const lineNumber = Math.max(error.lineNumber, 0);
         //             errorLines.push(lineNumber);
         //             codemirror.addLineClass(lineNumber, 'background', 'errorLine');
-        //
         //             const lineOptions = {
         //                 coverGutter: false,
         //                 noHScroll: true
@@ -235,18 +225,17 @@ class Scripter extends SmartFloater {
         //             const widget = codemirror.addLineWidget(lineNumber, message, lineOptions);
         //             lineWidgets.push(widget);
         //         }
-        //
         //         return (errors.length === 0);
         //     });
         // };
 
-        /***** TERN JS AUTOCOMPLETE *****/
+        /***** TERN JS (AUTOCOMPLETE) *****/
 
         // const server = new CodeMirror.TernServer({
         //     caseInsensitive: true,
         //     plugins: { threejs: null }
         // });
-
+        //
         // codemirror.setOption('extraKeys', {
         //     'Ctrl-Space': function(cm)  { server.complete(cm); },
         //     'Ctrl-I': function(cm)      { server.showType(cm); },
@@ -256,7 +245,7 @@ class Scripter extends SmartFloater {
         //     'Ctrl-Q': function(cm)      { server.rename(cm); },
         //     'Ctrl-.': function(cm)      { server.selectName(cm); },
         // });
-
+        //
         // codemirror.on('keypress', function(cm, kb) {
         //     if (self.mode !== SALT.SCRIPT_FORMAT.JAVASCRIPT) return;
         //     const typed = String.fromCharCode(kb.which || kb.keyCode);
@@ -309,6 +298,7 @@ class Scripter extends SmartFloater {
         const self = this;
         this.scrimp.clearHistory();
         this.scrimp.setCursor(this.script?.position ?? 0);
+        this.scrimp.setSelection(this.script?.selectFrom ?? 0, this.script?.selectTo ?? 0);
         setTimeout(() => {
             self.scrimp.scrollDOM.scrollLeft = self.script?.scrollLeft ?? 0;
             self.scrimp.scrollDOM.scrollTop = self.script?.scrollTop ?? 0;
