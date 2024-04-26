@@ -318,6 +318,11 @@
     height: 100%;
     background-color: rgb(var(--background-light));
 }
+.salt-script-right {
+    width: var(--scroll-size);
+    height: 100%;
+    background-color: rgb(var(--background-light));
+}
 
 .suey-input.salt-script-name {
     font-size: calc(var(--font-size) * 1.05);

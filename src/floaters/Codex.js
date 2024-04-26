@@ -60,6 +60,16 @@ class Codex extends SmartFloater {
         });
         assetMenu.add(addVariableMenuItem);
 
+        // 'Python'
+        const pythonIcon = `${FOLDER_TYPES}asset/script.svg`;
+        const addPythonMenuItem = new SUEY.MenuItem('Python', pythonIcon);
+        addPythonMenuItem.onSelect(() => {
+            const script = new SALT.Script(SALT.SCRIPT_FORMAT.PYTHON);
+            script.name = 'Python';
+            editor.execute(new AddAssetCommand(script));
+        });
+        assetMenu.add(addPythonMenuItem);
+
         // Append Children
         addButton.attachMenu(assetMenu);
         buttonRow.add(addButton, new SUEY.FlexSpacer());

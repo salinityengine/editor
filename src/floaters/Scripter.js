@@ -11,6 +11,7 @@ import { Advice } from '../config/Advice.js';
 import { Layout } from '../config/Layout.js';
 import { Signals } from '../config/Signals.js';
 
+import { AddAssetCommand } from '../commands/CommandList.js';
 import { SetAssetValueCommand } from '../commands/CommandList.js';
 import { SetScriptSourceCommand } from '../commands/CommandList.js';
 
@@ -48,6 +49,7 @@ class Scripter extends SmartFloater {
         this.on('destroy', () => {
             // Clean up codemirror
             scrimp.destroy();
+
             // Highlight script
             if (self.script && self.script.isScript) {
                 Signals.dispatch('assetSelect', 'script', self.script);
@@ -59,7 +61,8 @@ class Scripter extends SmartFloater {
         const nameRow = new SUEY.FlexBox();
         const scriptGutter = new SUEY.Text('').addClass('salt-script-gutter').selectable(false);
         const scriptName = new SUEY.TextBox().addClass('salt-script-name');
-        this.add(nameRow.add(scriptGutter, scriptName));
+        const scriptRight = new SUEY.Text('').addClass('salt-script-right').selectable(false);
+        this.add(nameRow.add(scriptGutter, scriptName, scriptRight));
         this.scriptGutter = scriptGutter;
         this.scriptName = scriptName;
 
@@ -69,17 +72,16 @@ class Scripter extends SmartFloater {
             }
         });
 
-        /********** WRAPPER */
+        /********** SCRIMP (CODEMIRROR) */
 
         const wrapper = new SUEY.Div().addClass('salt-script-wrapper');
         this.add(wrapper, new SUEY.FlexBox());
-
-        /********** SCRIMP (CODEMIRROR) */
 
         const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents: '' });
         this.scrimp = scrimp;
         this.scroller = scrimp;
 
+        // UPDATE
         let updateTimeout;
         function onUpdate(viewUpdate) {
             // Replace native tooltips (HTMLElement.title) with custom tooltips
@@ -95,6 +97,7 @@ class Scripter extends SmartFloater {
                     queue.push(child);
                 }
             }
+
             // Name Gutter Width
             const cmGutter = SUEY.Dom.childWithClass(scrimp.dom, 'cm-gutters');
             if (cmGutter) {
@@ -123,9 +126,16 @@ class Scripter extends SmartFloater {
         }
         scrimp.addUpdate(onUpdate);
 
-        // Extra Keys
+        // KEY: Save
         function onKeySave() {
-            Layout.removeFloater(self);
+            if (!self.script) {
+                const script = new SALT.Script();
+                script.name = self.scriptName.getValue();
+                script.source = scrimp.getContent();
+                editor.execute(new AddAssetCommand(script));
+                self.script = script;
+                self.dock.focus();
+            }
         }
         scrimp.addKeymap('Ctrl-s', onKeySave);
         scrimp.addKeymap('Meta-s', onKeySave);
@@ -248,6 +258,7 @@ class Scripter extends SmartFloater {
         /***** SIGNALS *****/
 
         Signals.connect(this, 'assetChanged', (type, script) => {
+            // Checks
             if (type !== 'script' || !script || !script.isScript) return;
             if (!self.script || self.script.uuid !== script.uuid) return;
             // Update Elements
@@ -256,8 +267,10 @@ class Scripter extends SmartFloater {
         });
 
         Signals.connect(this, 'assetRemoved', (type, script) => {
+            // Checks
             if (type !== 'script' || !script || !script.isScript) return;
             if (!self.script || self.script.uuid !== script.uuid) return;
+            // Remove Self
             Layout.removeFloater(self);
         });
 
@@ -269,25 +282,22 @@ class Scripter extends SmartFloater {
             this.scriptName.setValue(script.name);
             this.script = script;
             this.mode = script.format;
+            this.scrimp.setLanguage(this.mode);
             this.scrimp.setContent(script.source);
         // Empty
         } else {
             this.scriptName.setValue('None');
             this.script = null;
             this.mode = SALT.SCRIPT_FORMAT.JAVASCRIPT;
+            this.scrimp.setLanguage(this.mode);
             this.scrimp.setContent('');
         }
 
-        // //
         //
-        // TODO: Update CodeMirror
+        // TODO: codemirror.setCursor(script.line, script.char);
         //
-        // codemirror.clearHistory();
-        // codemirror.setOption('mode', this.mode);
-        // codemirror.setCursor(script.line, script.char);
-        // validate(codemirror.getContent());
-        //
-        // //
+
+        this.scrimp.clearHistory();
     }
 
 }

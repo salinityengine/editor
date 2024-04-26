@@ -1,4 +1,5 @@
 import {
+    FOLDER_FLOATERS,
     FOLDER_MENU,
 } from 'constants';
 import editor from 'editor';
@@ -292,7 +293,8 @@ class AssetBlock extends SUEY.Shrinkable {
         } else if (this.type === 'script') {
             const script = asset;
             let sourceIcon = '';
-            if (script.format === SALT.SCRIPT_FORMAT.JAVASCRIPT) sourceIcon = `${FOLDER_MENU}outliner/js.svg`;
+            if (script.format === SALT.SCRIPT_FORMAT.JAVASCRIPT) sourceIcon = `${FOLDER_FLOATERS}outliner/javascript.svg`;
+            if (script.format === SALT.SCRIPT_FORMAT.PYTHON) sourceIcon = `${FOLDER_FLOATERS}outliner/python.svg`;
             innerBox = new SUEY.VectorBox(sourceIcon).enableDragging();
 
         // TYPE: 'prefab'
