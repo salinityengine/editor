@@ -260,7 +260,7 @@ class Outliner extends SmartFloater {
                     const scriptImages = document.createElement('div');
                     const scriptJS = document.createElement('img');
                     scriptImages.classList.add('outliner-script-images');
-                    scriptJS.src = `${FOLDER_FLOATERS}outliner/javascript.svg`;
+                    scriptJS.src = `${FOLDER_TYPES}asset/script/javascript.svg`;
                     scriptJS.classList.add('outliner-script-type');
                     scriptImages.appendChild(scriptJS);
                     columnName.appendChild(scriptImages);

@@ -38,20 +38,23 @@ class SmartFloater extends SUEY.Floater {
 
         // Remember Scroller Position
         this.on('destroy', () => {
-            if (!self.scroller) return;
             if (self.id == null || self.id == '') return;
-            Config.setKey(`floater/scroller/${self.id}`, self.scroller.dom.scrollTop);
+            const scroller = (self.scroller && self.scroller.dom) ? self.scroller.dom : self.scroller;
+            if (!scroller) return;
+            Config.setKey(`floater/scroller/${self.id}`, scroller.scrollTop);
         });
         this.on('hidden', () => {
-            if (!self.scroller) return;
             if (self.id == null || self.id == '') return;
-            Config.setKey(`floater/scroller/${self.id}`, self.scroller.dom.scrollTop);
+            const scroller = (self.scroller && self.scroller.dom) ? self.scroller.dom : self.scroller;
+            if (!scroller) return;
+            Config.setKey(`floater/scroller/${self.id}`, scroller.scrollTop);
         });
         this.on('displayed', () => {
-            if (!self.scroller) return;
             if (self.id == null || self.id == '') return;
+            const scroller = (self.scroller && self.scroller.dom) ? self.scroller.dom : self.scroller;
+            if (!scroller) return;
             const scrollTop = parseFloat(Config.getKey(`floater/scroller/${self.id}`));
-            if (!isNaN(scrollTop) && isFinite(scrollTop)) self.scroller.dom.scrollTop = scrollTop;
+            if (!isNaN(scrollTop) && isFinite(scrollTop)) scroller.scrollTop = scrollTop;
         });
 
     } // end ctor

@@ -20,6 +20,7 @@ import { SetScriptSourceCommand } from '../commands/CommandList.js';
  */
 class Scripter extends SmartFloater {
 
+    editing = false;
     mode = SALT.SCRIPT_FORMAT.JAVASCRIPT;
     script = null;
 
@@ -47,8 +48,8 @@ class Scripter extends SmartFloater {
 
         // Dispose of things when Window 'X' is clicked
         this.on('destroy', () => {
-            // Clean up codemirror
-            scrimp.destroy();
+            self.editing = false;           // stop saving changes
+            scrimp.destroy();               // clean up codemirror
 
             // Highlight script
             if (self.script && self.script.isScript) {
@@ -77,9 +78,19 @@ class Scripter extends SmartFloater {
         const wrapper = new SUEY.Div().addClass('salt-script-wrapper');
         this.add(wrapper, new SUEY.FlexBox());
 
+        wrapper.on('click', (event) => {
+
+            // state.selection
+            //
+            // EditorSelection {
+            //  ranges: [ SelectionRange { from: 48, to: 48, flags: 1073741775 } ],
+            //  mainIndex: 0,
+            // }
+
+        });
+
         const scrimp = new Scrimp(wrapper.dom, { theme: 'suey', initialContents: '' });
         this.scrimp = scrimp;
-        this.scroller = scrimp;
 
         // UPDATE
         let updateTimeout;
@@ -103,6 +114,15 @@ class Scripter extends SmartFloater {
             if (cmGutter) {
                 const gutterRect = cmGutter.getBoundingClientRect();
                 scriptGutter.setStyle('width', `${gutterRect.width}px`);
+            }
+
+            // Cursor Position
+            if (self.script && self.script.isScript) {
+                if (self.editing) {
+                    self.script.position = scrimp.getCursor();
+                    self.script.scrollLeft = scrimp.scrollDOM.scrollLeft;
+                    self.script.scrollTop = scrimp.scrollDOM.scrollTop;
+                }
             }
 
             // Document Changed
@@ -237,16 +257,6 @@ class Scripter extends SmartFloater {
         //     'Ctrl-.': function(cm)      { server.selectName(cm); },
         // });
 
-        // codemirror.on('cursorActivity', function(cm) {
-        //     if (self.script && self.script.isScript) {
-        //         const pos = codemirror.getCursor();
-        //         self.script.line = pos.line;
-        //         self.script.char = pos.ch;
-        //     }
-        //     if (self.mode !== SALT.SCRIPT_FORMAT.JAVASCRIPT) return;
-        //     server.updateArgHints(cm);
-        // });
-
         // codemirror.on('keypress', function(cm, kb) {
         //     if (self.mode !== SALT.SCRIPT_FORMAT.JAVASCRIPT) return;
         //     const typed = String.fromCharCode(kb.which || kb.keyCode);
@@ -271,12 +281,15 @@ class Scripter extends SmartFloater {
             if (type !== 'script' || !script || !script.isScript) return;
             if (!self.script || self.script.uuid !== script.uuid) return;
             // Remove Self
+            self.editing = false;
             Layout.removeFloater(self);
         });
 
     } // end ctor
 
     loadScript(script) {
+        this.editing = false;
+
         // Script
         if (script && script.isScript) {
             this.scriptName.setValue(script.name);
@@ -293,11 +306,14 @@ class Scripter extends SmartFloater {
             this.scrimp.setContent('');
         }
 
-        //
-        // TODO: codemirror.setCursor(script.line, script.char);
-        //
-
+        const self = this;
         this.scrimp.clearHistory();
+        this.scrimp.setCursor(this.script?.position ?? 0);
+        setTimeout(() => {
+            self.scrimp.scrollDOM.scrollLeft = self.script?.scrollLeft ?? 0;
+            self.scrimp.scrollDOM.scrollTop = self.script?.scrollTop ?? 0;
+            self.editing = true;
+        }, 0);
     }
 
 }

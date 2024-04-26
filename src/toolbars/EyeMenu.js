@@ -177,15 +177,15 @@ class EyeMenu extends SUEY.Menu {
             editCopy.setDisabled(true);
             editPaste.setDisabled(true);
 
-            editUndo.onSelect(() => { editor.undo(); });
-            editRedo.onSelect(() => { editor.redo(); });
-            editCopy.onSelect(() => { editor.copy(); });
-            editCut.onSelect(() => { editor.cut(); });
-            editPaste.onSelect(() => { editor.paste(); });
-            editDuplicate.onSelect(() => { editor.duplicate('d'); });
-            editDelete.onSelect(() => { editor.delete(); });
-            editAll.onSelect(() => { editor.selectAll(); });
-            editNone.onSelect(() => { editor.selectNone(); });
+            editUndo.onSelect(() => editor.undo());
+            editRedo.onSelect(() => editor.redo());
+            editCopy.onSelect(() => editor.copy());
+            editCut.onSelect(() => editor.cut());
+            editPaste.onSelect(() => editor.paste());
+            editDuplicate.onSelect(() => editor.duplicate('d'));
+            editDelete.onSelect(() => editor.delete());
+            editAll.onSelect(() => editor.selectAll());
+            editNone.onSelect(() => editor.selectNone());
 
             // Clipboard changed
             Signals.connect(this, 'clipboardChanged', () => {
@@ -225,7 +225,7 @@ class EyeMenu extends SUEY.Menu {
 
             windowHide.onSelect(() => editor.docker.collapseTabs());
             windowShow.onSelect(() => editor.docker.expandTabs());
-            windowFullscreen.onSelect(() => { SALT.System.fullscreen(); });
+            windowFullscreen.onSelect(() => SALT.System.fullscreen());
 
             // Toggle Window Types
             function toggleWindow(windowMenuItem, windowName) {

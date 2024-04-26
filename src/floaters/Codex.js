@@ -40,35 +40,36 @@ class Codex extends SmartFloater {
         // 'Add' Menu
         const assetMenu = new SUEY.Menu();
 
-        // 'Script'
-        const scriptIcon = `${FOLDER_TYPES}asset/script.svg`;
-        const addScriptMenuItem = new SUEY.MenuItem('Script', scriptIcon);
+        // 'JavaScript'
+        // const scriptIcon = `${FOLDER_TYPES}asset/script.svg`;
+        const scriptIcon = `${FOLDER_TYPES}asset/script/javascript.svg`;
+        const addScriptMenuItem = new SUEY.MenuItem('JavaScript', scriptIcon);
         addScriptMenuItem.onSelect(() => {
             const script = new SALT.Script();
-            script.name = 'Script';
+            script.name = 'New JavaScript';
             editor.execute(new AddAssetCommand(script));
         });
         assetMenu.add(addScriptMenuItem);
 
-        // 'Variables'
-        const variableIcon = `${FOLDER_TYPES}asset/script.svg`;
-        const addVariableMenuItem = new SUEY.MenuItem('Variables', variableIcon);
-        addVariableMenuItem.onSelect(() => {
-            const script = new SALT.Script(SALT.SCRIPT_FORMAT.JAVASCRIPT, true /* variables? */);
-            script.name = 'Variables';
-            editor.execute(new AddAssetCommand(script));
-        });
-        assetMenu.add(addVariableMenuItem);
-
         // 'Python'
-        const pythonIcon = `${FOLDER_TYPES}asset/script.svg`;
+        const pythonIcon = `${FOLDER_TYPES}asset/script/python.svg`;
         const addPythonMenuItem = new SUEY.MenuItem('Python', pythonIcon);
         addPythonMenuItem.onSelect(() => {
             const script = new SALT.Script(SALT.SCRIPT_FORMAT.PYTHON);
-            script.name = 'Python';
+            script.name = 'New Python';
             editor.execute(new AddAssetCommand(script));
         });
         assetMenu.add(addPythonMenuItem);
+
+        // 'Variables'
+        const variableIcon = `${FOLDER_TYPES}asset/script/javascript.svg`;
+        const addVariableMenuItem = new SUEY.MenuItem('Variables', variableIcon);
+        addVariableMenuItem.onSelect(() => {
+            const script = new SALT.Script(SALT.SCRIPT_FORMAT.JAVASCRIPT, true /* variables? */);
+            script.name = 'New Variables';
+            editor.execute(new AddAssetCommand(script));
+        });
+        assetMenu.add(addVariableMenuItem);
 
         // Append Children
         addButton.attachMenu(assetMenu);

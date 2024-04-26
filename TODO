@@ -3,7 +3,7 @@
 /**********************************************/
 
 Scripter:
-    - Scrimp.setCursorPosition()
+    - Selection range
 
 Project:
     - Save/Load Assets
