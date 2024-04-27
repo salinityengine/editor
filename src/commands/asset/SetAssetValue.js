@@ -13,7 +13,7 @@ class SetAssetValueCommand extends Command {
 
         // Properties
         this.asset = asset;
-        this.assetType = SALT.AssetManager.checkType(asset);
+        this.assetType = asset.type.toLowerCase();
         this.attributeName = attributeName;
         this.oldValue = structuredClone(asset[attributeName]);
         this.newValue = structuredClone(newValue);

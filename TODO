@@ -3,7 +3,8 @@
 /**********************************************/
 
 Project:
-    - Save/Load Assets
+    - Asset types
+        - Images
     - 2D Components
 
 AssetFloater extends SmartFloater: (assets, codex, library)

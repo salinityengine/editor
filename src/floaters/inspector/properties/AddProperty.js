@@ -524,7 +524,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Event
         textBox.on('pointerdown', () => {
             if (asset) {
-                const verifyType = SALT.AssetManager.checkType(asset);
+                const verifyType = asset.type.toLowerCase();
                 Signals.dispatch('assetSelect', verifyType, asset);
             }
         });
@@ -571,7 +571,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         function checkItemType(asset) {
             if (!asset) return false;
             if (className === 'asset') return true;
-            return (SALT.AssetManager.checkType(asset) === className);
+            return (asset.type.toLowerCase() === className);
         }
 
         function updateName() {

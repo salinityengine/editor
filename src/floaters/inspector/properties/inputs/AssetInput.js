@@ -27,7 +27,7 @@ class AssetInput {
         // Event
         textBox.on('pointerdown', () => {
             if (asset) {
-                const verifyType = SALT.AssetManager.checkType(asset);
+                const verifyType = asset.type.toLowerCase();
                 Signals.dispatch('assetSelect', verifyType, asset);
             }
         });
@@ -72,7 +72,7 @@ class AssetInput {
         function checkItemType(asset) {
             if (!asset) return false;
             if (assetType === 'asset') return true;
-            return (SALT.AssetManager.checkType(asset) === assetType);
+            return (asset.type.toLowerCase() === assetType);
         }
 
         function updateName() {

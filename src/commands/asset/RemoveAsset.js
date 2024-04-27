@@ -13,7 +13,7 @@ class RemoveAssetCommand extends Command {
 
         // Properties
         this.asset = asset;
-        this.assetType = SALT.AssetManager.checkType(asset);
+        this.assetType = asset.type.toLowerCase();
         this.wasRemoved = false;
 
         // Brief
