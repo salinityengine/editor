@@ -163,7 +163,7 @@ class AssetBlock extends SUEY.Shrinkable {
     #searchTerm = '';
 
     applySearch(searchTerm) {
-        this.#searchTerm = searchTerm ?? '';
+        this.#searchTerm = String(searchTerm ?? '').toLowerCase();
         this.activateSearch();
         return this;
     }

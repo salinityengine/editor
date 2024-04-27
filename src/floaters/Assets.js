@@ -149,8 +149,7 @@ class Assets extends SmartFloater {
     /******************** SEARCH */
 
     getSearchTerm() {
-        const searchTerm = Config.getKey(`search/${this.constructor.name}`) ?? '';
-        return String(searchTerm).toLowerCase();
+        return Config.getKey(`search/${this.constructor.name}`) ?? '';
     }
 
     setSearchTerm(term) {
