@@ -507,7 +507,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         refreshAsset.onPress(() => {
             const component = propertyList._component;
             if (!component) return;
-            const newData = component.serialize();
+            const newData = component.toJSON();
             const cmds = [];
             cmds.push(new ChangeComponentCommand(component, newData));
             editor.execute(new MultiCmdsCommand(cmds, `Refresh Script Component`));

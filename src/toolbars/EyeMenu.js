@@ -82,7 +82,7 @@ class EyeMenu extends SUEY.Menu {
             }
 
             fileSave.onSelect(() => {
-                const output = formatJSON(editor.project.serialize());
+                const output = formatJSON(editor.project.toJSON());
                 const filename = ((editor.project.name !== '') ? editor.project.name : 'untitled') + '.eye';
                 SALT.System.saveString(output, filename);
             });
@@ -116,7 +116,7 @@ class EyeMenu extends SUEY.Menu {
                 //     // Selection is not an Object
                 // } else {
                 //     const object = editor.selected[0];
-                //     const output = formatJSON(object.serialize());
+                //     const output = formatJSON(object.toJSON());
                 //     const filename = ((object.name !== '') ? object.name : 'object') + '.json';
                 //     SALT.System.saveString(output, filename);
                 // }
@@ -126,7 +126,7 @@ class EyeMenu extends SUEY.Menu {
             // PUBLISH
 
             filePublish.onSelect(() => {
-                const output = formatJSON(editor.project.serialize());
+                const output = formatJSON(editor.project.toJSON());
 
                 const toZip = {};
                 toZip['data/project.eye'] = strToU8(output);

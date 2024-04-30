@@ -14,7 +14,7 @@ class RemoveComponentCommand extends Command {
         this.entity = entity;
         this.componentType = component.type;
         this.component = component;
-        this.data = component.serialize();
+        this.data = component.toJSON();
         this.wasAdded = false;
 
         // Brief

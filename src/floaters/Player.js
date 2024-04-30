@@ -169,7 +169,7 @@ class Player extends SmartFloater {
             adjustPlayButtons();
 
             // Serialize Project
-            const json = editor.project.serialize();
+            const json = editor.project.toJSON();
 
             // // DEBUG: Exported project json
             // console.log(json);

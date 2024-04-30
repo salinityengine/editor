@@ -122,7 +122,7 @@ class Editor extends SUEY.MainWindow {
             loaded = true;
         } else if (json) {
             this.selectEntities(/* none */);
-            this.project.parse(json, true /* loadAssets? */);
+            this.project.fromJSON(json, true /* loadAssets? */);
             loaded = true;
         }
 

@@ -21,7 +21,7 @@ class ChangeComponentCommand extends Command {
         SALT.ComponentManager.sanitizeData(component.type, newData);
         for (let key in newData) this.newData[key] = newData[key];
         this.oldData = {};
-        if (!optionalOldData) optionalOldData = component.serialize();
+        if (!optionalOldData) optionalOldData = component.toJSON();
         for (let key in optionalOldData) this.oldData[key] = optionalOldData[key];
 
         // Brief

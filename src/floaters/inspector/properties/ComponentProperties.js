@@ -31,7 +31,7 @@ class ComponentProperties extends SUEY.PropertyList {
         let data;
 
         // Data (as it was when tab was opened)
-        const startData = component.serialize() ?? {};
+        const startData = component.toJSON() ?? {};
         delete startData['base'];
 
         // Initial Build
@@ -60,7 +60,7 @@ class ComponentProperties extends SUEY.PropertyList {
             self.clearContents();
 
             // LOAD DATA
-            data = component.serialize() ?? {};
+            data = component.toJSON() ?? {};
             delete data['base'];
 
             // PARSE KEYS
