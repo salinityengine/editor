@@ -1,5 +1,5 @@
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 import { Command } from '../Command.js';
 import { Signals } from '../../config/Signals.js';
 

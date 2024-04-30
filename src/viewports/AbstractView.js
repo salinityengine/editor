@@ -4,8 +4,8 @@ import {
     MOUSE_STATES,
 } from 'constants';
 import editor from 'editor';
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';

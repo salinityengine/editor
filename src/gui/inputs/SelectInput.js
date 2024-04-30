@@ -1,4 +1,4 @@
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 
 class SelectInput extends SUEY.Dropdown {
 

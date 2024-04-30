@@ -25,7 +25,7 @@
 
     <!-- ALTERNATIVE IMPORTS
             CDN:
-                "engine":           "https://unpkg.com/@salinity/engine/dist/salinity.module.js",
+                "salt":             "https://unpkg.com/@salinity/core/dist/salinity.module.js",
                 "scrimp":           "https://unpkg.com/@salinity/scrimp/dist/scrimp.module.js",
                 "suey":             "https://unpkg.com/@salinity/suey/dist/suey.module.js",
     -->
@@ -35,22 +35,22 @@
             "imports": {
                 "constants":        "./src/constants.js",
                 "editor":           "./src/Editor.js",
-                "engine":           "../engine/src/Salinity.js",
-                "gui":              "../suey/dist/suey.module.js",
-                "scrimp":           "../scrimp/dist/scrimp.module.js"
+                "salt":             "../core/src/Salinity.js",
+                "scrimp":           "../scrimp/dist/scrimp.module.js",
+                "suey":             "../suey/dist/suey.module.js"
             }
         }
     </script>
 
     <!-- -------------------- EDITOR -------------------- -->
 
-    <script src='../engine/src/libs/matter.min.js' type='text/javascript'>
+    <script src='../core/src/libs/matter.min.js' type='text/javascript'>
         window.Matter = Matter;
     </script>
 
     <script type='module'>
         import editor from 'editor';
-        import * as SALT from 'engine';
+        import * as SALT from 'salt';
 
         console.log(`Welcome to the Salinity Editor on ${SALT.System.detectOS()}`);
 

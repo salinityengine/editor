@@ -1,4 +1,4 @@
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 
 class PropertyGroup extends SUEY.Shrinkable {
 

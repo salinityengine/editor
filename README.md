@@ -4,7 +4,7 @@
 
 # Salinity Editor
 
-Easy to use, drag and drop editor for the [Salinity Engine](https://github.com/salinityengine/engine).
+Easy to use, drag and drop editor for the [Salinity Engine](https://github.com/salinityengine/core).
 
 <br />
 

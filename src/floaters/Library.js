@@ -3,8 +3,8 @@ import {
     FOLDER_MENU,
     FOLDER_TYPES,
 } from 'constants';
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 import { AssetBlock } from '../gui/AssetBlock.js';
 import { SmartFloater } from '../gui/SmartFloater.js';
 

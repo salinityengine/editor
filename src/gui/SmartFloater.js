@@ -1,4 +1,4 @@
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 
 import { Config } from '../config/Config.js';
 import { Layout } from '../config/Layout.js';

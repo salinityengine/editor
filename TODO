@@ -3,21 +3,12 @@
 /**********************************************/
 
 Project:
-    - Simpify Worlds and World.types
     - Image Assets
     - Shape Assets
 
-AssetFloater extends SmartFloater: (Assets, Codex, Library, etc.)
-    - Inherit from same base class 'AssetFloater'
-    - Categories / Folders
-        - Option for 'Add New Category' button
-    - Change when over certain width
-        - Asset block split left / right when wide?
-        - Move search box to title bar when over a certain width
-
 View2D:
     Editor:
-        - Build from Suey.Graph
+        - Suey.Scene
         - Rubberband selection
         - Snap to grid
         - Duplication (WASD keyboard controls)
@@ -28,12 +19,18 @@ View2D:
         - Stage List
         - Arrange / Connections
 
+AssetFloater extends SmartFloater: (Assets, Codex, Library, etc.)
+    - Inherit from same base class 'AssetFloater'
+    - Categories / Folders
+        - Option for 'Add New Category' button
+    - Change when over certain width
+        - Asset block split left / right when wide?
+        - Move search box to title bar when over a certain width
+
 /******************** FUTURE ********************/
 
 Floaters:
     Advisor: Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
-    Assets (Project Folder): Categories / Folders
-    Codex: Add scripts
     Inspector:
         - Incorporate updates ('entityChanged' signal)
         - Go through Blocks
@@ -41,8 +38,8 @@ Floaters:
             - Only show shared properties in inspector?
             - Resizing a group of selected objects
     Game: Update 'Info' block to work with View2D
-    Notepad: Global & project scratchpads. Save project scratchpad to Project.
-    Outliner: Scene2D, Entity2D, etc.
+    Notepad: Global/Project scratchpads, save project scratchpad to Project
+    Outliner: Scene2D, Entity2D, etc
     Player:
         - Debug Console, override console.log to capture?
         - QR Code to load on phone

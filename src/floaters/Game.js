@@ -1,8 +1,8 @@
 import {
     FOLDER_FLOATERS,
 } from 'constants';
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';

@@ -2,7 +2,7 @@ import {
     FOLDER_FLOATERS,
 } from 'constants';
 import editor from 'editor';
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 import { SmartShrinker } from '../../gui/SmartShrinker.js';
 
 import { Advice } from '../../config/Advice.js';

@@ -1,7 +1,7 @@
 import {
     FOLDER_FLOATERS,
 } from 'constants';
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 import { SmartShrinker } from '../../gui/SmartShrinker.js';
 
 import { Config } from '../../config/Config.js';

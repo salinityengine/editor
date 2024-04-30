@@ -1,5 +1,5 @@
 import editor from 'editor';
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 import { Config } from './Config.js';
 import { Signals } from './Signals.js';
 

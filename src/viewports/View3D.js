@@ -4,8 +4,8 @@ import {
     MOUSE_STATES,
 } from 'constants';
 import editor from 'editor';
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 
 import { AbstractView } from './AbstractView.js';
 import { View3DToolbar } from '../toolbars/View3DToolbar.js';

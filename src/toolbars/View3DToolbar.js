@@ -4,7 +4,7 @@ import {
     FOLDER_TOOLBAR,
     MOUSE_MODES,
 } from 'constants';
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';

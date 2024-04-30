@@ -1,7 +1,7 @@
 import {
     TIMEOUT_INFOBOX,
 } from 'constants';
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 
 let _displayTimer;
 

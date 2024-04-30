@@ -5,8 +5,8 @@
 import {
     FOLDER_MENU,
 } from 'constants';
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 
 import { Config } from '../config/Config.js';
 import { Language } from '../config/Language.js';

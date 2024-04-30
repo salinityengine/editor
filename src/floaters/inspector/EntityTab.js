@@ -1,8 +1,8 @@
 import {
     FOLDER_FLOATERS,
 } from 'constants';
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 
 import { CameraProperties } from './properties/CameraProperties.js';
 import { ComponentProperties } from './properties/ComponentProperties.js';

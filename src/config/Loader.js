@@ -1,8 +1,8 @@
 // https://github.com/mrdoob/three.js/blob/master/editor/js/Loader.js
 
 import editor from 'editor';
-import * as SALT from 'engine';
-import * as SUEY from 'gui'
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 
 import { Signals } from './Signals.js';
 

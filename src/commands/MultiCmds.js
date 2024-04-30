@@ -1,4 +1,4 @@
-import * as SALT from 'engine';
+import * as SALT from 'salt';
 import { Command } from './Command.js';
 import { Signals } from '../config/Signals.js';
 

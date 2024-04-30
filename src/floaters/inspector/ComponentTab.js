@@ -1,8 +1,8 @@
 import {
     COMPONENT_ICONS,
 } from 'constants';
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 
 import { AddComponentButton } from './buttons/AddComponentButton.js';
 import { CameraProperties } from './properties/CameraProperties.js';

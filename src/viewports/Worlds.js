@@ -3,8 +3,8 @@ import {
     FOLDER_MENU,
 } from 'constants';
 import editor from 'editor';
-import * as SALT from 'engine';
-import * as SUEY from 'gui';
+import * as SALT from 'salt';
+import * as SUEY from 'suey';
 
 import { AbstractView } from './AbstractView.js';
 import { Config } from '../config/Config.js';

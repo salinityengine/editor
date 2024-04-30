@@ -3,7 +3,7 @@ import {
     FOLDER_LOGO,
     FOLDER_MENU,
 } from 'constants';
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 import { SmartFloater } from '../gui/SmartFloater.js';
 
 import { Advice } from '../config/Advice.js';

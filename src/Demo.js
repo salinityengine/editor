@@ -1,4 +1,4 @@
-import * as SALT from 'engine';
+import * as SALT from 'salt';
 
 function loadDemoProject(project) {
 

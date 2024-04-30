@@ -1,4 +1,4 @@
-import { THEMES } from 'gui';
+import { THEMES } from 'suey';
 
 /** Keys not to be cleared during Config.clear() */
 const KEEP_SETTINGS = [

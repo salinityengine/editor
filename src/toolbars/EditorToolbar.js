@@ -2,7 +2,7 @@ import {
     EDITOR_MODES,
     FOLDER_TOOLBAR,
 } from 'constants';
-import * as SUEY from 'gui';
+import * as SUEY from 'suey';
 
 import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
