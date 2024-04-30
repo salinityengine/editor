@@ -81,14 +81,18 @@ class WorldsToolbar {
 
         function addWorld(worldType) {
             const worldName = `${worldType} ${editor.project.worldCount(worldType) + 1}`;
-            let world, stageType;
+            let world, stage;
             switch (worldType) {
-                case EDITOR_MODES.WORLD_2D: world = new SALT.World2D(worldName); stageType = SALT.Stage2D; break;
-                case EDITOR_MODES.WORLD_3D: world = new SALT.World3D(worldName); stageType = SALT.Stage3D; break;
-                case EDITOR_MODES.WORLD_UI: world = new SALT.WorldUI(worldName); stageType = SALT.StageUI; break;
+                case EDITOR_MODES.WORLD_2D: world = new SALT.World(SALT.WORLD_TYPES.WORLD_2D, worldName); break;
+                case EDITOR_MODES.WORLD_3D: world = new SALT.World(SALT.WORLD_TYPES.WORLD_3D, worldName); break;
+                case EDITOR_MODES.WORLD_UI: world = new SALT.World(SALT.WORLD_TYPES.WORLD_UI, worldName); break;
             }
             if (!world) return;
-            const stage = new stageType('Start');
+            switch (worldType) {
+                case EDITOR_MODES.WORLD_2D: stage = new SALT.Stage(SALT.STAGE_TYPES.STAGE_2D, 'Start'); break;
+                case EDITOR_MODES.WORLD_3D: stage = new SALT.Stage(SALT.STAGE_TYPES.STAGE_3D, 'Start'); break;
+                case EDITOR_MODES.WORLD_UI: stage = new SALT.Stage(SALT.STAGE_TYPES.STAGE_UI, 'Start'); break;
+            }
             world.addEntity(stage);
             centerWorldPosition(world);
 

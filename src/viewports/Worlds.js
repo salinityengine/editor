@@ -51,9 +51,9 @@ class Worlds extends AbstractView {
 
         function createWorldNode(world) {
             let color = '#ffffff';
-            if (world.isWorld2D) color = '#ff2080'; // red
-            if (world.isWorld3D) color = '#50cc50'; // green
-            if (world.isWorldUI) color = '#2080ff'; // blue
+            if (world.type === SALT.WORLD_TYPES.WORLD_2D) color = '#ff2080'; // red
+            if (world.type === SALT.WORLD_TYPES.WORLD_3D) color = '#50cc50'; // green
+            if (world.type === SALT.WORLD_TYPES.WORLD_UI) color = '#2080ff'; // blue
             if (world.isFuture) color = '#ee20ff';  // purple
 
             const node = new SUEY.Node({
@@ -64,15 +64,15 @@ class Worlds extends AbstractView {
             });
             node.world = world;
 
-            if (world.isWorld2D) {
+            if (world.type === SALT.WORLD_TYPES.WORLD_2D) {
                 node.createHeader(world.name, `${FOLDER_MENU}node/world2d.svg`);
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.OUTPUT, title: 'Load UI' }));
-            } else if (world.isWorld3D) {
+            } else if (world.type === SALT.WORLD_TYPES.WORLD_3D) {
                 node.createHeader(world.name, `${FOLDER_MENU}node/world3d.svg`);
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.OUTPUT, title: 'Load UI' }));
-            } else if (world.isWorldUI) {
+            } else if (world.type === SALT.WORLD_TYPES.WORLD_UI) {
                 node.createHeader(world.name, `${FOLDER_MENU}node/worldui.svg`);
                 node.addItem(new SUEY.NodeItem({ type: SUEY.NODE_TYPES.INPUT, title: 'On Load' }));
             }

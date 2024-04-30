@@ -18,12 +18,11 @@ import { PropertyGroup } from '../../gui/PropertyGroup.js';
 class EntityTab extends SUEY.Titled {
 
     static entityTypeName(entity) {
-        if (entity.isWorld3D) return 'World3D';
-        else if (entity.isStage3D) return 'Stage3D';
+        if (entity.isWorld) return 'World';
+        else if (entity.isStage) return 'Stage';
         else if (entity.isPrefab) return 'Prefab';
-        else if (entity.isLight3D) return String(entity.type).replace('Light', '');
-        else if (entity.isCamera3D) return String(entity.type).replace('Camera', '');
-        else if (entity.isEntity3D) return 'Entity3D';
+        else if (entity.isLight) return String(entity.type).replace('Light', '');
+        else if (entity.isCamera) return String(entity.type).replace('Camera', '');
         else if (entity.isEntity) return 'Entity';
         else console.warn(`EntityTab.entityTypeName(): Unknown entity type.`);
         return 'Unknown';

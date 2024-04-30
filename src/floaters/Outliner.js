@@ -97,8 +97,8 @@ class Outliner extends SmartFloater {
             const viewWorld = editor.viewport().getWorld();
             if (!viewWorld) return;
             switch (editor.viewport().mode()) {
-                case EDITOR_MODES.WORLD_2D: return new SALT.Stage2D(`Stage ${viewWorld.getStages().length + 1}`);
-                case EDITOR_MODES.WORLD_3D: return new SALT.Stage3D(`Stage ${viewWorld.getStages().length + 1}`);
+                case EDITOR_MODES.WORLD_2D: return new SALT.Stage(SALT.STAGE_TYPES.STAGE_2D, `Stage ${viewWorld.getStages().length + 1}`);
+                case EDITOR_MODES.WORLD_3D: return new SALT.Stage(SALT.STAGE_TYPES.STAGE_3D, `Stage ${viewWorld.getStages().length + 1}`);
             }
         });
         stageMenuItem.divIcon.img.setStyle('padding', '0.05em', 'border-radius', '0.5em');

@@ -33,13 +33,13 @@ function loadDemoProject(project) {
     /********** WORLDS / STAGES **********/
 
     // World
-    const world = new SALT.World('World of Wonder');
+    const world = new SALT.World(SALT.WORLD_TYPES.WORLD_2D, 'World of Wonder');
     project.addWorld(world);
 
     // Stage
-    const stage1 = new SALT.Stage('Start');
-    const stage2 = new SALT.Stage('Stage 2');
-    const stage3 = new SALT.Stage('Stage 3');
+    const stage1 = new SALT.Stage(SALT.STAGE_TYPES.STAGE_2D, 'Start');
+    const stage2 = new SALT.Stage(SALT.STAGE_TYPES.STAGE_2D, 'Stage 2');
+    const stage3 = new SALT.Stage(SALT.STAGE_TYPES.STAGE_2D, 'Stage 3');
     stage2.enabled = false;
     stage3.enabled = false;
     world.addEntity(stage1);
@@ -54,16 +54,16 @@ function loadDemoProject(project) {
     const player = new SALT.Entity('Player');
     world.addEntity(player);
 
-    // Camera
-    const camera = new SALT.Camera();
-    camera.position.set(0, 0, 10);
-    world.addEntity(camera);
+    // // Camera
+    // const camera = new SALT.Camera();
+    // camera.position.set(0, 0, 10);
+    // world.addEntity(camera);
 
     /***** STAGE */
 
-    // Sube
+    // Cube
     const cube1 = new SALT.Entity('Cube 1');
-    cube1.position.set(-1, 1, 0);
+    // cube1.position.set(-1, 1, 0);
     stage1.addEntity(cube1);
 
 }
