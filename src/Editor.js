@@ -115,18 +115,20 @@ class Editor extends SUEY.MainWindow {
     /******************** PROJECT ********************/
 
     loadProject(json, demo = false) {
-        function newProjectLoaded() {
-            Signals.dispatch('sceneGraphChanged');              // rebuild outliner
-            Signals.dispatch('projectLoaded');                  // alert floaters
-        }
-
+        let loaded = false;
         if (demo) {
             this.selectEntities(/* none */);
             // loadDemoProject(this.project);
-            newProjectLoaded();
+            loaded = true;
         } else if (json) {
             this.selectEntities(/* none */);
-            this.project.fromJSON(json, true /* loadAssets? */, newProjectLoaded);
+            this.project.parse(json, true /* loadAssets? */);
+            loaded = true;
+        }
+
+        if (loaded) {
+            Signals.dispatch('sceneGraphChanged');                  // rebuild outliner
+            Signals.dispatch('projectLoaded');                      // alert floaters
         }
     }
 

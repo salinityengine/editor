@@ -385,6 +385,7 @@ class AssetBlock extends SUEY.Shrinkable {
 
         // New updated item
         const item = this.createItem(asset);
+
         if (item) {
             this.add(item);
             this.sort();

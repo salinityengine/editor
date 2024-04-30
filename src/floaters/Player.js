@@ -168,8 +168,8 @@ class Player extends SmartFloater {
             if (app.isPlaying) return;
             adjustPlayButtons();
 
-            // Save Project to JSON
-            const json = editor.project.toJSON();
+            // Serialize Project
+            const json = editor.project.serialize();
 
             // // DEBUG: Exported project json
             // console.log(json);

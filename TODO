@@ -3,61 +3,43 @@
 /**********************************************/
 
 Project:
-    - Asset types
-        - Images
-    - 2D Components
+    - Image Assets
+    - Shape Assets
 
-AssetFloater extends SmartFloater: (assets, codex, library)
-    - Move search box to title bar when over a certain width
-    - Option for 'Add New Category' button
-    - Asset block split left / right when wide?
+AssetFloater extends SmartFloater: (Assets, Codex, Library, etc.)
+    - Inherit from same base class 'AssetFloater'
+    - Categories / Folders
+        - Option for 'Add New Category' button
+    - Change when over certain width
+        - Asset block split left / right when wide?
+        - Move search box to title bar when over a certain width
 
 View2D:
     Editor:
         - Build from Suey.Graph
-        - Multiple scenes open at the same time
         - Rubberband selection
         - Snap to grid
         - Duplication (WASD keyboard controls)
         - Rotate / Flip
     Scenes:
+        - Multiple scenes open at the same time?
         - Multiple scene flipping, drop down select list?
         - Stage List
         - Arrange / Connections
 
-Undo / Redo Commands:
-    - Import from Onsight
-
 /******************** FUTURE ********************/
 
-Editor:
-    Loading: Progress Bar
-    File Menu:
-        New: Warn before starting new "You Sure?"
-        Save / Load:
-        Import / Export:
-    Help Menu:
-        Tips: (show tips / hide tips)
-        Samples: Sample projects floater?
-        Manual / FAQ / Tutorials / Contact / Bug Report:
-        Keyboard Layout Map:
-    Storage: Autosave / Browser Storage
-        - https://github.com/mrdoob/three.js/blob/dev/editor/js/Storage.js
-        - https://github.com/DVLP/localStorageDB/blob/master/localdata.js
-
 Floaters:
-    Advisor: Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc).
-    Assets (Project Folder): Categories / folders.
-    Codex: Add scripts.
+    Advisor: Tie into Schema (i.e. NumberBoxes need to alert user min / max / step, etc)
+    Assets (Project Folder): Categories / Folders
+    Codex: Add scripts
     Inspector:
         - Incorporate updates ('entityChanged' signal)
         - Go through Blocks
         - Multi-Select
             - Only show shared properties in inspector?
             - Resizing a group of selected objects
-    Game: Get info to work with View2D.
-    History: Separate undo/redo history for each Viewport?
-    Library: Prebuilt objects.
+    Game: Update 'Info' block to work with View2D
     Notepad: Global & project scratchpads. Save project scratchpad to Project.
     Outliner: Scene2D, Entity2D, etc.
     Player:
@@ -76,6 +58,21 @@ Floaters:
         - Modernize with SmartFloater
         - Editable points
         - Save shapes
+
+General:
+    Loading: Progress Bar
+    File Menu:
+        New: Warn before starting new "You Sure?"
+        Save / Load:
+        Import / Export:
+    Help Menu:
+        Tips: (show tips / hide tips)
+        Samples: Sample projects floater?
+        Manual / FAQ / Tutorials / Contact / Bug Report:
+        Keyboard Layout Map:
+    Storage: Autosave / Browser Storage
+        - https://github.com/mrdoob/three.js/blob/dev/editor/js/Storage.js
+        - https://github.com/DVLP/localStorageDB/blob/master/localdata.js
 
 Modes:
     UI Editor:

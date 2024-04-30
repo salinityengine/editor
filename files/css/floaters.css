@@ -299,10 +299,19 @@
     margin: var(--pad-x-small);
 }
 
-.salt-search-box {
+.salt-search-box.suey-text-box {
+    color: rgb(var(--complement));
     padding: 0.2em 0.25em 0.2em 1.5em !important; /* top right bottom left */
-    margin: none !important;
+    margin: 0 !important;
     width: 100% !important;
+}
+.salt-search-box.suey-text-box:hover,
+.salt-search-box.suey-text-box:focus {
+    color: rgb(var(--complement));
+    filter: brightness(1.2);
+}
+.salt-search-box.suey-text-box:not(:placeholder-shown) {
+    border-color: rgb(var(--complement));
 }
 
 .salt-search-icon {

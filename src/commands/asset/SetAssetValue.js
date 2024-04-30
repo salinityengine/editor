@@ -25,7 +25,7 @@ class SetAssetValueCommand extends Command {
 
     setBrief(asset, attributeName, newValue) {
         const assetName = (attributeName === 'name') ? newValue : asset.name;
-        const name = (typeof assetName === 'string' && assetName !== '') ? ` ("${assetName}")` : '';
+        const name = (typeof assetName === 'string') ? ` ("${assetName}")` : '';
         this.brief = `Set ${SUEY.Strings.capitalize(this.assetType)}${name} Value: '${attributeName}'`;
     }
 

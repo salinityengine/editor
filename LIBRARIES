@@ -32,6 +32,7 @@
     taro                (MIT)       Components          -------------------     https://github.com/Cloud9c/taro
 
 - Graphics
+    escher.js           (MIT)       2D DOM              0.0.17  Sep 17 2022     https://github.com/tentone/escher.js
     pixi.js             (MIT)       2D Graphics         8.0.0   Mar 05 2024     https://github.com/pixijs/pixijs
 
 - Physics

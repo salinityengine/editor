@@ -25,7 +25,7 @@ class SetEntityValueCommand extends Command {
 
     setBrief(entity, attributeName, newValue) {
         const entityName = (attributeName === 'name') ? newValue : entity.name;
-        const name = (typeof entityName === 'string' && entityName !== '') ? ` ("${entityName}")` : '';
+        const name = (typeof entityName === 'string') ? ` ("${entityName}")` : '';
         this.brief = `Set ${SUEY.Strings.capitalize(entity.type)}${name} Value: '${attributeName}'`;
     }
 

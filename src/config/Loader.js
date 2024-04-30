@@ -98,9 +98,9 @@ export { Loader };
 
 function handleJSON(data) {
     // DEBUG: Show internal file type
-    console.info(`Type: ${data.metadata.type.toLowerCase()}`);
+    console.info(`Type: ${data.meta.type}`);
 
-    switch (data.metadata.type.toLowerCase()) {
+    switch (data.meta.type.toLowerCase()) {
         case 'entity':
         case 'geometry':
         case 'palette':

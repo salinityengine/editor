@@ -43,7 +43,7 @@ class Library extends SmartFloater {
             self.searchBlocks();
         });
         searchDiv.add(searchBox, searchIcon);
-        this.addToSelf(searchDiv);
+        this.addToSelf(new SUEY.FlexSpacer(), searchDiv);
 
         /***** INIT *****/
 
