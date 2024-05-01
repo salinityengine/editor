@@ -6,24 +6,24 @@ import { Signals } from '../../config/Signals.js';
 /** Select on 'execute' or 'undo' */
 class SelectCommand extends Command {
 
-    constructor(entityArray = [], oldSelectionArray = []) {
+    constructor(newSelection = [], oldSelection = []) {
         super();
 
         // Cancel?
-        if (SALT.ArrayUtils.compareEntityArrays(entityArray, oldSelectionArray)) return this.cancel();
+        if (SALT.ArrayUtils.compareThingArrays(newSelection, oldSelection)) return this.cancel();
 
         // Properties
-        this.newSelection = Array.isArray(entityArray) ? [ ...entityArray ] : [ entityArray ];
-        this.oldSelection = Array.isArray(oldSelectionArray) ? [ ...oldSelectionArray ] : [ oldSelectionArray ];
+        this.newSelection = Array.isArray(newSelection) ? [ ...newSelection ] : [ newSelection ];
+        this.oldSelection = Array.isArray(oldSelection) ? [ ...oldSelection ] : [ oldSelection ];
 
         // Brief
         if (this.newSelection.length === 0) {
             this.brief = 'Select None';
         } else if (this.newSelection.length === 1) {
-            const entity = this.newSelection[0];
-            this.brief = `Select ${entity.type}: "${entity.name}"`;
+            const thing = this.newSelection[0];
+            this.brief = `Select ${thing.type}: "${thing.name}"`;
         } else {
-            this.brief = 'Select Entities';
+            this.brief = 'Select Things';
         }
     }
 
@@ -32,11 +32,11 @@ class SelectCommand extends Command {
     }
 
     execute() {
-        editor.selectEntities(this.newSelection);
+        editor.selectThings(this.newSelection);
     }
 
     undo() {
-        editor.selectEntities(this.oldSelection);
+        editor.selectThings(this.oldSelection);
     }
 
 }

@@ -237,7 +237,7 @@ class Worlds extends AbstractView {
                 if (!node.world || !node.world.isWorld) continue;
 
                 // World is Selected
-                const selected = SALT.ArrayUtils.includesEntity(node.world, editor.selected);
+                const selected = SALT.ArrayUtils.includesThing(node.world, editor.selected);
                 if (selected) {
                     if (!node.hasClass('suey-node-selected')) {
                         const nodes = graph.getNodes();

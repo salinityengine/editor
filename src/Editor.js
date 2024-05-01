@@ -117,11 +117,11 @@ class Editor extends SUEY.MainWindow {
     loadProject(json, demo = false) {
         let loaded = false;
         if (demo) {
-            this.selectEntities(/* none */);
+            this.selectThings(/* none */);
             // loadDemoProject(this.project);
             loaded = true;
         } else if (json) {
-            this.selectEntities(/* none */);
+            this.selectThings(/* none */);
             this.project.fromJSON(json, true /* loadAssets? */);
             loaded = true;
         }
@@ -239,18 +239,18 @@ class Editor extends SUEY.MainWindow {
      * This function is *** NOT *** meant to run through Undo/Redo Commands
      * Emits 'selectionChanged' signal upon new selection
      */
-    selectEntities(...entities) {
-        if (entities.length > 0 && Array.isArray(entities[0])) entities = entities[0];
+    selectThings(...things) {
+        if (things.length > 0 && Array.isArray(things[0])) things = things[0];
 
         // Verify items are valid for selection
         const filtered = [];
-        for (const entity of entities) {
-            if (!entity || !entity.isEntity) continue;
-            filtered.push(entity);
+        for (const thing of things) {
+            if (!thing || !thing.isThing) continue;
+            filtered.push(thing);
         }
 
         // New selection same as current selection?
-        if (SALT.ArrayUtils.compareEntityArrays(this.selected, filtered)) return;
+        if (SALT.ArrayUtils.compareThingArrays(this.selected, filtered)) return;
 
         // Update selection array
         this.selected = [ ...filtered ];

@@ -31,7 +31,7 @@ class MoveEntityCommand extends Command {
 
     moveEntity(parent, index) {
         const currentSelection = [ ...editor.selected ];
-        editor.selectEntities(/* none */);
+        editor.selectThings(/* none */);
 
         this.entity.changeParent(parent, index);
         Signals.dispatch('entityChanged', this.entity);
@@ -39,7 +39,7 @@ class MoveEntityCommand extends Command {
         if (this.newParent) Signals.dispatch('entityChanged', this.newParent);
         Signals.dispatch('sceneGraphChanged');
 
-        editor.selectEntities(currentSelection);
+        editor.selectThings(currentSelection);
     }
 
     execute() {

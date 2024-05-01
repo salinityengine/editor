@@ -7,7 +7,7 @@ class Clipboard {
 
     clear() {
         for (const item of this.items) {
-            if (item && item.isEntity) item.dispose();
+            if (item && typeof item.dispose === 'function') item.dispose();
         }
         this.items = [];
     }
@@ -16,11 +16,10 @@ class Clipboard {
         this.clear();
 
         data = Array.isArray(data) ? data : [ data ];
-        for (let i = 0; i < data.length; i++) {
-            const item = data[i];
-            if (item.isEntity) {
-                const entity = item.clone();
-                this.items.push(entity);
+        for (const item of data) {
+            if (item.isThing) {
+                const thing = item.clone(true /* recursive */);
+                this.items.push(thing);
             }
         }
     }

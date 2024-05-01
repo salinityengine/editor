@@ -97,7 +97,7 @@ class CameraProperties extends SUEY.Div {
         }
 
         function render() {
-            if (!camera || !camera.isEntity3D) return;
+            if (!camera || !camera.isEntity) return;
             const scene = camera.parentWorld();
             if (!scene) return;
 

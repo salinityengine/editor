@@ -45,8 +45,8 @@ class Inspector extends SmartFloater {
                 // TEMP: Only process first entity
                 if (Array.isArray(from)) from = (from.length === 0) ? undefined : from[0];
 
-                // Don't rebuild an entity that is already displayed
-                if (from && item && item.isEntity && item.uuid === from.uuid) return;
+                // Don't rebuild a thing that is already displayed
+                if (from && item && item.isThing && item.uuid === from.uuid) return;
 
                 // Save Current Item
                 item = from;
