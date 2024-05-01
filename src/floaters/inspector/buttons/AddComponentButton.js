@@ -48,7 +48,7 @@ class AddComponentButton extends SUEY.Button {
                 if (!config.family) continue;
                 const componentFamily = Array.isArray(config.family) ? config.family : [ config.family ];
                 const entityFamily = Array.isArray(entity.componentFamily()) ? entity.componentFamily() : [ entity.componentFamily() ];
-                if (Arrays.shareValues(componentFamily, entityFamily) === false) continue;
+                if (SALT.ArrayUtils.shareValues(componentFamily, entityFamily) === false) continue;
 
                 // Add Component
                 const compName = SUEY.Strings.capitalize(type);

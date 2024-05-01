@@ -75,7 +75,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
     } else if (item.type === 'number' || item.type === 'int' || item.type === 'angle') {
 
         // Value
-        if (item.type === 'angle') value = SALT.Maths.radiansToDegrees(value);
+        if (item.type === 'angle') value = SALT.MathUtils.radiansToDegrees(value);
 
         // Widget
         const numberHolder = new SUEY.Span().addClass('suey-number-holder');
@@ -85,7 +85,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Event
         numberBox.on('change', () => {
             value = numberBox.getValue();
-            if (item.type === 'angle') value = SALT.Maths.degreesToRadians(value);
+            if (item.type === 'angle') value = SALT.MathUtils.degreesToRadians(value);
             updateComponent(item, propKey, value);
         });
 

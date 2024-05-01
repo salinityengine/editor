@@ -28,7 +28,7 @@ class EntityProperties extends SUEY.PropertyList {
         const entityUUID = new SUEY.TextBox().setDisabled(true);
         // // 'New' UUID Button
         // const entityUUIDNew = new SUEY.Button('NEW').setStyle('marginLeft', WIDGET_SPACING).onPress(() => {
-        //     entityUUID.setValue(SALT.Uuid.generate());
+        //     entityUUID.setValue(SALT.MathUtils.randomUUID());
         //     editor.execute(new SetUUIDCommand(entity, entityUUID.getValue()));
         // });
         // // 'Copy' UUID Button

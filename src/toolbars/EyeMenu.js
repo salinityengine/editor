@@ -84,7 +84,7 @@ class EyeMenu extends SUEY.Menu {
             fileSave.onSelect(() => {
                 const output = formatJSON(editor.project.toJSON());
                 const filename = ((editor.project.name !== '') ? editor.project.name : 'untitled') + '.eye';
-                SALT.System.saveString(output, filename);
+                SALT.SysUtils.saveString(output, filename);
             });
 
             // IMPORT
@@ -118,7 +118,7 @@ class EyeMenu extends SUEY.Menu {
                 //     const object = editor.selected[0];
                 //     const output = formatJSON(object.toJSON());
                 //     const filename = ((object.name !== '') ? object.name : 'object') + '.json';
-                //     SALT.System.saveString(output, filename);
+                //     SALT.SysUtils.saveString(output, filename);
                 // }
 
             });
@@ -141,7 +141,7 @@ class EyeMenu extends SUEY.Menu {
                 // const manager = new SALT.LoadingManager(function() {
                 //     const zipped = zipSync(toZip, { level: 9 });
                 //     const filename = ((title !== '') ? title : 'untitled') + '.zip';
-                //     SALT.System.saveBuffer(zipped.buffer, filename, 'application/zip');
+                //     SALT.SysUtils.saveBuffer(zipped.buffer, filename, 'application/zip');
                 // });
 
                 // const loader = new THREE.FileLoader(manager);
@@ -163,14 +163,14 @@ class EyeMenu extends SUEY.Menu {
         let editUndo, editRedo, editCopy, editCut, editPaste, editDuplicate, editDelete, editAll, editNone;
 
         if (useEdit) {
-            editUndo = new SUEY.MenuItem(Language.getKey('menubar/edit/undo'), `${FOLDER_MENU}main/edit/undo.svg`, `${SALT.System.metaKeyOS()}Z`).keepOpen();
-            editRedo = new SUEY.MenuItem(Language.getKey('menubar/edit/redo'), `${FOLDER_MENU}main/edit/redo.svg`, `⇧${SALT.System.metaKeyOS()}Z`).keepOpen();
-            editCut = new SUEY.MenuItem(Language.getKey('menubar/edit/cut'), `${FOLDER_MENU}main/edit/cut.svg`, `${SALT.System.metaKeyOS()}X`);
-            editCopy = new SUEY.MenuItem(Language.getKey('menubar/edit/copy'), `${FOLDER_MENU}main/edit/copy.svg`, `${SALT.System.metaKeyOS()}C`);
-            editPaste = new SUEY.MenuItem(Language.getKey('menubar/edit/paste'), `${FOLDER_MENU}main/edit/paste.svg`, `${SALT.System.metaKeyOS()}V`);
+            editUndo = new SUEY.MenuItem(Language.getKey('menubar/edit/undo'), `${FOLDER_MENU}main/edit/undo.svg`, `${SALT.SysUtils.metaKeyOS()}Z`).keepOpen();
+            editRedo = new SUEY.MenuItem(Language.getKey('menubar/edit/redo'), `${FOLDER_MENU}main/edit/redo.svg`, `⇧${SALT.SysUtils.metaKeyOS()}Z`).keepOpen();
+            editCut = new SUEY.MenuItem(Language.getKey('menubar/edit/cut'), `${FOLDER_MENU}main/edit/cut.svg`, `${SALT.SysUtils.metaKeyOS()}X`);
+            editCopy = new SUEY.MenuItem(Language.getKey('menubar/edit/copy'), `${FOLDER_MENU}main/edit/copy.svg`, `${SALT.SysUtils.metaKeyOS()}C`);
+            editPaste = new SUEY.MenuItem(Language.getKey('menubar/edit/paste'), `${FOLDER_MENU}main/edit/paste.svg`, `${SALT.SysUtils.metaKeyOS()}V`);
             editDuplicate = new SUEY.MenuItem(Language.getKey('menubar/edit/duplicate'), `${FOLDER_MENU}main/edit/duplicate.svg`, 'D');
             editDelete = new SUEY.MenuItem(Language.getKey('menubar/edit/delete'), `${FOLDER_MENU}main/edit/delete.svg`, '⌫');
-            editAll = new SUEY.MenuItem(Language.getKey('menubar/edit/all'), `${FOLDER_MENU}main/edit/all.svg`, `${SALT.System.metaKeyOS()}A`);
+            editAll = new SUEY.MenuItem(Language.getKey('menubar/edit/all'), `${FOLDER_MENU}main/edit/all.svg`, `${SALT.SysUtils.metaKeyOS()}A`);
             editNone = new SUEY.MenuItem(Language.getKey('menubar/edit/none'), `${FOLDER_MENU}main/edit/none.svg`, '⎋');
 
             editCut.setDisabled(true);
@@ -217,7 +217,7 @@ class EyeMenu extends SUEY.Menu {
         let windowFullscreen;
 
         if (useWindow) {
-            const fullscreenTxt = `${SALT.System.metaKeyOS()}↵`; // i.e. Ctrl + "Enter" or "Return"
+            const fullscreenTxt = `${SALT.SysUtils.metaKeyOS()}↵`; // i.e. Ctrl + "Enter" or "Return"
 
             windowHide = new SUEY.MenuItem(Language.getKey('menubar/window/hide'), `${FOLDER_MENU}main/window/hide-panels.svg`).keepOpen();
             windowShow = new SUEY.MenuItem(Language.getKey('menubar/window/show'), `${FOLDER_MENU}main/window/show-panels.svg`).keepOpen();
@@ -225,7 +225,7 @@ class EyeMenu extends SUEY.Menu {
 
             windowHide.onSelect(() => editor.docker.collapseTabs());
             windowShow.onSelect(() => editor.docker.expandTabs());
-            windowFullscreen.onSelect(() => SALT.System.fullscreen());
+            windowFullscreen.onSelect(() => SALT.SysUtils.fullscreen());
 
             // Toggle Window Types
             function toggleWindow(windowMenuItem, windowName) {

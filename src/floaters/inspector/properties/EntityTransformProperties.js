@@ -231,18 +231,18 @@ class EntityTransformProperties extends SUEY.Div {
             const cmds = [];
 
             // Position / Rotation / Scale / Size
-            const xAngle = SALT.Maths.degreesToRadians(entityRotationX.getValue());
-            const yAngle = SALT.Maths.degreesToRadians(entityRotationY.getValue());
-            const zAngle = SALT.Maths.degreesToRadians(entityRotationZ.getValue());
+            const xAngle = SALT.MathUtils.degreesToRadians(entityRotationX.getValue());
+            const yAngle = SALT.MathUtils.degreesToRadians(entityRotationY.getValue());
+            const zAngle = SALT.MathUtils.degreesToRadians(entityRotationZ.getValue());
             newPosition.set(entityPositionX.getValue(), entityPositionY.getValue(), entityPositionZ.getValue());
             newRotation.set(xAngle, yAngle, zAngle);
             newScale.set(entityScaleX.getValue(), entityScaleY.getValue(), entityScaleZ.getValue());
             newSize.set(entitySizeX.getValue(), entitySizeY.getValue(), entitySizeZ.getValue());
 
-            let changePosition = SALT.Maths.fuzzyVector(entity.position, newPosition) === false;
-            let changeRotate = SALT.Maths.fuzzyVector(entity.rotation, newRotation) === false;
-            let changeScale = SALT.Maths.fuzzyVector(entity.scale, newScale) === false;
-            let changeSize = SALT.Maths.fuzzyVector(entitySize, newSize) === false;
+            let changePosition = SALT.MathUtils.fuzzyVector(entity.position, newPosition) === false;
+            let changeRotate = SALT.MathUtils.fuzzyVector(entity.rotation, newRotation) === false;
+            let changeScale = SALT.MathUtils.fuzzyVector(entity.scale, newScale) === false;
+            let changeSize = SALT.MathUtils.fuzzyVector(entitySize, newSize) === false;
                 changeSize = changeSize && hasMesh && !changeScale;
 
             if (changeSize) {

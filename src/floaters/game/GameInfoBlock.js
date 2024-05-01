@@ -67,14 +67,14 @@ class GameInfoBlock extends SmartShrinker {
                 }
             });
 
-            scenesInfo.setTextContent(SALT.Maths.addCommas(sceneCount));
-            entitiesInfo.setTextContent(SALT.Maths.addCommas(entityCount));
+            scenesInfo.setTextContent(SALT.MathUtils.addCommas(sceneCount));
+            entitiesInfo.setTextContent(SALT.MathUtils.addCommas(entityCount));
             // const geometries = SALT.AssetManager.library('asset', 'geometry');
             // const materials = SALT.AssetManager.library('asset', 'material');
             // const textures = SALT.AssetManager.library('asset', 'texture');
-            // geometriesInfo.setTextContent(SALT.Maths.addCommas(geometries.length));
-            // materialsInfo.setTextContent(SALT.Maths.addCommas(materials.length));
-            // texturesInfo.setTextContent(SALT.Maths.addCommas(textures.length));
+            // geometriesInfo.setTextContent(SALT.MathUtils.addCommas(geometries.length));
+            // materialsInfo.setTextContent(SALT.MathUtils.addCommas(materials.length));
+            // texturesInfo.setTextContent(SALT.MathUtils.addCommas(textures.length));
         }
 
         /***** SIGNALS *****/

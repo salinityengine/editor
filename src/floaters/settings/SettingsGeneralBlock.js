@@ -173,7 +173,7 @@ class SettingsGeneralBlock extends SmartShrinker {
 
         const alphaSlider = new SUEY.Slider();
         alphaSlider.on('input', () => {
-            const panelAlpha = SALT.Maths.clamp(parseFloat(alphaSlider.getValue()), 0.0, 1.0);
+            const panelAlpha = SALT.MathUtils.clamp(parseFloat(alphaSlider.getValue()), 0.0, 1.0);
             Config.setKey('scheme/transparency', panelAlpha);
             SUEY.Css.setVariable('--panel-transparency', panelAlpha);
         });

@@ -26,7 +26,7 @@ class Loader {
 
         const reader = new FileReader();
         reader.addEventListener('progress', function(event) {
-            const size = '(' + SALT.Maths.addCommas(Math.floor(event.total / 1000)) + ' KB)';
+            const size = '(' + SALT.MathUtils.addCommas(Math.floor(event.total / 1000)) + ' KB)';
             const progress = Math.floor((event.loaded / event.total) * 100) + '%';
             console.info('Loading', filename, size, progress);
         });

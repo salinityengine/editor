@@ -212,7 +212,7 @@ class AssetBlock extends SUEY.Shrinkable {
         const assets = SALT.AssetManager.library(this.type, this.category);
 
         // Remove missing Assets
-        const uuids = SALT.Uuid.arrayFromObjects(assets);
+        const uuids = SALT.MathUtils.toUUIDArray(assets);
         for (const assetBox of this.contents().children) {
             if (!assetBox.uuid) continue;
             if (uuids.includes(assetBox.uuid)) continue;
@@ -228,7 +228,7 @@ class AssetBlock extends SUEY.Shrinkable {
     /** Add missing items */
     buildItems(assets) {
         assets = assets ?? SALT.AssetManager.library(this.type, this.category);
-        const uuids = SALT.Uuid.arrayFromObjects(this.contents().children);
+        const uuids = SALT.MathUtils.toUUIDArray(this.contents().children);
         for (const asset of assets) {
             if (uuids.includes(asset.uuid)) continue;
             const item = this.createItem(asset);

@@ -250,7 +250,7 @@ class Editor extends SUEY.MainWindow {
         }
 
         // New selection same as current selection?
-        if (SALT.Arrays.compareEntityArrays(this.selected, filtered)) return;
+        if (SALT.ArrayUtils.compareEntityArrays(this.selected, filtered)) return;
 
         // Update selection array
         this.selected = [ ...filtered ];
@@ -295,7 +295,7 @@ class Editor extends SUEY.MainWindow {
         } else {
             fontSize = parseInt(fontSize);
         }
-        fontSize = SALT.Maths.clamp(fontSize, CONSTANTS.FONT_SIZE_MIN, CONSTANTS.FONT_SIZE_MAX);
+        fontSize = SALT.MathUtils.clamp(fontSize, CONSTANTS.FONT_SIZE_MIN, CONSTANTS.FONT_SIZE_MAX);
         Config.setKey('scheme/fontSize', SUEY.Css.toPx(fontSize));
         SUEY.Css.setVariable('--font-size', SUEY.Css.toPx(fontSize));
         Signals.dispatch('fontSizeChanged');
@@ -481,7 +481,7 @@ function editorKeyDown(editor, event) {
         // Fullscreen
         case 'Enter':
             if (event.altKey || event.ctrlKey || event.metaKey) {
-                SALT.System.fullscreen();
+                SALT.SysUtils.fullscreen();
             }
             break;
 

@@ -10,7 +10,7 @@ class SelectCommand extends Command {
         super();
 
         // Cancel?
-        if (SALT.Arrays.compareEntityArrays(entityArray, oldSelectionArray)) return this.cancel();
+        if (SALT.ArrayUtils.compareEntityArrays(entityArray, oldSelectionArray)) return this.cancel();
 
         // Properties
         this.newSelection = Array.isArray(entityArray) ? [ ...entityArray ] : [ entityArray ];

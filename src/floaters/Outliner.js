@@ -435,7 +435,7 @@ class Outliner extends SmartFloater {
 
             // Multi-selection
             if (editor.selected.length > 0) {
-                const selectedUUIDs = SALT.Uuid.arrayFromObjects(editor.selected);
+                const selectedUUIDs = SALT.MathUtils.toUUIDArray(editor.selected);
                 treeList.setValues(selectedUUIDs);
             }
         }

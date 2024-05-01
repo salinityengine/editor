@@ -258,7 +258,7 @@ class Player extends SmartFloater {
             const filename = app.project.name + ' ' + new Date().toLocaleString() + '.png';
             const strMime = 'image/png'; /* or 'image/jpeg' or 'image/webp' */
             const imgData = app.renderer.domElement.toDataURL(strMime);
-            SALT.System.saveImage(imgData, filename);
+            SALT.SysUtils.saveImage(imgData, filename);
 
             // Restore
             app.setSize(_size.x, _size.y);
