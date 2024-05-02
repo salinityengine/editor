@@ -170,7 +170,7 @@ class Editor extends SUEY.MainWindow {
     viewport(worldType) {
         // Find by World Type
         if (worldType && worldType.isWorld) worldType = worldType.type;
-        if (worldType) {
+        if (worldType && typeof worldType ==='string') {
             for (const viewport of this.viewports) {
                 if (viewport.mode() === worldType) return viewport;
             }

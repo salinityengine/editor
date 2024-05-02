@@ -2,9 +2,9 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Project:
-    - Image Assets
-    - Shape Assets
+Engine:
+    - Scene / Render / Viewport
+    - Improve Entity / Component
 
 View2D:
     Editor:
@@ -85,6 +85,9 @@ Modes:
             - Save connections
 
 Project:
+    Assets:
+        - Image Assets
+        - Shape Assets
     Entity:
         Physics:
         Transform:

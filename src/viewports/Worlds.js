@@ -358,7 +358,9 @@ class Worlds extends AbstractView {
 
         // Types Included
         const worldTypes = [];
-        worlds.forEach((world) => { if (worldTypes.includes(world.type) === false) worldTypes.push(world.type); });
+        worlds.forEach((world) => {
+            if (worldTypes.includes(world.type) === false) worldTypes.push(world.type);
+        });
 
         // Remove Worlds
         const cmds = [];

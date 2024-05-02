@@ -1,7 +1,6 @@
 class Clipboard {
 
     constructor() {
-        // Properties, Data
         this.items = [];
     }
 

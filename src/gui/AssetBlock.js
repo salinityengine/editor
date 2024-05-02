@@ -26,9 +26,8 @@ class AssetBlock extends SUEY.Shrinkable {
     #viewStart = 'icon';
     #viewString = '';
 
-    /* Supports current types: asset, prefab */
     constructor({
-        type,
+        type,               // 'asset', 'script', etc
         category,           // 'primitive', 'item', etc.
         title = '',
         icon = '',
