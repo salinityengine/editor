@@ -2,13 +2,23 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Engine:
-    - Scene / Render / Viewport
-    - Improve Entity / Component
+Suey.Scene:
+    - Resizers
+        - Combine scale / rotate
+        - Side objects
+    - Box flipping makes drag stop working
+    Objects:
+        - Image
+        - Line
+        - DOM
+        - Pattern
+        - Rounded Box
+    Styles:
+        - Gradient
+        - Pattern
 
 View2D:
     Editor:
-        - Suey.Scene
         - Rubberband selection
         - Snap to grid
         - Duplication (WASD keyboard controls)
@@ -26,6 +36,9 @@ AssetFloater extends SmartFloater: (Assets, Codex, Library, etc.)
     - Change when over certain width
         - Asset block split left / right when wide?
         - Move search box to title bar when over a certain width
+
+Engine:
+    - Improve Entity / Component
 
 /******************** FUTURE ********************/
 

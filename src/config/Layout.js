@@ -90,8 +90,7 @@ class Layout {
 
     static createFloater(id) {
         if (id in _types) return new _types[id].type;
-        console.warn(`Layout.createFloater(): Unknown type '${id}'`);
-        return null;
+        return console.warn(`Layout.createFloater(): Unknown type '${id}'`);
     }
 
     static installFloater(floater, defaultOnly = false) {
