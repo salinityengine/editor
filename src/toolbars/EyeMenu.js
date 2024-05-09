@@ -14,7 +14,7 @@ import { Layout } from '../config/Layout.js';
 import { Loader } from '../config/Loader.js';
 import { Signals } from '../config/Signals.js';
 
-import { zipSync, strToU8 } from '../libs/fflate.module.js';
+import { zipSync, strToU8 } from '../../libs/fflate.module.js';
 
 class EyeMenu extends SUEY.Menu {
 

@@ -28,9 +28,6 @@
 - Code Editing
     code-mirror-6       (MIT)       Code Editor         6.26.2  Apr 09 2024     https://github.com/codemirror/view
 
-- Engine
-    taro                (MIT)       Components          -------------------     https://github.com/Cloud9c/taro
-
 - Graphics
     escher.js           (MIT)       2D DOM              0.0.17  Sep 17 2022     https://github.com/tentone/escher.js
     pixi.js             (MIT)       2D Graphics         8.0.0   Mar 05 2024     https://github.com/pixijs/pixijs
@@ -51,30 +48,31 @@
     flaticon            (Premium)   https://www.flaticon.com/
 
 - Fonts
-    aileron             (CC0)       https://github.com/Nicholaiii/Aileron (source - http://dotcolon.net)
-    roboto              (Apache)    https://fonts.google.com/specimen/Roboto (source - google)
+    aileron             (OFL)       https://github.com/Nicholaiii/Aileron (source - http://dotcolon.net)
+    roboto              (APACHE)    https://fonts.google.com/specimen/Roboto (source - google)
 
 /******************** FUTURE ********************/
 
 - App
     capacitor           (MIT)       Mobile App          https://github.com/ionic-team/capacitor
-    cordova             (Apache)    Mobile App          https://cordova.apache.org
+    cordova             (APACHE)    Mobile App          https://cordova.apache.org
     electron            (MIT)       Desktop App         https://github.com/electron/electron
     neutralino.js       (MIT)       Desktop App         https://github.com/neutralinojs/neutralinojs
     nw.js               (MIT)       Desktop App         https://github.com/nwjs/nw.js
-    tauri               (Apache)    Desktop/Mobile      https://github.com/tauri-apps/tauri
+    tauri               (APACHE)    Desktop/Mobile      https://github.com/tauri-apps/tauri
 
 - Audio
     howler.js           (MIT)       Audio Playback      https://github.com/goldfire/howler.js
     tone.js             (MIT)       Audio Creation      https://github.com/Tonejs/Tone.js
 
 - Code Editing
-    blockly             (Apache)    Visual Code         https://developers.google.com/blockly
+    blockly             (APACHE)    Visual Code         https://developers.google.com/blockly
     brython             (BSD)       Python Scripting    https://github.com/brython-dev/brython
     monaco              (MIT)       Code Editor         https://github.com/microsoft/monaco-editor
 
 - Entity Component System
     square              (MIT)       ECS                 https://github.com/harshdoesdev/square
+    taro                (MIT)       Components          https://github.com/Cloud9c/taro
 
 - Geometry (2D)
     concaveman          (ISC)       Concave Hull        https://github.com/mapbox/concaveman
@@ -86,6 +84,7 @@
     potpack             (ISC)       Rect Packing        https://github.com/mapbox/potpack
 
 - Graphics
+    ogl                 (PUBLIC)    3D Graphics         https://github.com/oframe/ogl
     three.js            (MIT)       3D Graphics         https://github.com/mrdoob/three.js
 
 - Textures

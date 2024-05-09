@@ -3,24 +3,33 @@
 /**********************************************/
 
 Suey.Scene:
-    - Resizers
-        - Combine scale / rotate
-        - Side objects
-    - Box flipping makes drag stop working
+    Controls:
+        - CameraControls
+            - Add spacebar translating
+            - Popup zoom level display
+        - DragControls
+        - SelectControls
+    Selection:
+        - Group
+        - Rubberband selection
+        - Resize group
     Objects:
         - Image
-        - Line
         - DOM
         - Pattern
         - Rounded Box
     Styles:
-        - Gradient
         - Pattern
+    Grid:
+        - Draw grid
+        - Snap to grid
+    Events:
+        - 'selection'
+        - 'remove-object'
+        - 'add-object'
 
 View2D:
     Editor:
-        - Rubberband selection
-        - Snap to grid
         - Duplication (WASD keyboard controls)
         - Rotate / Flip
     Scenes:
@@ -94,6 +103,7 @@ Modes:
             - Joints (motor, spring, etc.)
     World Graph:
         - Nodes:
+            - Delete node clears connections
             - Auto resizing
             - Save connections
 

@@ -8,7 +8,7 @@ import { Signals } from './Signals.js';
 
 import { AddAssetCommand } from '../commands/CommandList.js';
 
-import { unzipSync, strFromU8 } from '../libs/fflate.module.js';
+import { unzipSync, strFromU8 } from '../../libs/fflate.module.js';
 
 class Loader {
 
