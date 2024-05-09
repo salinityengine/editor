@@ -20,7 +20,7 @@ class AbstractView extends SUEY.Div {
         const floaters = [
             'advisor',
             'player',
-            'game',
+            'project',
             'notepad',
             'history',
             'settings',

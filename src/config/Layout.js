@@ -6,13 +6,13 @@ import { Signals } from './Signals.js';
 import { Advisor } from '../floaters/Advisor.js';
 import { Assets } from '../floaters/Assets.js';
 import { Codex } from '../floaters/Codex.js';
-import { Game } from '../floaters/Game.js';
 import { History } from '../floaters/History.js';
 import { Inspector } from '../floaters/Inspector.js';
 import { Library } from '../floaters/Library.js';
 import { Notepad } from '../floaters/Notepad.js';
 import { Outliner } from '../floaters/Outliner.js';
 import { Player } from '../floaters/Player.js';
+import { Project } from '../floaters/Project.js';
 import { Scripter } from '../floaters/Scripter.js';
 import { Settings } from '../floaters/Settings.js';
 import { Shaper } from '../floaters/Shaper.js';
@@ -24,13 +24,13 @@ const _types = {
     'advisor':      { type: Advisor,    init: 'left',     side: 'bottom',     size: DEFAULT_LEFT,   size2: '10em' },
     'assets':       { type: Assets,     init: 'left',     side: 'left',       size: DEFAULT_LEFT    },
     'codex':        { type: Codex,      init: 'left',     side: 'left',       size: DEFAULT_LEFT    },
-    'game':         { type: Game,       init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
     'history':      { type: History,    init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
     'inspector':    { type: Inspector,  init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
     'library':      { type: Library,    init: 'left',     side: 'left',       size: DEFAULT_LEFT    },
     'notepad':      { type: Notepad,    init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
     'outliner':     { type: Outliner,   init: 'left',     side: 'left',       size: DEFAULT_LEFT    },
     'player':       { type: Player,     init: 'center',                       size: '60%',          size2: '80%' },
+    'project':      { type: Project,    init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
     'scripter':     { type: Scripter,   init: 'center',                       size: '60%',          size2: '85%' },
     'settings':     { type: Settings,   init: 'right',    side: 'right',      size: DEFAULT_RIGHT   },
 };

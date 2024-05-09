@@ -358,9 +358,9 @@
 
 /********** Settings */
 
-/* Game */
+/* Project */
 
-.suey-toolbar-button:hover #tb-game-ship, .suey-toolbar-button.suey-selected #tb-game-ship {
+.suey-toolbar-button:hover #tb-project-ship, .suey-toolbar-button.suey-selected #tb-project-ship {
     animation: takeOff 1.2s;
     animation-fill-mode: forwards;
 }

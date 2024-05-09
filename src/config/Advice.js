@@ -14,23 +14,23 @@ const _values = {
         'floater/advisor':                  { title: 'Advisor', html: `Shows helpful tips and information.` },
         'floater/assets':                   { title: 'Assets', html: `Collection of assets for use in your project.` },
         'floater/codex':                    { title: 'Codex', html: `Collection of scripts for use in your project.` },
-        'floater/game':                     { title: 'Game', html: `Game settings viewer.` },
         'floater/history':                  { title: 'History', html: `Undo / redo history log.`},
         'floater/inspector':                { title: 'Inspector', html: `View and edit properties and settings.`},
         'floater/library':                  { title: 'Library', html: `Prefab collection.`},
         'floater/notepad':                  { title: 'Notepad', html: `Scratchpad to keep project notes and ideas.`},
         'floater/outliner':                 { title: 'Outliner', html: `Displays interactive scene hierarchy.` },
         'floater/player':                   { title: 'Player', html: `Play game in it's current state.` },
+        'floater/project':                  { title: 'Project', html: `Project settings viewer.` },
         'floater/scripter':                 { title: 'Scripter', html: `Script viewer and editor.` },
         'floater/settings':                 { title: 'Settings', html: `Editor settings viewer.`},
 
-        // Game
-        'game/app':                         { title: 'App Settings', html: `` },
-        'game/app/name':                    { title: 'App Name', html: `` },
-        'game/app/orientation':             { title: 'Orientation', html: `App is to be displayed in 'Portrait' or 'Landscape' mode?` },
-        'game/threshold':                   { title: 'Threshold', html: `Distance thresholds are used for loading additional Entities (via Stages) and removing Entities that are out of view.` },
-        'game/threshold/preload':           { title: 'Preload', html: `Stages will be loaded this far ahead of camera target. Value in world units, -1 to disable.` },
-        'game/threshold/unload':            { title: 'Unload', html: `Entities will be removed when camera target is this far past an Entity. Value in world units, -1 to disable.` },
+        // Project
+        'project/app':                      { title: 'App Settings', html: `` },
+        'project/app/name':                 { title: 'App Name', html: `` },
+        'project/app/orientation':          { title: 'Orientation', html: `App is to be displayed in 'Portrait' or 'Landscape' mode?` },
+        'project/threshold':                { title: 'Threshold', html: `Distance thresholds are used for loading additional Entities (via Stages) and removing Entities that are out of view.` },
+        'project/threshold/preload':        { title: 'Preload', html: `Stages will be loaded this far ahead of camera target. Value in world units, -1 to disable.` },
+        'project/threshold/unload':         { title: 'Unload', html: `Entities will be removed when camera target is this far past an Entity. Value in world units, -1 to disable.` },
 
         // History
         'history':                          { title: 'History', html: `List of undo / redo actions taken in editor.` },
@@ -92,7 +92,7 @@ const _values = {
         // Toolbar, Settings
         'toolbar/play':                     { title: 'Play Game', html: `Play game in it's current state.` },
         'toolbar/notepad':                  { title: 'Notepad', html: `Scratchpad to keep project notes and ideas.`},
-        'toolbar/game':                     { title: 'Game Settings', html: `Various settings for current game.` },
+        'toolbar/project':                  { title: 'Project Settings', html: `Various settings for current project.` },
         'toolbar/history':                  { title: 'History', html: `List of undo / redo actions taken in editor.` },
         'toolbar/settings':                 { title: 'Editor Settings', html: `Various settings for the Salinity Editor.` },
     },

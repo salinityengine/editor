@@ -9,24 +9,24 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-import { GameAppBlock } from './game/GameAppBlock.js';
-import { GameInfoBlock } from './game/GameInfoBlock.js';
+import { ProjectAppBlock } from './project/ProjectAppBlock.js';
+import { ProjectInfoBlock } from './project/ProjectInfoBlock.js';
 
 /**
- * Game Settings
+ * Project Settings
  */
-class Game extends SmartFloater {
+class Project extends SmartFloater {
 
     constructor() {
-        const icon = `${FOLDER_FLOATERS}game.svg`;
-        super('game', { icon, color: '#773399' });
+        const icon = `${FOLDER_FLOATERS}project.svg`;
+        super('project', { icon, color: '#773399' });
         const self = this;
-        Advice.attach(this.button, 'floater/game');
+        Advice.attach(this.button, 'floater/project');
 
         // Create Blocks
         const blocks = [];
-        blocks.push(new GameAppBlock());
-        blocks.push(new GameInfoBlock());
+        blocks.push(new ProjectAppBlock());
+        blocks.push(new ProjectInfoBlock());
 
         // Add Blocks
         this.add(...blocks);
@@ -35,4 +35,4 @@ class Game extends SmartFloater {
 
 }
 
-export { Game };
+export { Project };

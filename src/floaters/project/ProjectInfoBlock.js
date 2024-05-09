@@ -8,10 +8,10 @@ import { SmartShrinker } from '../../gui/SmartShrinker.js';
 
 import { Signals } from '../../config/Signals.js';
 
-class GameInfoBlock extends SmartShrinker {
+class ProjectInfoBlock extends SmartShrinker {
 
     constructor() {
-        const icon = `${FOLDER_FLOATERS}game/info.svg`;
+        const icon = `${FOLDER_FLOATERS}project/info.svg`;
         super({ title: 'Info', icon, arrow: 'right', border: true });
 
         // Property Box
@@ -91,4 +91,4 @@ class GameInfoBlock extends SmartShrinker {
 
 }
 
-export { GameInfoBlock };
+export { ProjectInfoBlock };

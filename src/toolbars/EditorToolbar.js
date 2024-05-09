@@ -27,7 +27,7 @@ class EditorToolbar extends SUEY.Panel {
         const scene3d = new SUEY.ToolbarButton(null, 'middle').setColor('sienna');
         const sceneui = new SUEY.ToolbarButton(null, 'right').setColor('sienna');
         const play = new SUEY.ToolbarButton().setColor('red');
-        const game = new SUEY.ToolbarButton(null, 'left').setColor('gray');
+        const project = new SUEY.ToolbarButton(null, 'left').setColor('gray');
         const notes = new SUEY.ToolbarButton(null, 'middle').setColor('gray');
         const history = new SUEY.ToolbarButton(null, 'middle').setColor('gray');
         const settings = new SUEY.ToolbarButton(null, 'right').setColor('gray');
@@ -38,7 +38,7 @@ class EditorToolbar extends SUEY.Panel {
         scene3d.setAttribute('tooltip', Config.tooltip('Scene Editor 3D'));
         sceneui.setAttribute('tooltip', Config.tooltip('UI Editor'));
         play.setAttribute('tooltip', Config.tooltip('Play Game', Config.getKey('shortcuts/play')));
-        game.setAttribute('tooltip', 'Game');
+        project.setAttribute('tooltip', 'Projecet');
         notes.setAttribute('tooltip', 'Notepad');
         history.setAttribute('tooltip', 'History');
         settings.setAttribute('tooltip', 'Settings');
@@ -49,7 +49,7 @@ class EditorToolbar extends SUEY.Panel {
         Advice.attach(scene3d, 'toolbar/mode/scene3d');
         Advice.attach(sceneui, 'toolbar/mode/sceneui');
         Advice.attach(play, 'toolbar/play');
-        Advice.attach(game, 'toolbar/game');
+        Advice.attach(project, 'toolbar/project');
         Advice.attach(notes, 'toolbar/notepad');
         Advice.attach(history, 'toolbar/history');
         Advice.attach(settings, 'toolbar/settings');
@@ -119,9 +119,9 @@ class EditorToolbar extends SUEY.Panel {
 
         /******************** SETTINGS */
 
-        const gameStars = new SUEY.VectorBox(`${FOLDER_TOOLBAR}game-stars.svg`).setID('tb-game-stars');
-        const gameShip = new SUEY.VectorBox(`${FOLDER_TOOLBAR}game-ship.svg`).setID('tb-game-ship');
-        game.add(gameStars, gameShip);
+        const projectStars = new SUEY.VectorBox(`${FOLDER_TOOLBAR}project-stars.svg`).setID('tb-project-stars');
+        const projectShip = new SUEY.VectorBox(`${FOLDER_TOOLBAR}project-ship.svg`).setID('tb-project-ship');
+        project.add(projectStars, projectShip);
 
         const editPencil = new SUEY.VectorBox(`${FOLDER_TOOLBAR}notes-pencil.svg`).setID('tb-notes-pencil');
         notes.add(editPencil);
@@ -138,7 +138,7 @@ class EditorToolbar extends SUEY.Panel {
         const settingsShadow = new SUEY.VectorBox(`${FOLDER_TOOLBAR}settings-shadow.svg`).setID('tb-settings-shadow');
         settings.add(settingsGear, settingsShadow, settingsCenter);
 
-        game.onPress(() => Layout.selectFloater('game', true /* build? */));
+        project.onPress(() => Layout.selectFloater('project', true /* build? */));
         notes.onPress(() => Layout.selectFloater('notepad', true /* build? */));
         history.onPress(() => Layout.selectFloater('history', true /* build? */));
         settings.onPress(() => Layout.selectFloater('settings', true /* build? */));
@@ -152,7 +152,7 @@ class EditorToolbar extends SUEY.Panel {
         const middle = new SUEY.FlexBox().setStyle('flex', '1 1 auto', 'pointerEvents', 'none');
         const right = new SUEY.FlexBox().setStyle('flex', '0 0 auto', 'pointerEvents', 'none');
         left.add(eye, new SUEY.ToolbarSeparator(), worlds, scene2d, scene3d, sceneui, new SUEY.FlexSpacer());
-        right.add(new SUEY.FlexSpacer(), play, new SUEY.ToolbarSeparator(), game, notes, history, settings);
+        right.add(new SUEY.FlexSpacer(), play, new SUEY.ToolbarSeparator(), project, notes, history, settings);
         this.add(left, middle, right);
 
         // Reference to Middle

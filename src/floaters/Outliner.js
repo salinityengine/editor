@@ -86,7 +86,7 @@ class Outliner extends SmartFloater {
         addEntityMenuItem('Camera', `${FOLDER_TYPES}entity/camera.svg`, () => {
             switch (editor.viewport().mode()) {
                 case EDITOR_MODES.WORLD_2D: return new SALT.Camera2D();
-                case EDITOR_MODES.WORLD_3D: return new SALT.Camera3D();
+                // case EDITOR_MODES.WORLD_3D: return new SALT.Camera3D();
             }
         });
 
