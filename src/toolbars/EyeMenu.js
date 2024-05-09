@@ -14,6 +14,8 @@ import { Layout } from '../config/Layout.js';
 import { Loader } from '../config/Loader.js';
 import { Signals } from '../config/Signals.js';
 
+import { FileLoader } from '../config/loading/FileLoader.js';
+import { LoadingManager } from '../config/loading/LoadingManager.js';
 import { zipSync, strToU8 } from '../../libs/fflate.module.js';
 
 class EyeMenu extends SUEY.Menu {
@@ -138,22 +140,18 @@ class EyeMenu extends SUEY.Menu {
                 //
                 new SUEY.Question('TODO: Publish!').alert();
 
-                // const manager = new SALT.LoadingManager(function() {
+                // const manager = new LoadingManager(function() {
                 //     const zipped = zipSync(toZip, { level: 9 });
                 //     const filename = ((title !== '') ? title : 'untitled') + '.zip';
                 //     SALT.SysUtils.saveBuffer(zipped.buffer, filename, 'application/zip');
                 // });
-
-                // const loader = new THREE.FileLoader(manager);
+                // const loader = new FileLoader(manager);
                 // loader.load('./src/export/index.html', function(content) {
                 //     content = content.replace('<!-- TITLE -->', title);
                 //     toZip['index.html'] = strToU8(content);
                 // });
                 // loader.load('./src/libs/salinity.min.js', function(content) {
                 //     toZip['libs/salinity.min.js'] = strToU8(content);
-                // });
-                // loader.load('./src/libs/graphics/three.module.js', function(content) {
-                //     toZip['libs/three.module.js'] = strToU8(content);
                 // });
             });
         }

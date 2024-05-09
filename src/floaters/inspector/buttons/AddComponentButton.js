@@ -44,7 +44,7 @@ class AddComponentButton extends SUEY.Button {
                 const config = ComponentClass.config ?? {};
                 if (!config.multiple && entity.getComponent(type)) continue;
 
-                // FAMILY - Ex: [ 'Entity3D', 'World3D' ]
+                // FAMILY - Ex: [ 'Entity2D', 'World2D' ]
                 if (!config.family) continue;
                 const componentFamily = Array.isArray(config.family) ? config.family : [ config.family ];
                 const entityFamily = Array.isArray(entity.componentFamily()) ? entity.componentFamily() : [ entity.componentFamily() ];

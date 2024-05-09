@@ -46,9 +46,6 @@ AssetFloater extends SmartFloater: (Assets, Codex, Library, etc.)
         - Asset block split left / right when wide?
         - Move search box to title bar when over a certain width
 
-Engine:
-    - Improve Entity / Component
-
 /******************** FUTURE ********************/
 
 Floaters:
@@ -59,13 +56,13 @@ Floaters:
         - Multi-Select
             - Only show shared properties in inspector?
             - Resizing a group of selected objects
-    Game: Update 'Info' block to work with View2D
     Notepad: Global/Project scratchpads, save project scratchpad to Project
     Outliner: Scene2D, Entity2D, etc
     Player:
         - Debug Console, override console.log to capture?
         - QR Code to load on phone
         - Video screen capture? (https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API)
+    Project: Update 'Info' block to work with View2D
     Scripter:
         - Auto complete / Tern
             https://codemirror.net/try/?example=Custom%20completions
