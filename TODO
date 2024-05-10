@@ -3,9 +3,10 @@
 /**********************************************/
 
 Suey.Scene:
+    Helpers:
+        - Tooltip
     Controls:
         - CameraControls
-            - Add spacebar translating
             - Popup zoom level display
         - DragControls
         - SelectControls
