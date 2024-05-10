@@ -3,14 +3,13 @@
 /**********************************************/
 
 Suey.Scene:
+    ResizeTool:
+        - Show origin point during rotation
     Helpers:
         - Tooltip
-    Controls:
-        - CameraControls
-            - Popup zoom level display
-        - DragControls
-        - SelectControls
-    Selection:
+    CameraControls:
+        - Popup zoom level display
+    SelectCointrols:
         - Group
         - Rubberband selection
         - Resize group

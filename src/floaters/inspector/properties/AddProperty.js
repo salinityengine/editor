@@ -410,7 +410,7 @@ export function addProperty(propertyList, value, propKey, item, updateComponent 
         // Widget
         let stringBox;
         const rows = parseFloat(item['rows']);
-        if (!Number.isNaN(rows) && Number.isFinite(rows) && rows > 1) {
+        if (Number.isFinite(rows) && rows > 1) {
             stringBox = new SUEY.TextArea();
             stringBox.setStyle('min-width', '100%');
             stringBox.setStyle('min-height', 'var(--row-height)');

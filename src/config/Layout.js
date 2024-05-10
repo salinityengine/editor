@@ -310,7 +310,7 @@ class Layout {
                             window.addFloater(floater);
                             // Z-Index
                             const zIndex = parseFloat(childNode.zIndex);
-                            if (zIndex && !Number.isNaN(zIndex) && Number.isFinite(zIndex)) {
+                            if (Number.isFinite(zIndex)) {
                                 SUEY.Css.setVariable('--window-z-index', `${zIndex}`, window);
                             }
                         }
