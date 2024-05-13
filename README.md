@@ -1,10 +1,10 @@
 <div align="center">
-<img src="./files/logo/salinity256.png" alt="Salinity Engine"/>
+<img src="./files/logo/slide256.png" alt="Salinity Editor"/>
 </div>
 
-# Salinity Editor
+# Slide
 
-Easy to use, drag and drop editor for the [Salinity Engine](https://github.com/salinityengine/engine).
+The Salinity Editor. An easy to use, drag and drop editor for the [Salinity Engine](https://github.com/salinityengine/engine).
 
 <br />
 

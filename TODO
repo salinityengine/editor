@@ -4,6 +4,7 @@
 
 Suey.Scene:
     ResizeTool:
+        - New resize tool can resize multiple objects
         - Show origin point during rotation
     Helpers:
         - Tooltip
