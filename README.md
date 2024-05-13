@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./files/logo/slide256.png" alt="Salinity Editor"/>
+<img src="./files/logo/slide256.png" width="256px" height="256px" alt="Salinity Editor"/>
 </div>
 
 # Slide
