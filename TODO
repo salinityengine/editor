@@ -4,13 +4,12 @@
 
 Suey.Scene:
     ResizeTool:
-        - New resize tool can resize multiple objects
         - Show origin point during rotation
     Helpers:
         - Tooltip
     CameraControls:
         - Popup zoom level display
-    SelectCointrols:
+    SelectControls:
         - Group
         - Rubberband selection
         - Resize group
