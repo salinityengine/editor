@@ -59,7 +59,7 @@ class CameraProperties extends SUEY.Div {
                 canvas.width = canvas.height;
         }
         emptyBox.dom.appendChild(canvas);
-        const ctx = canvas.getContext('2d');
+        const context = canvas.getContext('2d');
 
         const outlineBox = new SUEY.Div().addClass('salt-app-outline');
         emptyBox.add(outlineBox);
@@ -113,9 +113,9 @@ class CameraProperties extends SUEY.Div {
             SALT.RenderUtils.offscreenRenderer(canvas.width, canvas.height).render(scene, tempCam);
             if (typeof tempCam.dispose === 'function') tempCam.dispose()
 
-            if (ctx) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(SALT.RenderUtils.offscreenRenderer().domElement, 0, 0, canvas.width, canvas.height);
+            if (context) {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(SALT.RenderUtils.offscreenRenderer().domElement, 0, 0, canvas.width, canvas.height);
             }
         }
 

@@ -66,10 +66,10 @@ class Shaper extends SmartFloater {
 
         // Clear Canvas
         const canvas = this.canvas.dom;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = _clr.set(SUEY.ColorScheme.color(SUEY.TRAIT.COMPLEMENT)).hexString();
-        ctx.lineWidth = 2;
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.strokeStyle = _clr.set(SUEY.ColorScheme.color(SUEY.TRAIT.COMPLEMENT)).hexString();
+        context.lineWidth = 2;
         if (!shape || shape.type !== 'Shape') return;
 
         // // SHAPE -> PATH (for drawing curve path, .lineTo, etc.) -> CURVEPATH -> CURVE
@@ -94,8 +94,8 @@ class Shaper extends SmartFloater {
         //             // aEndAngle = PI * 2
         //             // aClockwise = false
         //             // aRotation = 0
-        //             ctx.beginPath();
-        //             ctx.ellipse(
+        //             context.beginPath();
+        //             context.ellipse(
         //                 mapX(curve.aX),
         //                 mapY(curve.aY),
         //                 curve.xRadius * scale,
@@ -104,7 +104,7 @@ class Shaper extends SmartFloater {
         //                 curve.aStartAngle,
         //                 curve.aEndAngle,
         //                 !curve.aClockwise);
-        //             ctx.stroke();
+        //             context.stroke();
         //             break;
 
         //         case 'CubicBezierCurve':
@@ -112,29 +112,29 @@ class Shaper extends SmartFloater {
         //             // v1       Vector2     control point 1
         //             // v2       Vector2     control point 2
         //             // v3       Vector2     end point
-        //             ctx.beginPath();
-        //             ctx.moveTo(mapX(curve.v0.x), mapY(curve.v0.y));
-        //             ctx.bezierCurveTo(mapX(curve.v1.x), mapY(curve.v1.y), mapX(curve.v2.x), mapY(curve.v2.y), mapX(curve.v3.x), mapY(curve.v3.y));
-        //             ctx.stroke();
+        //             context.beginPath();
+        //             context.moveTo(mapX(curve.v0.x), mapY(curve.v0.y));
+        //             context.bezierCurveTo(mapX(curve.v1.x), mapY(curve.v1.y), mapX(curve.v2.x), mapY(curve.v2.y), mapX(curve.v3.x), mapY(curve.v3.y));
+        //             context.stroke();
         //             break;
 
         //         case 'LineCurve':
         //             // v1       Vector2     start point
         //             // v2       Vector2     end point
-        //             ctx.beginPath();
-        //             ctx.moveTo(mapX(curve.v1.x), mapY(curve.v1.y));
-        //             ctx.lineTo(mapX(curve.v2.x), mapY(curve.v2.y));
-        //             ctx.stroke();
+        //             context.beginPath();
+        //             context.moveTo(mapX(curve.v1.x), mapY(curve.v1.y));
+        //             context.lineTo(mapX(curve.v2.x), mapY(curve.v2.y));
+        //             context.stroke();
         //             break;
 
         //         case 'QuadraticBezierCurve':
         //             // v0       Vector2     start point
         //             // v1       Vector2     control point
         //             // v2       Vector2     end point
-        //             ctx.beginPath();
-        //             ctx.moveTo(mapX(curve.v0.x), mapY(curve.v0.y));
-        //             ctx.quadraticCurveTo(mapX(curve.v1.x), mapY(curve.v1.y), mapX(curve.v2.x), mapY(curve.v2.y));
-        //             ctx.stroke();
+        //             context.beginPath();
+        //             context.moveTo(mapX(curve.v0.x), mapY(curve.v0.y));
+        //             context.quadraticCurveTo(mapX(curve.v1.x), mapY(curve.v1.y), mapX(curve.v2.x), mapY(curve.v2.y));
+        //             context.stroke();
         //             break;
 
         //         case 'SplineCurve':

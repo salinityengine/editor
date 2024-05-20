@@ -11,8 +11,8 @@ class CanvasUtils {
     static drawPalette(canvas, palette) {
         if (!palette || !palette.isPalette || !Array.isArray(palette.colors)) return;
 
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
 
         const numColors = palette.colors.length;
         const rowSize = Math.ceil(Math.sqrt(numColors));
@@ -24,8 +24,8 @@ class CanvasUtils {
             for (let x = 0; x < rowSize; x++) {
                 if (index < numColors) {
                     _color.set(palette.colors[index]);
-                    ctx.fillStyle = _color.hexString();
-                    ctx.fillRect(x * cellX, y * cellY, cellX, cellY);
+                    context.fillStyle = _color.hexString();
+                    context.fillRect(x * cellX, y * cellY, cellX, cellY);
                 }
                 index++;
             }
