@@ -3,21 +3,19 @@
 /**********************************************/
 
 Suey.Scene:
+    Objects:
+        - Image
+            - Transparent image can show as pattern? Use masks?
+            - Don't rubber band intersect with transparent images?
+        - DOM
+        - Pattern
+        - Rounded Box
     ResizeTool:
-        - Show origin point during rotation
+        - Improve origin points?
     Helpers:
         - Tooltip
     CameraControls:
         - Popup zoom level display
-    SelectControls:
-        - Group
-        - Rubberband selection
-        - Resize group
-    Objects:
-        - Image
-        - DOM
-        - Pattern
-        - Rounded Box
     Styles:
         - Pattern
     Grid:
@@ -27,6 +25,10 @@ Suey.Scene:
         - 'selection'
         - 'remove-object'
         - 'add-object'
+
+Object2D:
+    - copy / clone
+    - toJSON / fromJSON
 
 View2D:
     Editor:

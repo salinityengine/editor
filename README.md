@@ -4,7 +4,7 @@
 
 # Slide
 
-The Salinity Editor. An easy to use, drag and drop editor for the [Salinity Engine](https://github.com/salinityengine/engine).
+The Salinity (IDE) Editor, an easy to use drag and drop editor for the [Salinity Engine](https://github.com/salinityengine/engine).
 
 <br />
 
