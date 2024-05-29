@@ -294,23 +294,6 @@
 .suey-toolbar-button.suey-selected #tb-snap-grid { z-index: 1; }
 .suey-toolbar-button:enabled:hover #tb-snap-grid { animation: sliding 0.7s ease-in-out; }
 
-/* Snap (Resize to Grid) */
-
-#tb-snap-square,
-#tb-snap-circle {
-    transform-origin: 45% 55%; /* specific x-offset | y-offset */
-    transition: transform 0.2s ease-out;
-}
-#tb-snap-square { transform: scale(0.0); }
-#tb-snap-circle { transform: scale(1.0); }
-.suey-toolbar-button.suey-selected #tb-snap-square { transform: scale(1.0); transition-duration: 0.2s; }
-.suey-toolbar-button.suey-selected #tb-snap-circle { transform: scale(0.0); transition-duration: 0.2s; }
-
-#tb-snap-corner {
-    animation-fill-mode: forwards;
-}
-.suey-toolbar-button:enabled:hover #tb-snap-corner { animation: rattle 0.5s; }
-
 /* Snap (Snap to Grid) */
 
 #tb-snap-attract {

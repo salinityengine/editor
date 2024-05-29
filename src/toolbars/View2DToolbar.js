@@ -35,7 +35,6 @@ class View2DToolbar {
 
         // Grid
         const gridTop = new SUEY.ToolbarButton(null, 'left');
-        const gridResize = new SUEY.ToolbarButton(null, 'middle');
         const gridSnap = new SUEY.ToolbarButton(null, 'right');
 
         /******************** TOOLTIPS */
@@ -58,7 +57,6 @@ class View2DToolbar {
 
         // Grid
         gridTop.setAttribute('tooltip', Config.tooltip('Grid on Top?'));
-        gridResize.setAttribute('tooltip', Config.tooltip('Resize to Grid?'));
         gridSnap.setAttribute('tooltip', Config.tooltip('Snap to Grid?', 'g'));
 
         /******************** ADVISOR */
@@ -81,7 +79,6 @@ class View2DToolbar {
 
         // Grid
         Advice.attach(gridTop, 'toolbar/grid/top');
-        Advice.attach(gridResize, 'toolbar/grid/resize');
         Advice.attach(gridSnap, 'toolbar/grid/snap');
 
         /******************** MOUSE MODES */
@@ -314,11 +311,6 @@ class View2DToolbar {
         const snapObject = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-object.svg`).setID('tb-snap-object');
         gridTop.add(snapGrid, snapObject);
 
-        const snapCorner = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-corner.svg`).setID('tb-snap-corner');
-        const snapSquare = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-square.svg`).setID('tb-snap-square');
-        const snapCircle = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-circle.svg`).setID('tb-snap-circle');
-        gridResize.add(snapCorner, snapSquare, snapCircle);
-
         const snapMagnet = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-magnet.svg`).setID('tb-snap-magnet');
         const snapAttract = new SUEY.VectorBox(`${FOLDER_TOOLBAR}snap-attract.svg`).setID('tb-snap-attract');
         gridSnap.add(snapMagnet, snapAttract);
@@ -326,12 +318,6 @@ class View2DToolbar {
         gridTop.onPress(() => {
             const ontop = !Config.getKey('viewport/grid/ontop');
             Config.setKey('viewport/grid/ontop', ontop);
-            Signals.dispatch('gridChanged');
-        });
-
-        gridResize.onPress(() => {
-            const resizeto = !Config.getKey('view2d/grid/resize');
-            Config.setKey('view2d/grid/resize', resizeto);
             Signals.dispatch('gridChanged');
         });
 
@@ -343,7 +329,6 @@ class View2DToolbar {
 
         Signals.connect(view2d, 'gridChanged', () => {
             gridTop.wantsClass('suey-selected', Config.getKey('viewport/grid/ontop'));
-            gridResize.wantsClass('suey-selected', Config.getKey('view2d/grid/resize'));
             gridSnap.wantsClass('suey-selected', Config.getKey('viewport/grid/snap'));
         })
 
@@ -355,7 +340,7 @@ class View2DToolbar {
         buttons.push(new SUEY.FlexSpacer());
         buttons.push(arrange, transform, new SUEY.ToolbarSeparator(), views);
         buttons.push(new SUEY.FlexSpacer());
-        buttons.push(gridTop, gridResize, gridSnap);
+        buttons.push(gridTop, gridSnap);
         buttons.push(new SUEY.FlexSpacer());
         this.buttons = buttons;
 

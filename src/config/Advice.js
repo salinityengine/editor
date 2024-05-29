@@ -86,7 +86,6 @@ const _values = {
 
         // Toolbar, Grid
         'toolbar/grid/top':                 { title: 'Grid on Top?', html: `Show grid on top of objects?` },
-        'toolbar/grid/resize':              { title: 'Resize to Grid?', html: `When rotation matches grid angle, resize tool will snap corners to grid.` },
         'toolbar/grid/snap':                { title: 'Snap to Grid?', html: `During tranlation, should objects snap to align with grid?` },
 
         // Toolbar, Settings

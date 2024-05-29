@@ -46,7 +46,6 @@ const DEFAULT_SETTINGS = {
     /***** 2D Viewport *****/
 
     'view2d/grid/ontop':                        false,              // Show grid on top of objects?
-    'view2d/grid/resize':                       true,               // Resize to grid?
     'view2d/grid/show':                         true,               // Show grid in Scene Editor 2D?
     'view2d/grid/sizeX':                        10,                 // Grid size X
     'view2d/grid/sizeY':                        10,                 // Grid size Y

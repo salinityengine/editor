@@ -2,25 +2,23 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Suey.Scene:
-    Objects:
-        - Image
-            - Transparent image can show as pattern? Use masks?
-            - Don't rubber band intersect with transparent images?
-        - DOM
-        - Pattern
-        - Rounded Box
-    ResizeTool:
-        - Improve origin points?
-    Helpers:
-        - Tooltip
-    CameraControls:
-        - Popup zoom level display
+Engine:
+    - Max / min zoom
+    ResizeHelper:
+        - On rotate, snap rotation to grid
+        - On rotate, draw rotate angle
+        - On drag, draw center cross aligned with grid
+        - Implement shift/ctrl keys (uniform resizing)
     Styles:
         - Pattern
-    Grid:
-        - Draw grid
-        - Snap to grid
+    Objects:
+        - Sprite
+            - Transparent image can show as pattern? Use masks?
+            - Don't rubber band intersect with transparent images?
+            - Animation
+        - Pattern
+    RubberBandBox:
+        - Per-pixel collision
     Events:
         - 'selection'
         - 'remove-object'
