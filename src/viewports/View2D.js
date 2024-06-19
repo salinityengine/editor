@@ -41,6 +41,7 @@ class View2D extends AbstractView {
 
         // Objects
         this.camera = null;
+        this.grid = null;
 
         // Controls
         this.rubberBandBox = null;
@@ -60,6 +61,70 @@ class View2D extends AbstractView {
         this.on('pointerup', (event) => viewportPointerUp(self, event));
         this.on('keydown', (event) => viewportKeyDown(self, event));
         this.on('keyup', (event) => viewportKeyUp(self, event));
+
+        /***** SCENE */
+
+        console.log('Creating 2D Viewport!');
+
+        const scene = new SALT.Object2D();
+
+        const center = new SALT.Circle(10);
+        center.setPosition(0, 0);
+        center.fillStyle.color = '#ff00ff';
+        center.draggable = false;
+        center.selectable = false;
+        scene.add(center);
+
+        const rainbowBox = new SALT.Box();
+        rainbowBox.setPosition(-100, 200);
+        rainbowBox.radius = 25;
+        rainbowBox.fillStyle = new SALT.LinearGradientStyle();
+        rainbowBox.fillStyle.start.set(-50, -50);
+        rainbowBox.fillStyle.end.set(50, 50);
+        rainbowBox.fillStyle.addColorStop(0, '#ff0000');
+        rainbowBox.fillStyle.addColorStop(0.5, '#00ff00');
+        rainbowBox.fillStyle.addColorStop(1, '#0000ff');
+        scene.add(rainbowBox);
+
+        // Renderer
+        const renderer = new SALT.Renderer({ width: window.innerWidth, height: window.innerHeight });
+        // const container = document.getElementById('container');
+        // container.appendChild(renderer.dom);
+        this.add(renderer.dom);
+
+        // Camera
+        this.camera = new SALT.Camera2D();
+
+        // Camera Controls
+        const cameraControls = new SALT.CameraControls(this.camera);
+        renderer.addUpdate(cameraControls);
+
+        // Select Controls
+        const selectControls = new SALT.SelectControls();
+        renderer.addUpdate(selectControls);
+
+        // Grid Helper
+        this.grid = new SALT.GridHelper();
+        scene.add(this.grid);
+
+        function updateGridSettings() {
+            self.grid.visible = Config.getKey('view2d/grid/show');
+            self.grid.onTop = Config.getKey('viewport/grid/ontop');
+            self.grid.snap = Config.getKey('viewport/grid/snap');
+            self.grid.gridX = Math.max(Config.getKey('view2d/grid/sizeX'), 1);
+            self.grid.gridY = Math.max(Config.getKey('view2d/grid/sizeY'), 1);
+            self.grid.scale.x = Math.max(Config.getKey('view2d/grid/scaleX'), 0.1);
+            self.grid.scale.y = Math.max(Config.getKey('view2d/grid/scaleY'), 0.1);
+            self.grid.rotation = Config.getKey('view2d/grid/rotate') * (Math.PI / 180);
+        }
+        updateGridSettings();
+        Signals.connect(this, 'gridChanged', updateGridSettings);
+
+        // Start
+        const debug = new SALT.Debug();
+        const onBeforeRender = () => { debug.startFrame(renderer); };
+        const onAfterRender = () => { debug.endFrame(renderer); };
+        renderer.start(scene, this.camera, onBeforeRender, onAfterRender);
 
     }
 

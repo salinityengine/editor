@@ -41,20 +41,58 @@ class View2DGridBlock extends SmartShrinker {
         props.addRow('Show Grid', showGrid, new SUEY.FlexSpacer(), showGridShortcut);
 
         // Grid Size
-        const gridSizeBox = new SUEY.NumberBox();
-        gridSizeBox.setPrecision(3).setRange(0.00, 100).setStep(0.01);
-        gridSizeBox.on('change', () => {
-            Config.setKey('view2d/grid/sizeX', gridSizeBox.getValue());
+        const gridSizeX = new SUEY.NumberBox();
+        gridSizeX.setPrecision(3).setRange(0, 100).setStep(5);
+        gridSizeX.on('change', () => {
+            Config.setKey('view2d/grid/sizeX', gridSizeX.getValue());
             Signals.dispatch('gridChanged');
         });
-        props.addRow('Grid Size', gridSizeBox);
+        const gridSizeY = new SUEY.NumberBox();
+        gridSizeY.setPrecision(3).setRange(0, 100).setStep(5);
+        gridSizeY.on('change', () => {
+            Config.setKey('view2d/grid/sizeY', gridSizeY.getValue());
+            Signals.dispatch('gridChanged');
+        });
+        gridSizeX.setStyle('color', 'rgb(var(--triadic1))');
+        gridSizeY.setStyle('color', 'rgb(var(--triadic2))');
+        props.addRow('Grid Size', gridSizeX, gridSizeY);
+
+        // Grid Scale
+        const gridScaleX = new SUEY.NumberBox();
+        gridScaleX.setPrecision(1).setRange(0, 10).setStep(0.2);
+        gridScaleX.on('change', () => {
+            Config.setKey('view2d/grid/scaleX', gridScaleX.getValue());
+            Signals.dispatch('gridChanged');
+        });
+        const gridScaleY = new SUEY.NumberBox();
+        gridScaleY.setPrecision(1).setRange(0, 10).setStep(0.2);
+        gridScaleY.on('change', () => {
+            Config.setKey('view2d/grid/scaleY', gridScaleY.getValue());
+            Signals.dispatch('gridChanged');
+        });
+        props.addRow('Grid Scale X', gridScaleX, gridScaleY);
+
+        // Grid Scale
+        const gridRotate = new SUEY.Slider();
+        gridRotate.setPrecision(1).setRange(0, 360).setStep(5);
+        function updateGridRotation() {
+            Config.setKey('view2d/grid/rotate', gridRotate.getValue());
+            Signals.dispatch('gridChanged');
+        }
+        gridRotate.on('input', updateGridRotation);
+        gridRotate.on('wheel', updateGridRotation);
+        props.addRow('Grid Rotation', gridRotate);
 
         /***** UPDATE *****/
 
         function updateUI() {
             snapGrid.setValue(Config.getKey('viewport/grid/snap'));
-            gridSizeBox.setValue(Config.getKey('view2d/grid/sizeX'));
             showGrid.setValue(Config.getKey('view2d/grid/show'));
+            gridSizeX.setValue(Config.getKey('view2d/grid/sizeX'));
+            gridSizeY.setValue(Config.getKey('view2d/grid/sizeY'));
+            gridScaleX.setValue(Config.getKey('view2d/grid/scaleX'));
+            gridScaleY.setValue(Config.getKey('view2d/grid/scaleY'));
+            gridRotate.setValue(Config.getKey('view2d/grid/rotate'));
         }
 
         /***** SIGNALS *****/

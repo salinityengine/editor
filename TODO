@@ -2,34 +2,16 @@
 /*                    TO DO                   */
 /**********************************************/
 
-Engine:
-    - Max / min zoom
-    ResizeHelper:
-        - On rotate, snap rotation to grid
-        - On rotate, draw rotate angle
-        - On drag, draw center cross aligned with grid
-        - Implement shift/ctrl keys (uniform resizing)
-    Styles:
-        - Pattern
-    Objects:
-        - Sprite
-            - Transparent image can show as pattern? Use masks?
-            - Don't rubber band intersect with transparent images?
-            - Animation
-        - Pattern
-    RubberBandBox:
-        - Per-pixel collision
-    Events:
-        - 'selection'
-        - 'remove-object'
-        - 'add-object'
-
-Object2D:
-    - copy / clone
-    - toJSON / fromJSON
+Entity:
+    - Build from Object2D
+    - Update Stage / World
 
 View2D:
     Editor:
+        - Incorporate new engine into 2D World
+            - Finish adding 'Grid' settings
+                - Make suey control 'SlideBox' that has slider + number box (for scale)
+            - Focus toolbar button
         - Duplication (WASD keyboard controls)
         - Rotate / Flip
     Scenes:
@@ -37,6 +19,20 @@ View2D:
         - Multiple scene flipping, drop down select list?
         - Stage List
         - Arrange / Connections
+
+Engine:
+    Objects:
+        - Sprite
+            - Animation
+        - BezierCurves (Quadratic, Cubic)
+    RubberBandBox:
+        - Per-pixel collision
+    Events:
+        - 'selection'
+        - 'remove-object'
+        - 'add-object'
+    Changes:
+        - WebGL backend?
 
 AssetFloater extends SmartFloater: (Assets, Codex, Library, etc.)
     - Inherit from same base class 'AssetFloater'

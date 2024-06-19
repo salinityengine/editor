@@ -330,7 +330,7 @@ class View2DToolbar {
         Signals.connect(view2d, 'gridChanged', () => {
             gridTop.wantsClass('suey-selected', Config.getKey('viewport/grid/ontop'));
             gridSnap.wantsClass('suey-selected', Config.getKey('viewport/grid/snap'));
-        })
+        });
 
         /******************** ADD TO TOOLBAR */
 

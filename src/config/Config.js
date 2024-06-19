@@ -45,10 +45,12 @@ const DEFAULT_SETTINGS = {
 
     /***** 2D Viewport *****/
 
-    'view2d/grid/ontop':                        false,              // Show grid on top of objects?
     'view2d/grid/show':                         true,               // Show grid in Scene Editor 2D?
+    'view2d/grid/ontop':                        false,              // Show grid on top of objects?
     'view2d/grid/sizeX':                        10,                 // Grid size X
     'view2d/grid/sizeY':                        10,                 // Grid size Y
+    'view2d/grid/scaleX':                       1,                  // Grid scale X
+    'view2d/grid/scaleY':                       1,                  // Grid scale Y
     'view2d/grid/rotate':                       0,                  // Grid rotation, in degrees
 
     /***** 3D Viewport *****/
