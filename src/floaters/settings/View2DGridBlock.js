@@ -58,29 +58,29 @@ class View2DGridBlock extends SmartShrinker {
         props.addRow('Grid Size', gridSizeX, gridSizeY);
 
         // Grid Scale
-        const gridScaleX = new SUEY.NumberBox();
-        gridScaleX.setPrecision(1).setRange(0, 10).setStep(0.2);
+        const gridScaleX = new SUEY.SliderBox();
+        gridScaleX.setPrecision(1).setRange(0, 5).setStep(0.2);
         gridScaleX.on('change', () => {
             Config.setKey('view2d/grid/scaleX', gridScaleX.getValue());
             Signals.dispatch('gridChanged');
         });
-        const gridScaleY = new SUEY.NumberBox();
-        gridScaleY.setPrecision(1).setRange(0, 10).setStep(0.2);
+        const gridScaleY = new SUEY.SliderBox();
+        gridScaleY.setPrecision(1).setRange(0, 5).setStep(0.2);
         gridScaleY.on('change', () => {
             Config.setKey('view2d/grid/scaleY', gridScaleY.getValue());
             Signals.dispatch('gridChanged');
         });
-        props.addRow('Grid Scale X', gridScaleX, gridScaleY);
+        props.addRow('Grid Scale X', gridScaleX);
+        props.addRow('Grid Scale Y', gridScaleY);
 
         // Grid Scale
-        const gridRotate = new SUEY.Slider();
-        gridRotate.setPrecision(1).setRange(0, 360).setStep(5);
+        const gridRotate = new SUEY.SliderBox(0);
+        gridRotate.setPrecision(1).setRange(0, 360).setStep(5).setUnit('°');
         function updateGridRotation() {
             Config.setKey('view2d/grid/rotate', gridRotate.getValue());
             Signals.dispatch('gridChanged');
         }
-        gridRotate.on('input', updateGridRotation);
-        gridRotate.on('wheel', updateGridRotation);
+        gridRotate.on('change', updateGridRotation);
         props.addRow('Grid Rotation', gridRotate);
 
         /***** UPDATE *****/
