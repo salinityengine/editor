@@ -39,13 +39,6 @@ class View2D extends AbstractView {
         // Toolbar
         this.toolbar = new View2DToolbar(this);
 
-        // Objects
-        this.camera = null;
-        this.grid = null;
-
-        // Controls
-        this.rubberBandBox = null;
-
         // Input
         this.mouseMode = MOUSE_MODES.SELECT;                    // left mouse button mode
         this.mouseState = MOUSE_STATES.NONE;                    // current mouse state
@@ -54,7 +47,7 @@ class View2D extends AbstractView {
         this.startSelection = [];                               // stores starting selection when mouse down with shift/ctrl
         this.dragStarted = false;                               // true when mouse has moved enough to start 'dragging'
 
-        /******************** EVENTS ********************/
+        /***** EVENTS *****/
 
         this.on('pointerdown', (event) => viewportPointerDown(self, event));
         this.on('pointermove', (event) => viewportPointerMove(self, event));
@@ -62,18 +55,9 @@ class View2D extends AbstractView {
         this.on('keydown', (event) => viewportKeyDown(self, event));
         this.on('keyup', (event) => viewportKeyUp(self, event));
 
-        /***** SCENE */
-
-        console.log('Creating 2D Viewport!');
+        /***** SCENE *****/
 
         const scene = new SALT.Object2D();
-
-        const center = new SALT.Circle(10);
-        center.setPosition(0, 0);
-        center.fillStyle.color = '#ff00ff';
-        center.draggable = false;
-        center.selectable = false;
-        scene.add(center);
 
         const rainbowBox = new SALT.Box();
         rainbowBox.setPosition(-100, 200);
@@ -88,15 +72,13 @@ class View2D extends AbstractView {
 
         // Renderer
         const renderer = new SALT.Renderer({ width: window.innerWidth, height: window.innerHeight });
-        // const container = document.getElementById('container');
-        // container.appendChild(renderer.dom);
         this.add(renderer.dom);
 
         // Camera
-        this.camera = new SALT.Camera2D();
+        const camera = new SALT.Camera2D();
 
         // Camera Controls
-        const cameraControls = new SALT.CameraControls(this.camera);
+        const cameraControls = new SALT.CameraControls(camera);
         renderer.addUpdate(cameraControls);
 
         // Select Controls
@@ -104,28 +86,52 @@ class View2D extends AbstractView {
         renderer.addUpdate(selectControls);
 
         // Grid Helper
-        this.grid = new SALT.GridHelper();
-        scene.add(this.grid);
+        const grid = new SALT.GridHelper();
+        scene.add(grid);
+
+        // Origin Helper
+        const originHelper = new SALT.OriginHelper();
+        scene.add(originHelper);
+
+        // Tooltip Helper
+        const tooltip = new SALT.TooltipHelper(true /* sceneTips? */);
+        scene.add(tooltip);
 
         function updateGridSettings() {
-            self.grid.visible = Config.getKey('view2d/grid/show');
-            self.grid.onTop = Config.getKey('viewport/grid/ontop');
-            self.grid.snap = Config.getKey('viewport/grid/snap');
-            self.grid.gridX = Math.max(Config.getKey('view2d/grid/sizeX'), 1);
-            self.grid.gridY = Math.max(Config.getKey('view2d/grid/sizeY'), 1);
-            self.grid.scale.x = Math.max(Config.getKey('view2d/grid/scaleX'), 0.1);
-            self.grid.scale.y = Math.max(Config.getKey('view2d/grid/scaleY'), 0.1);
-            self.grid.rotation = Config.getKey('view2d/grid/rotate') * (Math.PI / 180);
+            grid.visible = Config.getKey('view2d/grid/show');
+            grid.onTop = Config.getKey('viewport/grid/ontop');
+            grid.snap = Config.getKey('viewport/grid/snap');
+            grid.gridX = Math.max(Config.getKey('view2d/grid/sizeX'), 1);
+            grid.gridY = Math.max(Config.getKey('view2d/grid/sizeY'), 1);
+            grid.scale.x = Math.max(Config.getKey('view2d/grid/scaleX'), 0.1);
+            grid.scale.y = Math.max(Config.getKey('view2d/grid/scaleY'), 0.1);
+            grid.rotation = Config.getKey('view2d/grid/rotate') * (Math.PI / 180);
         }
         updateGridSettings();
         Signals.connect(this, 'gridChanged', updateGridSettings);
 
-        // Start
+        /***** SIGNALS *****/
+
+        Signals.connect(this, 'schemeChanged', () => {
+            renderer.refreshColors();
+        });
+
+        /***** REFERENCE *****/
+
+        this.renderer = renderer;
+        this.camera = camera;
+        this.cameraControls = cameraControls;
+        this.selectControls = selectControls;
+        this.grid = grid;
+        this.originHelper = originHelper;
+        this.tooltip = tooltip;
+
+        /***** START *****/
+
         const debug = new SALT.Debug();
         const onBeforeRender = () => { debug.startFrame(renderer); };
         const onAfterRender = () => { debug.endFrame(renderer); };
         renderer.start(scene, this.camera, onBeforeRender, onAfterRender);
-
     }
 
     /******************** CLIPBOARD / EDIT ********************/
@@ -158,22 +164,25 @@ class View2D extends AbstractView {
     /******************** VIEW ********************/
 
     cameraFocus() {
-        //
-        // TODO
-        //
+        if (this.cameraControls) {
+            if (this.selectControls && this.selectControls.resizeHelper) {
+                this.cameraControls.focusCamera(this.renderer, this.selectControls.resizeHelper);
+            } else {
+                this.cameraControls.focusCamera(this.renderer, this.renderer.scene);
+            }
+        }
     }
 
     cameraReset(animate = true) {
-        //
-        // TODO
-        //
+        if (this.cameraControls) {
+            this.cameraControls.focusCamera(this.renderer, null, (animate) ? 200 : 0);
+        }
     }
 
     gridSize() {
-        //
-        // TODO
-        //
-        return 0;
+        const gridX = Math.max(Config.getKey('view2d/grid/sizeX'), 1);
+        const gridY = Math.max(Config.getKey('view2d/grid/sizeY'), 1);
+        return Math.min(gridX, gridY);
     }
 
 }

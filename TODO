@@ -9,9 +9,9 @@ Entity:
 View2D:
     Editor:
         - Incorporate new engine into 2D World
-            - Finish adding 'Grid' settings
-                - Make suey control 'SlideBox' that has slider + number box (for scale)
-            - Focus toolbar button
+            - Outliner
+            - Selection
+            - Inspector
         - Duplication (WASD keyboard controls)
         - Rotate / Flip
     Scenes:

@@ -44,7 +44,7 @@ class AbstractView extends SUEY.Div {
 
         Signals.connect(this, 'projectLoaded', () => {
             self.setWorld(null);
-            self.cameraReset(false /* animater? */);
+            self.cameraReset(false /* animate? */);
         });
     }
 
