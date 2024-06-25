@@ -399,6 +399,8 @@ class Outliner extends SmartFloater {
                 return option;
             }
 
+            console.log('Outliner', editor.viewport(), editor.viewport().getWorld());
+
             const viewWorld = editor.viewport().getWorld();
             if (!viewWorld || !viewWorld.isEntity) return treeList.setOptions([ emptyOption() ]);
             const viewStageUUID = (viewWorld && viewWorld.isWorld) ? viewWorld.activeStage().uuid : -1;
@@ -505,20 +507,12 @@ class Outliner extends SmartFloater {
         Signals.connect(this, 'assetRemoved', rebuildOnAssetChange);
         Signals.connect(this, 'promodeChanged', rebuildTree);
         Signals.connect(this, 'sceneGraphChanged', rebuildTree);
+        Signals.connect(this, 'stageChanged', rebuildTree);
 
         Signals.connect(this, 'entityChanged', (entity) => {
             //
             // TODO: Update entity (script icon, etc)
             //
-        });
-
-        Signals.connect(this, 'stageChanged', () => {
-            const viewWorld = editor.viewport().getWorld();
-            const viewStageUUID = viewWorld?.activeStage()?.uuid ?? -1;
-            for (const div of treeList.options) {
-                if (div.value == viewStageUUID) div.classList.add('outliner-active-stage');
-                else div.classList.remove('outliner-active-stage');
-            }
         });
 
         Signals.connect(this, 'selectionChanged', () => {

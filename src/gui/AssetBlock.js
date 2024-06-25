@@ -268,9 +268,6 @@ class AssetBlock extends SUEY.Shrinkable {
             } else if (this.type === 'palette') {
                 canvas.style['border-radius'] = 'var(--radius-small)';
                 CanvasUtils.drawPalette(canvas, asset /* palette */);
-
-                console.log('Drawing palette');
-
             } else if (this.type === 'shape') {
                 // const renderHexColor = 0xff00ff; // SUEY.ColorScheme.color(SUEY.TRAIT.TRIADIC1);
                 // const shapeGeometry = new THREE.ShapeGeometry(asset /* shape */);

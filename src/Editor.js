@@ -127,8 +127,14 @@ class Editor extends SUEY.MainWindow {
         }
 
         if (loaded) {
-            Signals.dispatch('sceneGraphChanged');                  // rebuild outliner
             Signals.dispatch('projectLoaded');                      // alert floaters
+            Signals.dispatch('sceneGraphChanged');                  // rebuild outliner
+
+            if (demo) {
+                const selectWorld = this.project.activeWorld();
+                this.viewport(CONSTANTS.EDITOR_MODES.WORLD_2D).setWorld(selectWorld);
+                Signals.dispatch('stageChanged');
+            }
         }
     }
 

@@ -137,6 +137,38 @@ class Worlds extends AbstractView {
             }
         }
 
+        function selectNodes() {
+            // Find Viewport Worlds
+            const viewWorlds = [];
+            for (const viewport of editor.viewports) {
+                const world = viewport.getWorld();
+                if (world && world.isWorld) viewWorlds.push(world.uuid);
+            }
+
+            // Run through World Graph Nodes
+            for (const node of graph.getNodes()) {
+                if (!node.world || !node.world.isWorld) continue;
+
+                // World is Selected
+                const selected = SALT.ArrayUtils.includesThing(node.world, editor.selected);
+                if (selected) {
+                    if (!node.hasClass('suey-node-selected')) {
+                        const nodes = graph.getNodes();
+                        if (node.zIndex !== nodes.length) {
+                            nodes.forEach(node => node.setStyle('zIndex', `${node.zIndex - 1}`));
+                            node.setStyle('zIndex', nodes.length);
+                        }
+                        node.addClass('suey-node-selected');
+                    }
+                } else {
+                    node.removeClass('suey-node-selected');
+                }
+
+                // World is Selected in a Viewport
+                node.wantsClass('suey-node-displayed', viewWorlds.includes(node.world.uuid));
+            }
+        }
+
         // Update Node Location
         function updateNode(node) {
             node.setStyle(
@@ -220,40 +252,14 @@ class Worlds extends AbstractView {
 
         // Selection Changed
         Signals.connect(this, 'selectionChanged', () => {
-            if (!self.isActive) return;
+            if (self.isActive) refreshNodes();
+            selectNodes();
+        });
 
-            // Refresh
+        // Stage Changed
+        Signals.connect(this, 'stageChanged', () => {
             refreshNodes();
-
-            // Find Viewport Worlds
-            const viewWorlds = [];
-            for (const viewport of editor.viewports) {
-                const world = viewport.getWorld();
-                if (world && world.isWorld) viewWorlds.push(world.uuid);
-            }
-
-            // Run through World Graph Nodes
-            for (const node of graph.getNodes()) {
-                if (!node.world || !node.world.isWorld) continue;
-
-                // World is Selected
-                const selected = SALT.ArrayUtils.includesThing(node.world, editor.selected);
-                if (selected) {
-                    if (!node.hasClass('suey-node-selected')) {
-                        const nodes = graph.getNodes();
-                        if (node.zIndex !== nodes.length) {
-                            nodes.forEach(node => node.setStyle('zIndex', `${node.zIndex - 1}`));
-                            node.setStyle('zIndex', nodes.length);
-                        }
-                        node.addClass('suey-node-selected');
-                    }
-                } else {
-                    node.removeClass('suey-node-selected');
-                }
-
-                // World is Selected in a Viewport
-                node.wantsClass('suey-node-displayed', viewWorlds.includes(node.world.uuid));
-            }
+            selectNodes();
         });
 
         // Entity Changed
