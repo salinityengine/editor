@@ -118,7 +118,7 @@ class Editor extends SUEY.MainWindow {
         let loaded = false;
         if (demo) {
             this.selectThings(/* none */);
-            // loadDemoProject(this.project);
+            loadDemoProject(this.project);
             loaded = true;
         } else if (json) {
             this.selectThings(/* none */);

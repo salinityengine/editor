@@ -1,8 +1,10 @@
 import {
     FOLDER_FLOATERS,
+    FOLDER_TYPES,
 } from 'constants';
 import * as SALT from 'salt';
 import * as SUEY from 'suey';
+import { SmartShrinker } from '../../gui/SmartShrinker.js';
 
 import { CameraProperties } from './properties/CameraProperties.js';
 import { ComponentProperties } from './properties/ComponentProperties.js';
@@ -15,7 +17,7 @@ import { AddComponentButton } from './buttons/AddComponentButton.js';
 import { EntitySettingsButton } from './buttons/EntitySettingsButton.js';
 import { PropertyGroup } from '../../gui/PropertyGroup.js';
 
-class EntityTab extends SUEY.Titled {
+class EntityBlock extends SmartShrinker {
 
     static entityTypeName(entity) {
         if (entity.isWorld) return 'World';
@@ -24,12 +26,17 @@ class EntityTab extends SUEY.Titled {
         else if (entity.isLight) return String(entity.type).replace('Light', '');
         else if (entity.isCamera) return String(entity.type).replace('Camera', '');
         else if (entity.isEntity) return 'Entity';
-        else console.warn(`EntityTab.entityTypeName(): Unknown entity type.`);
+        else console.warn(`EntityBlock.entityTypeName(): Unknown entity type.`);
         return 'Unknown';
     }
 
     constructor(entity) {
-        super({ title: EntityTab.entityTypeName(entity) });
+        const icon = `${FOLDER_TYPES}entity/entity.svg`; // color = '#D8007F'
+        super({
+            title: EntityBlock.entityTypeName(entity),
+            icon, arrow: 'right', border: true,
+            defaultExpanded: true,
+        });
 
         // Style 'Prefab'
         if (entity.isPrefab) {
@@ -38,11 +45,11 @@ class EntityTab extends SUEY.Titled {
 
         /********** HEADER BUTTONS */
 
-        const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)');
-        buttonRow.add(new SUEY.FlexSpacer());
-        buttonRow.add(new EntitySettingsButton(entity));
-        buttonRow.add(new AddComponentButton(entity));
-        this.tabTitle.add(buttonRow);
+        // const buttonRow = new SUEY.AbsoluteBox().setStyle('padding', '0 var(--pad-large)');
+        // buttonRow.add(new SUEY.FlexSpacer());
+        // buttonRow.add(new EntitySettingsButton(entity));
+        // buttonRow.add(new AddComponentButton(entity));
+        // this.tabTitle.add(buttonRow);
 
         /********** PROPERTY BOXES */
 
@@ -60,4 +67,4 @@ class EntityTab extends SUEY.Titled {
 
 }
 
-export { EntityTab };
+export { EntityBlock };

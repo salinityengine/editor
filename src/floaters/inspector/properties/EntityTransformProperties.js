@@ -10,7 +10,7 @@ import * as SUEY from 'suey';
 import { Config } from '../../../config/Config.js';
 import { Language } from '../../../config/Language.js';
 import { PropertyGroup } from '../../../gui/PropertyGroup.js';
-import { SceneUtils } from '../../../viewport/SceneUtils.js';
+// import { SceneUtils } from '../../../viewport/SceneUtils.js';
 import { Signals } from '../../../config/Signals.js';
 
 import { MultiCmdsCommand } from '../../../commands/CommandList.js';
@@ -30,8 +30,8 @@ class EntityTransformProperties extends SUEY.Div {
         this.addClass('salt-property-panel');
 
         // Scoped Variables
-        const entitySize = new THREE.Vector3();
-        const identitySize = new THREE.Vector3();
+        const entitySize = new SALT.Vector3();
+        const identitySize = new SALT.Vector3();
 
         /******************** TRANSFORM */
 
@@ -219,10 +219,10 @@ class EntityTransformProperties extends SUEY.Div {
 
         /***** UPDATE OBJECT *****/
 
-        const newPosition = new THREE.Vector3();
-        const newRotation = new THREE.Euler();
-        const newScale = new THREE.Vector3();
-        const newSize = new THREE.Vector3();
+        const newPosition = new SALT.Vector3();
+        const newRotation = new SALT.Vector3();//Euler();
+        const newScale = new SALT.Vector3();
+        const newSize = new SALT.Vector3();
 
         function update(axis = '') {
             if (!entity || !entity.isObject3D) return;

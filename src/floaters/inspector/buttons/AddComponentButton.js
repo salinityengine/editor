@@ -38,31 +38,31 @@ class AddComponentButton extends SUEY.Button {
             self.componentMenu.clearContents();
 
             let componentCount = 0;
-            const types = SALT.ComponentManager.registeredTypes();
-            for (const type of types) {
-                const ComponentClass = SALT.ComponentManager.registered(type);
-                const config = ComponentClass.config ?? {};
-                if (!config.multiple && entity.getComponent(type)) continue;
+            // const types = SALT.ComponentManager.registeredTypes();
+            // for (const type of types) {
+            //     const ComponentClass = SALT.ComponentManager.registered(type);
+            //     const config = ComponentClass.config ?? {};
+            //     if (!config.multiple && entity.getComponent(type)) continue;
 
-                // FAMILY - Ex: [ 'Entity2D', 'World2D' ]
-                if (!config.family) continue;
-                const componentFamily = Array.isArray(config.family) ? config.family : [ config.family ];
-                const entityFamily = Array.isArray(entity.componentFamily()) ? entity.componentFamily() : [ entity.componentFamily() ];
-                if (SALT.ArrayUtils.shareValues(componentFamily, entityFamily) === false) continue;
+            //     // FAMILY - Ex: [ 'Entity2D', 'World2D' ]
+            //     if (!config.family) continue;
+            //     const componentFamily = Array.isArray(config.family) ? config.family : [ config.family ];
+            //     const entityFamily = Array.isArray(entity.componentFamily()) ? entity.componentFamily() : [ entity.componentFamily() ];
+            //     if (SALT.ArrayUtils.shareValues(componentFamily, entityFamily) === false) continue;
 
-                // Add Component
-                const compName = SUEY.Strings.capitalize(type);
-                const compIcon = COMPONENT_ICONS[type] ?? config.icon ?? ``;
-                const menuItem = new SUEY.MenuItem(compName, compIcon);
-                menuItem.onSelect(() => {
-                    const data = {};
-                    editor.execute(new AddComponentCommand(entity, type, data));
-                });
+            //     // Add Component
+            //     const compName = SUEY.Strings.capitalize(type);
+            //     const compIcon = COMPONENT_ICONS[type] ?? config.icon ?? ``;
+            //     const menuItem = new SUEY.MenuItem(compName, compIcon);
+            //     menuItem.onSelect(() => {
+            //         const data = {};
+            //         editor.execute(new AddComponentCommand(entity, type, data));
+            //     });
 
-                // Add to Menu
-                self.componentMenu.add(menuItem);
-                componentCount++;
-            }
+            //     // Add to Menu
+            //     self.componentMenu.add(menuItem);
+            //     componentCount++;
+            // }
 
             if (componentCount === 0) self.setStyle('display', 'none');
         }

@@ -15,7 +15,7 @@ import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
 // import { ComponentTab } from './inspector/ComponentTab.js';
-// import { EntityTab } from './inspector/EntityTab.js';
+import { EntityBlock } from './inspector/EntityBlock.js';
 // import { PaletteTab } from './inspector/PaletteTab.js';
 // import { TextureTab } from './inspector/TextureTab.js';
 
@@ -64,18 +64,18 @@ class Inspector extends SmartFloater {
 
             // ITEM: Palette
             } else if (item.isPalette) {
-                blocks.push(new SUEY.Floater('palette', { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }).add(new PaletteTab(item)));
+                // blocks.push(new SUEY.Floater('palette', { icon: `${FOLDER_FLOATERS}asset/palette.svg`, color: '#a0a0a0', shrink: true }).add(new PaletteTab(item)));
 
             // ITEM: Texture
             } else if (item.isTexture) {
-                let icon = `${FOLDER_FLOATERS}asset/texture.svg`;
-                if (item.isCubeTexture) icon = `${FOLDER_FLOATERS}asset/cube-texture.svg`;
-                blocks.push(new SUEY.Floater('texture', { icon, color: '#C9C1B6', shadow: false, shrink: true }).add(new TextureTab(item)));
+                // let icon = `${FOLDER_FLOATERS}asset/texture.svg`;
+                // if (item.isCubeTexture) icon = `${FOLDER_FLOATERS}asset/cube-texture.svg`;
+                // blocks.push(new SUEY.Floater('texture', { icon, color: '#C9C1B6', shadow: false, shrink: true }).add(new TextureTab(item)));
 
             // ITEM: Entity
             } else if (item.isEntity) {
-                // const entity = item;
-                // let icon, color, shrink, shadow, tabType;
+                const entity = item;
+                let icon, color, shrink, shadow, tabType;
                 // if (entity.isPrefab) { tabType = 'prefab'; icon = `${FOLDER_TYPES}entity/prefab.svg`; shrink = true; }
                 // else if (entity.isWorld) { tabType = 'world'; icon = `${FOLDER_TYPES}entity/world.svg`; }
                 // else if (entity.isStage) { tabType = 'stage'; icon = `${FOLDER_TYPES}entity/stage.svg`; color = '#333355'; }
@@ -83,8 +83,8 @@ class Inspector extends SmartFloater {
                 // else if (entity.isLight) { tabType = 'light'; icon = `${FOLDER_TYPES}entity/light.svg`; color = '#222222'; shrink = true; }
                 // else { /* isEntity */ tabType = 'entity'; icon = `${FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
 
-                // // Entity Tab
-                // blocks.push(new SUEY.Floater(tabType, { icon, color, shrink, shadow }).add(new EntityTab(entity)));
+                // Entity Tab
+                blocks.push(new EntityBlock(entity));
 
                 // // Component Tabs
                 // const components = entity.components;

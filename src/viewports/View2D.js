@@ -89,13 +89,13 @@ class View2D extends AbstractView {
         const grid = new SALT.GridHelper();
         scene.add(grid);
 
-        // Origin Helper
-        const originHelper = new SALT.OriginHelper();
-        scene.add(originHelper);
-
         // Tooltip Helper
         const tooltip = new SALT.TooltipHelper(true /* sceneTips? */);
         scene.add(tooltip);
+
+        // Origin Helper
+        const originHelper = new SALT.OriginHelper();
+        scene.add(originHelper);
 
         function updateGridSettings() {
             grid.visible = Config.getKey('view2d/grid/show');
@@ -123,8 +123,8 @@ class View2D extends AbstractView {
         this.cameraControls = cameraControls;
         this.selectControls = selectControls;
         this.grid = grid;
-        this.originHelper = originHelper;
         this.tooltip = tooltip;
+        this.originHelper = originHelper;
 
         /***** START *****/
 
@@ -132,6 +132,13 @@ class View2D extends AbstractView {
         const onBeforeRender = () => { debug.startFrame(renderer); };
         const onAfterRender = () => { debug.endFrame(renderer); };
         renderer.start(scene, this.camera, onBeforeRender, onAfterRender);
+
+        const debugElement = document.getElementById('EyeDebug');
+        if (debugElement) {
+            debugElement.style.right = 0;
+            debugElement.style.width = '12.5em';
+            debugElement.style.margin = '0.25em auto';
+        }
     }
 
     /******************** CLIPBOARD / EDIT ********************/

@@ -77,15 +77,15 @@ class Outliner extends SmartFloater {
         // Add Entity
         addEntityMenuItem('Entity', `${FOLDER_TYPES}entity/entity.svg`, () => {
             switch (editor.viewport().mode()) {
-                case EDITOR_MODES.WORLD_2D: return new SALT.Entity2D();
-                case EDITOR_MODES.WORLD_3D: return new SALT.Entity3D();
+                case EDITOR_MODES.WORLD_2D: return new SALT.Entity();
+                // case EDITOR_MODES.WORLD_3D: return new SALT.Entity3D();
             }
         });
 
         // Add Camera
         addEntityMenuItem('Camera', `${FOLDER_TYPES}entity/camera.svg`, () => {
             switch (editor.viewport().mode()) {
-                case EDITOR_MODES.WORLD_2D: return new SALT.Camera2D();
+                // case EDITOR_MODES.WORLD_2D: return new SALT.Camera2D();
                 // case EDITOR_MODES.WORLD_3D: return new SALT.Camera3D();
             }
         });

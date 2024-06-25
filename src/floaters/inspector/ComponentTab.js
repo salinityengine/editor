@@ -8,14 +8,14 @@ import { AddComponentButton } from './buttons/AddComponentButton.js';
 import { CameraProperties } from './properties/CameraProperties.js';
 import { ComponentProperties } from './properties/ComponentProperties.js';
 import { ComponentSettingsButton } from './buttons/ComponentSettingsButton.js';
+import { EntityBlock } from './EntityBlock.js';
 import { EntitySettingsButton } from './buttons/EntitySettingsButton.js';
-import { EntityTab } from './EntityTab.js';
 import { PropertyGroup } from '../../gui/PropertyGroup.js';
 
 class ComponentTab extends SUEY.Titled {
 
     constructor(entity, compType) {
-        super({ title: EntityTab.entityTypeName(entity) });
+        super({ title: EntityBlock.entityTypeName(entity) });
 
         // Style "Prefab"
         if (entity.isPrefab) {
