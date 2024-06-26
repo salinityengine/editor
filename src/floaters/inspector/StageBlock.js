@@ -5,14 +5,14 @@ import editor from 'editor';
 import * as SALT from 'salt';
 import * as SUEY from 'suey';
 
-import { Config } from '../../../config/Config.js';
-import { Language } from '../../../config/Language.js';
-import { PropertyGroup } from '../../../gui/PropertyGroup.js';
-import { Signals } from '../../../config/Signals.js';
+import { Config } from '../../config/Config.js';
+import { Language } from '../../config/Language.js';
+import { PropertyGroup } from '../../gui/PropertyGroup.js';
+import { Signals } from '../../config/Signals.js';
 
-import { SetEntityValueCommand } from '../../../commands/CommandList.js';
+import { SetEntityValueCommand } from '../../commands/CommandList.js';
 
-class StageProperties extends SUEY.Div {
+class StageBlock extends SUEY.Div {
 
     constructor(entity) {
         super();
@@ -20,7 +20,12 @@ class StageProperties extends SUEY.Div {
 
         /******************** GENERAL */
 
-        const displayGroup = new PropertyGroup({ title: 'Display', icon: `${FOLDER_FLOATERS}inspector/stage/flag.svg` });
+        const displayGroup = new PropertyGroup({
+            title: 'Display',
+            icon: `${FOLDER_FLOATERS}inspector/stage/flag.svg`,
+            arrow: 'right',
+            border: true,
+        });
         displayGroup.setLeftPropertyWidth('30%');
         this.add(displayGroup);
 
@@ -70,4 +75,4 @@ class StageProperties extends SUEY.Div {
 
 }
 
-export { StageProperties };
+export { StageBlock };

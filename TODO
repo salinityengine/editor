@@ -5,6 +5,7 @@
 Entity:
     - Build from Object2D
     - Update Stage / World
+        - SALT.Color (replace THREE.Color)
 
 View2D:
     Editor:

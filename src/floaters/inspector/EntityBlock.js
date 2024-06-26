@@ -27,9 +27,15 @@ class EntityBlock extends PropertyGroup {
     }
 
     constructor(entity) {
-        let icon = `${FOLDER_TYPES}entity/entity.svg`; // color = '#D8007F'
+        let icon = `${FOLDER_TYPES}entity/entity.svg`; /* color = '#D8007F'; */
         let shrink = false;
+        let radius = 0;
         if (entity.isWorld) { icon = `${FOLDER_TYPES}entity/world.svg`; shrink = 0.9; }
+        else if (entity.isStage) { icon = `${FOLDER_TYPES}entity/stage.svg`; radius = '0.4em'; /* color = '#333355'; */ }
+
+        // 'prefab'; icon = `${FOLDER_TYPES}entity/prefab.svg`;
+        // 'camera'; icon = `${FOLDER_TYPES}entity/camera.svg`; color = '#4B4886';
+        // 'light'; icon = `${FOLDER_TYPES}entity/light.svg`;   color = '#222222';
 
         super({
             title: EntityBlock.entityTypeName(entity),
@@ -37,6 +43,8 @@ class EntityBlock extends PropertyGroup {
             arrow: 'right',
             border: true,
             shrink,
+            radius,
+            leftPropertyWidth: '30%',
             defaultExpanded: true,
         });
 
@@ -101,7 +109,7 @@ class EntityBlock extends PropertyGroup {
 
         updateUI();
 
-        // if (entity.locked) this.disableInputs();
+        if (entity.locked) this.disableInputs();
 
     }
 

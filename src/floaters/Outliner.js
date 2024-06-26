@@ -310,21 +310,21 @@ class Outliner extends SmartFloater {
                         shown.appendChild(eyeIcon);
                         shown.style['pointer-events'] = 'none';
                         columnCheck.appendChild(shown);
-
-                        // World Locked
-                        const lockCheck = document.createElement('span');
-                        lockCheck.classList.add('outliner-lock-checkbox');
-                        lockCheck.classList.add('suey-black-or-white');
-                        const lockIcon = document.createElement('img');
-                        lockIcon.style['max-width'] = '1em';
-                        lockIcon.src = `${FOLDER_MENU}lock.svg`;
-                        lockCheck.appendChild(lockIcon);
-                        lockCheck.style['pointer-events'] = 'none';
-                        columnCheck.appendChild(lockCheck);
                     }
 
+                    // World Locked
+                    const lockCheck = document.createElement('span');
+                    lockCheck.classList.add('outliner-lock-checkbox');
+                    lockCheck.classList.add('suey-black-or-white');
+                    const lockIcon = document.createElement('img');
+                    lockIcon.style['max-width'] = '1em';
+                    lockIcon.src = `${FOLDER_MENU}lock.svg`;
+                    lockCheck.appendChild(lockIcon);
+                    lockCheck.style['pointer-events'] = 'none';
+                    columnCheck.appendChild(lockCheck);
+
                 } else if (!entity.isStage) {
-                    // Stage Visible
+                    // Entity Visible
                     if (promode) {
                         const shown = document.createElement('span');
                         shown.classList.add('outliner-visible-checkbox');
@@ -353,7 +353,7 @@ class Outliner extends SmartFloater {
                         columnCheck.appendChild(shown);
                     }
 
-                    // Stage Locked
+                    // Entity Locked
                     const lockCheck = document.createElement('span');
                     lockCheck.classList.add('outliner-lock-checkbox');
                     lockCheck.classList.add('suey-black-or-white');

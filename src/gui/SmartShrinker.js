@@ -13,9 +13,10 @@ class SmartShrinker extends SUEY.Shrinkable {
         arrow = 'left',
         border = true,
         shrink = false,
+        radius = 0,
         defaultExpanded = false,
     } = {}) {
-        super({ title, icon, arrow, border, shrink });
+        super({ title, icon, arrow, border, shrink, radius });
 
         let expanded = Config.getKey(`blocks/expanded/${this.constructor.name}`);
         if (defaultExpanded && expanded == null) expanded = true;
