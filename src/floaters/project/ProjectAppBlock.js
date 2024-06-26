@@ -3,22 +3,18 @@ import {
 } from 'constants';
 import editor from 'editor';
 import * as SUEY from 'suey';
-import { SmartShrinker } from '../../gui/SmartShrinker.js';
+import { PropertyGroup } from '../../gui/PropertyGroup.js';
 
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
 import { Signals } from '../../config/Signals.js';
 
-class ProjectAppBlock extends SmartShrinker {
+class ProjectAppBlock extends PropertyGroup {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/app.svg`;
         super({ title: 'App', icon, arrow: 'right', border: true });
         Advice.attach(this.titleDiv, 'project/app');
-
-        // Property Box
-        const props = new SUEY.PropertyList();
-        this.add(props);
 
         /***** APP *****/
 
@@ -26,7 +22,7 @@ class ProjectAppBlock extends SmartShrinker {
         const projectName = new SUEY.TextBox().on('change', () => {
             editor.project.name = projectName.getValue();
         });
-        const nameRow = props.addRow('Name', projectName);
+        const nameRow = this.addRow('Name', projectName);
         Advice.attach(nameRow, 'project/app/name');
 
         // Orientation
@@ -40,12 +36,12 @@ class ProjectAppBlock extends SmartShrinker {
         orientSelect.on('change', () => {
             editor.project.settings.orientation = orientSelect.getValue();
         });
-        const orientRow = props.addRow('Orientation', orientSelect);
+        const orientRow = this.addRow('Orientation', orientSelect);
         Advice.attach(orientRow, 'project/app/orientation');
 
         /***** THRESHOLD *****/
 
-        const thresholdHeader = props.addHeader('Threshold', `${FOLDER_FLOATERS}project/threshold.svg`);
+        const thresholdHeader = this.addHeader('Threshold', `${FOLDER_FLOATERS}project/threshold.svg`);
         Advice.attach(thresholdHeader, 'project/threshold');
 
         // Preload
@@ -53,7 +49,7 @@ class ProjectAppBlock extends SmartShrinker {
         preload.on('change', () => {
             editor.project.settings.preload = preload.getValue();
         });
-        const preloadRow = props.addRow('Preload', preload);
+        const preloadRow = this.addRow('Preload', preload);
         Advice.attach(preloadRow, 'project/threshold/preload');
 
         // Unload
@@ -61,7 +57,7 @@ class ProjectAppBlock extends SmartShrinker {
         unload.on('change', () => {
             editor.project.settings.unload = unload.getValue();
         });
-        const unloadRow = props.addRow('Unload', unload);
+        const unloadRow = this.addRow('Unload', unload);
         Advice.attach(unloadRow, 'project/threshold/unload');
 
         /***** UPDATE *****/

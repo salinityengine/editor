@@ -4,43 +4,39 @@ import {
 import editor from 'editor';
 import * as SALT from 'salt';
 import * as SUEY from 'suey';
-import { SmartShrinker } from '../../gui/SmartShrinker.js';
+import { PropertyGroup } from '../../gui/PropertyGroup.js';
 
 import { Signals } from '../../config/Signals.js';
 
-class ProjectInfoBlock extends SmartShrinker {
+class ProjectInfoBlock extends PropertyGroup {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/info.svg`;
         super({ title: 'Info', icon, arrow: 'right', border: true });
 
-        // Property Box
-        const props = new SUEY.PropertyList();
-        this.add(props);
-
         /***** SCENE *****/
 
-        // props.addHeader('Scene', `${FOLDER_FLOATERS}settings/info/scene.svg`);
+        // this.addHeader('Scene', `${FOLDER_FLOATERS}settings/info/scene.svg`);
 
         // Scenes
         const scenesInfo = new SUEY.Text('0').selectable(false);
-        props.addRow('Scenes', scenesInfo);
+        this.addRow('Scenes', scenesInfo);
 
         // Entities
         const entitiesInfo = new SUEY.Text('0').selectable(false);
-        props.addRow('Entities', entitiesInfo);
+        this.addRow('Entities', entitiesInfo);
 
         // Geometries
         const geometriesInfo = new SUEY.Text('0').selectable(false);
-        props.addRow('Geometries', geometriesInfo);
+        this.addRow('Geometries', geometriesInfo);
 
         // Materials
         const materialsInfo = new SUEY.Text('0').selectable(false);
-        props.addRow('Materials', materialsInfo);
+        this.addRow('Materials', materialsInfo);
 
         // Textures
         const texturesInfo = new SUEY.Text('0').selectable(false);
-        props.addRow('Textures', texturesInfo);
+        this.addRow('Textures', texturesInfo);
 
         // // DEBUG: Log 'editor.project' to Console
         const debugRow = new SUEY.Row().setStyle('justify-content', 'center');
@@ -52,7 +48,7 @@ class ProjectInfoBlock extends SmartShrinker {
             'margin-bottom', 'var(--pad-small)',
         );
         logButton.onPress(() => console.log(editor.project));
-        props.add(debugRow.add(logButton));
+        this.add(debugRow.add(logButton));
 
         /***** UPDATE *****/
 

@@ -14,8 +14,10 @@ import { Advice } from '../config/Advice.js';
 import { Config } from '../config/Config.js';
 import { Signals } from '../config/Signals.js';
 
-// import { ComponentTab } from './inspector/ComponentTab.js';
 import { EntityBlock } from './inspector/EntityBlock.js';
+import { WorldBlock } from './inspector/WorldBlock.js';
+
+// import { ComponentTab } from './inspector/ComponentTab.js';
 // import { PaletteTab } from './inspector/PaletteTab.js';
 // import { TextureTab } from './inspector/TextureTab.js';
 
@@ -76,15 +78,21 @@ class Inspector extends SmartFloater {
             } else if (item.isEntity) {
                 const entity = item;
                 let icon, color, shrink, shadow, tabType;
-                // if (entity.isPrefab) { tabType = 'prefab'; icon = `${FOLDER_TYPES}entity/prefab.svg`; shrink = true; }
-                // else if (entity.isWorld) { tabType = 'world'; icon = `${FOLDER_TYPES}entity/world.svg`; }
-                // else if (entity.isStage) { tabType = 'stage'; icon = `${FOLDER_TYPES}entity/stage.svg`; color = '#333355'; }
-                // else if (entity.isCamera) { tabType = 'camera'; icon = `${FOLDER_TYPES}entity/camera.svg`; color = '#4B4886'; shrink = true; }
-                // else if (entity.isLight) { tabType = 'light'; icon = `${FOLDER_TYPES}entity/light.svg`; color = '#222222'; shrink = true; }
-                // else { /* isEntity */ tabType = 'entity'; icon = `${FOLDER_TYPES}entity/entity.svg`; color = '#D8007F'; shrink = true; }
+                // 'prefab'; icon = `${FOLDER_TYPES}entity/prefab.svg`;
+                // 'stage'; icon = `${FOLDER_TYPES}entity/stage.svg`;   color = '#333355';
+                // 'camera'; icon = `${FOLDER_TYPES}entity/camera.svg`; color = '#4B4886';
+                // 'light'; icon = `${FOLDER_TYPES}entity/light.svg`;   color = '#222222';
 
                 // Entity Tab
                 blocks.push(new EntityBlock(entity));
+
+                // World, Stage
+                if (entity.isWorld) blocks.push(new WorldBlock(entity));
+                // else if (entity.isStage) blocks.push(new StageProperties(entity));
+                // else blocks.push(new EntityTransformProperties(entity));
+
+                // // Camera
+                // if (entity.isCamera) this.add(new CameraProperties(entity));
 
                 // // Component Tabs
                 // const components = entity.components;

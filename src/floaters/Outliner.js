@@ -399,8 +399,6 @@ class Outliner extends SmartFloater {
                 return option;
             }
 
-            console.log('Outliner', editor.viewport(), editor.viewport().getWorld());
-
             const viewWorld = editor.viewport().getWorld();
             if (!viewWorld || !viewWorld.isEntity) return treeList.setOptions([ emptyOption() ]);
             const viewStageUUID = (viewWorld && viewWorld.isWorld) ? viewWorld.activeStage().uuid : -1;

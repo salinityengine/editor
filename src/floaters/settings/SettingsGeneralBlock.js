@@ -4,7 +4,7 @@ import {
 import editor from 'editor';
 import * as SALT from 'salt';
 import * as SUEY from 'suey';
-import { SmartShrinker } from '../../gui/SmartShrinker.js';
+import { PropertyGroup } from '../../gui/PropertyGroup.js';
 
 import { Advice } from '../../config/Advice.js';
 import { Config } from '../../config/Config.js';
@@ -13,7 +13,7 @@ import { Signals } from '../../config/Signals.js';
 
 const _color = new SUEY.Iris();
 
-class SettingsGeneralBlock extends SmartShrinker {
+class SettingsGeneralBlock extends PropertyGroup {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings/general.svg`; // color: '#C04145'
@@ -23,10 +23,6 @@ class SettingsGeneralBlock extends SmartShrinker {
             defaultExpanded: true,
         });
         Advice.attach(this.titleDiv, 'settings');
-
-        // Property Box
-        const props = new SUEY.PropertyList();
-        this.add(props);
 
         /***** GENERAL *****/
 
@@ -43,7 +39,7 @@ class SettingsGeneralBlock extends SmartShrinker {
             Config.setKey('editor/language', languageDropDown.getValue());
             editor.refreshSettings();
         });
-        const languageRow = props.addRow(Language.getKey('floater/settings/language'), languageDropDown);
+        const languageRow = this.addRow(Language.getKey('floater/settings/language'), languageDropDown);
         Advice.attach(languageRow, 'settings/general/language');
 
         // ProMode
@@ -59,7 +55,7 @@ class SettingsGeneralBlock extends SmartShrinker {
             Config.setKey('promode', (!Config.getKey('promode')));
             Signals.dispatch('promodeChanged');
         });
-        const promodeRow = props.addRow(Language.getKey('floater/settings/promode'), promodeBox);
+        const promodeRow = this.addRow(Language.getKey('floater/settings/promode'), promodeBox);
         Advice.attach(promodeRow, 'settings/general/promode');
 
         /***** STYLE *****/
@@ -90,7 +86,7 @@ class SettingsGeneralBlock extends SmartShrinker {
 
         // Add Theme Menu, Button
         themeButton.attachMenu(themeMenu, true /* popupStyle */);
-        const themeRow = props.addRow(Language.getKey('floater/settings/theme'), themeButton);
+        const themeRow = this.addRow(Language.getKey('floater/settings/theme'), themeButton);
         Advice.attach(themeRow, 'settings/style/theme');
 
         // COLOR //
@@ -136,7 +132,7 @@ class SettingsGeneralBlock extends SmartShrinker {
 
         // Add Color Menu and Button
         colorButton.attachMenu(colorMenu, true /* popupStyle */);
-        const colorRow = props.addRow(Language.getKey('floater/settings/color'), colorButton);
+        const colorRow = this.addRow(Language.getKey('floater/settings/color'), colorButton);
         Advice.attach(colorRow, 'settings/style/color');
 
         // TEXT SIZE //
@@ -166,7 +162,7 @@ class SettingsGeneralBlock extends SmartShrinker {
         largerButton.setAttribute('tooltip', Config.tooltip(largerLabel, largerShortcut));
 
         // Font Button Row
-        const textSizeRow = props.addRow(Language.getKey('floater/settings/textSize'), smallerButton, largerButton);
+        const textSizeRow = this.addRow(Language.getKey('floater/settings/textSize'), smallerButton, largerButton);
         Advice.attach(textSizeRow, 'settings/style/textsize');
 
         // OPACITY //
@@ -178,7 +174,7 @@ class SettingsGeneralBlock extends SmartShrinker {
             SUEY.Css.setVariable('--panel-transparency', panelAlpha);
         });
         alphaSlider.setRange(0, 1.0).setStep('any').setPrecision(2);
-        const opacityRow = props.addRow(Language.getKey('floater/settings/opacity'), alphaSlider);
+        const opacityRow = this.addRow(Language.getKey('floater/settings/opacity'), alphaSlider);
         Advice.attach(opacityRow, 'settings/style/opacity');
 
         /***** RESET *****/
@@ -194,7 +190,7 @@ class SettingsGeneralBlock extends SmartShrinker {
         const resetShortcut = Config.getKey('shortcuts/reset');
         resetButton.add(new SUEY.ShadowBox(`${FOLDER_FLOATERS}settings/general/reset.svg`));
         resetButton.setAttribute('tooltip', Config.tooltip(resetLabel, resetShortcut));
-        const resetRow = props.addRow(resetLabel, resetButton);
+        const resetRow = this.addRow(resetLabel, resetButton);
         Advice.attach(resetRow, 'settings/reset');
 
         /***** UPDATE *****/

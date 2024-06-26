@@ -2,20 +2,16 @@ import {
     FOLDER_FLOATERS,
 } from 'constants';
 import * as SUEY from 'suey';
-import { SmartShrinker } from '../../gui/SmartShrinker.js';
+import { PropertyGroup } from '../../gui/PropertyGroup.js';
 
 import { Config } from '../../config/Config.js';
 import { Signals } from '../../config/Signals.js';
 
-class View2DGridBlock extends SmartShrinker {
+class View2DGridBlock extends PropertyGroup {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'
         super({ title: 'Grid', icon, arrow: 'right', border: true });
-
-        // Property Box
-        const props = new SUEY.PropertyList();
-        this.add(props);
 
         /***** SNAP *****/
 
@@ -25,12 +21,12 @@ class View2DGridBlock extends SmartShrinker {
             Signals.dispatch('gridChanged');
         });
         const snapShortcut = new SUEY.MenuShortcut(`G`);
-        props.addRow('Snap to Grid', snapGrid, new SUEY.FlexSpacer(), snapShortcut);
+        this.addRow('Snap to Grid', snapGrid, new SUEY.FlexSpacer(), snapShortcut);
 
         /***** STYLE *****/
 
-        // props.addHeader('Style', `${FOLDER_FLOATERS}settings/grid/style.svg`);
-        // props.addHeader('Visibility', `${FOLDER_FLOATERS}settings/grid/visibility.svg`);
+        // this.addHeader('Style', `${FOLDER_FLOATERS}settings/grid/style.svg`);
+        // this.addHeader('Visibility', `${FOLDER_FLOATERS}settings/grid/visibility.svg`);
 
         // Show Grid
         const showGrid = new SUEY.Checkbox().on('change', () => {
@@ -38,7 +34,7 @@ class View2DGridBlock extends SmartShrinker {
             Signals.dispatch('gridChanged');
         });
         const showGridShortcut = new SUEY.MenuShortcut(); // `N`);
-        props.addRow('Show Grid', showGrid, new SUEY.FlexSpacer(), showGridShortcut);
+        this.addRow('Show Grid', showGrid, new SUEY.FlexSpacer(), showGridShortcut);
 
         // Grid Size
         const gridSizeX = new SUEY.NumberBox();
@@ -55,7 +51,7 @@ class View2DGridBlock extends SmartShrinker {
         });
         gridSizeX.setStyle('color', 'rgb(var(--triadic1))');
         gridSizeY.setStyle('color', 'rgb(var(--triadic2))');
-        props.addRow('Grid Size', gridSizeX, gridSizeY);
+        this.addRow('Grid Size', gridSizeX, gridSizeY);
 
         // Grid Scale
         const gridScaleX = new SUEY.SliderBox();
@@ -70,8 +66,8 @@ class View2DGridBlock extends SmartShrinker {
             Config.setKey('view2d/grid/scaleY', gridScaleY.getValue());
             Signals.dispatch('gridChanged');
         });
-        props.addRow('Grid Scale X', gridScaleX);
-        props.addRow('Grid Scale Y', gridScaleY);
+        this.addRow('Grid Scale X', gridScaleX);
+        this.addRow('Grid Scale Y', gridScaleY);
 
         // Grid Scale
         const gridRotate = new SUEY.SliderBox(0);
@@ -81,7 +77,7 @@ class View2DGridBlock extends SmartShrinker {
             Signals.dispatch('gridChanged');
         }
         gridRotate.on('change', updateGridRotation);
-        props.addRow('Grid Rotation', gridRotate);
+        this.addRow('Grid Rotation', gridRotate);
 
         /***** UPDATE *****/
 

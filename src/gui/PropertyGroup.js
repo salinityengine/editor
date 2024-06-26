@@ -1,15 +1,17 @@
 import * as SUEY from 'suey';
+import { SmartShrinker } from './SmartShrinker.js';
 
-class PropertyGroup extends SUEY.Shrinkable {
+class PropertyGroup extends SmartShrinker {
 
     constructor({
         title,
         icon,
         arrow = 'left',
         border = false,
+        defaultExpanded = false,
         leftPropertyWidth = '50%',
     } = {}) {
-        super({ title, icon, arrow, border });
+        super({ title, icon, arrow, border, defaultExpanded });
 
         // Property List
         const properties = new SUEY.PropertyList(leftPropertyWidth);
@@ -18,13 +20,14 @@ class PropertyGroup extends SUEY.Shrinkable {
 
         // Contents Accessor (this.add(...rows))
         this.contents = function() { return properties };
-
-        // Expanded
-        this.setExpanded(true);
     }
 
     setLeftPropertyWidth(width = '50%') {
         return this.properties.setLeftPropertyWidth(width);
+    }
+
+    addHeader(text = '', iconUrl) {
+        return this.properties.addHeader(text, iconUrl);
     }
 
     addRow(title = '', ...controls) {
@@ -33,6 +36,10 @@ class PropertyGroup extends SUEY.Shrinkable {
 
     addRowWithoutTitle(...controls) {
         return this.properties.addRowWithoutTitle(...controls);
+    }
+
+    createHeader(text = '', iconUrl) {
+        return this.properties.createHeader(text, iconUrl);
     }
 
     createRow(title = '', ...controls) {

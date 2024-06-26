@@ -1,7 +1,6 @@
 import {
     FOLDER_FLOATERS,
 } from 'constants';
-import * as SALT from 'salt';
 import * as SUEY from 'suey';
 
 import { Config } from '../config/Config.js';

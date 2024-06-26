@@ -1,23 +1,19 @@
 import {
     FOLDER_FLOATERS,
     FOLDER_TYPES,
+    WIDGET_SPACING,
 } from 'constants';
 import * as SALT from 'salt';
 import * as SUEY from 'suey';
-import { SmartShrinker } from '../../gui/SmartShrinker.js';
-
-import { CameraProperties } from './properties/CameraProperties.js';
-import { ComponentProperties } from './properties/ComponentProperties.js';
-import { EntityProperties } from './properties/EntityProperties.js';
-import { EntityTransformProperties } from './properties/EntityTransformProperties.js';
-import { StageProperties } from './properties/StageProperties.js';
-import { WorldProperties } from './properties/WorldProperties.js';
-
-import { AddComponentButton } from './buttons/AddComponentButton.js';
-import { EntitySettingsButton } from './buttons/EntitySettingsButton.js';
 import { PropertyGroup } from '../../gui/PropertyGroup.js';
 
-class EntityBlock extends SmartShrinker {
+import { Config } from '../../config/Config.js';
+import { Language } from '../../config/Language.js';
+import { Signals } from '../../config/Signals.js';
+
+import { SetEntityValueCommand } from '../../commands/CommandList.js';
+
+class EntityBlock extends PropertyGroup {
 
     static entityTypeName(entity) {
         if (entity.isWorld) return 'World';
@@ -38,10 +34,10 @@ class EntityBlock extends SmartShrinker {
             defaultExpanded: true,
         });
 
-        // Style 'Prefab'
-        if (entity.isPrefab) {
-            this.tabTitle.setStyle('background-image', 'linear-gradient(to bottom, rgba(var(--triadic1), 0.75), rgba(var(--triadic1), 0.5))');
-        }
+        // // Style 'Prefab'
+        // if (entity.isPrefab) {
+        //     this.tabTitle.setStyle('background-image', 'linear-gradient(to bottom, rgba(var(--triadic1), 0.75), rgba(var(--triadic1), 0.5))');
+        // }
 
         /********** HEADER BUTTONS */
 
@@ -53,16 +49,54 @@ class EntityBlock extends SmartShrinker {
 
         /********** PROPERTY BOXES */
 
-        // Entity
-        this.add(new EntityProperties(entity));
+        // NAME
+        const entityName = new SUEY.TextBox().on('change', () => {
+            editor.execute(new SetEntityValueCommand(entity, 'name', entityName.getValue()));
+        });
+        this.addRow(Language.getKey('inspector/entity/name'), entityName);
 
-        // World, Stage
-        if (entity.isWorld) this.add(new WorldProperties(entity));
-        else if (entity.isStage) this.add(new StageProperties(entity));
-        else this.add(new EntityTransformProperties(entity));
+        // UUID
+        const entityUUID = new SUEY.TextBox().setDisabled(true);
+        // // 'New' UUID Button
+        // const entityUUIDNew = new SUEY.Button('NEW').setStyle('marginLeft', WIDGET_SPACING).onPress(() => {
+        //     entityUUID.setValue(SALT.MathUtils.randomUUID());
+        //     editor.execute(new SetUUIDCommand(entity, entityUUID.getValue()));
+        // });
+        // // 'Copy' UUID Button
+        const entityUUIDCopy = new SUEY.Button('Copy').onPress(() => {
+            navigator.clipboard.writeText(entity.uuid).then(
+                function() { /* success */ },
+                function(err) { console.error('EntityProperties.copy(): Could not copy text to clipboard - ', err); }
+            );
+        });
+        entityUUIDCopy.setStyle('marginLeft', WIDGET_SPACING)
+        entityUUIDCopy.setStyle('minWidth', '3.5em');
+        if (Config.getKey('promode') === true) {
+            this.addRow('UUID', entityUUID, entityUUIDCopy);
+        }
 
-        // Camera
-        if (entity.isCamera) this.add(new CameraProperties(entity));
+        /***** UPDATE *****/
+
+        function updateUI() {
+            entityName.setValue(entity.name);
+            entityUUID.setValue(entity.uuid);
+        }
+
+        /***** SIGNALS *****/
+
+        function entityChangeCallback(changedEntity) {
+            if (!changedEntity || !changedEntity.isEntity) return;
+            if (changedEntity.uuid === entity.uuid) updateUI();
+        };
+
+        Signals.connect(this, 'entityChanged', entityChangeCallback);
+
+        /***** INIT *****/
+
+        updateUI();
+
+        // if (entity.locked) this.disableInputs();
+
     }
 
 }
