@@ -89,7 +89,7 @@ class Worlds extends AbstractView {
                     const x = node.left;
                     const y = node.top;
                     if (node.world.position.x !== x || node.world.position.y !== y) {
-                        cmds.push(new SetEntityValueCommand(node.world, 'position', [ x, y ]));
+                        cmds.push(new SetEntityValueCommand(node.world, 'position', new SALT.Vector2(x, y)));
                     }
                 });
                 if (cmds.length > 0) {

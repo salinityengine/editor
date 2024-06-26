@@ -68,7 +68,12 @@ class WorldBlock extends SUEY.Div {
 
         /******************** NODES */
 
-        const nodeGroup = new PropertyGroup({ title: 'Node', icon: `${FOLDER_TOOLBAR}graph-nodes.svg` });
+        const nodeGroup = new PropertyGroup({
+            title: 'Node',
+            icon: `${FOLDER_TOOLBAR}graph-nodes.svg`,
+            arrow: 'right',
+            border: true,
+        });
         nodeGroup.setLeftPropertyWidth('50%');
         if (Config.getKey('promode') === true) {
             this.add(nodeGroup);
@@ -77,14 +82,14 @@ class WorldBlock extends SUEY.Div {
         // X Pos
         const nodeX = new SUEY.NumberBox(0).setStep(25).setNudge(5);
         nodeX.on('change', () => {
-            editor.execute(new SetEntityValueCommand(entity, 'xPos', nodeX.getValue()));
+            editor.execute(new SetEntityValueCommand(entity, 'position', new SALT.Vector2(nodeX.getValue(), entity.position.y)));
         });
         nodeGroup.addRow('X', nodeX);
 
         // Y Pos
         const nodeY = new SUEY.NumberBox(0).setStep(25).setNudge(5);
         nodeY.on('change', () => {
-            editor.execute(new SetEntityValueCommand(entity, 'yPos', nodeY.getValue()));
+            editor.execute(new SetEntityValueCommand(entity, 'position', new SALT.Vector2(entity.position.x, nodeY.getValue())));
         });
         nodeGroup.addRow('Y', nodeY);
 
@@ -96,8 +101,8 @@ class WorldBlock extends SUEY.Div {
             bgColorRow.setStyle('display', (backType === 'color') ? '' : 'none');
             bgTextureRow.setStyle('display', (backType === 'texture') ? '' : 'none');
             // Node
-            nodeX.setValue(entity.xPos);
-            nodeY.setValue(entity.yPos);
+            nodeX.setValue(entity.position.x);
+            nodeY.setValue(entity.position.y);
         }
 
         /***** SIGNALS *****/
