@@ -28,8 +28,8 @@ class PropertyGroup extends SmartShrinker {
         return this.properties.setLeftPropertyWidth(width);
     }
 
-    addHeader(text = '', iconUrl) {
-        return this.properties.addHeader(text, iconUrl);
+    addHeader(text = '', iconUrl, arrow = 'left') {
+        return this.properties.addHeader(text, iconUrl, arrow);
     }
 
     addRow(title = '', ...controls) {
@@ -40,8 +40,8 @@ class PropertyGroup extends SmartShrinker {
         return this.properties.addRowWithoutTitle(...controls);
     }
 
-    createHeader(text = '', iconUrl) {
-        return this.properties.createHeader(text, iconUrl);
+    createHeader(text = '', iconUrl, arrow = 'left') {
+        return this.properties.createHeader(text, iconUrl, arrow);
     }
 
     createRow(title = '', ...controls) {

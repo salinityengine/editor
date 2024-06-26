@@ -25,7 +25,7 @@ class WorldBlock extends SUEY.Div {
         const backgroundBlock = new PropertyGroup({
             title: 'Background',
             icon: `${FOLDER_FLOATERS}inspector/world/background.svg`,
-            arrow: 'right',
+            arrow: 'left',
             border: true,
         });
         backgroundBlock.setLeftPropertyWidth('50%');
@@ -65,7 +65,7 @@ class WorldBlock extends SUEY.Div {
         const nodeGroup = new PropertyGroup({
             title: 'Node',
             icon: `${FOLDER_TOOLBAR}graph-nodes.svg`,
-            arrow: 'right',
+            arrow: 'left',
             border: true,
         });
         nodeGroup.setLeftPropertyWidth('50%');

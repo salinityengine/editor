@@ -19,7 +19,9 @@ class SettingsGeneralBlock extends PropertyGroup {
         const icon = `${FOLDER_FLOATERS}settings/general.svg`; // color: '#C04145'
         super({
             title: Language.getKey('floater/settings/general'),
-            icon, arrow: 'right', border: true,
+            icon,
+            arrow: 'left',
+            border: true,
             defaultExpanded: true,
         });
         Advice.attach(this.titleDiv, 'settings');

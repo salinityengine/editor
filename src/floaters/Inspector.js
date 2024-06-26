@@ -16,6 +16,7 @@ import { Signals } from '../config/Signals.js';
 
 import { EntityBlock } from './inspector/EntityBlock.js';
 import { StageBlock } from './inspector/StageBlock.js';
+import { TransformBlock } from './inspector/TransformBlock.js';
 import { WorldBlock } from './inspector/WorldBlock.js';
 
 // import { ComponentTab } from './inspector/ComponentTab.js';
@@ -85,7 +86,7 @@ class Inspector extends SmartFloater {
                 // World, Stage
                 if (entity.isWorld) blocks.push(new WorldBlock(entity));
                 else if (entity.isStage) blocks.push(new StageBlock(entity));
-                // else blocks.push(new EntityTransformProperties(entity));
+                else blocks.push(new TransformBlock(entity));
 
                 // // Camera
                 // if (entity.isCamera) this.add(new CameraProperties(entity));

@@ -23,7 +23,7 @@ class StageBlock extends SUEY.Div {
         const displayGroup = new PropertyGroup({
             title: 'Display',
             icon: `${FOLDER_FLOATERS}inspector/stage/flag.svg`,
-            arrow: 'right',
+            arrow: 'left',
             border: true,
         });
         displayGroup.setLeftPropertyWidth('30%');

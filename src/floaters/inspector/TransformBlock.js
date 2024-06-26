@@ -7,23 +7,23 @@ import editor from 'editor';
 import * as SALT from 'salt';
 import * as SUEY from 'suey';
 
-import { Config } from '../../../config/Config.js';
-import { Language } from '../../../config/Language.js';
-import { PropertyGroup } from '../../../gui/PropertyGroup.js';
+import { Config } from '../../config/Config.js';
+import { Language } from '../../config/Language.js';
+import { PropertyGroup } from '../../gui/PropertyGroup.js';
 // import { SceneUtils } from '../../../viewport/SceneUtils.js';
-import { Signals } from '../../../config/Signals.js';
+import { Signals } from '../../config/Signals.js';
 
-import { MultiCmdsCommand } from '../../../commands/CommandList.js';
+import { MultiCmdsCommand } from '../../commands/CommandList.js';
 // import { SetPositionCommand } from '../../../commands/CommandList.js';
 // import { SetRotationCommand } from '../../../commands/CommandList.js';
 // import { SetScaleCommand } from '../../../commands/CommandList.js';
-import { SetEntityValueCommand } from '../../../commands/CommandList.js';
+import { SetEntityValueCommand } from '../../commands/CommandList.js';
 
 const PROCESS_SIGNAL_MILLISECONDS = 50;         // 20 times per second
 
 let _lastSignalTime = performance.now();
 
-class EntityTransformProperties extends SUEY.Div {
+class TransformBlock extends SUEY.Div {
 
     constructor(entity) {
         super();
@@ -35,7 +35,12 @@ class EntityTransformProperties extends SUEY.Div {
 
         /******************** TRANSFORM */
 
-        const transformGroup = new PropertyGroup({ title: 'Transform', icon: `${FOLDER_FLOATERS}inspector/entity/transform.svg` });
+        const transformGroup = new PropertyGroup({
+            title: 'Transform',
+            icon: `${FOLDER_FLOATERS}inspector/entity/transform.svg`,
+            arrow: 'left',
+            border: true,
+        });
         transformGroup.setLeftPropertyWidth('30%');
         this.add(transformGroup);
 
@@ -363,4 +368,4 @@ class EntityTransformProperties extends SUEY.Div {
 
 }
 
-export { EntityTransformProperties };
+export { TransformBlock };

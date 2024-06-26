@@ -12,7 +12,12 @@ class ProjectInfoBlock extends PropertyGroup {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/info.svg`;
-        super({ title: 'Info', icon, arrow: 'right', border: true });
+        super({
+            title: 'Info',
+            icon,
+            arrow: 'left',
+            border: true,
+        });
 
         /***** SCENE *****/
 

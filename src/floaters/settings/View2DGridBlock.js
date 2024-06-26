@@ -11,7 +11,12 @@ class View2DGridBlock extends PropertyGroup {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}settings/grid.svg`; // color: '#333333'
-        super({ title: 'Grid', icon, arrow: 'right', border: true });
+        super({
+            title: 'Grid',
+            icon,
+            arrow: 'left',
+            border: true,
+        });
 
         /***** SNAP *****/
 

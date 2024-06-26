@@ -40,7 +40,7 @@ class EntityBlock extends PropertyGroup {
         super({
             title: EntityBlock.entityTypeName(entity),
             icon,
-            arrow: 'right',
+            arrow: 'left',
             border: true,
             shrink,
             radius,

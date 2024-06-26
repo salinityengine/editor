@@ -13,7 +13,12 @@ class ProjectAppBlock extends PropertyGroup {
 
     constructor() {
         const icon = `${FOLDER_FLOATERS}project/app.svg`;
-        super({ title: 'App', icon, arrow: 'right', border: true });
+        super({
+            title: 'App',
+            icon,
+            arrow: 'left',
+            border: true,
+         });
         Advice.attach(this.titleDiv, 'project/app');
 
         /***** APP *****/
