@@ -27,10 +27,16 @@ class EntityBlock extends PropertyGroup {
     }
 
     constructor(entity) {
-        const icon = `${FOLDER_TYPES}entity/entity.svg`; // color = '#D8007F'
+        let icon = `${FOLDER_TYPES}entity/entity.svg`; // color = '#D8007F'
+        let shrink = false;
+        if (entity.isWorld) { icon = `${FOLDER_TYPES}entity/world.svg`; shrink = 0.9; }
+
         super({
             title: EntityBlock.entityTypeName(entity),
-            icon, arrow: 'right', border: true,
+            icon,
+            arrow: 'right',
+            border: true,
+            shrink,
             defaultExpanded: true,
         });
 

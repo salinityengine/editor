@@ -8,10 +8,11 @@ class PropertyGroup extends SmartShrinker {
         icon,
         arrow = 'left',
         border = false,
+        shrink = false,
         defaultExpanded = false,
         leftPropertyWidth = '50%',
     } = {}) {
-        super({ title, icon, arrow, border, defaultExpanded });
+        super({ title, icon, arrow, border, shrink, defaultExpanded });
 
         // Property List
         const properties = new SUEY.PropertyList(leftPropertyWidth);

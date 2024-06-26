@@ -19,12 +19,6 @@ class WorldBlock extends SUEY.Div {
 
     constructor(entity) {
         super();
-        // const icon = `${FOLDER_TYPES}entity/world.svg`;
-        // super({
-        //     title: Language.getKey('floater/settings/general'),
-        //     icon, arrow: 'right', border: true,
-        //     defaultExpanded: true,
-        // });
 
         /******************** BACKGROUND */
 
